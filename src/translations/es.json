@@ -1,0 +1,52 @@
+{
+  "header": {
+    "searchPlaceholder": "Busca aquí personas o grupos"
+  },
+  "passwordStrengthBar": {
+    "shortScoreWord": "demasiado corto",
+    "scoreWords": {
+      "weak": "débil",
+      "okay": "bien",
+      "good": "buena",
+      "strong": "fuerte"
+    }
+  },
+  "authentication": {
+    "welcome": "Bienvenido a ",
+    "welcomeDescription": "¡La comunidad de redes sociales de próxima generación! ¡Conéctate con tus amigos y juega con nuestro sistema de gamificación de misiones e insignias!",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "accountLogin": "Inicio de sesión",
+    "usernameOrEmail": "Correo electrónico",
+    "yourEmail": "Tu correo electrónico",
+    "registerTitle": "Cree su cuenta!",
+    "password": "Contraseña",
+    "repeatPassword": "Repite tu contraseña",
+    "registerButton": "Registrarse ahora!",
+    "rememberMe": "Recordarme",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "loginToYourAccount": "Inicia sesión en tu cuenta",
+    "code": "Código de verificación",
+    "confirmEmailMessage": "We send you and email with the verification code",
+    "confirmEmail": "Please confirm your email",
+    "enterEmailCode": "Please enter the verification code",
+    "resendVerificationCode": "Resend verification code",
+    "confirm": "Confirmar",
+    "changeLanguage": "Cambiar idioma",
+    "registerConfimationEmailMessage": "You'll receive a confirmation email in your inbox with a link to activate your account. If you have any problems, ",
+    "contactUs": "contact us",
+    "messages": {
+      "successfullyLoggedIn": "You are successfully logged in"
+    },
+    "errors": {
+      "UsernameExistsException": "An account with the given email already exists.",
+      "UserNotConfirmedException": "User is not confirmed.",
+      "NotAuthorizedException": "Incorrect user name or password",
+      "enterValidEmailAddress": "Please enter a valid email address",
+      "confirmYourEmailAccount": "Please confirm your email account GOTO FORGOT PASSWORD",
+      "LimitExceededException": "Attempt limit exceeded, please try after some time",
+      "passwordDoesntMatch": "Password does not matches",
+      "UnknownError": "Unknown error, please contact support"
+    }
+  }
+}

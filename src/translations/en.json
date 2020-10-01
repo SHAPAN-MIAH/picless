@@ -1,0 +1,52 @@
+{
+  "header": {
+    "searchPlaceholder": "Search here for people or groups"
+  },
+  "passwordStrengthBar": {
+    "shortScoreWord": "too short",
+    "scoreWords": {
+      "weak": "weak",
+      "okay": "okay",
+      "good": "good",
+      "strong": "strong"
+    }
+  },
+  "authentication": {
+    "welcome": "Welcome to ",
+    "welcomeDescription": "The next generation social network community! Connect with your friends and play with our quests and badges gamification system!",
+    "login": "Login",
+    "register": "Register",
+    "accountLogin": "Account Login",
+    "usernameOrEmail": "Email",
+    "yourEmail": "Your Email",
+    "registerTitle": "Create your Account!",
+    "password": "Password",
+    "repeatPassword": "RepeatPassword",
+    "registerButton": "Register Now!",
+    "rememberMe": "Remember Me",
+    "forgotPassword": "Forgot Password?",
+    "loginToYourAccount": "Login to your Account",
+    "code": "Verification code",
+    "confirmEmailMessage": "We send you and email with the verification code",
+    "confirmEmail": "Please confirm your email",
+    "enterEmailCode": "Please enter your verification code",
+    "resendVerificationCode": "Resend verification code",
+    "confirm": "Confirm",
+    "changeLanguage": "Change language",
+    "registerConfimationEmailMessage": "You'll receive a confirmation email in your inbox with a link to activate your account. If you have any problems, ",
+    "contactUs": "contact us",
+    "messages": {
+      "successfullyLoggedIn": "You are successfully logged in"
+    },
+    "errors": {
+      "UsernameExistsException": "An account with the given email already exists.",
+      "UserNotConfirmedException": "User is not confirmed.",
+      "NotAuthorizedException": "Incorrect user name or password",
+      "enterValidEmailAddress": "Please enter a valid email address",
+      "confirmYourEmailAccount": "Please confirm your email account GOTO FORGOT PASSWORD",
+      "LimitExceededException": "Attempt limit exceeded, please try after some time",
+      "passwordDoesntMatch": "Password does not matches",
+      "UnknownError": "Unknown error, please contact support"
+    }
+  }
+}
