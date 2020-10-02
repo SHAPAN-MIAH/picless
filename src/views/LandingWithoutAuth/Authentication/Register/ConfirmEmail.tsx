@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import FormItem from '../../../../components/Common/Form/FormItem'
+import FormRowItem from '../../../../components/Common/Form/FormRowItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
 
 import {
@@ -14,7 +14,7 @@ import {
   resendConfirmationCode,
 } from '../../../../redux/slices/Auth'
 
-import { TextInput } from '../../../../components/Common/TextInput'
+import TextInput from '../../../../components/Common/TextInput'
 
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
@@ -53,7 +53,7 @@ const ConfirmEmail = () => {
           <p>{t('authentication.confirmEmailMessage')}</p>
         </FormRow>
 
-        <FormItem>
+        <FormRowItem>
           <TextInput
             type="text"
             id="verification-code"
@@ -62,7 +62,7 @@ const ConfirmEmail = () => {
             defaultValue={code}
             onChange={(e) => setCode(e.target.value)}
           />
-        </FormItem>
+        </FormRowItem>
 
         <FormRow classNameRow="flex-end">
           <a className="form-link" href="#/" onClick={resendVerificationCode}>

@@ -7,9 +7,7 @@ export interface FormRowProps {
 }
 
 const FormRow = (props: FormRowProps) => {
-  const { classNameRow } = props
-
-  const { children } = props
+  const { classNameRow, children } = props
 
   return <div className={classNames('form-row', classNameRow)}>{children}</div>
 }

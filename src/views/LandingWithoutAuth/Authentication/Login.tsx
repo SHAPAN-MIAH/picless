@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { Redirect } from 'react-router-dom'
 // import i18n from 'i18next'
 
-import FormItem from '../../../components/Common/Form/FormItem'
+import FormRowItem from '../../../components/Common/Form/FormRowItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 
 import { login, errors, messages, getAction } from '../../../redux/slices/Auth'
 
-import { TextInput } from '../../../components/Common/TextInput'
+import TextInput from '../../../components/Common/TextInput'
 
 import Alert from '../../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
@@ -65,7 +65,7 @@ const Login = () => {
       <h2 className="form-box-title">{t('authentication.accountLogin')}</h2>
 
       <form className="form" onSubmit={signIn}>
-        <FormItem>
+        <FormRowItem>
           <TextInput
             type="text"
             id="login-username"
@@ -74,9 +74,9 @@ const Login = () => {
             defaultValue={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-        </FormItem>
+        </FormRowItem>
 
-        <FormItem>
+        <FormRowItem>
           <TextInput
             type="password"
             id="login-password"
@@ -85,7 +85,7 @@ const Login = () => {
             defaultValue={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </FormItem>
+        </FormRowItem>
 
         <FormRow classNameRow="space-between">
           <div className="form-item">

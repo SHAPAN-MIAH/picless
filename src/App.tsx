@@ -3,7 +3,8 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import LayoutWithouAuth from './views/LandingWithoutAuth/LayoutWithouAuth'
-import LayoutMain from './views/LayoutMain/LayoutMain'
+import AccountInfo from './views/Account/AccountInfo'
+
 import { store } from './redux/store'
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
         <Router>
           <Switch>
             <Route path="/home">
-              <LayoutMain />
+              <AccountInfo />
             </Route>
             <Route path="/">
               <LayoutWithouAuth />

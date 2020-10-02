@@ -1,21 +1,14 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import classNames from 'classnames'
-import FormRow, { FormRowProps } from './FormRow'
 
-export interface FormItemProps extends FormRowProps {
-  classNameItem?: string
+interface FormItemProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  children: ReactNode
 }
 
 const FormItem = (props: FormItemProps) => {
-  const { classNameRow, classNameItem } = props
+  const { children, className } = props
 
-  const { children } = props
-
-  return (
-    <FormRow classNameRow={classNameRow}>
-      <div className={classNames('form-item', classNameItem)}>{children}</div>
-    </FormRow>
-  )
+  return <div className={classNames('form-item', className)}>{children}</div>
 }
 
 export default FormItem

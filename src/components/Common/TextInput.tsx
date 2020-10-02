@@ -1,15 +1,17 @@
 import classNames from 'classnames'
 import React, { useState } from 'react'
 
-export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement>
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  classNameFormInput?: string
+}
 
-export function TextInput(props: TextInputProps) {
-  const { className, placeholder, id, defaultValue } = props
+function TextInput(props: TextInputProps) {
+  const { className, placeholder, id, defaultValue, classNameFormInput } = props
 
   const [isFocused, setIsFocused] = useState(false)
 
   return (
-    <div className={classNames('form-input', isFocused || defaultValue ? 'active' : '')}>
+    <div className={classNames('form-input', classNameFormInput, isFocused || defaultValue ? 'active' : '')}>
       <label htmlFor={id}>{placeholder}</label>
       <input
         {...props}
@@ -27,3 +29,5 @@ export function TextInput(props: TextInputProps) {
     </div>
   )
 }
+
+export default TextInput

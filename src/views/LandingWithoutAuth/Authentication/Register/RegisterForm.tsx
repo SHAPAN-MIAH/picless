@@ -5,9 +5,9 @@ import PasswordStrengthBar from 'react-password-strength-bar'
 
 import { errors, messages, register, getAction } from '../../../../redux/slices/Auth'
 
-import { TextInput } from '../../../../components/Common/TextInput'
+import TextInput from '../../../../components/Common/TextInput'
 
-import FormItem from '../../../../components/Common/Form/FormItem'
+import FormRowItem from '../../../../components/Common/Form/FormRowItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
@@ -43,7 +43,7 @@ const RegisterForm = () => {
       <h2 className="form-box-title">{t('authentication.registerTitle')}</h2>
 
       <form className="form" onSubmit={signUp}>
-        <FormItem>
+        <FormRowItem>
           <TextInput
             type="text"
             id="register-email"
@@ -52,9 +52,9 @@ const RegisterForm = () => {
             defaultValue={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </FormItem>
+        </FormRowItem>
 
-        <FormItem>
+        <FormRowItem>
           <TextInput
             type="password"
             id="register-password"
@@ -69,9 +69,9 @@ const RegisterForm = () => {
             scoreWords={scoreWords}
             minLength={6}
           />
-        </FormItem>
+        </FormRowItem>
 
-        <FormItem>
+        <FormRowItem>
           <TextInput
             type="password"
             id="register-password-repeat"
@@ -80,7 +80,7 @@ const RegisterForm = () => {
             defaultValue={passwordRepeat}
             onChange={(e) => setPasswordRepeat(e.target.value)}
           />
-        </FormItem>
+        </FormRowItem>
 
         <FormRow>
           <ButtonWithLoader type="submit" className="button medium primary" showLoader={showLoader}>
