@@ -326,7 +326,7 @@ export const signOut = (): AppThunk => async (dispatch) => {
   })
 }
 
-export const onlyAuth = (): AppThunk => async () => {
+export const getListDevices = (): AppThunk => async () => {
   await Auth.currentAuthenticatedUser()
     .then((data) => {
       data.listDevices(5, null, {
