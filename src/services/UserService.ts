@@ -24,6 +24,7 @@ const getUserProfile = async (): Promise<UserType> => {
     headers: requestHeaders,
   }
   const url = `${baseUrl}/getprofile?email=${email}`
+  //const url = 'https://localhost:44326/users/getprofile?email=${email}'
 
   console.log(requestOptions)
   const response = await fetch(url, requestOptions)
@@ -50,6 +51,7 @@ const updateUserProfile = async (userData: UserType): Promise<any> => {
     headers: requestHeaders,
     body: JSON.stringify(userData),
   }
+  //const url = 'https://localhost:44326/users/updateprofile'
   const url = `${baseUrl}/updateprofile`
 
   console.log(requestOptions)
@@ -65,17 +67,17 @@ const uploadUserImages = async (data: UploadImageType): Promise<any> => {
   const token = user.getIdToken().getJwtToken()
 
   const requestHeaders = {
-    'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${token}`,
-    Accept: '*/*',
-    'Accept-Encoding': 'gzip, deflate, br',
+    //'Content-Type': 'multipart/form-data',
+    Authorization: 'Bearer ' + token,
+    Accept: '*/*',    'Accept-Encoding': 'gzip, deflate, br',
     Connection: 'keep-alive',
     type: 'formData',
   }
 
   const bodyData = new FormData()
-  bodyData.set('imageType', data.imageType.toLowerCase())
-  bodyData.append('coverImage', data.coverImage, data.coverImage.name)
+  bodyData.append('imageType', data.imageType.toLowerCase())
+  //bodyData.append('coverImage', data.coverImage, data.coverImage.name)
+  bodyData.append('file', data.coverImage)
 
   const requestOptions: RequestInit = {
     method: 'PUT',
@@ -83,6 +85,7 @@ const uploadUserImages = async (data: UploadImageType): Promise<any> => {
     body: bodyData,
   }
   const url = `${baseUrl}/updateuserimage`
+  //const url = 'https://localhost:44326/users/updateuserimage'
 
   console.log(requestOptions)
   const response = await fetch(url, requestOptions)
