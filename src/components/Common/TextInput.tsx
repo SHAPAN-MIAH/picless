@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classNameFormInput?: string
+  iconName?: string
 }
 
-function TextInput(props: TextInputProps) {
-  const { className, placeholder, id, defaultValue, classNameFormInput } = props
+const TextInput = (props: TextInputProps) => {
+  const { className, placeholder, id, defaultValue, classNameFormInput, iconName, ...rest } = props
 
   const [isFocused, setIsFocused] = useState(false)
 
@@ -14,8 +15,8 @@ function TextInput(props: TextInputProps) {
     <div className={classNames('form-input', classNameFormInput, isFocused || defaultValue ? 'active' : '')}>
       <label htmlFor={id}>{placeholder}</label>
       <input
-        {...props}
-        placeholder=""
+        defaultValue={defaultValue}
+        id={id}
         className={classNames(isFocused ? ' ' : ' ', className)}
         onBlur={(e) => {
           setIsFocused(false)
@@ -25,7 +26,14 @@ function TextInput(props: TextInputProps) {
           setIsFocused(true)
           if (props.onFocus) props.onFocus(e)
         }}
+        {...rest}
       />
+
+      {iconName && (
+        <svg className={`form-input-icon icon-${iconName}`}>
+          <use xlinkHref={`#svg-${iconName}`} />
+        </svg>
+      )}
     </div>
   )
 }

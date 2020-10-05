@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { getAction } from '../../../../redux/slices/Auth'
+import { getAction } from '../../../../redux/slices/AuthView'
 
 import RegisterForm from './RegisterForm'
 import ConfirmEmail from './ConfirmEmail'

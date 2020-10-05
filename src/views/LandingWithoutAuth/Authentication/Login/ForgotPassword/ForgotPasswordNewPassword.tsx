@@ -1,36 +1,36 @@
 import React, { FormEvent, useState } from 'react'
+
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import PasswordStrengthBar from 'react-password-strength-bar'
 
-import { errors, messages, register, getAction } from '../../../../redux/slices/AuthView'
+import { emailSelected, errors, resetPassword, getAction, messages } from '../../../../../redux/slices/AuthView'
+import FormRow from '../../../../../components/Common/Form/FormRow'
+import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
+import TextInput from '../../../../../components/Common/TextInput'
+import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
+import Alert from '../../../../../components/Common/Alerts/Alerts'
 
-import TextInput from '../../../../components/Common/TextInput'
-
-import FormRowItem from '../../../../components/Common/Form/FormRowItem'
-import FormRow from '../../../../components/Common/Form/FormRow'
-import Alert from '../../../../components/Common/Alerts/Alerts'
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
-
-const RegisterForm = () => {
+const ForgotPasswordNewPassword = () => {
   const { t } = useTranslation()
-
-  const error = useSelector(errors)
-  const message = useSelector(messages)
-  const currentAction = useSelector(getAction)
   const dispatch = useDispatch()
 
-  const [email, setEmail] = useState('')
+  const error: string = useSelector(errors)
+  const message: string = useSelector(messages)
+  const currentAction = useSelector(getAction)
+  const email: string = useSelector(emailSelected)
+
+  const [code, setCode] = useState('')
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
 
-  const signUp = (e: FormEvent<HTMLFormElement>) => {
+  const clickResetPassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    dispatch(register(email, password, passwordRepeat))
+    dispatch(resetPassword(email, code, password, passwordRepeat))
   }
 
-  const showLoader = currentAction.action === 'REGISTER' && currentAction.status === 'WAITING'
+  const showLoader = currentAction.action === 'FORGOT_PASSWORD_NEW_PASSWORD' && currentAction.status === 'WAITING'
 
   const scoreWords = [
     t('passwordStrengthBar.scoreWords.weak'),
@@ -38,19 +38,24 @@ const RegisterForm = () => {
     t('passwordStrengthBar.scoreWords.good'),
     t('passwordStrengthBar.scoreWords.strong'),
   ]
+
   return (
     <div>
-      <h2 className="form-box-title">{t('authentication.registerTitle')}</h2>
+      <h2 className="form-box-title">{t('authentication.enterResetPasswordVerificationCode')}</h2>
 
-      <form className="form" onSubmit={signUp}>
+      <form className="form" onSubmit={clickResetPassword}>
+        <FormRow>
+          <p>{t('authentication.confirmResetPasswordCode')}</p>
+        </FormRow>
+
         <FormRowItem>
           <TextInput
             type="text"
-            id="register-email"
-            name="register_email"
-            placeholder={t('authentication.yourEmail')}
-            defaultValue={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="reset-password-code"
+            name="reset-password-code"
+            placeholder={t('authentication.code')}
+            defaultValue={code}
+            onChange={(e) => setCode(e.target.value)}
           />
         </FormRowItem>
 
@@ -84,7 +89,7 @@ const RegisterForm = () => {
 
         <FormRow>
           <ButtonWithLoader type="submit" className="button medium primary" showLoader={showLoader}>
-            {t('authentication.registerButton')}
+            {t('authentication.sendVerificationCode')}
           </ButtonWithLoader>
         </FormRow>
 
@@ -93,13 +98,8 @@ const RegisterForm = () => {
           {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
         </FormRow>
       </form>
-
-      <p className="form-text">
-        {t('authentication.registerConfimationEmailMessage')}
-        <a href="http://google.com">{t('authentication.contactUs')}</a>!
-      </p>
     </div>
   )
 }
 
-export default RegisterForm
+export default ForgotPasswordNewPassword

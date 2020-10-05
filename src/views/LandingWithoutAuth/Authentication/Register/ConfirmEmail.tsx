@@ -12,7 +12,7 @@ import {
   getAction,
   messages,
   resendConfirmationCode,
-} from '../../../../redux/slices/Auth'
+} from '../../../../redux/slices/AuthView'
 
 import TextInput from '../../../../components/Common/TextInput'
 

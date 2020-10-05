@@ -3,8 +3,17 @@ import { Auth } from '@aws-amplify/auth'
 import Utils from '../../utils/Functions'
 
 import { AppThunk, RootState } from '../store'
+import { currentUserAuthenticated } from './User'
 
-type Action = 'LOGIN' | 'REGISTER' | 'CONFIRM_EMAIL' | 'SIGNOUT' | 'ISAUTHENTICATED' | 'UNKNOWN'
+type Action =
+  | 'LOGIN'
+  | 'REGISTER'
+  | 'CONFIRM_EMAIL'
+  | 'FORGOT_PASSWORD_EMAIL'
+  | 'FORGOT_PASSWORD_NEW_PASSWORD'
+  | 'SIGNOUT'
+  | 'ISAUTHENTICATED'
+  | 'UNKNOWN'
 
 type Status = 'PENDING' | 'WAITING' | 'FINISHED' | 'ERROR'
 
@@ -37,8 +46,8 @@ const initialState: AuthState = {
   email: '',
 }
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const authViewSlice = createSlice({
+  name: 'authView',
   initialState,
   reducers: {
     actionFail: (state, action: PayloadAction<ActionFail>) => {
@@ -65,8 +74,6 @@ export const authSlice = createSlice({
     },
 
     loginSuccess: (state) => {
-      localStorage.setItem('isAuthenticated', JSON.stringify(true))
-
       return {
         ...state,
         operation: {
@@ -76,6 +83,19 @@ export const authSlice = createSlice({
         isAuthenticated: true,
         error: '',
         message: 'authentication.messages.successfullyLoggedIn',
+      }
+    },
+
+    loginReady: (state) => {
+      return {
+        ...state,
+        operation: {
+          action: 'LOGIN',
+          status: 'PENDING',
+        },
+        isAuthenticated: true,
+        error: '',
+        message: 'authentication.messages.successfullyPasswordReset',
       }
     },
 
@@ -119,14 +139,41 @@ export const authSlice = createSlice({
       }
     },
 
-    haveAccessSuccess: (state, action: PayloadAction<boolean>) => {
+    // haveAccessSuccess: (state, action: PayloadAction<boolean>) => {
+    //   return {
+    //     ...state,
+    //     operation: {
+    //       action: 'ISAUTHENTICATED',
+    //       status: 'FINISHED',
+    //     },
+    //     isAuthenticated: action.payload,
+    //   }
+    // },
+
+    forgotPasswordEmail: (state, action: PayloadAction<string>) => {
       return {
         ...state,
         operation: {
-          action: 'ISAUTHENTICATED',
-          status: 'FINISHED',
+          action: 'FORGOT_PASSWORD_EMAIL',
+          status: 'PENDING',
         },
-        isAuthenticated: action.payload,
+        isAuthenticated: false,
+        email: action.payload,
+        message: '',
+        error: '',
+      }
+    },
+
+    forgotPasswordNewPassword: (state) => {
+      return {
+        ...state,
+        operation: {
+          action: 'FORGOT_PASSWORD_NEW_PASSWORD',
+          status: 'PENDING',
+        },
+        isAuthenticated: false,
+        message: '',
+        error: '',
       }
     },
   },
@@ -140,10 +187,78 @@ export const {
   registerSuccess,
   confirmSignUpSuccess,
   signOutSuccess,
-  haveAccessSuccess,
-} = authSlice.actions
+  // haveAccessSuccess,
+  loginReady,
+  forgotPasswordEmail,
+  forgotPasswordNewPassword,
+} = authViewSlice.actions
 
 // Functions
+export const showForgotPasswordEmail = (email: string): AppThunk => async (dispatch) => {
+  dispatch(forgotPasswordEmail(email))
+}
+
+export const forgotPasswordSendCode = (email: string): AppThunk => async (dispatch) => {
+  dispatch(actionWaiting('FORGOT_PASSWORD_EMAIL'))
+
+  if (email) {
+    if (Utils.ValidateEmail(email)) {
+      await Auth.forgotPassword(email)
+        .then(() => {
+          dispatch(forgotPasswordNewPassword())
+        })
+        .catch((err) => {
+          dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'FORGOT_PASSWORD_EMAIL' }))
+        })
+    } else {
+      dispatch(
+        actionFail({ errorMessage: `authentication.errors.enterValidEmailAddress`, actionName: 'FORGOT_PASSWORD_EMAIL' })
+      )
+    }
+  } else {
+    dispatch(
+      actionFail({ errorMessage: `authentication.errors.enterValidEmailAddress`, actionName: 'FORGOT_PASSWORD_EMAIL' })
+    )
+  }
+}
+
+export const resetPassword = (
+  email: string,
+  code: string,
+  newPassword: string,
+  repeatedPassword: string
+): AppThunk => async (dispatch) => {
+  dispatch(actionWaiting('FORGOT_PASSWORD_NEW_PASSWORD'))
+
+  if (code) {
+    if (newPassword === repeatedPassword) {
+      await Auth.forgotPasswordSubmit(email, code, newPassword)
+        .then(() => {
+          dispatch(loginReady())
+        })
+        .catch((err) => {
+          if (err.code) {
+            dispatch(
+              actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'FORGOT_PASSWORD_NEW_PASSWORD' })
+            )
+          } else {
+            dispatch(
+              actionFail({ errorMessage: `authentication.errors.UnknownError`, actionName: 'FORGOT_PASSWORD_NEW_PASSWORD' })
+            )
+          }
+        })
+    } else {
+      dispatch(
+        actionFail({ errorMessage: `authentication.errors.passwordDoesntMatch`, actionName: 'FORGOT_PASSWORD_NEW_PASSWORD' })
+      )
+    }
+  } else {
+    dispatch(
+      actionFail({ errorMessage: `authentication.errors.emptyVerificationCode`, actionName: 'FORGOT_PASSWORD_NEW_PASSWORD' })
+    )
+  }
+}
+
 export const login = (username: string, password: string, rememberMe: boolean): AppThunk => async (dispatch) => {
   dispatch(actionWaiting('LOGIN'))
 
@@ -151,7 +266,15 @@ export const login = (username: string, password: string, rememberMe: boolean): 
     if (Utils.ValidateEmail(username)) {
       // SignIn cognito
       await Auth.signIn(username, password)
-        .then((user): void => {
+        .then(async (user) => {
+          // await Auth.currentSession().then((u) => {
+          //   console.log(u)
+          //   console.log(u.getIdToken().payload.email)
+          // })
+
+          // console.log('COGNITO_USER')
+          // console.log(user)
+
           if (user.attributes.email_verified) {
             user.getCachedDeviceKeyAndPassword()
 
@@ -160,6 +283,7 @@ export const login = (username: string, password: string, rememberMe: boolean): 
               user.setDeviceStatusRemembered({
                 onSuccess: (): void => {
                   dispatch(loginSuccess())
+                  dispatch(currentUserAuthenticated())
                 },
                 onFailure: (err: any) => {
                   dispatch(signOutSuccess())
@@ -217,33 +341,25 @@ export const onlyAuth = (): AppThunk => async () => {
     .catch((err) => {
       console.error(err)
     })
-
-  // await Auth.currentAuthenticatedUser()
-  //   .then((data) => {
-  //     console.log(data)
-  //   })6
-  //   .catch((err) => {
-  //     console.error(err)
-  //   })
 }
 
-export const haveAccess = (): AppThunk => async (dispatch) => {
-  dispatch(actionWaiting('ISAUTHENTICATED'))
+// export const haveAccess = (): AppThunk => async (dispatch) => {
+//   dispatch(actionWaiting('ISAUTHENTICATED'))
 
-  await Auth.currentAuthenticatedUser()
-    .then((user: any) => {
-      if (user) {
-        dispatch(haveAccessSuccess(true))
-      } else {
-        dispatch(haveAccessSuccess(false))
-      }
-    })
-    .catch((err) => {
-      dispatch(haveAccessSuccess(false))
+//   await Auth.currentAuthenticatedUser()
+//     .then((user: any) => {
+//       if (user) {
+//         dispatch(haveAccessSuccess(true))
+//       } else {
+//         dispatch(haveAccessSuccess(false))
+//       }
+//     })
+//     .catch((err) => {
+//       dispatch(haveAccessSuccess(false))
 
-      dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'ISAUTHENTICATED' }))
-    })
-}
+//       dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'ISAUTHENTICATED' }))
+//     })
+// }
 
 export const register = (username: string, password: string, repeatedPassword: string): AppThunk => async (dispatch) => {
   dispatch(actionWaiting('REGISTER'))
@@ -288,17 +404,21 @@ export const confirmSignUp = (email: string, code: string): AppThunk => async (d
   dispatch(actionWaiting('CONFIRM_EMAIL'))
 
   if (email) {
-    await Auth.confirmSignUp(email, code)
-      .then(() => {
-        dispatch(confirmSignUpSuccess(''))
-      })
-      .catch((err) => {
-        if (err.code) {
-          dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'CONFIRM_EMAIL' }))
-        } else {
-          dispatch(actionFail({ errorMessage: `authentication.errors.UnknownError`, actionName: 'CONFIRM_EMAIL' }))
-        }
-      })
+    if (code) {
+      await Auth.confirmSignUp(email, code)
+        .then(() => {
+          dispatch(confirmSignUpSuccess(''))
+        })
+        .catch((err) => {
+          if (err.code) {
+            dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'CONFIRM_EMAIL' }))
+          } else {
+            dispatch(actionFail({ errorMessage: `authentication.errors.UnknownError`, actionName: 'CONFIRM_EMAIL' }))
+          }
+        })
+    } else {
+      dispatch(actionFail({ errorMessage: `authentication.errors.emptyVerificationCode`, actionName: 'CONFIRM_EMAIL' }))
+    }
   }
 }
 
@@ -326,11 +446,10 @@ export const resendConfirmationCode = (email: string): AppThunk => async (dispat
 }
 
 // Values
-export const getAction = (state: RootState) => state.auth.operation
-export const emailSelected = (state: RootState): string => state.auth.email
-export const isAuthenticated = (state: RootState) => state.auth.isAuthenticated
-export const messages = (state: RootState) => state.auth.message
-export const errors = (state: RootState) => state.auth.error
+export const getAction = (state: RootState) => state.authView.operation
+export const emailSelected = (state: RootState): string => state.authView.email
+export const messages = (state: RootState) => state.authView.message
+export const errors = (state: RootState) => state.authView.error
 
 // Reducer
-export default authSlice.reducer
+export default authViewSlice.reducer

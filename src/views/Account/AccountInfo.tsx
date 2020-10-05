@@ -1,17 +1,61 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
 import TextInput from '../../components/Common/TextInput'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
+import UserService from '../../services/UserService'
+import { UserType } from '../../types/UserType'
 
 const AccountInfo: FunctionComponent<{}> = () => {
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [urlUserName, setUrlUserName] = useState('')
+  const [recoveryEmail, setRecoveryEmail] = useState('')
+  const [country, setCountry] = useState('0')
+  const [phoneNumber, setPhoneNumber] = useState('')
+
+  useEffect(() => {
+    UserService.getUserProfile()
+      .then((response) => {
+        setFullName(response.fullName || '')
+        setEmail(response.email || '')
+        setUrlUserName(response.userName || '')
+        setRecoveryEmail(response.emailRecovery || '')
+        setCountry((response.countryId || 0).toString())
+        setPhoneNumber(response.phoneNumber || '')
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [])
+
+  const saveUserData = () => {
+    const userData: UserType = {
+      fullName,
+      email,
+      userName: urlUserName,
+      emailRecovery: recoveryEmail,
+      countryId: parseInt(country, 10),
+      phoneNumber,
+    }
+
+    UserService.updateUserProfile(userData)
+      .then((w) => {
+        console.info(w)
+        alert('User Updated')
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
+
   return (
     <LayoutMain>
       <div className="content-grid">
         <div className="grid grid-3-9">
-          <AccountSidebar />
+          <AccountSidebar onSaveButton={saveUserData} />
 
           <div className="account-hub-content">
             <div className="section-header">
@@ -36,7 +80,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_full_name"
                           placeholder="Full Name"
-                          defaultValue="Marina Valentine"
+                          defaultValue={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
                         />
                       </FormItem>
                       <FormItem>
@@ -46,7 +91,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_email"
                           placeholder="Account Email"
-                          defaultValue="ghuntress@yourmail.com"
+                          defaultValue={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </FormItem>
                     </FormRow>
@@ -59,7 +105,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_url_username"
                           placeholder="URL Username"
-                          defaultValue="www.thefanspage.com/marinavalentine"
+                          defaultValue={urlUserName}
+                          onChange={(e) => setUrlUserName(e.target.value)}
                         />
                       </FormItem>
                       <FormItem>
@@ -69,7 +116,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_recovery_email"
                           placeholder="Recovery Email"
-                          defaultValue="pepe@yourmail.com"
+                          defaultValue={recoveryEmail}
+                          onChange={(e) => setRecoveryEmail(e.target.value)}
                         />
                       </FormItem>
                     </FormRow>
@@ -78,11 +126,14 @@ const AccountInfo: FunctionComponent<{}> = () => {
                       <FormItem>
                         <div className="form-select">
                           <label htmlFor="account-country">Country</label>
-                          <select id="account-country" name="account_country">
+                          <select
+                            id="account-country"
+                            name="account_country"
+                            defaultValue={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                          >
                             <option value="0">Select your Country</option>
-                            <option value="1" selected>
-                              United States
-                            </option>
+                            <option value="1">United States</option>
                           </select>
 
                           <svg className="form-select-icon icon-small-arrow">
@@ -97,7 +148,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="phone_number"
                           placeholder="Phone Number"
-                          defaultValue="+66995511354"
+                          defaultValue={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                       </FormItem>
                     </FormRow>

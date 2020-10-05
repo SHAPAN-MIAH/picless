@@ -1,28 +1,30 @@
 import React, { FormEvent, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 // import i18n from 'i18next'
 
-import FormRowItem from '../../../components/Common/Form/FormRowItem'
-import FormRow from '../../../components/Common/Form/FormRow'
+import FormRowItem from '../../../../components/Common/Form/FormRowItem'
+import FormRow from '../../../../components/Common/Form/FormRow'
 
-import { login, errors, messages, getAction } from '../../../redux/slices/Auth'
+import { login, errors, messages, getAction, showForgotPasswordEmail } from '../../../../redux/slices/AuthView'
 
-import TextInput from '../../../components/Common/TextInput'
+import TextInput from '../../../../components/Common/TextInput'
 
-import Alert from '../../../components/Common/Alerts/Alerts'
-import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
+import Alert from '../../../../components/Common/Alerts/Alerts'
+import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
-const Login = () => {
+const LoginForm = () => {
   const { t } = useTranslation()
 
   const error: string = useSelector(errors)
   const message: string = useSelector(messages)
   const dispatch = useDispatch()
 
-  const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('')
+  // const [userName, setUserName] = useState('')
+  // const [password, setPassword] = useState('')
+
+  const [userName, setUserName] = useState('brunofranco43@gmail.com')
+  const [password, setPassword] = useState('Qwer.1234')
 
   const [rememberMe, setRememberMe] = useState(false)
   // const [language, setLanguage] = useState('en')
@@ -49,19 +51,8 @@ const Login = () => {
   const currentAction = useSelector(getAction)
 
   const showLoader = currentAction.action === 'LOGIN' && currentAction.status === 'WAITING'
-
-  const redirectToHome = currentAction.action === 'LOGIN' && currentAction.status === 'FINISHED'
-
   return (
-    <div className="form-box login-register-form-element" style={{ display: 'block' }}>
-      {redirectToHome && <Redirect to="/home" />}
-
-      <img
-        className="form-box-decoration overflowing"
-        src={`${process.env.PUBLIC_URL}/assets/img/landing/rocket.png`}
-        alt="rocket"
-      />
-
+    <div>
       <h2 className="form-box-title">{t('authentication.accountLogin')}</h2>
 
       <form className="form" onSubmit={signIn}>
@@ -111,7 +102,13 @@ const Login = () => {
           </div>
 
           <div className="form-item">
-            <a className="form-link" href="#/">
+            <a
+              className="form-link"
+              href="#/"
+              onClick={() => {
+                dispatch(showForgotPasswordEmail(userName))
+              }}
+            >
               {t('authentication.forgotPassword')}
             </a>
           </div>
@@ -132,4 +129,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginForm

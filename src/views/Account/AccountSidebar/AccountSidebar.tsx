@@ -1,7 +1,13 @@
 import React, { FunctionComponent } from 'react'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 
-const AccountSidebar: FunctionComponent<{}> = () => {
+interface AccountSidebarProps {
+  onSaveButton: () => void
+}
+
+const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
+  const { onSaveButton } = props
+
   return (
     <div>
       <div className="account-hub-sidebar">
@@ -49,7 +55,7 @@ const AccountSidebar: FunctionComponent<{}> = () => {
           </div>
 
           <div className="sidebar-box-footer">
-            <ButtonWithLoader type="submit" className="button medium primary" showLoader={false}>
+            <ButtonWithLoader type="button" className="medium primary" onClick={onSaveButton} showLoader={false}>
               Save Changes!
             </ButtonWithLoader>
 

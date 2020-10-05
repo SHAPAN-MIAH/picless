@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Login from './Authentication/Login'
+import Login from './Authentication/Login/Login'
 import Register from './Authentication/Register/Register'
 import NavLoginRegister from './NavLoginRegister/NavLoginRegister'
 

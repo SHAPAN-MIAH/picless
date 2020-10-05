@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import LayoutWithouAuth from './views/LandingWithoutAuth/LayoutWithouAuth'
 import AccountInfo from './views/Account/AccountInfo'
+import ProfileInfo from './views/Account/ProfileInfo'
 
 import { store } from './redux/store'
 
@@ -13,13 +14,16 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route path="/home">
+            <Route path="/account-info">
               <AccountInfo />
             </Route>
-            <Route path="/">
+            <Route path="/profile-info">
+              <ProfileInfo />
+            </Route>
+            <Route exact path="/">
               <LayoutWithouAuth />
             </Route>
-            <Route path="/error">
+            <Route path="/">
               <h1>ERROR</h1>
             </Route>
           </Switch>
