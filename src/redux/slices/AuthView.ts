@@ -393,6 +393,25 @@ export const getListDevices = (): AppThunk => async (dispatch) => {
     })
 }
 
+//https://docs.amplify.aws/lib/auth/device_features/q/platform/ios#remember-device
+// solo es posible olvidar este dispositivo en el que estoy logueado
+export const forgetDevice = (): AppThunk => async () => {
+  await Auth.currentAuthenticatedUser()
+    .then((data) => {
+      data.forgetDevice({
+        onSuccess: (data: any): void => {
+          console.log(data);
+        },
+        onFailure: (err: any) => {
+          console.error(err)
+        },
+      })
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 export const register = (username: string, password: string, repeatedPassword: string): AppThunk => async (dispatch) => {
   dispatch(actionWaiting('REGISTER'))
 
