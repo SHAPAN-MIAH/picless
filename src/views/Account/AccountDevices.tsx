@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListDevices } from '../../redux/slices/AuthView'
+import { getListDevices, listDevices } from '../../redux/slices/AuthView'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
 import TextInput from '../../components/Common/TextInput'
@@ -16,6 +16,10 @@ const AccountDevices: FunctionComponent<{}> = () => {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const dispatch = useDispatch()
+
+  const myDevices = useSelector(listDevices);
+
+
 
   useEffect(() => {
  

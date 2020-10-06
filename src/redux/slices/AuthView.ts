@@ -15,6 +15,7 @@ type Action =
   | 'SIGNOUT'
   | 'ISAUTHENTICATED'
   | 'UNKNOWN'
+  | 'LIST_DEVICES'
 
 type Status = 'PENDING' | 'WAITING' | 'FINISHED' | 'ERROR'
 
@@ -29,6 +30,7 @@ interface AuthState {
   email: string | string
   error: string
   message: string
+  listDevices: any
 }
 
 interface ActionFail {
@@ -45,6 +47,7 @@ const initialState: AuthState = {
   error: '',
   message: '',
   email: '',
+  listDevices: []
 }
 
 export const authViewSlice = createSlice({
@@ -86,6 +89,21 @@ export const authViewSlice = createSlice({
         message: 'authentication.messages.successfullyLoggedIn',
       }
     },
+
+     listDevicesSuccess: (state, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        listDevices: action.payload,
+        operation: {
+          action: 'LOGIN',
+          status: 'FINISHED',
+        },
+        isAuthenticated: true,
+        error: '',
+        message: 'authentication.messages.successfullyLoggedIn',
+      }
+    },
+
 
     loginReady: (state) => {
       return {
@@ -194,6 +212,7 @@ export const {
   forgotPasswordEmail,
   forgotPasswordNewPassword,
   changePasswordSuccess,
+  listDevicesSuccess
 } = authViewSlice.actions
 
 // Functions
@@ -357,12 +376,12 @@ export const signOut = (): AppThunk => async (dispatch) => {
   })
 }
 
-export const getListDevices = (): AppThunk => async () => {
+export const getListDevices = (): AppThunk => async (dispatch) => {
   await Auth.currentAuthenticatedUser()
     .then((data) => {
       data.listDevices(5, null, {
         onSuccess: (list: any): void => {
-          console.log(list)
+          dispatch(listDevicesSuccess(list))
         },
         onFailure: (err: any) => {
           console.error(err)
@@ -463,6 +482,8 @@ export const getAction = (state: RootState) => state.authView.operation
 export const emailSelected = (state: RootState): string => state.authView.email
 export const messages = (state: RootState) => state.authView.message
 export const errors = (state: RootState) => state.authView.error
+export const listDevices = (state: RootState) => state.authView.listDevices
+
 
 // Reducer
 export default authViewSlice.reducer
