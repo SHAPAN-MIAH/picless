@@ -11,6 +11,45 @@
       "strong": "strong"
     }
   },
+  "accountSidebar":{
+    "accountTitle": "Account",
+    "accountDescription":"Change your avatar & cover, update information, email and more!",
+    "accountInfo":"Account Info",
+    "profileInfo":"Profile Info",
+    "accountdevices":"Devices",
+    "changePassword":"Change Password",
+    "logout":"Log Out",
+    "saveButtonText":"Save Changes!",
+    "discardAllButton":"Discard All"
+  },
+  "accountInfo":{
+    "accountTitle":"Account",
+    "accountSubTitle":"Account Info",
+    "personalInfo":"Personal Info",
+    "fullNameField":"Full Name",
+    "accountEmailField":"Account Email",
+    "countryField":"Country",
+    "recoveryEmailField":"Recovery Email",
+    "phoneNumberField":"Phone Number",
+    "urlUserNameField5":"URL Username"
+  },
+  "changePassword":{
+    "changePasswordTitle":"Change Password",
+    "changeYourPasswordHere":"Change Your Password Here",
+    "oldPasswordField":"Confirm Your Current Password",
+    "newPasswordField":"Your New Password",
+    "passwordRepeatField":"Confirm New Password",
+    "buttonChangePassowrd":"Change Password Now!",
+    "messageSuccessfully":"Your password has been updated sucessfully",
+    "errors":{
+     "NotAuthorizedException":"Incorrect password",
+     "passwordDoesntMatch":"Passwords do not match",
+     "InvalidParameterException":"The new password does not meet the requirements",
+     "LimitExceededException":"Attempt limit exceeded, please try after some minutes"
+    }
+
+    
+  },
   "authentication": {
     "welcome": "Welcome to ",
     "welcomeDescription": "The next generation social network community! Connect with your friends and play with our quests and badges gamification system!",
@@ -42,6 +81,7 @@
     "enterResetPasswordVerificationCode": "Password reset",
     "confirmResetPasswordCode": "Please enter the verification code you received in your mailbox, and type a new password",
     "register_password_repeat": "Repeat the new password",
+    "sendConfirmNewPassword": "Save new password",
     
     "messages": {
       "successfullyLoggedIn": "You are successfully logged in",
@@ -53,12 +93,13 @@
       "NotAuthorizedException": "Incorrect username or password",
       "enterValidEmailAddress": "Please enter a valid email address",
       "confirmYourEmailAccount": "Please confirm your email account GOTO FORGOT PASSWORD",
-      "LimitExceededException": "Attempt limit exceeded, please try after some time",
-      "passwordDoesntMatch": "Passwords don't match",
+      "LimitExceededException": "Attempt limit exceeded, please try after some minutes",
+      "passwordDoesntMatch": "Passwords do not match",
       "UnknownError": "Unknown error, please contact support",
       "emptyVerificationCode": "The verification code filed cannot be empty",
-      "InvalidParameterException": "The password is too short",
+      "InvalidParameterException": "The new password does not meet the requirements",
       "InvalidPasswordException": "Invalid password, please try with new one"
+      
     }
   }
 }
