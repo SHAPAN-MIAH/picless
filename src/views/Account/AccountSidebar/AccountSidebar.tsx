@@ -73,6 +73,10 @@ const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
                   {t('accountSidebar.profileInfo')}
                 </Link>
 
+                <Link className="sidebar-menu-link" to="/account-devices">
+                  {t('accountSidebar.accountdevices')}
+                </Link>
+
                 <Link className="sidebar-menu-link" to="/change-password">
                   {t('accountSidebar.changePassword')}
                 </Link>
