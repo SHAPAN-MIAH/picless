@@ -9,11 +9,12 @@ interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   imageType: ImageType
   iconName: string
   uploadTitleName: string
-  uploadText: string
+  uploadText: string,
+  imageUrl: string
 }
 
 const UploadBox = (props: UploadBoxProps) => {
-  const { id, iconName, className, uploadText, uploadTitleName, imageType } = props
+  const { id, iconName, className, uploadText, uploadTitleName, imageType, imageUrl } = props
   const fileField = React.useRef<HTMLInputElement>(null)
 
   const openSelectionFile = () => {
@@ -41,7 +42,7 @@ const UploadBox = (props: UploadBoxProps) => {
   }
 
   return (
-    <div className={classNames('upload-box', className)} onClick={openSelectionFile}>
+    <div className={classNames('upload-box', className)} onClick={openSelectionFile} data-src={imageUrl} >
       <svg className={classNames('upload-box-icon', `icon-${iconName}`)}>
         <use xlinkHref={`#svg-${iconName}`} />
       </svg>

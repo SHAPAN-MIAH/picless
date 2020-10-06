@@ -2,7 +2,16 @@ import React, { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import UploadBox from '../../../components/Common/UploadBox'
 
-const AccountHubMain: FunctionComponent<{}> = () => {
+interface AccountHubMainProps {
+  coverPicture: string
+  profilePicture: string
+}
+
+
+const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
+  
+  const { coverPicture = "", profilePicture = "" } = props
+
   const { t } = useTranslation()
   return (
     <div className="grid grid-3-3-3 centered">
@@ -54,6 +63,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
         uploadTitleName={t('profileInfo.changeAvatar')}
         imageType="PROFILE"
         uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
+        imageUrl = {profilePicture}
       />
 
       <UploadBox
@@ -62,6 +72,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
         uploadTitleName={t('profileInfo.changeCover')}
         imageType="COVER"
         uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
+        imageUrl = {coverPicture}
       />
     </div>
   )

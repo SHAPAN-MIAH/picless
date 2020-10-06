@@ -12,7 +12,7 @@ import TextArea from '../../components/Common/TextArea'
 import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
 import UserService from '../../services/UserService'
 
-const ProfileInfo: FunctionComponent<{}> = () => {
+const ProfileInfo: FunctionComponent<{}> = (props: any) => {
   const { t } = useTranslation()
 
   const [userName, setUserName] = useState('')
@@ -20,6 +20,9 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const [profileDescription, setProfileDescription] = useState('')
   const [countryId, setCountryId] = useState('0')
   const [birthday, setBirthday] = useState(null)
+  
+  const [coverPicture, setCoverPicture] = useState('')
+  const [profilePicture, setProfilePicture] = useState('')
 
   useEffect(() => {
     UserService.getUserProfile()
@@ -28,6 +31,10 @@ const ProfileInfo: FunctionComponent<{}> = () => {
         setProfileDescription(response.profileDescription || '')
         // setBirthday()
         setCountryId((response.countryId || 0).toString())
+        
+        setCoverPicture(response.coverPicture || '')
+        setProfilePicture(response.profilePicture || '')
+
       })
       .catch((err) => {
         console.error(err)
@@ -67,7 +74,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
             </div>
 
             <div className="grid-column">
-              <AccountHubMain />
+              <AccountHubMain coverPicture = {coverPicture} profilePicture={profilePicture} />
 
               <form className="form">
                 <div className="widget-box">
