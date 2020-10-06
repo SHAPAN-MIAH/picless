@@ -21,11 +21,11 @@
     "yourEmail": "Your Email",
     "registerTitle": "Create your Account!",
     "password": "Password",
-    "repeatPassword": "RepeatPassword",
+    "repeatPassword": "Repeat Password",
     "registerButton": "Register Now!",
     "rememberMe": "Remember Me",
     "forgotPassword": "Forgot Password?",
-    "loginToYourAccount": "Login to your Account",
+    "loginToYourAccount": "Login to your account",
     "code": "Verification code",
     "confirmEmailMessage": "We send you and email with the verification code",
     "confirmEmail": "Please confirm your email",
@@ -35,18 +35,30 @@
     "changeLanguage": "Change language",
     "registerConfimationEmailMessage": "You'll receive a confirmation email in your inbox with a link to activate your account. If you have any problems, ",
     "contactUs": "contact us",
+    "putEmailToResetPassword": "Password reset",
+    "putEmailToResetPasswordMessage": "Type your email address to receive the verification code",
+    "resetPasswordEmail": "Email address",
+    "sendVerificationCode": "Send verification code",
+    "enterResetPasswordVerificationCode": "Password reset",
+    "confirmResetPasswordCode": "Please enter the verification code you received in your mailbox, and type a new password",
+    "register_password_repeat": "Repeat the new password",
+    
     "messages": {
-      "successfullyLoggedIn": "You are successfully logged in"
+      "successfullyLoggedIn": "You are successfully logged in",
+      "successfullyPasswordReset": "Your password has been updated sucessfully"
     },
     "errors": {
       "UsernameExistsException": "An account with the given email already exists.",
       "UserNotConfirmedException": "User is not confirmed.",
-      "NotAuthorizedException": "Incorrect user name or password",
+      "NotAuthorizedException": "Incorrect username or password",
       "enterValidEmailAddress": "Please enter a valid email address",
       "confirmYourEmailAccount": "Please confirm your email account GOTO FORGOT PASSWORD",
       "LimitExceededException": "Attempt limit exceeded, please try after some time",
-      "passwordDoesntMatch": "Password does not matches",
-      "UnknownError": "Unknown error, please contact support"
+      "passwordDoesntMatch": "Passwords don't match",
+      "UnknownError": "Unknown error, please contact support",
+      "emptyVerificationCode": "The verification code filed cannot be empty",
+      "InvalidParameterException": "The password is too short",
+      "InvalidPasswordException": "Invalid password, please try with new one"
     }
   }
 }
