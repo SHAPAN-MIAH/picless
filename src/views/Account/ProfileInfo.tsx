@@ -1,4 +1,6 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { UserType } from '../../types/UserType'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
@@ -9,9 +11,10 @@ import AccountHubMain from './AccountHub/AccountHubMain'
 import TextArea from '../../components/Common/TextArea'
 import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
 import UserService from '../../services/UserService'
-import { UserType } from 'types/UserType'
 
 const ProfileInfo: FunctionComponent<{}> = () => {
+  const { t } = useTranslation()
+
   const [userName, setUserName] = useState('')
   const [tagline, setTagline] = useState('')
   const [profileDescription, setProfileDescription] = useState('')
@@ -57,9 +60,9 @@ const ProfileInfo: FunctionComponent<{}> = () => {
           <div className="account-hub-content">
             <div className="section-header">
               <div className="section-header-info">
-                <p className="section-pretitle">My Profile</p>
+                <p className="section-pretitle">{t('profileInfo.myProfileTitle')}</p>
 
-                <h2 className="section-title">Profile Info</h2>
+                <h2 className="section-title">{t('profileInfo.profileInfo')}</h2>
               </div>
             </div>
 
@@ -68,7 +71,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
               <form className="form">
                 <div className="widget-box">
-                  <p className="widget-box-title">About Your Profile</p>
+                  <p className="widget-box-title">{t('profileInfo.aboutYourProfile')}</p>
 
                   <div className="widget-box-content">
                     <FormRow classNameRow="split">
@@ -78,7 +81,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           id="account-profile-name"
                           classNameFormInput="small"
                           name="account_profile_name"
-                          placeholder="Profile Name"
+                          placeholder={t('profileInfo.profileNameField')}
                           defaultValue={userName}
                           onChange={(e) => setUserName(e.target.value)}
                         />
@@ -89,7 +92,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           id="tag-line"
                           classNameFormInput="small"
                           name="tag_line"
-                          placeholder="Tagline"
+                          placeholder={t('profileInfo.taglineField')}
                           defaultValue={tagline}
                           onChange={(e) => setTagline(e.target.value)}
                         />
@@ -103,7 +106,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           id="account-url-username"
                           classNameFormInput="small full"
                           name="account_url_username"
-                          placeholder="Write a little description about you ..."
+                          placeholder={t('profileInfo.writeDescriptionField')}
                           defaultValue={profileDescription}
                           onChange={(e) => setProfileDescription(e.target.value)}
                         />
@@ -111,7 +114,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
                       <FormItem>
                         <div className="form-select">
-                          <label htmlFor="account-country">Country</label>
+                          <label htmlFor="account-country">{t('profileInfo.countryField')}</label>
                           <select
                             id="account-country"
                             name="account_country"
@@ -131,8 +134,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
                         <div className="form-input-decorated">
                           <DatePickerForm
-                            customInputRef="adsffdas"
-                            placeholderText="Birthday"
+                            placeholderText={t('profileInfo.birthdayField')}
                             selected={birthday}
                             onChange={(date: any) => setBirthday(date)}
                             iconName="events"
@@ -145,7 +147,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
                 {/* Interests */}
                 <div className="widget-box">
-                  <p className="widget-box-title">Interests</p>
+                  <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
 
                   <div className="widget-box-content">
                     <FormRow classNameRow="split">
@@ -155,7 +157,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           id="interest-1"
                           classNameFormInput="small full"
                           name="account_url_username"
-                          placeholder="Write a little description about you ..."
+                          placeholder="Write a about you ..."
                           defaultValue=""
                         />
                       </FormItem>

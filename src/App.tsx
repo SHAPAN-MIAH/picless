@@ -7,18 +7,22 @@ import AccountInfo from './views/Account/AccountInfo'
 import ProfileInfo from './views/Account/ProfileInfo'
 
 import { store } from './redux/store'
+import ChangePassword from './views/Account/ChangePassword'
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        <Router>
+        <Router forceRefresh>
           <Switch>
             <Route path="/account-info">
               <AccountInfo />
             </Route>
             <Route path="/profile-info">
               <ProfileInfo />
+            </Route>
+            <Route path="/change-password">
+              <ChangePassword />
             </Route>
             <Route exact path="/">
               <LayoutWithouAuth />

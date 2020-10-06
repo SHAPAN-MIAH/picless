@@ -14,7 +14,7 @@ const Login = () => {
 
   useEffect(() => {
     if (currentAction.action === 'LOGIN' && currentAction.status === 'FINISHED') {
-      history.replace('/account-info')
+      history.push('/account-info')
     }
   })
 

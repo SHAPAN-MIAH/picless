@@ -20,15 +20,8 @@ const LoginForm = () => {
   const message: string = useSelector(messages)
   const dispatch = useDispatch()
 
-  // const [userName, setUserName] = useState('')
-  // const [password, setPassword] = useState('')
-
-  const [userName, setUserName] = useState('brunofranco43@gmail.com')
-  const [password, setPassword] = useState('Qwer.1234')
-
-  //const [userName, setUserName] = useState('pablosanchez9@gmail.com')
-  //const [password, setPassword] = useState('Nokia2000')
-
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
 
   const [rememberMe, setRememberMe] = useState(false)
   // const [language, setLanguage] = useState('en')

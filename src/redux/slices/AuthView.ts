@@ -9,6 +9,7 @@ type Action =
   | 'LOGIN'
   | 'REGISTER'
   | 'CONFIRM_EMAIL'
+  | 'CHANGE_PASSWORD'
   | 'FORGOT_PASSWORD_EMAIL'
   | 'FORGOT_PASSWORD_NEW_PASSWORD'
   | 'SIGNOUT'
@@ -139,17 +140,6 @@ export const authViewSlice = createSlice({
       }
     },
 
-    // haveAccessSuccess: (state, action: PayloadAction<boolean>) => {
-    //   return {
-    //     ...state,
-    //     operation: {
-    //       action: 'ISAUTHENTICATED',
-    //       status: 'FINISHED',
-    //     },
-    //     isAuthenticated: action.payload,
-    //   }
-    // },
-
     forgotPasswordEmail: (state, action: PayloadAction<string>) => {
       return {
         ...state,
@@ -176,6 +166,19 @@ export const authViewSlice = createSlice({
         error: '',
       }
     },
+
+    changePasswordSuccess: (state) => {
+      return {
+        ...state,
+        operation: {
+          action: 'CHANGE_PASSWORD',
+          status: 'FINISHED',
+        },
+        isAuthenticated: false,
+        message: 'changePassword.messageSuccessfully',
+        error: '',
+      }
+    },
   },
 })
 
@@ -187,10 +190,10 @@ export const {
   registerSuccess,
   confirmSignUpSuccess,
   signOutSuccess,
-  // haveAccessSuccess,
   loginReady,
   forgotPasswordEmail,
   forgotPasswordNewPassword,
+  changePasswordSuccess,
 } = authViewSlice.actions
 
 // Functions
@@ -256,6 +259,34 @@ export const resetPassword = (
     dispatch(
       actionFail({ errorMessage: `authentication.errors.emptyVerificationCode`, actionName: 'FORGOT_PASSWORD_NEW_PASSWORD' })
     )
+  }
+}
+
+export const changePassword = (oldPassword: string, newPassword: string, repeatedPassword: string): AppThunk => async (
+  dispatch
+) => {
+  dispatch(actionWaiting('CHANGE_PASSWORD'))
+
+  if (oldPassword) {
+    if (newPassword === repeatedPassword) {
+      await Auth.currentAuthenticatedUser().then((user) => {
+        Auth.changePassword(user, oldPassword, newPassword)
+          .then(() => {
+            dispatch(changePasswordSuccess())
+          })
+          .catch((err) => {
+            if (err.code) {
+              dispatch(actionFail({ errorMessage: `changePassword.errors.${err.code}`, actionName: 'CHANGE_PASSWORD' }))
+            } else {
+              dispatch(actionFail({ errorMessage: `changePassword.errors.UnknownError`, actionName: 'CHANGE_PASSWORD' }))
+            }
+          })
+      })
+    } else {
+      dispatch(actionFail({ errorMessage: `changePassword.errors.passwordDoesntMatch`, actionName: 'CHANGE_PASSWORD' }))
+    }
+  } else {
+    dispatch(actionFail({ errorMessage: `changePassword.errors.emptyOldPassword`, actionName: 'CHANGE_PASSWORD' }))
   }
 }
 
@@ -342,24 +373,6 @@ export const getListDevices = (): AppThunk => async () => {
       console.error(err)
     })
 }
-
-// export const haveAccess = (): AppThunk => async (dispatch) => {
-//   dispatch(actionWaiting('ISAUTHENTICATED'))
-
-//   await Auth.currentAuthenticatedUser()
-//     .then((user: any) => {
-//       if (user) {
-//         dispatch(haveAccessSuccess(true))
-//       } else {
-//         dispatch(haveAccessSuccess(false))
-//       }
-//     })
-//     .catch((err) => {
-//       dispatch(haveAccessSuccess(false))
-
-//       dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'ISAUTHENTICATED' }))
-//     })
-// }
 
 export const register = (username: string, password: string, repeatedPassword: string): AppThunk => async (dispatch) => {
   dispatch(actionWaiting('REGISTER'))

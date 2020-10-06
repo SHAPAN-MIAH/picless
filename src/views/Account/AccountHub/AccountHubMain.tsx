@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react'
+import { useTranslation } from 'react-i18next'
 import UploadBox from '../../../components/Common/UploadBox'
 
 const AccountHubMain: FunctionComponent<{}> = () => {
+  const { t } = useTranslation()
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
@@ -49,17 +51,17 @@ const AccountHubMain: FunctionComponent<{}> = () => {
       <UploadBox
         id="upload-avatar"
         iconName="members"
-        uploadTitleName="Change Avatar"
+        uploadTitleName={t('profileInfo.changeAvatar')}
         imageType="PROFILE"
-        uploadText="110x110px size minimum"
+        uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
       />
 
       <UploadBox
         id="upload-cover"
         iconName="photos"
-        uploadTitleName="Change Cover"
+        uploadTitleName={t('profileInfo.changeCover')}
         imageType="COVER"
-        uploadText="1184x300px size minimum"
+        uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
       />
     </div>
   )

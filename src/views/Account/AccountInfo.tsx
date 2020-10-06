@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
@@ -9,6 +10,8 @@ import UserService from '../../services/UserService'
 import { UserType } from '../../types/UserType'
 
 const AccountInfo: FunctionComponent<{}> = () => {
+  const { t } = useTranslation()
+
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [urlUserName, setUrlUserName] = useState('')
@@ -60,15 +63,15 @@ const AccountInfo: FunctionComponent<{}> = () => {
           <div className="account-hub-content">
             <div className="section-header">
               <div className="section-header-info">
-                <p className="section-pretitle">Account</p>
+                <p className="section-pretitle">{t('accountInfo.accountTitle')}</p>
 
-                <h2 className="section-title">Account Info</h2>
+                <h2 className="section-title">{t('accountInfo.accountSubTitle')}</h2>
               </div>
             </div>
 
             <div className="grid-column">
               <div className="widget-box">
-                <p className="widget-box-title">Personal Info</p>
+                <p className="widget-box-title">{t('accountInfo.personalInfo')}</p>
 
                 <div className="widget-box-content">
                   <form className="form">
@@ -79,7 +82,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           id="account-full-name"
                           classNameFormInput="small active"
                           name="account_full_name"
-                          placeholder="Full Name"
+                          placeholder={t('accountInfo.fullNameField')}
                           defaultValue={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                         />
@@ -90,7 +93,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           id="account-email"
                           classNameFormInput="small active"
                           name="account_email"
-                          placeholder="Account Email"
+                          placeholder={t('accountInfo.accountEmailField')}
                           defaultValue={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
@@ -104,7 +107,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           id="account-url-username"
                           classNameFormInput="small active"
                           name="account_url_username"
-                          placeholder="URL Username"
+                          placeholder={t('accountInfo.urlUserNameField5')}
                           defaultValue={urlUserName}
                           onChange={(e) => setUrlUserName(e.target.value)}
                         />
@@ -115,7 +118,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           id="account-recovery-email"
                           classNameFormInput="small active"
                           name="account_recovery_email"
-                          placeholder="Recovery Email"
+                          placeholder={t('accountInfo.recoveryEmailField')}
                           defaultValue={recoveryEmail}
                           onChange={(e) => setRecoveryEmail(e.target.value)}
                         />
@@ -125,7 +128,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                     <FormRow classNameRow="split">
                       <FormItem>
                         <div className="form-select">
-                          <label htmlFor="account-country">Country</label>
+                          <label htmlFor="account-country">{t('accountInfo.countryField')}</label>
                           <select
                             id="account-country"
                             name="account_country"
@@ -147,7 +150,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           id="phone-number"
                           classNameFormInput="small active"
                           name="phone_number"
-                          placeholder="Phone Number"
+                          placeholder={t('accountInfo.phoneNumberField')}
                           defaultValue={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />

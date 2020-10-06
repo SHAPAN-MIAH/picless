@@ -1,6 +1,7 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
@@ -21,6 +22,7 @@ import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 const ConfirmEmail = () => {
   const { t } = useTranslation()
+  const history = useHistory()
 
   const error: string = useSelector(errors)
   const message: string = useSelector(messages)
@@ -29,6 +31,12 @@ const ConfirmEmail = () => {
   const dispatch = useDispatch()
 
   const [code, setCode] = useState('')
+
+  useEffect(() => {
+    if (currentAction.action === 'CONFIRM_EMAIL' && currentAction.status === 'FINISHED') {
+      history.push('/')
+    }
+  })
 
   const clickConfirmSignUp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
