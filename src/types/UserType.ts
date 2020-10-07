@@ -40,3 +40,8 @@ export type UploadImageType = {
   imageType: ImageType
   coverImage: File
 }
+
+export type Device = {
+  DeviceAttributes: { Name: string; Value: string }
+  DeviceLastAuthenticatedDate: string
+}

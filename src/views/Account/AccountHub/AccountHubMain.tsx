@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import UploadBox from '../../../components/Common/UploadBox'
 
 interface AccountHubMainProps {
@@ -7,17 +8,18 @@ interface AccountHubMainProps {
   profilePicture: string
 }
 
-
 const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
-  
-  const { coverPicture = "", profilePicture = "" } = props
-
   const { t } = useTranslation()
+  const {
+    coverPicture = `${process.env.PUBLIC_URL}/assets/img/cover/01.jpg`,
+    profilePicture = `${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`,
+  } = props
+
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
         <figure className="user-preview-cover liquid">
-          <img src={`${process.env.PUBLIC_URL}/assets/img/cover/01.jpg`} alt="cover-01" />
+          <img src={profilePicture} alt="cover-01" />
         </figure>
 
         <div className="user-preview-info">
@@ -28,7 +30,7 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
               </div>
 
               <div className="user-avatar-content">
-                <div className="hexagon-image-68-74" data-src={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
+                <div className="hexagon-image-68-74" data-src={profilePicture} />
               </div>
 
               <div className="user-avatar-progress">
@@ -63,7 +65,7 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
         uploadTitleName={t('profileInfo.changeAvatar')}
         imageType="PROFILE"
         uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
-        imageUrl = {profilePicture}
+        imageUrl={profilePicture}
       />
 
       <UploadBox
@@ -72,7 +74,7 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
         uploadTitleName={t('profileInfo.changeCover')}
         imageType="COVER"
         uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
-        imageUrl = {coverPicture}
+        imageUrl={coverPicture}
       />
     </div>
   )

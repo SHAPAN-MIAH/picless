@@ -14,8 +14,8 @@ type Action =
   | 'FORGOT_PASSWORD_NEW_PASSWORD'
   | 'SIGNOUT'
   | 'ISAUTHENTICATED'
-  | 'UNKNOWN'
   | 'LIST_DEVICES'
+  | 'UNKNOWN'
 
 type Status = 'PENDING' | 'WAITING' | 'FINISHED' | 'ERROR'
 
@@ -47,7 +47,7 @@ const initialState: AuthState = {
   error: '',
   message: '',
   email: '',
-  listDevices: []
+  listDevices: [],
 }
 
 export const authViewSlice = createSlice({
@@ -90,7 +90,7 @@ export const authViewSlice = createSlice({
       }
     },
 
-     listDevicesSuccess: (state, action: PayloadAction<any>) => {
+    listDevicesSuccess: (state, action: PayloadAction<any>) => {
       return {
         ...state,
         listDevices: action.payload,
@@ -100,10 +100,9 @@ export const authViewSlice = createSlice({
         },
         isAuthenticated: true,
         error: '',
-        message: 'authentication.messages.successfullyLoggedIn',
+        message: '',
       }
     },
-
 
     loginReady: (state) => {
       return {
@@ -212,7 +211,7 @@ export const {
   forgotPasswordEmail,
   forgotPasswordNewPassword,
   changePasswordSuccess,
-  listDevicesSuccess
+  listDevicesSuccess,
 } = authViewSlice.actions
 
 // Functions
@@ -324,7 +323,6 @@ export const login = (username: string, password: string, rememberMe: boolean): 
 
           // console.log('COGNITO_USER')
           // console.log(user)
-
           if (user.attributes.email_verified) {
             user.getCachedDeviceKeyAndPassword()
 
@@ -333,7 +331,7 @@ export const login = (username: string, password: string, rememberMe: boolean): 
               user.setDeviceStatusRemembered({
                 onSuccess: (): void => {
                   dispatch(loginSuccess())
-                  dispatch(currentUserAuthenticated())
+                  // dispatch(currentUserAuthenticated())
                 },
                 onFailure: (err: any) => {
                   dispatch(signOutSuccess())
@@ -377,14 +375,16 @@ export const signOut = (): AppThunk => async (dispatch) => {
 }
 
 export const getListDevices = (): AppThunk => async (dispatch) => {
+  dispatch(actionWaiting('LIST_DEVICES'))
+
   await Auth.currentAuthenticatedUser()
     .then((data) => {
-      data.listDevices(5, null, {
+      data.listDevices(20, null, {
         onSuccess: (list: any): void => {
-          dispatch(listDevicesSuccess(list))
+          dispatch(listDevicesSuccess(list.Devices))
         },
         onFailure: (err: any) => {
-          console.error(err)
+          dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'LIST_DEVICES' }))
         },
       })
     })
@@ -393,24 +393,24 @@ export const getListDevices = (): AppThunk => async (dispatch) => {
     })
 }
 
-//https://docs.amplify.aws/lib/auth/device_features/q/platform/ios#remember-device
+// https://docs.amplify.aws/lib/auth/device_features/q/platform/ios#remember-device
 // solo es posible olvidar este dispositivo en el que estoy logueado
-export const forgetDevice = (): AppThunk => async () => {
-  await Auth.currentAuthenticatedUser()
-    .then((data) => {
-      data.forgetDevice({
-        onSuccess: (data: any): void => {
-          console.log(data);
-        },
-        onFailure: (err: any) => {
-          console.error(err)
-        },
-      })
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-}
+// export const forgetDevice = (): AppThunk => async () => {
+//   await Auth.currentAuthenticatedUser()
+//     .then((data) => {
+//       data.forgetDevice({
+//         onSuccess: (data: any): void => {
+//           console.log(data)
+//         },
+//         onFailure: (err: any) => {
+//           console.error(err)
+//         },
+//       })
+//     })
+//     .catch((err) => {
+//       console.error(err)
+//     })
+// }
 
 export const register = (username: string, password: string, repeatedPassword: string): AppThunk => async (dispatch) => {
   dispatch(actionWaiting('REGISTER'))
@@ -458,7 +458,7 @@ export const confirmSignUp = (email: string, code: string): AppThunk => async (d
     if (code) {
       await Auth.confirmSignUp(email, code)
         .then(() => {
-          dispatch(confirmSignUpSuccess(''))
+          dispatch(confirmSignUpSuccess('authentication.messageRegisterSuccessfully'))
         })
         .catch((err) => {
           if (err.code) {
@@ -502,7 +502,6 @@ export const emailSelected = (state: RootState): string => state.authView.email
 export const messages = (state: RootState) => state.authView.message
 export const errors = (state: RootState) => state.authView.error
 export const listDevices = (state: RootState) => state.authView.listDevices
-
 
 // Reducer
 export default authViewSlice.reducer

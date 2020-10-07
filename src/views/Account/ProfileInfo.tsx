@@ -12,7 +12,7 @@ import TextArea from '../../components/Common/TextArea'
 import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
 import UserService from '../../services/UserService'
 
-const ProfileInfo: FunctionComponent<{}> = (props: any) => {
+const ProfileInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const [userName, setUserName] = useState('')
@@ -20,7 +20,7 @@ const ProfileInfo: FunctionComponent<{}> = (props: any) => {
   const [profileDescription, setProfileDescription] = useState('')
   const [countryId, setCountryId] = useState('0')
   const [birthday, setBirthday] = useState(null)
-  
+
   const [coverPicture, setCoverPicture] = useState('')
   const [profilePicture, setProfilePicture] = useState('')
 
@@ -31,10 +31,9 @@ const ProfileInfo: FunctionComponent<{}> = (props: any) => {
         setProfileDescription(response.profileDescription || '')
         // setBirthday()
         setCountryId((response.countryId || 0).toString())
-        
+
         setCoverPicture(response.coverPicture || '')
         setProfilePicture(response.profilePicture || '')
-
       })
       .catch((err) => {
         console.error(err)
@@ -74,7 +73,7 @@ const ProfileInfo: FunctionComponent<{}> = (props: any) => {
             </div>
 
             <div className="grid-column">
-              <AccountHubMain coverPicture = {coverPicture} profilePicture={profilePicture} />
+              <AccountHubMain coverPicture={coverPicture} profilePicture={profilePicture} />
 
               <form className="form">
                 <div className="widget-box">
@@ -141,6 +140,7 @@ const ProfileInfo: FunctionComponent<{}> = (props: any) => {
 
                         <div className="form-input-decorated">
                           <DatePickerForm
+                            customInputRef="birthdayRef"
                             placeholderText={t('profileInfo.birthdayField')}
                             selected={birthday}
                             onChange={(date: any) => setBirthday(date)}

@@ -11,6 +11,7 @@ interface AccountSidebarProps {
   onSaveButton: () => void
   saveButtonText?: string
   showLoaderButton?: boolean
+  showButtons?: boolean
 }
 
 const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
@@ -20,7 +21,12 @@ const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
   const currentAction = useSelector(getAction)
   const dispatch = useDispatch()
 
-  const { onSaveButton, showLoaderButton = false, saveButtonText = t('accountSidebar.saveButtonText') } = props
+  const {
+    onSaveButton,
+    showButtons = true,
+    showLoaderButton = false,
+    saveButtonText = t('accountSidebar.saveButtonText'),
+  } = props
 
   useEffect(() => {
     if (currentAction.action === 'SIGNOUT' && currentAction.status === 'FINISHED') {
@@ -88,15 +94,22 @@ const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
             </div>
           </div>
 
-          <div className="sidebar-box-footer">
-            <ButtonWithLoader type="button" className="medium primary" onClick={onSaveButton} showLoader={showLoaderButton}>
-              {saveButtonText}
-            </ButtonWithLoader>
+          {showButtons && (
+            <div className="sidebar-box-footer">
+              <ButtonWithLoader
+                type="button"
+                className="medium primary"
+                onClick={onSaveButton}
+                showLoader={showLoaderButton}
+              >
+                {saveButtonText}
+              </ButtonWithLoader>
 
-            <ButtonWithLoader type="reset" className="button medium white" showLoader={showLoaderButton}>
-              {t('accountSidebar.discardAllButton')}
-            </ButtonWithLoader>
-          </div>
+              <ButtonWithLoader type="reset" className="button medium white" showLoader={showLoaderButton}>
+                {t('accountSidebar.discardAllButton')}
+              </ButtonWithLoader>
+            </div>
+          )}
         </div>
       </div>
     </div>
