@@ -33,6 +33,22 @@
     "phoneNumberField":"Phone Number",
     "urlUserNameField5":"URL Username"
   },
+  "profileInfo":{
+    "profileInfo":"Profile Info",
+    "aboutYourProfile":"Aboute Your Profile",
+    "changeAvatar":"Change Avatar",
+    "changeCover":"Change Cover",
+    "changeAvatarDescription":"110x110px size minimum",
+    "changeCoverDescription":"1184x300px size minimum",
+    "profileNameField":"Profile Name",
+    "writeDescriptionField":"Write a little description about you..",
+    "interestTitle":"Interests",
+    "taglineField":"Tagline",
+    "countryField":"Country",
+    "birthdayField":"Birthday",
+    "interestsMusicField":"Favourite Music Bands /Artists",
+    "interestsListField":"Things that you really enjoy..."
+  },
   "changePassword":{
     "changePasswordTitle":"Change Password",
     "changeYourPasswordHere":"Change Your Password Here",
