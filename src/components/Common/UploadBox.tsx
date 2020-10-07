@@ -42,7 +42,11 @@ const UploadBox = (props: UploadBoxProps) => {
   }
 
   return (
-    <div className={classNames('upload-box', className)} onClick={openSelectionFile} data-src={imageUrl} >
+    <div className={classNames('upload-box', className)} onClick={openSelectionFile} >
+       <figure>
+          <img src={imageUrl} alt={imageType}/>
+        </figure>
+
       <svg className={classNames('upload-box-icon', `icon-${iconName}`)}>
         <use xlinkHref={`#svg-${iconName}`} />
       </svg>
