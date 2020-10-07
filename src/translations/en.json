@@ -33,6 +33,11 @@
     "phoneNumberField":"Phone Number",
     "urlUserNameField5":"URL Username"
   },
+  "accountDevices":{
+    "devicesTitle":"Devices",
+    "devicesSubTitle":"My Devices",
+    "devicesList":"List Of Remebered Devices"
+  },
   "profileInfo":{
     "profileInfo":"Profile Info",
     "aboutYourProfile":"Aboute Your Profile",
@@ -82,7 +87,7 @@
     "forgotPassword": "Forgot Password?",
     "loginToYourAccount": "Login to your account",
     "code": "Verification code",
-    "confirmEmailMessage": "We send you and email with the verification code",
+    "confirmEmailMessage": "We send you an email with the verification code",
     "confirmEmail": "Please confirm your email",
     "enterEmailCode": "Please enter your verification code",
     "resendVerificationCode": "Resend verification code",
@@ -101,7 +106,8 @@
     
     "messages": {
       "successfullyLoggedIn": "You are successfully logged in",
-      "successfullyPasswordReset": "Your password has been updated sucessfully"
+      "successfullyPasswordReset": "Your password has been updated successfully",
+      "RegisterSuccessfully":"You have been registered successfully"
     },
     "errors": {
       "UsernameExistsException": "An account with the given email already exists.",
@@ -114,8 +120,9 @@
       "UnknownError": "Unknown error, please contact support",
       "emptyVerificationCode": "The verification code filed cannot be empty",
       "InvalidParameterException": "The new password does not meet the requirements",
-      "InvalidPasswordException": "Invalid password, please try with new one"
-      
+      "InvalidPasswordException": "Invalid password, please try with new one",
+      "CodeMismatchException":"Incorrect verification code",
+      "CodeDeliveryFailureException":"Imposible to send the verification code to this email address"
     }
   }
 }

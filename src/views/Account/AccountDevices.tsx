@@ -84,20 +84,20 @@ const AccountDevices: FunctionComponent<{}> = () => {
           <div className="account-hub-content">
             <div className="section-header">
               <div className="section-header-info">
-                <p className="section-pretitle">{t('accountInfo.accountTitle')}</p>
+                <p className="section-pretitle">{t('accountDevices.devicesTitle')}</p>
 
-                <h2 className="section-title">{t('accountInfo.accountSubTitle')}</h2>
+                <h2 className="section-title">{t('accountDevices.devicesSubTitle')}</h2>
               </div>
             </div>
 
             <div className="grid-column">
               <div className="widget-box">
-                <p className="widget-box-title">{t('accountInfo.devices')}</p>
+                <p className="widget-box-title">{t('accountDevices.devicesList')}</p>
 
                 <div className="widget-box-content">
                   {myDevices.length > 0 && (
                     <table className="table">
-                      <thead className="thead-dark">
+                      <thead>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Name</th>
