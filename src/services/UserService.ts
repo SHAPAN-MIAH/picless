@@ -56,7 +56,7 @@ const updateUserProfile = async (userData: UserType): Promise<any> => {
 
   console.log(requestOptions)
   const response = await fetch(url, requestOptions)
-  const body = await response.json()
+  const body = await response;
 
   return body
 }
