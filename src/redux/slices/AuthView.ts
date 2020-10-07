@@ -458,7 +458,8 @@ export const confirmSignUp = (email: string, code: string): AppThunk => async (d
     if (code) {
       await Auth.confirmSignUp(email, code)
         .then(() => {
-          dispatch(confirmSignUpSuccess('authentication.messages.RegisterSuccessfully'))
+          //dispatch(confirmSignUpSuccess('authentication.messages.RegisterSuccessfully'))
+          dispatch(confirmSignUpSuccess('authentication.messageRegisterSuccessfully'))
         })
         .catch((err) => {
           if (err.code) {
