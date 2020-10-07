@@ -17,6 +17,8 @@ const UploadBox = (props: UploadBoxProps) => {
   const { id, iconName, className, uploadText, uploadTitleName, imageType, imageUrl } = props
   const fileField = React.useRef<HTMLInputElement>(null)
 
+  let _imageProfile = imageUrl;
+  
   const openSelectionFile = () => {
     const { current } = fileField
     if (current) current.click()
@@ -35,7 +37,17 @@ const UploadBox = (props: UploadBoxProps) => {
     UserService.uploadUserImages(imageData)
       .then((a) => {
         console.log(a)
+        if (imageType == "COVER")
+        {
+          _imageProfile = a.coverPicture;
+        }
+        else if (imageType == "PROFILE")
+        {
+          _imageProfile = a.profilePicture;
+        }
+
         alert("upload ok");
+
       })
       .catch((err) => {
         console.error(err)
@@ -45,7 +57,7 @@ const UploadBox = (props: UploadBoxProps) => {
   return (
     <div className={classNames('upload-box', className)} onClick={openSelectionFile} >
        <figure>
-          <img src={imageUrl} alt={imageType}/>
+          <img src={_imageProfile} alt={imageType}/>
         </figure>
 
       <svg className={classNames('upload-box-icon', `icon-${iconName}`)}>
