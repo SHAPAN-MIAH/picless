@@ -99,29 +99,32 @@ const removeDevice = async (deviceKey: string): Promise<any> => {
   const user = await Auth.currentSession()
 
   const token = user.getIdToken().getJwtToken()
+  const tokenToForgetDevice = user.getAccessToken().getJwtToken();
+
+
 
   const requestHeaders = {
-    'Content-Type': 'application/json',
+    //'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
     Accept: '*/*',
     'Accept-Encoding': 'gzip, deflate, br',
     Connection: 'keep-alive',
   }
 
+  const bodyData = new FormData()
+  bodyData.append('devicekey', deviceKey)
+  bodyData.append('token', tokenToForgetDevice)
+
   const requestOptions: RequestInit = {
     method: 'DELETE',
     headers: requestHeaders,
-    body: JSON.stringify({
-      devicekey: deviceKey,
-      token,
-    }),
+    body: bodyData,
   }
 
   const url = `${baseUrl}/removeDevice`
 
   const response = await fetch(url, requestOptions)
-  const body = await response.json()
-
+  const body = await response
   return body
 }
 

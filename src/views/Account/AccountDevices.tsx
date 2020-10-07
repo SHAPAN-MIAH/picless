@@ -11,9 +11,10 @@ interface RenderTableProps {
   devices: any
 }
 
+
 const RenderTableData = (props: RenderTableProps) => {
   const { devices } = props
-
+  const dispatch = useDispatch()
   return devices.map((item: any, index: number) => {
     const deviceKey = item.DeviceKey
     const deviceName = item.DeviceAttributes.find((attr: any) => {
@@ -25,8 +26,19 @@ const RenderTableData = (props: RenderTableProps) => {
     })
 
     const removeDevice = () => {
-      UserService.removeDevice(deviceKey).then(() => {
-        alert('Device deleted')
+      UserService.removeDevice(deviceKey).then((response) => {
+        if (response.status == 200)
+        {
+          dispatch(getListDevices());
+          alert('Device deleted')
+
+        }
+        else
+        {
+          alert('Error to delete device')
+
+        }
+        
       })
     }
 
