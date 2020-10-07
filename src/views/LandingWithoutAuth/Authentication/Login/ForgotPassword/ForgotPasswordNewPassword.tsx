@@ -89,7 +89,7 @@ const ForgotPasswordNewPassword = () => {
 
         <FormRow>
           <ButtonWithLoader type="submit" className="button medium primary" showLoader={showLoader}>
-            {t('authentication.sendVerificationCode')}
+            {t('authentication.sendConfirmNewPassword')}
           </ButtonWithLoader>
         </FormRow>
 

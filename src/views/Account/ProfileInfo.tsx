@@ -164,7 +164,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           id="interest-1"
                           classNameFormInput="small full"
                           name="account_url_username"
-                          placeholder="Write a about you ..."
+                          placeholder={t('profileInfo.interestsListField')}
                           defaultValue=""
                         />
                       </FormItem>
@@ -175,7 +175,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           id="interest-2"
                           classNameFormInput="small full"
                           name="account_url_username"
-                          placeholder="Write a little description about you ..."
+                          placeholder={t('profileInfo.interestsMusicField')}
                           defaultValue=""
                         />
                       </FormItem>
