@@ -35,6 +35,7 @@ const UploadBox = (props: UploadBoxProps) => {
     UserService.uploadUserImages(imageData)
       .then((a) => {
         console.log(a)
+        alert("upload ok");
       })
       .catch((err) => {
         console.error(err)
