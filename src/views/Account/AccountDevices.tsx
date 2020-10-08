@@ -11,7 +11,6 @@ interface RenderTableProps {
   devices: any
 }
 
-
 const RenderTableData = (props: RenderTableProps) => {
   const { devices } = props
   const dispatch = useDispatch()
@@ -27,18 +26,12 @@ const RenderTableData = (props: RenderTableProps) => {
 
     const removeDevice = () => {
       UserService.removeDevice(deviceKey).then((response) => {
-        if (response.status == 200)
-        {
-          dispatch(getListDevices());
+        if (response.status === 200) {
+          dispatch(getListDevices())
           alert('Device deleted')
-
-        }
-        else
-        {
+        } else {
           alert('Error to delete device')
-
         }
-        
       })
     }
 
@@ -68,7 +61,7 @@ const AccountDevices: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     dispatch(getListDevices())
-  }, [])
+  }, [dispatch])
 
   return (
     <LayoutMain>

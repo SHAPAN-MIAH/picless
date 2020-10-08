@@ -96,7 +96,7 @@ const RegisterForm = () => {
 
       <p className="form-text">
         {t('authentication.registerConfimationEmailMessage')}
-        <a href="#">{t('authentication.contactUs')}</a>!
+        <a href="#/">{t('authentication.contactUs')}</a>!
       </p>
     </div>
   )

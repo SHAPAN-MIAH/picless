@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import UploadBox from '../../../components/Common/UploadBox'
@@ -15,12 +15,20 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
     profilePicture = `${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`,
   } = props
 
+  const [imageCover, setImageCover] = useState(coverPicture)
+  const [imageProfile, setImageProfile] = useState(profilePicture)
+
+  useEffect(() => {
+    setImageCover(coverPicture)
+    setImageProfile(profilePicture)
+  }, [profilePicture, imageProfile, coverPicture, imageCover])
+
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
-        <figure className="user-preview-cover liquid">
-          <img src={profilePicture} alt="cover-01" />
-        </figure>
+        <div className="user-preview-cover liquid">
+          <img src={coverPicture} alt="cover-01" />
+        </div>
 
         <div className="user-preview-info">
           <div className="user-short-description small">
@@ -59,23 +67,31 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
         </div>
       </div>
 
-      <UploadBox
-        id="upload-avatar"
-        iconName="members"
-        uploadTitleName={t('profileInfo.changeAvatar')}
-        imageType="PROFILE"
-        uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
-        imageUrl={profilePicture}
-      />
+      {imageProfile ? (
+        <UploadBox
+          id="upload-avatar"
+          iconName="members"
+          uploadTitleName={t('profileInfo.changeAvatar')}
+          imageType="PROFILE"
+          uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
+          imageUrl={profilePicture}
+        />
+      ) : (
+        <h4>Loading ...</h4>
+      )}
 
-      <UploadBox
-        id="upload-cover"
-        iconName="photos"
-        uploadTitleName={t('profileInfo.changeCover')}
-        imageType="COVER"
-        uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
-        imageUrl={coverPicture}
-      />
+      {imageCover ? (
+        <UploadBox
+          id="upload-cover"
+          iconName="photos"
+          uploadTitleName={t('profileInfo.changeCover')}
+          imageType="COVER"
+          uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
+          imageUrl={imageCover}
+        />
+      ) : (
+        <h4>Loading ...</h4>
+      )}
     </div>
   )
 }

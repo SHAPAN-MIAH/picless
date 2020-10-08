@@ -3,7 +3,6 @@ import { Auth } from '@aws-amplify/auth'
 import Utils from '../../utils/Functions'
 
 import { AppThunk, RootState } from '../store'
-import { currentUserAuthenticated } from './User'
 
 type Action =
   | 'LOGIN'
