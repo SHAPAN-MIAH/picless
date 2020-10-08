@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import classNames from 'classnames'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import UserService from '../../services/UserService'
 import { ImageType, UploadImageType } from '../../types/UserType'
 
@@ -11,15 +11,14 @@ interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   uploadTitleName: string
   uploadText: string
   imageUrl: string
+  onChange: any
 }
 
 const UploadBox = (props: UploadBoxProps) => {
-  const { id, iconName, className, uploadText, uploadTitleName, imageType, imageUrl } = props
+  const { id, iconName, className, uploadText, uploadTitleName, imageType, imageUrl, onChange } = props
   const fileField = React.useRef<HTMLInputElement>(null)
 
   const [urlImage, setUrlImage] = useState(imageUrl)
-
-  useEffect(() => {}, [urlImage])
 
   const openSelectionFile = () => {
     const { current } = fileField
@@ -36,15 +35,13 @@ const UploadBox = (props: UploadBoxProps) => {
     }
 
     UserService.uploadUserImages(imageData)
-      .then((a) => {
-        console.log(a)
+      .then((user) => {
         if (imageType === 'COVER') {
-          setUrlImage(a.coverPicture)
+          setUrlImage(user.coverPicture)
         } else if (imageType === 'PROFILE') {
-          setUrlImage(a.profilePicture)
+          setUrlImage(user.profilePicture)
         }
-
-        alert('upload ok')
+        onChange(user)
       })
       .catch((err) => {
         console.error(err)

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import UploadBox from '../../../components/Common/UploadBox'
@@ -15,19 +15,24 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
     profilePicture = `${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`,
   } = props
 
-  const [imageCover, setImageCover] = useState(coverPicture)
-  const [imageProfile, setImageProfile] = useState(profilePicture)
+  let pictureCover = coverPicture
+  let pictureProfile = profilePicture
+
+  const [imageCover, setImageCover] = useState(pictureCover)
+  const [imageProfile, setImageProfile] = useState(pictureProfile)
 
   useEffect(() => {
     setImageCover(coverPicture)
-    setImageProfile(profilePicture)
+    setImageProfile(pictureProfile)
   }, [profilePicture, imageProfile, coverPicture, imageCover])
+
+  const updateImage = (param: any) => {}
 
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
-        <div className="user-preview-cover liquid">
-          <img src={coverPicture} alt="cover-01" />
+        <div className="user-preview-cover" style={{ background: `url(${coverPicture}) center center / cover no-repeat` }}>
+          <img src={coverPicture} alt="cover-01" style={{ display: 'none' }} />
         </div>
 
         <div className="user-preview-info">
@@ -38,7 +43,10 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
               </div>
 
               <div className="user-avatar-content">
-                <div className="hexagon-image-68-74" data-src={profilePicture} />
+                <div
+                  className="hexagon-image-68-74"
+                  style={{ background: `url(${profilePicture}) center center / cover no-repeat` }}
+                />
               </div>
 
               <div className="user-avatar-progress">
@@ -75,6 +83,7 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
           imageType="PROFILE"
           uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
           imageUrl={profilePicture}
+          onChange={updateImage}
         />
       ) : (
         <h4>Loading ...</h4>
@@ -88,6 +97,7 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
           imageType="COVER"
           uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
           imageUrl={imageCover}
+          onChange={updateImage}
         />
       ) : (
         <h4>Loading ...</h4>
