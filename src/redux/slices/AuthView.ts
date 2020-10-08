@@ -170,13 +170,14 @@ export const authViewSlice = createSlice({
       }
     },
 
-    forgotPasswordNewPassword: (state) => {
+    forgotPasswordNewPassword: (state, action: PayloadAction<string>) => {
       return {
         ...state,
         operation: {
           action: 'FORGOT_PASSWORD_NEW_PASSWORD',
           status: 'PENDING',
         },
+        email: action.payload,
         isAuthenticated: false,
         message: '',
         error: '',
@@ -225,7 +226,7 @@ export const forgotPasswordSendCode = (email: string): AppThunk => async (dispat
     if (Utils.ValidateEmail(email)) {
       await Auth.forgotPassword(email)
         .then(() => {
-          dispatch(forgotPasswordNewPassword())
+          dispatch(forgotPasswordNewPassword(email))
         })
         .catch((err) => {
           dispatch(actionFail({ errorMessage: `authentication.errors.${err.code}`, actionName: 'FORGOT_PASSWORD_EMAIL' }))
@@ -457,7 +458,6 @@ export const confirmSignUp = (email: string, code: string): AppThunk => async (d
     if (code) {
       await Auth.confirmSignUp(email, code)
         .then(() => {
-          //dispatch(confirmSignUpSuccess('authentication.messages.RegisterSuccessfully'))
           dispatch(confirmSignUpSuccess('authentication.messageRegisterSuccessfully'))
         })
         .catch((err) => {
