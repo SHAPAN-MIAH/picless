@@ -22,8 +22,17 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
   const [imageProfile, setImageProfile] = useState(pictureProfile)
 
   useEffect(() => {
-    setImageCover(coverPicture)
-    setImageProfile(pictureProfile)
+
+    if (coverPicture != "")
+    {
+      setImageCover(coverPicture)
+    }
+
+    if (pictureProfile != "")
+    {
+      setImageProfile(pictureProfile)
+    }
+    
   }, [profilePicture, imageProfile, coverPicture, imageCover])
 
   const updateImage = (param: any) => {}
