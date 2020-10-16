@@ -4,19 +4,22 @@ import { useTranslation } from 'react-i18next'
 
 import PasswordStrengthBar from 'react-password-strength-bar'
 
+import { errorSelector, messageSelector, getAction } from '../../redux/Auth/AuthSelectors'
+import { changePassword } from '../../redux/Auth/AuthThunks'
+
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
 import TextInput from '../../components/Common/TextInput'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
-import { errors, messages, changePassword, getAction } from '../../redux/slices/AuthView'
 import Alert from '../../components/Common/Alerts/Alerts'
+import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
 const ChangePassword: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const error: string = useSelector(errors)
-  const message: string = useSelector(messages)
+  const error: string = useSelector(errorSelector)
+  const message: string = useSelector(messageSelector)
   const dispatch = useDispatch()
 
   const [oldPassword, setOldPassword] = useState('')
@@ -41,11 +44,7 @@ const ChangePassword: FunctionComponent<{}> = () => {
     <LayoutMain>
       <div className="content-grid">
         <div className="grid grid-3-9">
-          <AccountSidebar
-            onSaveButton={onChangePassword}
-            saveButtonText={t('changePassword.buttonChangePassowrd')}
-            showLoaderButton={showLoader}
-          />
+          <AccountSidebar />
 
           <div className="account-hub-content">
             <div className="section-header">
@@ -113,6 +112,19 @@ const ChangePassword: FunctionComponent<{}> = () => {
                     <FormRow>
                       {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
                       {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <ButtonWithLoader
+                          type="button"
+                          className="medium primary"
+                          onClick={onChangePassword}
+                          showLoader={showLoader}
+                        >
+                          {t('changePassword.buttonChangePassowrd')}
+                        </ButtonWithLoader>
+                      </FormItem>
                     </FormRow>
                   </form>
                 </div>

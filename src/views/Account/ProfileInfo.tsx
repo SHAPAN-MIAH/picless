@@ -1,6 +1,14 @@
-import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UserType } from '../../types/UserType'
+import { useDispatch, useSelector } from 'react-redux'
+import { CountryDropdown } from 'react-country-region-selector'
+
+import _ from 'lodash'
+
+import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
+import { cleanState, getProfile, updateProfile } from '../../redux/User/UserThunks'
+
+import { UserType } from '../../types/UserType.d'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
@@ -10,58 +18,60 @@ import FormRow from '../../components/Common/Form/FormRow'
 import AccountHubMain from './AccountHub/AccountHubMain'
 import TextArea from '../../components/Common/TextArea'
 import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
-import UserService from '../../services/UserService'
+import Alert from '../../components/Common/Alerts/Alerts'
+import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
 const ProfileInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
 
-  const [userName, setUserName] = useState('')
+  const error: string = useSelector(errorSelector)
+  const message: string = useSelector(messageSelector)
+  const loading: boolean = useSelector(loadingSelector)
+  const userData: UserType = useSelector(userSelector)
+
+  const [userName, setUserName] = useState(userData.userName)
   const [tagline, setTagline] = useState('')
-  const [profileDescription, setProfileDescription] = useState('')
-  const [countryId, setCountryId] = useState('0')
-  const [birthday, setBirthday] = useState(null)
+  const [profileDescription, setProfileDescription] = useState(userData.profileDescription)
+  const [country, setCountry] = useState('adasdasdd')
+  const [birthDate, setBirthdate] = useState(userData.birthDate)
 
-  const [coverPicture, setCoverPicture] = useState('')
-  const [profilePicture, setProfilePicture] = useState('')
+  const prevUserDataRef = useRef(userData)
 
   useEffect(() => {
-    UserService.getUserProfile()
-      .then((response) => {
-        setUserName(response.userName || '')
-        setProfileDescription(response.profileDescription || '')
-        // setBirthday()
-        setCountryId((response.countryId || 0).toString())
+    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
 
-        setCoverPicture(response.coverPicture || '')
-        setProfilePicture(response.profilePicture || '')
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
+    if (!_.isEqual(userData, prevUserDataRef.current)) {
+      dispatch(getProfile())
+
+      setUserName(userData.fullName)
+      setTagline('')
+      setProfileDescription(userData.userName)
+      // setCountry(userData.country)
+      setBirthdate(userData.phoneNumber)
+
+      prevUserDataRef.current = userData
+    }
+  }, [userData, dispatch])
 
   const saveUserData = useCallback(() => {
-    const userData: UserType = {
+    let user: UserType = {
+      ...userData,
       userName,
       profileDescription,
-      countryId: parseInt(countryId, 10),
+      country,
     }
 
-    UserService.updateUserProfile(userData)
-      .then((w) => {
-        console.info(w)
-        alert('User Updated')
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [countryId, profileDescription, userName])
+    if (birthDate) user = { ...user, birthDate: JSON.stringify(birthDate) }
+
+    dispatch(updateProfile(user))
+  }, [country, profileDescription, userName, birthDate, dispatch, userData])
 
   return (
     <LayoutMain>
       <div className="content-grid">
         <div className="grid grid-3-9">
-          <AccountSidebar onSaveButton={saveUserData} />
+          <AccountSidebar />
 
           <div className="account-hub-content">
             <div className="section-header">
@@ -73,7 +83,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
             </div>
 
             <div className="grid-column">
-              <AccountHubMain coverPicture={coverPicture} profilePicture={profilePicture} />
+              <AccountHubMain />
 
               <form className="form">
                 <div className="widget-box">
@@ -121,33 +131,32 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                       <FormItem>
                         <div className="form-select">
                           <label htmlFor="account-country">{t('profileInfo.countryField')}</label>
-                          <select
+                          <CountryDropdown
                             id="account-country"
                             name="account_country"
-                            defaultValue={countryId}
-                            onChange={(e) => {
-                              setCountryId(e.target.value)
+                            value={country}
+                            onChange={(val) => {
+                              console.log(val)
+                              setCountry(val)
                             }}
-                          >
-                            <option value="0">Select your Country</option>
-                            <option value="1">United States</option>
-                          </select>
-
-                          <svg className="form-select-icon icon-small-arrow">
-                            <use xlinkHref="#svg-small-arrow" />
-                          </svg>
+                          />
                         </div>
 
                         <div className="form-input-decorated">
                           <DatePickerForm
                             customInputRef="birthdayRef"
                             placeholderText={t('profileInfo.birthdayField')}
-                            selected={birthday}
-                            onChange={(date: any) => setBirthday(date)}
+                            selected={birthDate}
+                            onChange={(date: any) => setBirthdate(date)}
                             iconName="events"
                           />
                         </div>
                       </FormItem>
+                    </FormRow>
+
+                    <FormRow>
+                      {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
+                      {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
                     </FormRow>
                   </div>
                 </div>
@@ -178,6 +187,19 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           placeholder={t('profileInfo.interestsMusicField')}
                           defaultValue=""
                         />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <ButtonWithLoader
+                          type="button"
+                          className="medium primary"
+                          onClick={saveUserData}
+                          showLoader={loading}
+                        >
+                          {t('accountSidebar.saveButtonText')}
+                        </ButtonWithLoader>
                       </FormItem>
                     </FormRow>
                   </div>

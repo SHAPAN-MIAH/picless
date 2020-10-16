@@ -1,24 +1,24 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import React from 'react'
 import classNames from 'classnames'
-import React, { useState } from 'react'
-import UserService from '../../services/UserService'
-import { ImageType, UploadImageType } from '../../types/UserType'
+import { useDispatch } from 'react-redux'
+import { uploadUserImages } from '../../redux/User/UserThunks'
+import { ImageType, UploadImageType } from '../../types/UserType.d'
 
 interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   imageType: ImageType
   iconName: string
   uploadTitleName: string
   uploadText: string
-  imageUrl: string
-  onChange: any
 }
 
 const UploadBox = (props: UploadBoxProps) => {
-  const { id, iconName, className, uploadText, uploadTitleName, imageType, imageUrl, onChange } = props
+  const dispatch = useDispatch()
+  const { id, iconName, className, uploadText, uploadTitleName, imageType } = props
   const fileField = React.useRef<HTMLInputElement>(null)
 
-  const [urlImage, setUrlImage] = useState(imageUrl)
+  // const [urlImage, setUrlImage] = useState(imageUrl)
 
   const openSelectionFile = () => {
     const { current } = fileField
@@ -34,25 +34,25 @@ const UploadBox = (props: UploadBoxProps) => {
       coverImage: image,
     }
 
-    UserService.uploadUserImages(imageData)
-      .then((user) => {
-        if (imageType === 'COVER') {
-          setUrlImage(user.coverPicture)
-        } else if (imageType === 'PROFILE') {
-          setUrlImage(user.profilePicture)
-        }
-        onChange(user)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
+    dispatch(uploadUserImages(imageData))
+    // UserService.uploadUserImages(imageData)
+    //   .then((user) => {
+    //     if (imageType === 'COVER') {
+    //       setUrlImage(user.coverPicture)
+    //     } else if (imageType === 'PROFILE') {
+    //       setUrlImage(user.profilePicture)
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(err)
+    //   })
   }
 
   return (
     <div className={classNames('upload-box', className)} onClick={openSelectionFile}>
-      <figure>
+      {/* <figure>
         <img src={urlImage} alt={imageType} />
-      </figure>
+      </figure> */}
 
       <svg className={classNames('upload-box-icon', `icon-${iconName}`)}>
         <use xlinkHref={`#svg-${iconName}`} />

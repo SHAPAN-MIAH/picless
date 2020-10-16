@@ -1,8 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/lib/integration/react'
 
-import LayoutWithouAuth from './views/LandingWithoutAuth/LayoutWithouAuth'
+import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
+
+import LayoutUnauthorize from './views/LayoutUnauthorize/LayoutUnauthorize'
 import AccountInfo from './views/Account/AccountInfo'
 import ProfileInfo from './views/Account/ProfileInfo'
 import AccountDevices from './views/Account/AccountDevices'
@@ -10,34 +14,34 @@ import AccountDevices from './views/Account/AccountDevices'
 import { store } from './redux/store'
 import ChangePassword from './views/Account/ChangePassword'
 
+const persistor = persistStore(store)
+
 function App() {
+  const routerProps: ProtectedRouteProps = {
+    authenticationPath: '/',
+  }
+
   return (
-    <div className="App">
+    <>
       <Provider store={store}>
-        <Router forceRefresh>
-          <Switch>
-            <Route path="/account-info">
-              <AccountInfo />
-            </Route>
-            <Route path="/profile-info">
-              <ProfileInfo />
-            </Route>
-            <Route path="/account-devices">
-              <AccountDevices />
-            </Route>
-            <Route path="/change-password">
-              <ChangePassword />
-            </Route>
-            <Route exact path="/">
-              <LayoutWithouAuth />
-            </Route>
-            <Route path="/">
-              <h1>ERROR</h1>
-            </Route>
-          </Switch>
-        </Router>
+        <PersistGate loading={<div>Loading ...</div>} persistor={persistor}>
+          <Router forceRefresh>
+            <Switch>
+              <ProtectedRoute {...routerProps} exact path="/user/account-info" component={AccountInfo} />
+              <ProtectedRoute {...routerProps} exact path="/user/profile-info" component={ProfileInfo} />
+              <ProtectedRoute {...routerProps} exact path="/user/account-devices" component={AccountDevices} />
+              <ProtectedRoute {...routerProps} exact path="/user/change-password" component={ChangePassword} />
+              <Route exact path="/">
+                <LayoutUnauthorize />
+              </Route>
+              <Route path="/">
+                <h1>ERROR</h1>
+              </Route>
+            </Switch>
+          </Router>
+        </PersistGate>
       </Provider>
-    </div>
+    </>
   )
 }
 

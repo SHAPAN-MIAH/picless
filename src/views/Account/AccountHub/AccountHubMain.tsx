@@ -1,47 +1,35 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
+import React, { FunctionComponent, useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import _ from 'lodash'
+
+import { userSelector } from '../../../redux/User/UserSelectors'
 
 import UploadBox from '../../../components/Common/UploadBox'
 
-interface AccountHubMainProps {
-  coverPicture: string
-  profilePicture: string
-}
-
-const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
+const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-  const {
-    coverPicture = `${process.env.PUBLIC_URL}/assets/img/cover/01.jpg`,
-    profilePicture = `${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`,
-  } = props
+  const userData = useSelector(userSelector)
 
-  let pictureCover = coverPicture
-  let pictureProfile = profilePicture
+  const [imageCover, setImageCover] = useState(userData.coverPicture)
+  const [imageProfile, setImageProfile] = useState(userData.profilePicture)
 
-  const [imageCover, setImageCover] = useState(pictureCover)
-  const [imageProfile, setImageProfile] = useState(pictureProfile)
+  const prevUserDataRef = useRef(userData)
 
   useEffect(() => {
+    if (!_.isEqual(userData, prevUserDataRef.current)) {
+      setImageCover(userData.coverPicture)
+      setImageProfile(userData.profilePicture)
 
-    if (coverPicture != "")
-    {
-      setImageCover(coverPicture)
+      prevUserDataRef.current = userData
     }
-
-    if (pictureProfile != "")
-    {
-      setImageProfile(pictureProfile)
-    }
-    
-  }, [profilePicture, imageProfile, coverPicture, imageCover])
-
-  const updateImage = (param: any) => {}
+  }, [userData])
 
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
-        <div className="user-preview-cover" style={{ background: `url(${coverPicture}) center center / cover no-repeat` }}>
-          <img src={coverPicture} alt="cover-01" style={{ display: 'none' }} />
+        <div className="user-preview-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
+          <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
 
         <div className="user-preview-info">
@@ -54,7 +42,7 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
               <div className="user-avatar-content">
                 <div
                   className="hexagon-image-68-74"
-                  style={{ background: `url(${profilePicture}) center center / cover no-repeat` }}
+                  style={{ background: `url(${imageProfile}) center center / cover no-repeat` }}
                 />
               </div>
 
@@ -84,33 +72,21 @@ const AccountHubMain: FunctionComponent<AccountHubMainProps> = (props) => {
         </div>
       </div>
 
-      {imageProfile ? (
-        <UploadBox
-          id="upload-avatar"
-          iconName="members"
-          uploadTitleName={t('profileInfo.changeAvatar')}
-          imageType="PROFILE"
-          uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
-          imageUrl={profilePicture}
-          onChange={updateImage}
-        />
-      ) : (
-        <h4>Loading ...</h4>
-      )}
+      <UploadBox
+        id="upload-avatar"
+        iconName="members"
+        uploadTitleName={t('profileInfo.changeAvatar')}
+        imageType="PROFILE"
+        uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
+      />
 
-      {imageCover ? (
-        <UploadBox
-          id="upload-cover"
-          iconName="photos"
-          uploadTitleName={t('profileInfo.changeCover')}
-          imageType="COVER"
-          uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
-          imageUrl={imageCover}
-          onChange={updateImage}
-        />
-      ) : (
-        <h4>Loading ...</h4>
-      )}
+      <UploadBox
+        id="upload-cover"
+        iconName="photos"
+        uploadTitleName={t('profileInfo.changeCover')}
+        imageType="COVER"
+        uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
+      />
     </div>
   )
 }

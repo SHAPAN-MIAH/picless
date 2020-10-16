@@ -3,6 +3,11 @@ const ValidateEmail = (email: any) => {
   return regx.test(String(email).toLowerCase())
 }
 
+const SanitizeEmail = (email: string): string => {
+  return email.trim().toLowerCase()
+}
+
 export default {
   ValidateEmail,
+  SanitizeEmail,
 }

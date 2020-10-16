@@ -2,10 +2,15 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
-import UserService from '../../services/UserService'
-import { getListDevices, listDevices } from '../../redux/slices/AuthView'
+import { listDevicesSelector } from '../../redux/Auth/AuthSelectors'
+import { getListDevices } from '../../redux/Auth/AuthThunks'
+
+import { unixTimestampToDate } from '../../utils/Helpers'
+
 import LayoutMain from '../LayoutMain/LayoutMain'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
+
+import UserService from '../../services/UserService'
 
 interface RenderTableProps {
   devices: any
@@ -14,8 +19,10 @@ interface RenderTableProps {
 const RenderTableData = (props: RenderTableProps) => {
   const { devices } = props
   const dispatch = useDispatch()
-  return devices.map((item: any, index: number) => {
+  return devices.map((item: any) => {
     const deviceKey = item.DeviceKey
+    const lastAuthentication = item.DeviceLastAuthenticatedDate
+
     const deviceName = item.DeviceAttributes.find((attr: any) => {
       return attr.Name === 'device_name'
     })
@@ -37,9 +44,9 @@ const RenderTableData = (props: RenderTableProps) => {
 
     return (
       <tr key={deviceKey}>
-        <th scope="row">{index + 1}</th>
         <td>{deviceName.Value}</td>
         <td>{deviceIp.Value}</td>
+        <td>{unixTimestampToDate(lastAuthentication)}</td>
         <td>
           <a href="#/" onClick={removeDevice}>
             <svg className="icon-delete">
@@ -57,7 +64,7 @@ const AccountDevices: FunctionComponent<{}> = () => {
 
   const dispatch = useDispatch()
 
-  const myDevices = useSelector(listDevices)
+  const myDevices = useSelector(listDevicesSelector)
 
   useEffect(() => {
     dispatch(getListDevices())
@@ -67,12 +74,7 @@ const AccountDevices: FunctionComponent<{}> = () => {
     <LayoutMain>
       <div className="content-grid">
         <div className="grid grid-3-9">
-          <AccountSidebar
-            onSaveButton={() => {
-              console.log('')
-            }}
-            showButtons={false}
-          />
+          <AccountSidebar />
 
           <div className="account-hub-content">
             <div className="section-header">
@@ -92,9 +94,9 @@ const AccountDevices: FunctionComponent<{}> = () => {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
                           <th scope="col">Name</th>
-                          <th scope="col">Ip</th>
+                          <th scope="col">Ip v6</th>
+                          <th scope="col">Last Seen</th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>

@@ -1,64 +1,64 @@
 import { useTranslation } from 'react-i18next'
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
+import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
 import TextInput from '../../components/Common/TextInput'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
-import UserService from '../../services/UserService'
-import { UserType } from '../../types/UserType'
+
+import { UserType } from '../../types/UserType.d'
+import Alert from '../../components/Common/Alerts/Alerts'
+import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
 const AccountInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
 
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [urlUserName, setUrlUserName] = useState('')
-  const [recoveryEmail, setRecoveryEmail] = useState('')
-  const [country, setCountry] = useState('0')
-  const [phoneNumber, setPhoneNumber] = useState('')
+  const error: string = useSelector(errorSelector)
+  const message: string = useSelector(messageSelector)
+  const loading: boolean = useSelector(loadingSelector)
+
+  const userData: UserType = useSelector(userSelector)
+
+  const [fullName, setFullName] = useState(userData.fullName)
+  const [email, setEmail] = useState(userData.email)
+  const [urlUserName, setUrlUserName] = useState(userData.userName)
+  const [recoveryEmail, setRecoveryEmail] = useState(userData.emailRecovery)
+  const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber)
 
   useEffect(() => {
-    UserService.getUserProfile()
-      .then((response) => {
-        setFullName(response.fullName || '')
-        setEmail(response.email || '')
-        setUrlUserName(response.userName || '')
-        setRecoveryEmail(response.emailRecovery || '')
-        setCountry((response.countryId || 0).toString())
-        setPhoneNumber(response.phoneNumber || '')
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
+    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
+    if (userData.id === -1) dispatch(getProfile())
+
+    setFullName(userData.fullName)
+    setEmail(userData.email)
+    setUrlUserName(userData.userName)
+    setRecoveryEmail(userData.emailRecovery)
+    setPhoneNumber(userData.phoneNumber)
+  }, [dispatch, userData])
 
   const saveUserData = () => {
-    const userData: UserType = {
+    const user: UserType = {
       fullName,
       email,
       userName: urlUserName,
       emailRecovery: recoveryEmail,
-      countryId: parseInt(country, 10),
       phoneNumber,
     }
 
-    UserService.updateUserProfile(userData)
-      .then((w) => {
-        console.info(w)
-        alert('User Updated')
-      })
-      .catch((err) => {
-        console.error(err)
-      })
+    dispatch(updateProfile(user))
   }
 
   return (
     <LayoutMain>
       <div className="content-grid">
         <div className="grid grid-3-9">
-          <AccountSidebar onSaveButton={saveUserData} />
+          <AccountSidebar />
 
           <div className="account-hub-content">
             <div className="section-header">
@@ -127,24 +127,6 @@ const AccountInfo: FunctionComponent<{}> = () => {
 
                     <FormRow classNameRow="split">
                       <FormItem>
-                        <div className="form-select">
-                          <label htmlFor="account-country">{t('accountInfo.countryField')}</label>
-                          <select
-                            id="account-country"
-                            name="account_country"
-                            defaultValue={country}
-                            onChange={(e) => setCountry(e.target.value)}
-                          >
-                            <option value="0">Select your Country</option>
-                            <option value="1">United States</option>
-                          </select>
-
-                          <svg className="form-select-icon icon-small-arrow">
-                            <use xlinkHref="#svg-small-arrow" />
-                          </svg>
-                        </div>
-                      </FormItem>
-                      <FormItem>
                         <TextInput
                           type="text"
                           id="phone-number"
@@ -154,6 +136,24 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           defaultValue={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow>
+                      {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
+                      {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <ButtonWithLoader
+                          type="button"
+                          className="medium primary"
+                          onClick={saveUserData}
+                          showLoader={loading}
+                        >
+                          {t('accountSidebar.saveButtonText')}
+                        </ButtonWithLoader>
                       </FormItem>
                     </FormRow>
                   </form>

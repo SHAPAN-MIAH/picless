@@ -3,30 +3,15 @@ import { Link, useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
-import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
+import { getAction } from '../../../redux/Auth/AuthSelectors'
+import { signOut } from '../../../redux/Auth/AuthThunks'
 
-import { signOut, getAction } from '../../../redux/slices/AuthView'
-
-interface AccountSidebarProps {
-  onSaveButton: () => void
-  saveButtonText?: string
-  showLoaderButton?: boolean
-  showButtons?: boolean
-}
-
-const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
-  const { t } = useTranslation()
+const AccountSidebar: FunctionComponent<{}> = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   const currentAction = useSelector(getAction)
-  const dispatch = useDispatch()
-
-  const {
-    onSaveButton,
-    showButtons = true,
-    showLoaderButton = false,
-    saveButtonText = t('accountSidebar.saveButtonText'),
-  } = props
 
   useEffect(() => {
     if (currentAction.action === 'SIGNOUT' && currentAction.status === 'FINISHED') {
@@ -71,19 +56,19 @@ const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
               </div>
 
               <div className="sidebar-menu-body accordion-content-linked accordion-open">
-                <Link className="sidebar-menu-link" to="/account-info">
+                <Link className="sidebar-menu-link" to="/user/account-info">
                   {t('accountSidebar.accountInfo')}
                 </Link>
 
-                <Link className="sidebar-menu-link" to="/profile-info">
+                <Link className="sidebar-menu-link" to="/user/profile-info">
                   {t('accountSidebar.profileInfo')}
                 </Link>
 
-                <Link className="sidebar-menu-link" to="/account-devices">
+                <Link className="sidebar-menu-link" to="/user/account-devices">
                   {t('accountSidebar.accountdevices')}
                 </Link>
 
-                <Link className="sidebar-menu-link" to="/change-password">
+                <Link className="sidebar-menu-link" to="/user/change-password">
                   {t('accountSidebar.changePassword')}
                 </Link>
 
@@ -94,9 +79,8 @@ const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
             </div>
           </div>
 
-          {showButtons && (
-            <div className="sidebar-box-footer">
-              <ButtonWithLoader
+          <div className="sidebar-box-footer">
+            {/* <ButtonWithLoader
                 type="button"
                 className="medium primary"
                 onClick={onSaveButton}
@@ -107,9 +91,8 @@ const AccountSidebar: FunctionComponent<AccountSidebarProps> = (props) => {
 
               <ButtonWithLoader type="reset" className="button medium white" showLoader={showLoaderButton}>
                 {t('accountSidebar.discardAllButton')}
-              </ButtonWithLoader>
-            </div>
-          )}
+              </ButtonWithLoader> */}
+          </div>
         </div>
       </div>
     </div>
