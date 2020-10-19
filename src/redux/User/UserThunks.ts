@@ -9,17 +9,12 @@ export const cleanState = (): AppThunk => async (dispatch) => {
   dispatch(Actions.actionClean())
 }
 
-export const getProfile = (): AppThunk => async (dispatch, getState: any) => {
+export const getProfile = (): AppThunk => async (dispatch) => {
   dispatch(Actions.actionWaiting())
 
-  // const { data } = getState().user
   try {
-    // if (data.id === -1) {
     const userData = await UserService.getUserProfile()
     dispatch(Actions.getProfileSuccess(userData))
-    // } else {
-    //   dispatch(Actions.getProfileSuccess(data))
-    // }
   } catch (err) {
     dispatch(Actions.actionFail('profile.errors.fetchingData'))
   }
@@ -29,9 +24,10 @@ export const updateProfile = (userData: UserType): AppThunk => async (dispatch) 
   dispatch(Actions.actionWaiting())
 
   try {
-    await UserService.updateUserProfile(userData)
+    const data = await UserService.updateUserProfile(userData)
 
     dispatch(Actions.updateProfileSuccess())
+    dispatch(Actions.getProfileSuccess(data))
   } catch (err) {
     dispatch(Actions.actionFail('profile.errors.updatingData'))
   }

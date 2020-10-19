@@ -108,17 +108,8 @@ export const authSlice = createSlice({
       }
     },
 
-    signOutSuccess: (state) => {
-      return {
-        ...state,
-        operation: {
-          action: 'SIGNOUT',
-          status: 'FINISHED',
-        },
-        user: initialState.user,
-        message: 'Signed out',
-        error: '',
-      }
+    signOutSuccess: () => {
+      return initialState
     },
 
     forgotPasswordEmail: (state, action: PayloadAction<string>) => {
@@ -162,6 +153,15 @@ export const authSlice = createSlice({
         error: '',
       }
     },
+
+    checkUserAuthenticatedSuccess: (state, action: PayloadAction<UserAuthorization>) => {
+      return {
+        ...state,
+        user: action.payload,
+        message: '',
+        error: '',
+      }
+    },
   },
 })
 
@@ -169,15 +169,16 @@ export const authSlice = createSlice({
 export const {
   actionWaiting,
   actionFail,
+  loginReady,
   loginSuccess,
   registerSuccess,
   confirmSignUpSuccess,
-  signOutSuccess,
-  loginReady,
   forgotPasswordEmail,
   forgotPasswordNewPassword,
   changePasswordSuccess,
   listDevicesSuccess,
+  checkUserAuthenticatedSuccess,
+  signOutSuccess,
 } = authSlice.actions
 
 // Reducer

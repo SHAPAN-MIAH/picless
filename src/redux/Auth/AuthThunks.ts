@@ -2,7 +2,31 @@ import { Auth } from '@aws-amplify/auth'
 import { AppThunk } from '../store'
 import * as Actions from './AuthSlice'
 
+import { getProfile } from '../User/UserThunks'
+import * as UserActions from '../User/UserSlice'
+
 import Utils from '../../utils/Functions'
+
+export const checkUserAuthenticated = (): AppThunk => async (dispatch) => {
+  try {
+    await Auth.currentSession()
+      .then(async (user) => {
+        const userTokenId = await user.getIdToken()
+
+        const token = userTokenId.getJwtToken()
+        const { email } = userTokenId.payload
+
+        dispatch(Actions.checkUserAuthenticatedSuccess({ email, token }))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(Actions.signOutSuccess())
+        dispatch(UserActions.cleanSignOutSuccess())
+      })
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 export const showForgotPasswordEmail = (email: string): AppThunk => async (dispatch) => {
   dispatch(Actions.forgotPasswordEmail(email))
@@ -144,7 +168,7 @@ export const login = (username: string, password: string, rememberMe: boolean): 
               user.setDeviceStatusRemembered({
                 onSuccess: (): void => {
                   dispatch(Actions.loginSuccess(userAuth))
-                  // dispatch(currentUserAuthenticated())
+                  dispatch(getProfile())
                 },
                 onFailure: (err: any) => {
                   dispatch(Actions.signOutSuccess())
@@ -186,6 +210,7 @@ export const login = (username: string, password: string, rememberMe: boolean): 
 export const signOut = (): AppThunk => async (dispatch) => {
   await Auth.signOut().then(() => {
     dispatch(Actions.signOutSuccess())
+    dispatch(UserActions.cleanSignOutSuccess())
   })
 }
 

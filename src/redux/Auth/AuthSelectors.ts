@@ -1,8 +1,8 @@
-import { RootState } from '../store'
-import { UserAuthorization } from '../../types/AuthTypeSlice'
+// import { RootState } from '../store'
+import { UserAuthorization } from '../../types/AuthTypeSlice.d'
 
-export const getAction = (state: RootState) => state.auth.operation
-export const userAuthSelector = (state: RootState): UserAuthorization => state.auth.user
-export const messageSelector = (state: RootState) => state.auth.message
-export const errorSelector = (state: RootState) => state.auth.error
-export const listDevicesSelector = (state: RootState) => state.auth.listDevices
+export const getAction = (state: any) => state.auth.operation
+export const userAuthSelector = (state: any): UserAuthorization => state.auth.user
+export const messageSelector = (state: any) => state.auth.message
+export const errorSelector = (state: any) => state.auth.error
+export const listDevicesSelector = (state: any) => state.auth.listDevices

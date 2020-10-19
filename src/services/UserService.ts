@@ -33,7 +33,7 @@ const updateUserProfile = async (userData: UserType): Promise<any> => {
   const url = `${baseUrl}/updateprofile`
 
   const response = await fetch(url, requestOptions)
-  const body = await response
+  const body = await response.json()
 
   return body
 }

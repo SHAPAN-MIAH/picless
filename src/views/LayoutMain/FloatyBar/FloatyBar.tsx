@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 const FloatyBar: FunctionComponent<{}> = () => {
   return (
-    <div>
+    <>
       <aside className="floaty-bar">
         <div className="bar-actions">
           <div className="progress-stat">
@@ -52,7 +52,7 @@ const FloatyBar: FunctionComponent<{}> = () => {
           </a>
         </div>
       </aside>
-    </div>
+    </>
   )
 }
 

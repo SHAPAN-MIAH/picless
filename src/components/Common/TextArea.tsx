@@ -21,6 +21,7 @@ const TextArea = (props: TextAreaProps) => {
       <textarea
         id={id}
         name={name}
+        defaultValue={defaultValue}
         onBlur={(e) => {
           setIsFocused(false)
           if (props.onBlur) props.onBlur(e)

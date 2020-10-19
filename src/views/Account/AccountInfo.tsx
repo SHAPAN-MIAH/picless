@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+import _ from 'lodash'
 
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
 import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
@@ -31,15 +33,26 @@ const AccountInfo: FunctionComponent<{}> = () => {
   const [recoveryEmail, setRecoveryEmail] = useState(userData.emailRecovery)
   const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber)
 
+  const prevUserDataRef = useRef(userData)
+
   useEffect(() => {
     dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
-    if (userData.id === -1) dispatch(getProfile())
+
+    dispatch(getProfile())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (!_.isEqual(userData, prevUserDataRef.current)) {
+      dispatch(getProfile())
+    }
 
     setFullName(userData.fullName)
     setEmail(userData.email)
     setUrlUserName(userData.userName)
     setRecoveryEmail(userData.emailRecovery)
     setPhoneNumber(userData.phoneNumber)
+
+    prevUserDataRef.current = userData
   }, [dispatch, userData])
 
   const saveUserData = () => {

@@ -11,6 +11,8 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
   const user = useSelector(userAuthSelector)
   const isAuthenticated = !!user.token
 
+  console.log(`IsAuthenticated: ${isAuthenticated}`)
+
   const { authenticationPath } = props
 
   if (!isAuthenticated) {

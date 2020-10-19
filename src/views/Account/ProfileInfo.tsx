@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { CountryDropdown } from 'react-country-region-selector'
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector'
 
 import _ from 'lodash'
+import moment from 'moment'
 
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
 import { cleanState, getProfile, updateProfile } from '../../redux/User/UserThunks'
@@ -20,6 +21,7 @@ import TextArea from '../../components/Common/TextArea'
 import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
 import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
+import InterestList from './Interest/InterestList'
 
 const ProfileInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -31,41 +33,51 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const userData: UserType = useSelector(userSelector)
 
   const [userName, setUserName] = useState(userData.userName)
-  const [tagline, setTagline] = useState('')
+  const [tagLine, setTagLine] = useState(userData.tagLine || '')
   const [profileDescription, setProfileDescription] = useState(userData.profileDescription)
-  const [country, setCountry] = useState('adasdasdd')
-  const [birthDate, setBirthdate] = useState(userData.birthDate)
+  const [countryName, setCountry] = useState(userData.countryName)
+  const [regionName, setRegionName] = useState(userData.regionName)
+  const [userInterests, setUserInterests] = useState(userData.userInterest || [])
+  const [birthDate, setBirthdate] = useState(moment(userData.birthDate).toDate())
 
   const prevUserDataRef = useRef(userData)
 
   useEffect(() => {
     dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
 
+    dispatch(getProfile())
+  }, [dispatch])
+
+  useEffect(() => {
     if (!_.isEqual(userData, prevUserDataRef.current)) {
       dispatch(getProfile())
-
-      setUserName(userData.fullName)
-      setTagline('')
-      setProfileDescription(userData.userName)
-      // setCountry(userData.country)
-      setBirthdate(userData.phoneNumber)
-
-      prevUserDataRef.current = userData
     }
+
+    setUserName(userData.fullName)
+    setTagLine(userData.tagLine || '')
+    setProfileDescription(userData.profileDescription)
+    setCountry(userData.countryName)
+    setRegionName(userData.regionName)
+    setUserInterests(userData.userInterest || [])
+    setBirthdate(moment(userData.birthDate).toDate())
+
+    prevUserDataRef.current = userData
   }, [userData, dispatch])
 
-  const saveUserData = useCallback(() => {
-    let user: UserType = {
+  const saveUserData = () => {
+    const user: UserType = {
       ...userData,
       userName,
       profileDescription,
-      country,
+      countryName,
+      regionName,
+      tagLine,
     }
 
-    if (birthDate) user = { ...user, birthDate: JSON.stringify(birthDate) }
+    // if (birthDate) user = { ...user, birthDate: JSON.stringify(birthDate) }
 
     dispatch(updateProfile(user))
-  }, [country, profileDescription, userName, birthDate, dispatch, userData])
+  }
 
   return (
     <LayoutMain>
@@ -103,15 +115,15 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                         />
                       </FormItem>
                       <FormItem>
-                        <TextInput
-                          type="text"
-                          id="tag-line"
-                          classNameFormInput="small"
-                          name="tag_line"
-                          placeholder={t('profileInfo.taglineField')}
-                          defaultValue={tagline}
-                          onChange={(e) => setTagline(e.target.value)}
-                        />
+                        <div className="form-input-decorated">
+                          <DatePickerForm
+                            customInputRef="birthdayRef"
+                            placeholderText={t('profileInfo.birthdayField')}
+                            selected={birthDate}
+                            onChange={(date: any) => setBirthdate(date)}
+                            iconName="events"
+                          />
+                        </div>
                       </FormItem>
                     </FormRow>
 
@@ -134,23 +146,40 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           <CountryDropdown
                             id="account-country"
                             name="account_country"
-                            value={country}
+                            value={countryName || ''}
                             onChange={(val) => {
-                              console.log(val)
                               setCountry(val)
                             }}
                           />
                         </div>
 
-                        <div className="form-input-decorated">
-                          <DatePickerForm
-                            customInputRef="birthdayRef"
-                            placeholderText={t('profileInfo.birthdayField')}
-                            selected={birthDate}
-                            onChange={(date: any) => setBirthdate(date)}
-                            iconName="events"
+                        <div className="form-select">
+                          <label htmlFor="account-region">{t('profileInfo.regionField')}</label>
+                          <RegionDropdown
+                            id="account-region"
+                            name="account_region"
+                            disableWhenEmpty
+                            country={countryName || ''}
+                            value={regionName || ''}
+                            onChange={(val) => {
+                              setRegionName(val)
+                            }}
                           />
                         </div>
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow>
+                      <FormItem>
+                        <TextInput
+                          type="text"
+                          id="tag-line"
+                          classNameFormInput="small"
+                          name="tag_line"
+                          placeholder={t('profileInfo.taglineField')}
+                          defaultValue={tagLine}
+                          onChange={(e) => setTagLine(e.target.value)}
+                        />
                       </FormItem>
                     </FormRow>
 
@@ -162,35 +191,14 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                 </div>
 
                 {/* Interests */}
+                <InterestList list={userInterests} />
+
+                {/* TimeLine */}
+                <InterestList list={userInterests} />
+
                 <div className="widget-box">
-                  <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
-
                   <div className="widget-box-content">
-                    <FormRow classNameRow="split">
-                      <FormItem>
-                        <TextArea
-                          type="text"
-                          id="interest-1"
-                          classNameFormInput="small full"
-                          name="account_url_username"
-                          placeholder={t('profileInfo.interestsListField')}
-                          defaultValue=""
-                        />
-                      </FormItem>
-
-                      <FormItem>
-                        <TextArea
-                          type="text"
-                          id="interest-2"
-                          classNameFormInput="small full"
-                          name="account_url_username"
-                          placeholder={t('profileInfo.interestsMusicField')}
-                          defaultValue=""
-                        />
-                      </FormItem>
-                    </FormRow>
-
-                    <FormRow classNameRow="split">
+                    <FormRow>
                       <FormItem>
                         <ButtonWithLoader
                           type="button"

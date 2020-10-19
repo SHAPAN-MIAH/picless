@@ -1,6 +1,8 @@
-import { RootState } from '../store'
+// import { RootState } from '../store'
 
-export const loadingSelector = (state: RootState) => state.user.loading
-export const userSelector = (state: RootState) => state.user.data
-export const errorSelector = (state: RootState) => state.user.error
-export const messageSelector = (state: RootState) => state.user.message
+export const loadingSelector = (state: any) => {
+  return state.user.loading
+}
+export const userSelector = (state: any) => state.user.data
+export const errorSelector = (state: any) => state.user.error
+export const messageSelector = (state: any) => state.user.message

@@ -21,32 +21,35 @@ export interface UserType {
   birthDate?: any
   profileDescription?: any
   genderId?: any
-  countryId?: any
   cityName?: any
   numberOfFollowers?: number
   languageId?: any
   registrationDate?: string
   country?: any
+  countryId?: any
+  countryName?: string
+  regionName?: string
   gender?: any
   language?: any
-  userInterest?: UserInterest[]
-  userTimeLine?: UserTimeLine[]
+  tagLine?: string
+  userInterest?: UserInterestType[]
+  userTimeLine?: UserTimeLineType[]
 }
 
-export interface UserInterest {
-  id: number
-  userId: number
-  name: string
-  description: string
+export interface UserInterestType {
+  id?: number
+  userId?: number
+  name?: string
+  description?: string
 }
 
-export interface UserTimeLine {
-  id: number
-  userId: number
-  title: string
-  description: string
-  yearSarted: string
-  yearEnded: string
+export interface UserTimeLineType {
+  id?: number
+  userId?: number
+  title?: string
+  description?: string
+  yearSarted?: string
+  yearEnded?: string
 }
 
 export type ImageType = 'PROFILE' | 'COVER'

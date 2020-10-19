@@ -56,19 +56,19 @@ const AccountSidebar: FunctionComponent<{}> = () => {
               </div>
 
               <div className="sidebar-menu-body accordion-content-linked accordion-open">
-                <Link className="sidebar-menu-link" to="/user/account-info">
+                <Link className="sidebar-menu-link" to="/account/account-info">
                   {t('accountSidebar.accountInfo')}
                 </Link>
 
-                <Link className="sidebar-menu-link" to="/user/profile-info">
+                <Link className="sidebar-menu-link" to="/account/profile-info">
                   {t('accountSidebar.profileInfo')}
                 </Link>
 
-                <Link className="sidebar-menu-link" to="/user/account-devices">
+                <Link className="sidebar-menu-link" to="/account/account-devices">
                   {t('accountSidebar.accountdevices')}
                 </Link>
 
-                <Link className="sidebar-menu-link" to="/user/change-password">
+                <Link className="sidebar-menu-link" to="/account/change-password">
                   {t('accountSidebar.changePassword')}
                 </Link>
 

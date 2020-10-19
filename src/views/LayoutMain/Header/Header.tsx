@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 const Header: FunctionComponent<{}> = () => {
   return (
-    <div>
+    <>
       <header className="header">
         <div className="header-actions">
           <div className="header-brand">
@@ -1280,7 +1280,7 @@ const Header: FunctionComponent<{}> = () => {
           </div>
         </div>
       </header>
-    </div>
+    </>
   )
 }
 

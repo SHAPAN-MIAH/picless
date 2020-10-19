@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 const NavigationLeftMenu: FunctionComponent<{}> = () => {
   return (
-    <div>
+    <>
       {/* SMALL MENU */}
       <nav id="navigation-widget-small" className="navigation-widget navigation-widget-desktop closed sidebar left delayed">
         <a className="user-avatar small no-outline online" href="profile-timeline.html">
@@ -535,7 +535,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
           Privacy Policy
         </a>
       </nav>
-    </div>
+    </>
   )
 }
 

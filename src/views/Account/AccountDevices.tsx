@@ -61,7 +61,6 @@ const RenderTableData = (props: RenderTableProps) => {
 
 const AccountDevices: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-
   const dispatch = useDispatch()
 
   const myDevices = useSelector(listDevicesSelector)

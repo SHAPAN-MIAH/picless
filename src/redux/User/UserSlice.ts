@@ -79,11 +79,23 @@ export const userSlice = createSlice({
         message: 'profile.userUpdated',
       }
     },
+
+    cleanSignOutSuccess: () => {
+      console.log('LOGOUT USER')
+      return initialState
+    },
   },
 })
 
 // Actions
-export const { updateProfileSuccess, getProfileSuccess, actionClean, actionWaiting, actionFail } = userSlice.actions
+export const {
+  cleanSignOutSuccess,
+  updateProfileSuccess,
+  getProfileSuccess,
+  actionClean,
+  actionWaiting,
+  actionFail,
+} = userSlice.actions
 
 // Reducer
 export default userSlice.reducer
