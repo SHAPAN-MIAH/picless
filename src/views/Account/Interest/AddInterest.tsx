@@ -2,10 +2,9 @@ import React, { FunctionComponent, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import _ from 'lodash'
-
+import { actionFail } from '../../../redux/User/UserSlice'
 import { userSelector } from '../../../redux/User/UserSelectors'
-import { updateProfile } from '../../../redux/User/UserThunks'
+import { addInterest } from '../../../redux/User/UserThunks'
 
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
@@ -13,7 +12,7 @@ import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 
-import { UserType } from '../../../types/UserType.d'
+import { UserType, UserInterestType } from '../../../types/UserType.d'
 
 const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
   const { t } = useTranslation()
@@ -23,25 +22,22 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
 
   const { onAdd } = props
 
-  const [interestTitle, setInterestTitle] = useState('')
+  const [interestName, setInterestName] = useState('')
   const [interestDescription, setInterestDescription] = useState('')
 
-  const handleInputTitle = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setInterestTitle(e.target.value)
-  }
+  const onAddInterest = () => {
+    if (interestName && interestDescription) {
+      const interest: UserInterestType = {
+        userId: userData.id,
+        name: interestName,
+        description: interestDescription,
+      }
 
-  const addInterest = () => {
-    let interestList = userData.userInterest || []
-
-    interestList = _.concat(interestList, [{ name: interestTitle, description: interestDescription }])
-
-    const user: UserType = {
-      ...userData,
-      userInterest: interestList,
+      dispatch(addInterest(interest))
+      onAdd()
     }
 
-    dispatch(updateProfile(user))
-    onAdd()
+    dispatch(actionFail({ uiMessage: 'profileInfo.interest.error.nameOrDescriptionEmpty', err: '' }))
   }
 
   return (
@@ -54,8 +50,8 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             classNameFormInput="small"
             name="tag_line"
             placeholder={t('profileInfo.interest.addNewTitleInterestField')}
-            defaultValue={interestTitle}
-            onChange={handleInputTitle}
+            defaultValue={interestName}
+            onChange={(e) => setInterestName(e.target.value)}
           />
         </FormItem>
       </FormRow>
@@ -79,7 +75,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
           </ButtonWithLoader>
         </FormItem>
         <FormItem>
-          <ButtonWithLoader type="button" className="small secondary" onClick={addInterest} showLoader={false}>
+          <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
             {`+ ${t('interests.saveNewInterest')}`}
           </ButtonWithLoader>
         </FormItem>

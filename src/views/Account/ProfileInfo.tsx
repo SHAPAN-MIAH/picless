@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector'
 
-import _ from 'lodash'
 import moment from 'moment'
 
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
@@ -22,6 +21,7 @@ import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerFor
 import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 import InterestList from './Interest/InterestList'
+import TimeLineList from './TimeLine/TimeLineList'
 
 const ProfileInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -49,23 +49,18 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (!_.isEqual(userData, prevUserDataRef.current)) {
-      dispatch(getProfile())
-    }
-
     setUserName(userData.fullName)
     setTagLine(userData.tagLine || '')
     setProfileDescription(userData.profileDescription)
     setCountry(userData.countryName)
     setRegionName(userData.regionName)
-    setUserInterests(userData.userInterest || [])
     setBirthdate(moment(userData.birthDate).toDate())
 
     prevUserDataRef.current = userData
   }, [userData, dispatch])
 
   const saveUserData = () => {
-    const user: UserType = {
+    let user: UserType = {
       ...userData,
       userName,
       profileDescription,
@@ -74,7 +69,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       tagLine,
     }
 
-    // if (birthDate) user = { ...user, birthDate: JSON.stringify(birthDate) }
+    if (birthDate) user = { ...user, birthDate }
 
     dispatch(updateProfile(user))
   }
@@ -191,10 +186,10 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                 </div>
 
                 {/* Interests */}
-                <InterestList list={userInterests} />
+                <InterestList />
 
                 {/* TimeLine */}
-                <InterestList list={userInterests} />
+                <TimeLineList />
 
                 <div className="widget-box">
                   <div className="widget-box-content">

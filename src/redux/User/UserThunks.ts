@@ -1,7 +1,7 @@
 import { AppThunk } from '../store'
 
 import * as Actions from './UserSlice'
-import { UploadImageType, UserType } from '../../types/UserType.d'
+import { UploadImageType, UserType, UserInterestType, UserTimeLineType } from '../../types/UserType.d'
 
 import UserService from '../../services/UserService'
 
@@ -16,7 +16,7 @@ export const getProfile = (): AppThunk => async (dispatch) => {
     const userData = await UserService.getUserProfile()
     dispatch(Actions.getProfileSuccess(userData))
   } catch (err) {
-    dispatch(Actions.actionFail('profile.errors.fetchingData'))
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.errors.fetchingData', err }))
   }
 }
 
@@ -29,7 +29,7 @@ export const updateProfile = (userData: UserType): AppThunk => async (dispatch) 
     dispatch(Actions.updateProfileSuccess())
     dispatch(Actions.getProfileSuccess(data))
   } catch (err) {
-    dispatch(Actions.actionFail('profile.errors.updatingData'))
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.errors.updatingData', err }))
   }
 }
 
@@ -41,6 +41,68 @@ export const uploadUserImages = (imageData: UploadImageType): AppThunk => async 
 
     dispatch(Actions.getProfileSuccess(data))
   } catch (err) {
-    dispatch(Actions.actionFail('profile.errors.uploadingAnImage'))
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.errors.uploadingAnImage', err }))
+  }
+}
+
+/* INTERESTS */
+export const addInterest = (interest: UserInterestType): AppThunk => async (dispatch) => {
+  dispatch(Actions.actionWaiting())
+
+  try {
+    dispatch(Actions.addInterest(interest))
+  } catch (err) {
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.interests.errors.updatingData', err }))
+  }
+}
+
+export const removeInterest = (interest: UserInterestType): AppThunk => async (dispatch) => {
+  dispatch(Actions.actionWaiting())
+
+  try {
+    dispatch(Actions.removeInterest(interest))
+  } catch (err) {
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.interests.errors.updatingData', err }))
+  }
+}
+
+export const updateInterest = (interest: UserInterestType): AppThunk => async (dispatch) => {
+  dispatch(Actions.actionWaiting())
+
+  try {
+    dispatch(Actions.updateInterest(interest))
+  } catch (err) {
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.interests.errors.updatingData', err }))
+  }
+}
+
+/* TimeLine */
+export const addTimelineEvent = (timeline: UserTimeLineType): AppThunk => async (dispatch) => {
+  dispatch(Actions.actionWaiting())
+
+  try {
+    dispatch(Actions.addTimelineEvent(timeline))
+  } catch (err) {
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.timeline.errors.addingTimeLine', err }))
+  }
+}
+
+export const removeTimelineEvent = (timeline: UserTimeLineType): AppThunk => async (dispatch) => {
+  dispatch(Actions.actionWaiting())
+
+  try {
+    dispatch(Actions.removeTimelineEvent(timeline))
+  } catch (err) {
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.timeline.errors.removingTimeLine', err }))
+  }
+}
+
+export const updateTimelineEvent = (timeline: UserTimeLineType): AppThunk => async (dispatch) => {
+  dispatch(Actions.actionWaiting())
+
+  try {
+    dispatch(Actions.updateTimelineEvent(timeline))
+  } catch (err) {
+    dispatch(Actions.actionFail({ uiMessage: 'profileInfo.timeline.errors.updatingTimeline', err }))
   }
 }

@@ -7,7 +7,9 @@ import { UserTimeLineType } from '../../../types/UserType.d'
 import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import Alert from '../../../components/Common/Alerts/Alerts'
-// import AddInterest from './AddInterest'
+// import AddInterest from './AddTimeLineEvent'
+import SelectForm from '../../../components/Common/SelectForm'
+import AddTimeLineEvent from './AddTimeLineEvent'
 
 // interface InterestProps {
 //   item: UserInterestType
@@ -32,12 +34,10 @@ import Alert from '../../../components/Common/Alerts/Alerts'
 //   )
 // }
 
-const TimeLineList: FunctionComponent<{ list: UserTimeLineType[] }> = (props) => {
+const TimeLineList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const [addTimeLine, setAddTimeLine] = useState(false)
-
-  const { list } = props
 
   // let interests: any[] = []
   const content: any[] = []
@@ -50,31 +50,27 @@ const TimeLineList: FunctionComponent<{ list: UserTimeLineType[] }> = (props) =>
   //   // }
   // })
 
-  const showAddTimeLine = () => {
-    // setAddTimeLine(!addInterest)
-  }
-
   return (
     <>
       <div className="widget-box">
-        <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
+        <p className="widget-box-title">{t('profileInfo.timelineTitle')}</p>
 
         <div className="widget-box-content">
           {content}
 
-          {list.length === 0 && (
+          {[].length === 0 && (
             <FormRow>
-              <Alert alertType="PRIMARY" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
+              <Alert alertType="PRIMARY" message={t('profileInfo.timeline.hasNoEvents')} style={{ width: '100%' }} />
             </FormRow>
           )}
 
-          {/* {addTimeLine && (
-            <AddInterest
+          {addTimeLine && (
+            <AddTimeLineEvent
               onAdd={() => {
-                setAddInterest(false)
+                setAddTimeLine(false)
               }}
             />
-          )} */}
+          )}
 
           {!addTimeLine && (
             <FormRow>
@@ -82,7 +78,9 @@ const TimeLineList: FunctionComponent<{ list: UserTimeLineType[] }> = (props) =>
                 type="button"
                 className="small white"
                 style={{ width: '128px' }}
-                onClick={showAddTimeLine}
+                onClick={() => {
+                  setAddTimeLine(!addTimeLine)
+                }}
                 showLoader={false}
               >
                 {`+ ${t('profileInfo.timeline.addNewEvent')}`}

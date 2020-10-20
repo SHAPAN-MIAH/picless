@@ -42,7 +42,9 @@ const AccountHubMain: FunctionComponent<{}> = () => {
               <div className="user-avatar-content">
                 <div
                   className="hexagon-image-68-74"
-                  style={{ background: `url(${imageProfile}) center center / cover no-repeat` }}
+                  style={{
+                    background: `url(${process.env.REACT_APP_BUCKET_IMAGES}${imageProfile}) center center / cover no-repeat`,
+                  }}
                 />
               </div>
 

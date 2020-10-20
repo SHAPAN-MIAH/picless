@@ -1,5 +1,11 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+
+import _ from 'lodash'
+
+import { userInterestSelector } from '../../../redux/User/UserSelectors'
+
 import { UserInterestType } from '../../../types/UserType.d'
 
 import TextArea from '../../../components/Common/TextArea'
@@ -32,26 +38,26 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
   )
 }
 
-const InterestList: FunctionComponent<{ list: UserInterestType[] }> = (props) => {
+const InterestList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
+  const interestList: UserInterestType[] = useSelector(userInterestSelector)
 
   const [addInterest, setAddInterest] = useState(false)
 
-  const { list } = props
+  const renderContent = () => {
+    const interestSplitted = _.chunk(interestList, 2)
 
-  let interests: any[] = []
-  const content: any[] = []
-
-  list.map((item, index) => {
-    interests.push(<Interest item={item} />)
-
-    if ((index + 1) % 2 === 0) {
-      content.push(<FormRow classNameRow="split">{interests}</FormRow>)
-      interests = []
-    }
-
-    return null
-  })
+    return interestSplitted.map((row) => {
+      return (
+        <FormRow classNameRow="split">
+          {row.map((interest) => {
+            return <Interest item={interest} />
+          })}
+        </FormRow>
+      )
+    })
+  }
 
   const showAddInterest = () => {
     setAddInterest(!addInterest)
@@ -63,9 +69,9 @@ const InterestList: FunctionComponent<{ list: UserInterestType[] }> = (props) =>
         <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
 
         <div className="widget-box-content">
-          {content}
+          {renderContent()}
 
-          {list.length === 0 && (
+          {interestList.length === 0 && (
             <FormRow>
               <Alert alertType="PRIMARY" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
             </FormRow>
