@@ -38,7 +38,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const [countryName, setCountry] = useState(userData.countryName)
   const [regionName, setRegionName] = useState(userData.regionName)
   const [userInterests, setUserInterests] = useState(userData.userInterest || [])
-  const [birthDate, setBirthdate] = useState(moment(userData.birthDate).toDate())
+  const [birthDate, setBirthdate] = useState<Date | null>(userData.birthDate ? moment(userData.birthDate).toDate() : null)
 
   const prevUserDataRef = useRef(userData)
 
@@ -54,7 +54,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     setProfileDescription(userData.profileDescription)
     setCountry(userData.countryName)
     setRegionName(userData.regionName)
-    setBirthdate(moment(userData.birthDate).toDate())
+    setBirthdate(userData.birthDate ? moment(userData.birthDate).toDate() : null)
 
     prevUserDataRef.current = userData
   }, [userData, dispatch])
