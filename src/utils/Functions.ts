@@ -1,13 +1,17 @@
-const ValidateEmail = (email: any) => {
+export const ValidateEmail = (email: any) => {
   const regx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return regx.test(String(email).toLowerCase())
 }
 
-const SanitizeEmail = (email: string): string => {
+export const SanitizeEmail = (email: string): string => {
   return email.trim().toLowerCase()
 }
 
-export default {
-  ValidateEmail,
-  SanitizeEmail,
+export const simpleKeyGenerator = (lenght = 5): string => {
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  for (let i = 0; i < lenght; i += 1) text += possible.charAt(Math.floor(Math.random() * possible.length))
+
+  return text
 }

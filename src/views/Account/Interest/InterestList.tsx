@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 import { userInterestSelector } from '../../../redux/User/UserSelectors'
 
-import { UserInterestType } from '../../../types/UserType.d'
+import * as Utils from '../../../utils/Functions'
 
 import TextArea from '../../../components/Common/TextArea'
 import FormItem from '../../../components/Common/Form/FormItem'
@@ -14,6 +14,8 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import Alert from '../../../components/Common/Alerts/Alerts'
 import AddInterest from './AddInterest'
+
+import { UserInterestType } from '../../../types/UserType.d'
 
 interface InterestProps {
   item: UserInterestType
@@ -32,6 +34,7 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
           name={`interest_${item.id}`}
           placeholder={item.name}
           defaultValue={item.description}
+          readOnly
         />
       </FormItem>
     </>
@@ -46,17 +49,25 @@ const InterestList: FunctionComponent<{}> = () => {
   const [addInterest, setAddInterest] = useState(false)
 
   const renderContent = () => {
-    const interestSplitted = _.chunk(interestList, 2)
+    if (interestList) {
+      const interestSplitted = _.chunk(interestList, 2)
+      return interestSplitted.map((row) => {
+        const key = Utils.simpleKeyGenerator(5)
 
-    return interestSplitted.map((row) => {
-      return (
-        <FormRow classNameRow="split">
-          {row.map((interest) => {
-            return <Interest item={interest} />
-          })}
-        </FormRow>
-      )
-    })
+        return (
+          <>
+            <FormRow key={key} classNameRow="split">
+              {row.map((interest) => {
+                return <Interest key={interest.id} item={interest} />
+              })}
+            </FormRow>
+            <div style={{ borderTop: '1px solid #eaeaf5', marginTop: '15px', marginBottom: '15px' }} />
+          </>
+        )
+      })
+    }
+
+    return <h4>Loading...</h4>
   }
 
   const showAddInterest = () => {
@@ -65,41 +76,35 @@ const InterestList: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="widget-box">
-        <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
+      {renderContent()}
 
-        <div className="widget-box-content">
-          {renderContent()}
+      {interestList && interestList.length === 0 && (
+        <FormRow>
+          <Alert alertType="PRIMARY" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
+        </FormRow>
+      )}
 
-          {interestList.length === 0 && (
-            <FormRow>
-              <Alert alertType="PRIMARY" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
-            </FormRow>
-          )}
+      {addInterest && (
+        <AddInterest
+          onAdd={() => {
+            setAddInterest(false)
+          }}
+        />
+      )}
 
-          {addInterest && (
-            <AddInterest
-              onAdd={() => {
-                setAddInterest(false)
-              }}
-            />
-          )}
-
-          {!addInterest && (
-            <FormRow>
-              <ButtonWithLoader
-                type="button"
-                className="small white"
-                style={{ width: '128px' }}
-                onClick={showAddInterest}
-                showLoader={false}
-              >
-                {`+ ${t('profileInfo.interests.addNewInterest')}`}
-              </ButtonWithLoader>
-            </FormRow>
-          )}
-        </div>
-      </div>
+      {!addInterest && (
+        <FormRow>
+          <ButtonWithLoader
+            type="button"
+            className="small white"
+            style={{ width: '128px' }}
+            onClick={showAddInterest}
+            showLoader={false}
+          >
+            {`+ ${t('profileInfo.interests.addNewInterest')}`}
+          </ButtonWithLoader>
+        </FormRow>
+      )}
     </>
   )
 }

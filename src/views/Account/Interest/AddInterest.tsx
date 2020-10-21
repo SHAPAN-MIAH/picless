@@ -35,14 +35,17 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
 
       dispatch(addInterest(interest))
       onAdd()
+    } else {
+      dispatch(actionFail({ uiMessage: 'profileInfo.interest.error.nameOrDescriptionEmpty', err: '' }))
     }
-
-    dispatch(actionFail({ uiMessage: 'profileInfo.interest.error.nameOrDescriptionEmpty', err: '' }))
   }
 
   return (
     <>
-      <FormRow>
+      <FormRow classNameRow="top-border">
+        <FormRow>
+          <p>sadfadsf</p>
+        </FormRow>
         <FormItem>
           <TextInput
             type="text"
@@ -68,6 +71,9 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
           />
         </FormItem>
       </FormRow>
+      <FormRow>
+        <p style={{ color: 'red' }}>Message Error when added an interest</p>
+      </FormRow>
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
@@ -76,7 +82,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
         </FormItem>
         <FormItem>
           <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
-            {`+ ${t('interests.saveNewInterest')}`}
+            {`+ ${t('interests.addNewInterest')}`}
           </ButtonWithLoader>
         </FormItem>
       </FormRow>

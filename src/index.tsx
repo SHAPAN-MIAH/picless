@@ -8,6 +8,7 @@ import { store, persistor } from './redux/store'
 import awsconfig from './aws-exports'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import './i18n'
 

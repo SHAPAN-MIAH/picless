@@ -5,7 +5,7 @@ import * as Actions from './AuthSlice'
 import { getProfile } from '../User/UserThunks'
 import * as UserActions from '../User/UserSlice'
 
-import Utils from '../../utils/Functions'
+import * as Utils from '../../utils/Functions'
 
 export const checkUserAuthenticated = (): AppThunk => async (dispatch) => {
   try {

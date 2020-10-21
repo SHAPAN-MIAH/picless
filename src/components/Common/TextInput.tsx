@@ -17,7 +17,7 @@ const TextInput = (props: TextInputProps) => {
       <input
         defaultValue={defaultValue}
         id={id}
-        className={classNames(className)}
+        className={classNames(isFocused ? ' ' : ' ', className)}
         onBlur={(e) => {
           setIsFocused(false)
           if (props.onBlur) props.onBlur(e)

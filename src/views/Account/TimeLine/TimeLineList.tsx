@@ -1,94 +1,93 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UserTimeLineType } from '../../../types/UserType.d'
+import { useSelector } from 'react-redux'
 
-// import TextArea from '../../../components/Common/TextArea'
-// import FormItem from '../../../components/Common/Form/FormItem'
+import { userTimelineSelector } from '../../../redux/User/UserSelectors'
+
 import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import Alert from '../../../components/Common/Alerts/Alerts'
-// import AddInterest from './AddTimeLineEvent'
-import SelectForm from '../../../components/Common/SelectForm'
+
+import TimeLineEvent from './TimeLineEvent'
 import AddTimeLineEvent from './AddTimeLineEvent'
 
-// interface InterestProps {
-//   item: UserInterestType
-// }
-
-// const Interest: FunctionComponent<InterestProps> = (props) => {
-//   const { item } = props
-
-//   return (
-//     <>
-//       <FormItem>
-//         <TextArea
-//           type="text"
-//           id={`interest-${item.id}`}
-//           classNameFormInput="small full"
-//           name={`interest_${item.id}`}
-//           placeholder={item.name}
-//           defaultValue={item.description}
-//         />
-//       </FormItem>
-//     </>
-//   )
-// }
+import { UserTimeLineType } from '../../../types/UserType.d'
+import { simpleKeyGenerator } from '../../../utils/Functions'
 
 const TimeLineList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const [addTimeLine, setAddTimeLine] = useState(false)
 
-  // let interests: any[] = []
-  const content: any[] = []
+  const userTimeLineList: UserTimeLineType[] = useSelector(userTimelineSelector)
 
-  // list.map((item, index): void => {
-  //   // interests.push(<Interest item={item} />)
-  //   // if ((index + 1) % 2 === 0) {
-  //   //   content.push(<FormRow classNameRow="split">{interests}</FormRow>)
-  //   //   interests = []
-  //   // }
-  // })
+  const renderContent = () => {
+    if (userTimeLineList) {
+      return userTimeLineList.map((row) => {
+        const temporaryKey = simpleKeyGenerator(5)
+
+        return (
+          <>
+            <TimeLineEvent key={row.id || temporaryKey} item={row} years={years} />
+            <div style={{ borderTop: '1px solid #eaeaf5', marginTop: '30px', marginBottom: '35px' }} />
+          </>
+        )
+      })
+    }
+
+    return <h4>Loading ...</h4>
+  }
+
+  const loadYears = () => {
+    const currentYear = new Date().getFullYear()
+    const years = []
+    let startYear = 1980
+
+    while (startYear <= currentYear + 1) {
+      startYear += 1
+      const year = startYear.toString()
+      years.push({ value: year, name: year })
+    }
+
+    return years
+  }
+
+  const years = loadYears()
 
   return (
     <>
-      <div className="widget-box">
-        <p className="widget-box-title">{t('profileInfo.timelineTitle')}</p>
+      {renderContent()}
 
-        <div className="widget-box-content">
-          {content}
+      {userTimeLineList && userTimeLineList.length === 0 && (
+        <FormRow>
+          <Alert alertType="PRIMARY" message={t('profileInfo.timeline.hasNoEvents')} style={{ width: '100%' }} />
+        </FormRow>
+      )}
 
-          {[].length === 0 && (
-            <FormRow>
-              <Alert alertType="PRIMARY" message={t('profileInfo.timeline.hasNoEvents')} style={{ width: '100%' }} />
-            </FormRow>
-          )}
+      {addTimeLine && (
+        <AddTimeLineEvent
+          onAdd={() => {
+            setAddTimeLine(false)
+          }}
+          years={years}
+        />
+      )}
 
-          {addTimeLine && (
-            <AddTimeLineEvent
-              onAdd={() => {
-                setAddTimeLine(false)
-              }}
-            />
-          )}
-
-          {!addTimeLine && (
-            <FormRow>
-              <ButtonWithLoader
-                type="button"
-                className="small white"
-                style={{ width: '128px' }}
-                onClick={() => {
-                  setAddTimeLine(!addTimeLine)
-                }}
-                showLoader={false}
-              >
-                {`+ ${t('profileInfo.timeline.addNewEvent')}`}
-              </ButtonWithLoader>
-            </FormRow>
-          )}
-        </div>
-      </div>
+      {!addTimeLine && (
+        <FormRow>
+          <ButtonWithLoader
+            type="button"
+            className="small white"
+            style={{ width: '128px' }}
+            onClick={() => {
+              setAddTimeLine(!addTimeLine)
+            }}
+            showLoader={false}
+          >
+            {`+ ${t('profileInfo.timeline.addNewEvent')}`}
+          </ButtonWithLoader>
+        </FormRow>
+      )}
     </>
   )
 }

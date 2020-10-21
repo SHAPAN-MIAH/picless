@@ -10,36 +10,22 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-import SelectForm from '../../../components/Common/SelectForm'
+import SelectForm, { SelectOptionsType } from '../../../components/Common/SelectForm'
 
 import { UserType, UserTimeLineType } from '../../../types/UserType.d'
 
-const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void }> = (props) => {
+const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOptionsType[] }> = (props) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const userData: UserType = useSelector(userSelector)
 
-  const { onAdd } = props
+  const { onAdd, years } = props
 
   const [timelineEventTitle, setTimelineEventTitle] = useState('')
   const [timelineEventStarted, setTimelineEventStarted] = useState('0')
   const [timelineEventEnded, setTimelineEventEnded] = useState('0')
   const [timelineEventDescription, setTimelineEventDescription] = useState('')
-
-  const loadYears = () => {
-    const currentYear = new Date().getFullYear()
-    const years = []
-    let startYear = 1980
-
-    while (startYear <= currentYear + 1) {
-      startYear += 1
-      const year = startYear.toString()
-      years.push({ value: year, name: year })
-    }
-
-    return years
-  }
 
   const onAddInterest = () => {
     const timelineEvent: UserTimeLineType = {
@@ -74,7 +60,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void }> = (props) => {
               id="timeline-new-year-started"
               name="timeline_new_year_started"
               placeholder={t('profileInfo.timeline.newYearStarted')}
-              options={loadYears()}
+              options={years}
               defaultValue={timelineEventDescription}
               onChange={(e) => setTimelineEventStarted(e.target.value)}
             />
@@ -84,7 +70,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void }> = (props) => {
               id="timeline_new_year_started"
               name="timeline_new_year_started"
               placeholder={t('profileInfo.timeline.newYearEnded')}
-              options={loadYears()}
+              options={years}
               defaultValue={timelineEventEnded}
               onChange={(e) => setTimelineEventEnded(e.target.value)}
             />
@@ -107,12 +93,12 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void }> = (props) => {
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`+ ${t('interests.cancelNewInterest')}`}
+            {`+ ${t('profileInfo.timeline.cancelNewTimeLineEvent')}`}
           </ButtonWithLoader>
         </FormItem>
         <FormItem>
           <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
-            {`+ ${t('interests.saveNewInterest')}`}
+            {`+ ${t('profileInfo.timeline.addNewTimeLineEvent')}`}
           </ButtonWithLoader>
         </FormItem>
       </FormRow>

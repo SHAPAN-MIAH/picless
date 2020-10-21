@@ -72,6 +72,7 @@ export const updateInterest = (interest: UserInterestType): AppThunk => async (d
   try {
     dispatch(Actions.updateInterest(interest))
   } catch (err) {
+    console.log(err)
     dispatch(Actions.actionFail({ uiMessage: 'profileInfo.interests.errors.updatingData', err }))
   }
 }

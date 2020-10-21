@@ -37,7 +37,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const [profileDescription, setProfileDescription] = useState(userData.profileDescription)
   const [countryName, setCountry] = useState(userData.countryName)
   const [regionName, setRegionName] = useState(userData.regionName)
-  const [userInterests, setUserInterests] = useState(userData.userInterest || [])
   const [birthDate, setBirthdate] = useState<Date | null>(userData.birthDate ? moment(userData.birthDate).toDate() : null)
 
   const prevUserDataRef = useRef(userData)
@@ -70,7 +69,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     }
 
     if (birthDate) user = { ...user, birthDate }
-
+    debugger
     dispatch(updateProfile(user))
   }
 
@@ -185,13 +184,25 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                   </div>
                 </div>
 
-                {/* Interests */}
-                <InterestList />
+                <div className="widget-box" style={{ marginTop: '20px' }}>
+                  <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
 
-                {/* TimeLine */}
-                <TimeLineList />
+                  <div className="widget-box-content">
+                    {/* Interests */}
+                    <InterestList />
+                  </div>
+                </div>
 
-                <div className="widget-box">
+                <div className="widget-box" style={{ marginTop: '20px' }}>
+                  <p className="widget-box-title">{t('profileInfo.timelineTitle')}</p>
+
+                  <div className="widget-box-content">
+                    {/* TimeLine */}
+                    <TimeLineList />
+                  </div>
+                </div>
+
+                <div className="widget-box" style={{ marginTop: '20px' }}>
                   <div className="widget-box-content">
                     <FormRow>
                       <FormItem>
