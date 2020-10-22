@@ -49,7 +49,7 @@ const InterestList: FunctionComponent<{}> = () => {
   const [addInterest, setAddInterest] = useState(false)
 
   const renderContent = () => {
-    if (interestList) {
+    if (interestList && interestList.length > 0) {
       const interestSplitted = _.chunk(interestList, 2)
       return interestSplitted.map((row) => {
         const key = Utils.simpleKeyGenerator(5)
@@ -67,7 +67,7 @@ const InterestList: FunctionComponent<{}> = () => {
       })
     }
 
-    return <h4>Loading...</h4>
+    return <></>
   }
 
   const showAddInterest = () => {

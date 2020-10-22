@@ -22,7 +22,7 @@ const TimeLineList: FunctionComponent<{}> = () => {
   const userTimeLineList: UserTimeLineType[] = useSelector(userTimelineSelector)
 
   const renderContent = () => {
-    if (userTimeLineList) {
+    if (userTimeLineList && userTimeLineList.length > 0) {
       return userTimeLineList.map((row) => {
         const temporaryKey = simpleKeyGenerator(5)
 
@@ -35,7 +35,7 @@ const TimeLineList: FunctionComponent<{}> = () => {
       })
     }
 
-    return <h4>Loading ...</h4>
+    return <></>
   }
 
   const loadYears = () => {

@@ -12,6 +12,7 @@ import ProfileInfo from './views/Account/ProfileInfo'
 import AccountDevices from './views/Account/AccountDevices'
 import ChangePassword from './views/Account/ChangePassword'
 import UserProfile from './views/UserProfile/UserProfile'
+import UserSettings from './views/Account/UserSettings'
 
 function App() {
   const dispatch = useDispatch()
@@ -32,6 +33,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/account/profile-info" component={ProfileInfo} />
           <ProtectedRoute {...routerProps} exact path="/account/account-devices" component={AccountDevices} />
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
+          <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
           <Route exact path="/">
             <LayoutUnauthorize />
