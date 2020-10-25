@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, InputHTMLAttributes, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -38,6 +38,10 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
 
     dispatch(addTimelineEvent(timelineEvent))
     onAdd()
+  }
+
+  const eventDescriptionHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTimelineEventDescription(e.target.value)
   }
 
   return (
@@ -86,7 +90,8 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
             name="account_url_username"
             placeholder={t('profileInfo.timeline.addNewDescriptionEventField')}
             defaultValue={timelineEventDescription}
-            onChange={(e) => setTimelineEventDescription(e.target.value)}
+            onChange={eventDescriptionHandler}
+            maxLength={500}
           />
         </FormItem>
       </FormRow>

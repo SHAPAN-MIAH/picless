@@ -24,7 +24,7 @@ export const uploadPostVideo = async (bodyData: FormData): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
-    method: 'PUT',
+    method: 'POST',
     headers,
     body: bodyData,
   }

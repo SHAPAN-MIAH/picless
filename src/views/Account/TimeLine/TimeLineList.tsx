@@ -60,7 +60,7 @@ const TimeLineList: FunctionComponent<{}> = () => {
 
       {userTimeLineList && userTimeLineList.length === 0 && (
         <FormRow>
-          <Alert alertType="PRIMARY" message={t('profileInfo.timeline.hasNoEvents')} style={{ width: '100%' }} />
+          <Alert alertType="WARNING" message={t('profileInfo.timeline.hasNoEvents')} style={{ width: '100%' }} />
         </FormRow>
       )}
 

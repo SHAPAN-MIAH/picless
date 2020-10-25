@@ -68,6 +68,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             placeholder={t('profileInfo.addNewDescriptionInterestField')}
             defaultValue={interestDescription}
             onChange={(e) => setInterestDescription(e.target.value)}
+            maxLength={500}
           />
         </FormItem>
       </FormRow>

@@ -1,6 +1,18 @@
 import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+
+import { signOut } from '../../../redux/Auth/AuthThunks'
 
 const NavigationLeftMenu: FunctionComponent<{}> = () => {
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+
+  const logout = () => {
+    dispatch(signOut())
+  }
+
   return (
     <>
       {/* SMALL MENU */}
@@ -33,14 +45,26 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
 
         <ul className="menu small">
           <li className="menu-item">
-            <a className="menu-item-link text-tooltip-tfr" href="newsfeed.html" data-title="Newsfeed">
+            <Link className="menu-item-link text-tooltip-tfr" to="/user/home" data-title={t('navLeftMenu.home')}>
               <svg className="menu-item-link-icon icon-newsfeed">
                 <use xlinkHref="#svg-newsfeed" />
               </svg>
-            </a>
+            </Link>
           </li>
 
           <li className="menu-item">
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              to="/account/account-info"
+              data-title={t('navLeftMenu.accountInfo')}
+            >
+              <svg className="menu-item-link-icon icon-newsfeed">
+                <use xlinkHref="#svg-newsfeed" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* <li className="menu-item">
             <a className="menu-item-link text-tooltip-tfr" href="overview.html" data-title="Overview">
               <svg className="menu-item-link-icon icon-overview">
                 <use xlinkHref="#svg-overview" />
@@ -110,7 +134,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
                 <use xlinkHref="#svg-marketplace" />
               </svg>
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
 
@@ -205,15 +229,24 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
 
         <ul className="menu">
           <li className="menu-item">
-            <a className="menu-item-link" href="newsfeed.html">
+            <Link className="menu-item-link" to="/user/home">
               <svg className="menu-item-link-icon icon-newsfeed">
                 <use xlinkHref="#svg-newsfeed" />
               </svg>
-              Newsfeed
-            </a>
+              {t('navLeftMenu.home')}
+            </Link>
           </li>
 
           <li className="menu-item">
+            <Link className="menu-item-link" to="/account/account-info">
+              <svg className="menu-item-link-icon icon-newsfeed">
+                <use xlinkHref="#svg-newsfeed" />
+              </svg>
+              {t('navLeftMenu.accountInfo')}
+            </Link>
+          </li>
+
+          {/* <li className="menu-item">
             <a className="menu-item-link" href="overview.html">
               <svg className="menu-item-link-icon icon-overview">
                 <use xlinkHref="#svg-overview" />
@@ -292,7 +325,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
               </svg>
               Marketplace
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
 
@@ -344,22 +377,33 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
             <p className="navigation-widget-info-text">Welcome Back!</p>
           </div>
 
-          <p className="navigation-widget-info-button button small secondary">Logout</p>
+          <a className="navigation-widget-info-button button small secondary" href="#/" onClick={logout}>
+            {t('navLeftMenu.logout')}
+          </a>
         </div>
 
         <p className="navigation-widget-section-title">Sections</p>
 
         <ul className="menu">
           <li className="menu-item">
-            <a className="menu-item-link" href="newsfeed.html">
+            <Link className="menu-item-link" to="/user/home">
               <svg className="menu-item-link-icon icon-newsfeed">
                 <use xlinkHref="#svg-newsfeed" />
               </svg>
-              Newsfeed
-            </a>
+              {t('navLeftMenu.home')}
+            </Link>
           </li>
 
           <li className="menu-item">
+            <Link className="menu-item-link" to="/account/account-info">
+              <svg className="menu-item-link-icon icon-newsfeed">
+                <use xlinkHref="#svg-newsfeed" />
+              </svg>
+              {t('navLeftMenu.accountInfo')}
+            </Link>
+          </li>
+
+          {/* <li className="menu-item">
             <a className="menu-item-link" href="overview.html">
               <svg className="menu-item-link-icon icon-overview">
                 <use xlinkHref="#svg-overview" />
@@ -438,16 +482,16 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
               </svg>
               Marketplace
             </a>
-          </li>
+          </li> */}
         </ul>
 
         <p className="navigation-widget-section-title">My Profile</p>
 
-        <a className="navigation-widget-section-link" href="hub-profile-info.html">
-          Profile Info
-        </a>
+        <Link className="navigation-widget-section-link" to="/account/profile-info">
+          {t('navLeftMenu.profileInfo')}
+        </Link>
 
-        <a className="navigation-widget-section-link" href="hub-profile-social.html">
+        {/* <a className="navigation-widget-section-link" href="hub-profile-social.html">
           Social &amp; Stream
         </a>
 
@@ -533,7 +577,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
 
         <a className="navigation-widget-section-link" href="#/">
           Privacy Policy
-        </a>
+        </a> */}
       </nav>
     </>
   )

@@ -80,7 +80,7 @@ const InterestList: FunctionComponent<{}> = () => {
 
       {interestList && interestList.length === 0 && (
         <FormRow>
-          <Alert alertType="PRIMARY" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
+          <Alert alertType="WARNING" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
         </FormRow>
       )}
 

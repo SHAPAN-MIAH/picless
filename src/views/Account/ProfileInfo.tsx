@@ -33,10 +33,10 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const userData: UserType = useSelector(userSelector)
 
   const [userName, setUserName] = useState(userData.userName)
-  const [tagLine, setTagLine] = useState(userData.tagLine || '')
+  const [occupations, setOccupations] = useState(userData.tagLine || '') // TODO:
   const [profileDescription, setProfileDescription] = useState(userData.profileDescription)
   const [countryName, setCountry] = useState(userData.countryName)
-  const [regionName, setRegionName] = useState(userData.regionName)
+  const [cityName, setCityName] = useState(userData.cityName)
   const [birthDate, setBirthdate] = useState<Date | null>(userData.birthDate ? moment(userData.birthDate).toDate() : null)
 
   const prevUserDataRef = useRef(userData)
@@ -49,10 +49,10 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     setUserName(userData.fullName)
-    setTagLine(userData.tagLine || '')
+    setOccupations(userData.tagLine || '')
     setProfileDescription(userData.profileDescription)
     setCountry(userData.countryName)
-    setRegionName(userData.regionName)
+    setCityName(userData.cityName)
     setBirthdate(userData.birthDate ? moment(userData.birthDate).toDate() : null)
 
     prevUserDataRef.current = userData
@@ -64,8 +64,8 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       userName,
       profileDescription,
       countryName,
-      regionName,
-      tagLine,
+      cityName,
+      // occupations,
     }
 
     if (birthDate) user = { ...user, birthDate }
@@ -77,7 +77,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       <div className="content-grid">
         <div className="grid grid-3-9">
           <AccountSidebar />
-
           <div className="account-hub-content">
             <div className="section-header">
               <div className="section-header-info">
@@ -145,20 +144,15 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                             }}
                           />
                         </div>
-
-                        <div className="form-select">
-                          <label htmlFor="account-region">{t('profileInfo.regionField')}</label>
-                          <RegionDropdown
-                            id="account-region"
-                            name="account_region"
-                            disableWhenEmpty
-                            country={countryName || ''}
-                            value={regionName || ''}
-                            onChange={(val) => {
-                              setRegionName(val)
-                            }}
-                          />
-                        </div>
+                        <TextInput
+                          type="text"
+                          id="city"
+                          classNameFormInput="small"
+                          name="city"
+                          placeholder={t('profileInfo.cityField')}
+                          defaultValue={cityName}
+                          onChange={(e) => setCityName(e.target.value)}
+                        />
                       </FormItem>
                     </FormRow>
 
@@ -166,12 +160,12 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                       <FormItem>
                         <TextInput
                           type="text"
-                          id="tag-line"
+                          id="occupations"
                           classNameFormInput="small"
-                          name="tag_line"
-                          placeholder={t('profileInfo.taglineField')}
-                          defaultValue={tagLine}
-                          onChange={(e) => setTagLine(e.target.value)}
+                          name="occupations"
+                          placeholder={t('profileInfo.occupationsField')}
+                          defaultValue={occupations}
+                          onChange={(e) => setOccupations(e.target.value)}
                         />
                       </FormItem>
                     </FormRow>
