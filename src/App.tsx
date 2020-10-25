@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheck, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
 
@@ -13,6 +15,9 @@ import AccountDevices from './views/Account/AccountDevices'
 import ChangePassword from './views/Account/ChangePassword'
 import UserProfile from './views/UserProfile/UserProfile'
 import UserSettings from './views/Account/UserSettings'
+import Home from './views/Home/Home'
+
+library.add(faPlus, faTimes, faCheck)
 
 function App() {
   const dispatch = useDispatch()
@@ -34,6 +39,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/account/account-devices" component={AccountDevices} />
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
           <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
+          <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
           <Route exact path="/">
             <LayoutUnauthorize />

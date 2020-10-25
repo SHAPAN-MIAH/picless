@@ -1,0 +1,58 @@
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.container {
+  min-height: 200px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.previewContainer {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+}
+
+.addSource {
+  border: 1px solid #eaeaf5;
+  width: 80px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  text-align: center;
+  font-size: 30px;
+  margin: 7px;
+}
+
+.previewSource {
+  border: 1px solid #eaeaf5;
+  width: 80px;
+  height: 80px;
+  margin: 7px;
+}
+
+.previewStatusBase {
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.previewStatusUploading {
+  background-color: #eaeaf5;
+}
+
+.previewStatusSuccess {
+  background-color: green;
+}
+
+.previewStatusError {
+  background-color: red;
+}

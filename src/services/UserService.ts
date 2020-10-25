@@ -29,7 +29,7 @@ const updateUserProfile = async (userData: UserType): Promise<any> => {
     headers,
     body: JSON.stringify(userData),
   }
-  debugger
+
   const url = `${baseUrl}/updateprofile`
 
   const response = await fetch(url, requestOptions)

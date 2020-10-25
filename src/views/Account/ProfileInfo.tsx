@@ -69,7 +69,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     }
 
     if (birthDate) user = { ...user, birthDate }
-    debugger
     dispatch(updateProfile(user))
   }
 

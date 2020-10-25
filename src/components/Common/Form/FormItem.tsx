@@ -6,9 +6,13 @@ interface FormItemProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormItem = (props: FormItemProps) => {
-  const { children, className } = props
+  const { children, className, ...rest } = props
 
-  return <div className={classNames('form-item', className)}>{children}</div>
+  return (
+    <div className={classNames('form-item', className)} {...rest}>
+      {children}
+    </div>
+  )
 }
 
 export default FormItem

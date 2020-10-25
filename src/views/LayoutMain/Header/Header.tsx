@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import NavigationHeader from './NavigationHeader/NavigationHeader'
 
 const Header: FunctionComponent<{}> = () => {
   return (
@@ -33,61 +34,7 @@ const Header: FunctionComponent<{}> = () => {
             </div>
           </div>
 
-          <nav className="navigation">
-            <ul className="menu-main">
-              <li className="menu-main-item">
-                <a className="menu-main-item-link" href="#/">
-                  Home
-                </a>
-              </li>
-
-              <li className="menu-main-item">
-                <a className="menu-main-item-link" href="#/">
-                  Careers
-                </a>
-              </li>
-
-              <li className="menu-main-item">
-                <a className="menu-main-item-link" href="#/">
-                  Faqs
-                </a>
-              </li>
-
-              <li className="menu-main-item">
-                <p className="menu-main-item-link">
-                  <svg className="icon-dots">
-                    <use xlinkHref="#svg-dots" />
-                  </svg>
-                </p>
-
-                <ul className="menu-main">
-                  <li className="menu-main-item">
-                    <a className="menu-main-item-link" href="#/">
-                      About Us
-                    </a>
-                  </li>
-
-                  <li className="menu-main-item">
-                    <a className="menu-main-item-link" href="#/">
-                      Our Blog
-                    </a>
-                  </li>
-
-                  <li className="menu-main-item">
-                    <a className="menu-main-item-link" href="#/">
-                      Contact Us
-                    </a>
-                  </li>
-
-                  <li className="menu-main-item">
-                    <a className="menu-main-item-link" href="#/">
-                      Privacy Policy
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
+          <NavigationHeader />
         </div>
 
         <div className="header-actions search-bar">

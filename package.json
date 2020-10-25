@@ -4,6 +4,9 @@
     "private": true,
     "dependencies": {
         "@aws-amplify/auth": "^3.4.4",
+        "@fortawesome/fontawesome-svg-core": "^1.2.32",
+        "@fortawesome/free-solid-svg-icons": "^5.15.1",
+        "@fortawesome/react-fontawesome": "^0.1.11",
         "@reduxjs/toolkit": "^1.4.0",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.5.0",
@@ -24,6 +27,7 @@
         "lodash": "^4.17.20",
         "moment": "^2.29.1",
         "react": "^16.13.1",
+        "react-circular-progressbar": "^2.0.3",
         "react-country-region-selector": "^3.0.1",
         "react-datepicker": "^3.2.2",
         "react-dom": "^16.13.1",
