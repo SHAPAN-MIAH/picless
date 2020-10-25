@@ -14,6 +14,7 @@ import FormItem from '../../../../components/Common/Form/FormItem'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
+import { url } from 'inspector'
 
 type UploadSourcePostPost = {
   show: boolean
@@ -184,24 +185,20 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
               {selectedFile.map((item, index) => {
                 const previewHandler = selectedFilePreview[index]
 
-                if (/^video/.test(item.type)) {
-                  return (
-                    <div
-                      className={classNames(styles.previewSource, 'fixed-height')}
-                      key={`${item.lastModified}${item.name}`}
-                    >
-                      {' '}
-                    </div>
-                  )
-                }
+                // PREVIEW
+                if (/^image/.test(item.type) || /^video/.test(item.type)) {
+                  let imgUrl = previewHandler.url
+                  if (/^video/.test(item.type)) {
+                    imgUrl = `${process.env.PUBLIC_URL}/assets/img/defaults/video_preview.jpg`
+                  }
 
-                if (/^image/.test(item.type)) {
                   return (
                     <div
+                      title={item.name}
                       className={classNames(styles.previewSource, 'fixed-height')}
                       key={`${item.lastModified}${item.name}`}
                       style={{
-                        background: `url(${previewHandler.url}) center center / cover no-repeat`,
+                        background: `url(${imgUrl}) center center / cover no-repeat`,
                       }}
                     >
                       {previewHandler.status === 'PENDING' && (
@@ -253,6 +250,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
               className="button small primary"
               showLoader={isLoading}
               onClick={fileUploadHandler}
+              disabled={selectedFile.length < 1}
             >
               {t('Upload')}
             </ButtonWithLoader>
