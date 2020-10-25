@@ -84,12 +84,6 @@ const CreatePost: FunctionComponent<{}> = () => {
               </svg>
             </div>
 
-            <div className="quick-post-footer-action text-tooltip-tft-medium" data-title="Insert GIF">
-              <svg className="quick-post-footer-action-icon icon-gif">
-                <use xlinkHref="#svg-gif" />
-              </svg>
-            </div>
-
             <div className="quick-post-footer-action text-tooltip-tft-medium" data-title="Insert Tag">
               <svg className="quick-post-footer-action-icon icon-tags">
                 <use xlinkHref="#svg-tags" />
@@ -98,9 +92,9 @@ const CreatePost: FunctionComponent<{}> = () => {
           </div>
 
           <div className="quick-post-footer-actions">
-            <p className="button small void">Discard</p>
+            <p className="button small void">{t('home.createPost.discardButton')}</p>
 
-            <p className="button small secondary">Post</p>
+            <p className="button small secondary">{t('home.createPost.postButton')}</p>
           </div>
         </div>
       </div>
