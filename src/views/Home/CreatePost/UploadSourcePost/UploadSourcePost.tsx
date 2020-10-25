@@ -14,42 +14,46 @@ import FormItem from '../../../../components/Common/Form/FormItem'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
-import { url } from 'inspector'
 
-type UploadSourcePostPost = {
+type UploadSourcePostProp = {
   show: boolean
   onClose: any
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
 
-type filePreview = {
-  url: string
-  status: fileUploadStatus
+interface FilePreviewType extends File {
+  url?: string
+  status?: fileUploadStatus
 }
 
-const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
+const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
+
+const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
   const { t } = useTranslation()
   const { show, onClose } = props
 
-  const [selectedFile, setSelectedFile] = useState<File[]>([])
-  const [selectedFilePreview, setSelectedFilePreview] = useState<filePreview[]>([])
+  const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
+  // const [selectedFilePreview, setSelectedFilePreview] = useState<filePreview[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
 
-    if (target.files) {
-      const files: File[] = selectedFile.concat([])
-      const filesPreview: filePreview[] = selectedFilePreview.concat([])
+    if (target.files && target.files.length <= qtyResources) {
+      const files: FilePreviewType[] = selectedFile.concat([])
       let containsInvalidFormat = false
 
       for (let i = 0; i < target.files.length; i += 1) {
-        const file = (target.files as FileList)[i]
+        const file: FilePreviewType = (target.files as FileList)[i]
 
         if (/^image/.test(file.type) || /^video/.test(file.type)) {
+          file.url = URL.createObjectURL((target.files as FileList)[i])
+          file.status = 'PENDING'
+
+          console.log(file)
+
           files.push(file)
-          filesPreview.push({ url: URL.createObjectURL((target.files as FileList)[i]), status: 'PENDING' })
         } else {
           containsInvalidFormat = true
           break
@@ -60,8 +64,10 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
         alert('There are invalid format, please select images or videos')
       } else {
         setSelectedFile(files)
-        setSelectedFilePreview(filesPreview)
       }
+    } else if (target.files && target.files.length > qtyResources) alert('Max 8 photos or videos')
+    else {
+      console.error('UNEXPECTED ERROR')
     }
   }
 
@@ -69,88 +75,83 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
     setIsLoading(true)
 
     const formDataList: FormData[] = []
-    const largeFiles = selectedFilePreview.length
-    let previewList: filePreview[] = selectedFilePreview
+    const largeFiles = selectedFile.length
+    let previewList: FilePreviewType[] = selectedFile
 
     if (selectedFile) {
       selectedFile.forEach((file, index) => {
-        if (/^image/.test(file.type)) {
-          const formData = new FormData()
-          formData.append('imageType', 'cover')
-          formData.append('coverImage', file, file.name)
+        if (file.status === 'PENDING') {
+          if (/^image/.test(file.type)) {
+            const formData = new FormData()
+            formData.append('imageType', 'cover')
+            formData.append('coverImage', file, file.name)
 
-          formDataList.push(formData)
+            formDataList.push(formData)
 
-          previewList = updateImagePreviewStatus(previewList, index, 'UPLOADING')
+            previewList = updateImagePreviewStatus(previewList, file, 'UPLOADING')
 
-          PostService.uploadPostImage(formData)
-            .then(() => {
-              previewList = updateImagePreviewStatus(previewList, index, 'FINISHED')
-              setSelectedFilePreview(previewList)
+            PostService.uploadPostImage(formData)
+              .then(() => {
+                previewList = updateImagePreviewStatus(previewList, file, 'FINISHED')
+                setSelectedFile(previewList)
 
-              if (largeFiles === index + 1) {
-                setIsLoading(false)
-              }
-            })
-            .catch((err) => {
-              console.log(err)
-              previewList = updateImagePreviewStatus(previewList, index, 'ERROR')
-              setSelectedFilePreview(previewList)
-              if (largeFiles === index + 1) {
-                setIsLoading(false)
-              }
-            })
-        } else if (/^video/.test(file.type)) {
-          const formData = new FormData()
-          formData.append('fileType', 'video')
-          formData.append('coverImage', file, file.name)
+                if (largeFiles === index + 1) {
+                  setIsLoading(false)
+                }
+              })
+              .catch((err) => {
+                console.log(err)
+                previewList = updateImagePreviewStatus(previewList, file, 'ERROR')
+                setSelectedFile(previewList)
+                if (largeFiles === index + 1) {
+                  setIsLoading(false)
+                }
+              })
+          } else if (/^video/.test(file.type)) {
+            const formData = new FormData()
+            formData.append('fileType', 'video')
+            formData.append('coverImage', file, file.name)
 
-          formDataList.push(formData)
+            formDataList.push(formData)
 
-          previewList = updateImagePreviewStatus(previewList, index, 'UPLOADING')
+            previewList = updateImagePreviewStatus(previewList, file, 'UPLOADING')
 
-          PostService.uploadPostVideo(formData)
-            .then(() => {
-              previewList = updateImagePreviewStatus(previewList, index, 'FINISHED')
-              setSelectedFilePreview(previewList)
+            PostService.uploadPostVideo(formData)
+              .then(() => {
+                previewList = updateImagePreviewStatus(previewList, file, 'FINISHED')
+                setSelectedFile(previewList)
 
-              if (largeFiles === index + 1) {
-                setIsLoading(false)
-              }
-            })
-            .catch((err) => {
-              console.log(err)
-              previewList = updateImagePreviewStatus(previewList, index, 'ERROR')
-              setSelectedFilePreview(previewList)
+                if (largeFiles === index + 1) {
+                  setIsLoading(false)
+                }
+              })
+              .catch((err) => {
+                console.log(err)
+                previewList = updateImagePreviewStatus(previewList, file, 'ERROR')
+                setSelectedFile(previewList)
 
-              if (largeFiles === index + 1) {
-                setIsLoading(false)
-              }
-            })
+                if (largeFiles === index + 1) {
+                  setIsLoading(false)
+                }
+              })
+          }
         }
       })
 
-      setSelectedFilePreview(previewList)
+      setSelectedFile(previewList)
     }
   }
 
-  const removeImage = (imageName: string, indexSource: number) => {
+  const removeImage = (imageName: string) => {
     const selectedFilesTemp = selectedFile.filter((file) => file.name !== imageName)
 
-    const selectedFilesPreviewTemp = selectedFilePreview.filter((a, index) => index !== indexSource)
-
     setSelectedFile(selectedFilesTemp)
-    setSelectedFilePreview(selectedFilesPreviewTemp)
   }
 
-  const updateImagePreviewStatus = (list: filePreview[], fileIndex: number, status: fileUploadStatus) => {
-    return list.map((item, index) => {
-      if (fileIndex === index) {
-        const obj = {
-          ...item,
-          status,
-        }
-        return obj
+  const updateImagePreviewStatus = (list: FilePreviewType[], file: FilePreviewType, status: fileUploadStatus) => {
+    return list.map((item) => {
+      if (item.name === file.name) {
+        item.status = status
       }
 
       return item
@@ -182,12 +183,10 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
               </div>
 
               {/* IMAGES SELECTED AND UPLOADED */}
-              {selectedFile.map((item, index) => {
-                const previewHandler = selectedFilePreview[index]
-
+              {selectedFile.map((item) => {
                 // PREVIEW
                 if (/^image/.test(item.type) || /^video/.test(item.type)) {
-                  let imgUrl = previewHandler.url
+                  let imgUrl = item.url
                   if (/^video/.test(item.type)) {
                     imgUrl = `${process.env.PUBLIC_URL}/assets/img/defaults/video_preview.jpg`
                   }
@@ -201,7 +200,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
                         background: `url(${imgUrl}) center center / cover no-repeat`,
                       }}
                     >
-                      {previewHandler.status === 'PENDING' && (
+                      {item.status === 'PENDING' && (
                         <div
                           style={{
                             textAlign: 'right',
@@ -211,14 +210,14 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
                             backgroundColor: '#23d2e2',
                           }}
                           onClick={() => {
-                            removeImage(item.name, index)
+                            removeImage(item.name)
                           }}
                         >
                           <FontAwesomeIcon icon="times" />
                         </div>
                       )}
 
-                      {previewHandler.status === 'UPLOADING' && (
+                      {item.status === 'UPLOADING' && (
                         <div className={classNames(styles.previewStatusBase, styles.previewStatusUploading)}>
                           <div style={{ position: 'absolute' }}>
                             <Loader type="TailSpin" color="#615dfa" height={20} width={20} visible />
@@ -226,7 +225,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
                         </div>
                       )}
 
-                      {previewHandler.status === 'FINISHED' && (
+                      {item.status === 'FINISHED' && (
                         <>
                           <div className={classNames(styles.previewStatusBase, styles.previewStatusSuccess)}>
                             <div style={{ textAlign: 'center', fontSize: '30px', paddingTop: '15px', color: 'white' }}>
@@ -236,13 +235,14 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostPost> = (props) => {
                         </>
                       )}
 
-                      {previewHandler.status === 'ERROR' && (
+                      {item.status === 'ERROR' && (
                         <div className={classNames(styles.previewStatusBase, styles.previewStatusError)} />
                       )}
                     </div>
                   )
                 }
-                return <>{alert('not supported')}</>
+
+                return ''
               })}
             </div>
             <ButtonWithLoader
