@@ -5,6 +5,13 @@
       "home":"Home"
     }
   },
+  "navLeftMenu":{
+    "logout":"Log Out",
+    "home":"Home",
+    "accountInfo":"Account Info",
+    "profileInfo":"Profile Info"
+  },
+  
   "passwordStrengthBar": {
     "shortScoreWord": "too short",
     "scoreWords": {
@@ -82,7 +89,14 @@
       "addNewDescriptionInterestField":"New Interest Description",
       "AddedSuccessfully":"Interest Added Successfully",
       "addNewInterestButton":"Add Interest",
-      "cancelNewInterestButton":"Cancel"
+      "cancelNewInterestButton":"Cancel",
+      "errors":{
+        "updatingData":"Error while updating data"
+      }
+    },
+    "errors":{
+      "fetchingData":"Some information is still missing",
+      "uploadingAnImage":"Error while uploading the media file"
     },
     "timelineTitle":"Timeline",
     "timeline":{
@@ -94,7 +108,12 @@
       "addNewDescriptionEventField":"Event Description",
       "cancelNewTimeLineEventButton":"Cancel",
       "addNewTimeLineEventButton":"Add New Field",
-      "AddedSuccessfully":"Event Added Successfully"
+      "AddedSuccessfully":"Event Added Successfully",
+      "errors":{
+        "addingTimeLine":"Error while adding timeline",
+        "removingTimeLine":"Error while removing timeline",
+        "updatingTimeline":"Error while updating timeline"
+      }
     }
   },
   "changePassword":{
