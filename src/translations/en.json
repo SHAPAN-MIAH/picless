@@ -52,7 +52,29 @@
     "countryField":"Country",
     "birthdayField":"Birthday",
     "interestsMusicField":"Favourite Music Bands /Artists",
-    "interestsListField":"Things that you really enjoy..."
+    "interestsListField":"Things that you really enjoy...",
+    "myProfileTitle":"My Profile",
+    "interests":{
+      "hasNoInterests":"You Has No Interests Yet",
+      "addNewInterest":"Add New Interest",
+      "addNewTitleInterestField":"New Interest Title",
+      "addNewDescriptionInterestField":"New Interest Description",
+      "AddedSuccessfully":"Interest Added Successfully",
+      "addNewInterestButton":"Add Interest",
+      "cancelNewInterestButton":"Cancel"
+    },
+    "timelineTitle":"Timeline",
+    "timeline":{
+      "hasNoEvents":"You Has No Events Yet",
+      "addNewEvent":"Add New Event",
+      "addNewTitleTimelineEventField":"Title Or Place",
+      "newYearStarted":"Year Started",
+      "newYearEnded":"Year Ended",
+      "addNewDescriptionEventField":"Event Description",
+      "cancelNewTimeLineEventButton":"Cancel",
+      "addNewTimeLineEventButton":"Add New Field",
+      "AddedSuccessfully":"Event Added Successfully"
+    }
   },
   "changePassword":{
     "changePasswordTitle":"Change Password",

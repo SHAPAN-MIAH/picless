@@ -98,12 +98,12 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`+ ${t('profileInfo.timeline.cancelNewTimeLineEvent')}`}
+            {`+ ${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
           </ButtonWithLoader>
         </FormItem>
         <FormItem>
           <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
-            {`+ ${t('profileInfo.timeline.addNewTimeLineEvent')}`}
+            {`+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
           </ButtonWithLoader>
         </FormItem>
       </FormRow>
