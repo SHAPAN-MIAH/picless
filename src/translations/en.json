@@ -1,6 +1,9 @@
 {
   "header": {
-    "searchPlaceholder": "Search here for people or groups"
+    "searchPlaceholder": "Search here for people or groups",
+    "navigation":{
+      "home":"Home"
+    }
   },
   "passwordStrengthBar": {
     "shortScoreWord": "too short",
@@ -20,7 +23,8 @@
     "changePassword":"Change Password",
     "logout":"Log Out",
     "saveButtonText":"Save Changes!",
-    "discardAllButton":"Discard All"
+    "discardAllButton":"Discard All",
+    "settings":"Account Settings"
   },
   "accountInfo":{
     "accountTitle":"Account",
@@ -38,6 +42,21 @@
     "devicesSubTitle":"My Devices",
     "devicesList":"List Of Remebered Devices"
   },
+  "home":{
+    "createPost":{
+      "title":"Create Post",
+      "placeholderPostText":"Post Text",
+      "discardButton":"Discard Post",
+      "postButton":"Post Now!",
+      "uploadsources":{
+        "title":"Upload Photos Or Videos",
+        "":""
+      },
+      "error":{
+        "limitCharacters":"Too Long!"
+      }
+      }
+  },
   "profileInfo":{
     "profileInfo":"Profile Info",
     "aboutYourProfile":"Aboute Your Profile",
@@ -54,6 +73,8 @@
     "interestsMusicField":"Favourite Music Bands /Artists",
     "interestsListField":"Things that you really enjoy...",
     "myProfileTitle":"My Profile",
+    "cityField":"City",
+    "occupationsField":"Occupation",
     "interests":{
       "hasNoInterests":"You Has No Interests Yet",
       "addNewInterest":"Add New Interest",
@@ -90,9 +111,18 @@
      "InvalidParameterException":"The new password does not meet the requirements",
      "LimitExceededException":"Attempt limit exceeded, please try after some minutes"
     }
-
-    
   },
+"accountSettings":{
+  "changePassword":"Change Password",
+  "myProfileSection":"My Profile",
+  "profileInfo":"Profile Info",
+  "accountSection":"My Account",
+  "accountInfo":"Account Info",
+  "settings":"Account Settings"
+
+
+},
+
   "authentication": {
     "welcome": "Welcome to ",
     "welcomeDescription": "The next generation social network community! Connect with your friends and play with our quests and badges gamification system!",
