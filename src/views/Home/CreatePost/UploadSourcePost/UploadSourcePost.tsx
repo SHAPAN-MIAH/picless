@@ -14,10 +14,11 @@ import FormItem from '../../../../components/Common/Form/FormItem'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
+import { ResourceType, SourceType } from '../../../../types/PostType.d'
 
 type UploadSourcePostProp = {
-  show: boolean
   onClose: any
+  onUploadedFile: (source: SourceType, type: ResourceType) => void
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
@@ -31,7 +32,7 @@ const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST |
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
   const { t } = useTranslation()
-  const { show, onClose } = props
+  const { onClose, onUploadedFile } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [selectedFilePreview, setSelectedFilePreview] = useState<filePreview[]>([])
@@ -81,60 +82,44 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     if (selectedFile) {
       selectedFile.forEach((file, index) => {
         if (file.status === 'PENDING') {
+          let fileType: ResourceType
+          const formData = new FormData()
+
           if (/^image/.test(file.type)) {
-            const formData = new FormData()
-            formData.append('imageType', 'cover')
-            formData.append('coverImage', file, file.name)
-
-            formDataList.push(formData)
-
-            previewList = updateImagePreviewStatus(previewList, file, 'UPLOADING')
-
-            PostService.uploadPostImage(formData)
-              .then(() => {
-                previewList = updateImagePreviewStatus(previewList, file, 'FINISHED')
-                setSelectedFile(previewList)
-
-                if (largeFiles === index + 1) {
-                  setIsLoading(false)
-                }
-              })
-              .catch((err) => {
-                console.log(err)
-                previewList = updateImagePreviewStatus(previewList, file, 'ERROR')
-                setSelectedFile(previewList)
-                if (largeFiles === index + 1) {
-                  setIsLoading(false)
-                }
-              })
+            formData.append('fileType', 'image')
+            fileType = 'IMAGE'
           } else if (/^video/.test(file.type)) {
-            const formData = new FormData()
             formData.append('fileType', 'video')
-            formData.append('coverImage', file, file.name)
-
-            formDataList.push(formData)
-
-            previewList = updateImagePreviewStatus(previewList, file, 'UPLOADING')
-
-            PostService.uploadPostVideo(formData)
-              .then(() => {
-                previewList = updateImagePreviewStatus(previewList, file, 'FINISHED')
-                setSelectedFile(previewList)
-
-                if (largeFiles === index + 1) {
-                  setIsLoading(false)
-                }
-              })
-              .catch((err) => {
-                console.log(err)
-                previewList = updateImagePreviewStatus(previewList, file, 'ERROR')
-                setSelectedFile(previewList)
-
-                if (largeFiles === index + 1) {
-                  setIsLoading(false)
-                }
-              })
+            fileType = 'VIDEO'
           }
+
+          formData.append('coverImage', file, file.name)
+          formDataList.push(formData)
+
+          previewList = updateResourcePreviewStatus(previewList, file, 'UPLOADING')
+
+          PostService.uploadPostResource(formData)
+            .then((data) => {
+              previewList = updateResourcePreviewStatus(previewList, file, 'FINISHED')
+              setSelectedFile(previewList)
+
+              if (largeFiles === index + 1) {
+                setIsLoading(false)
+              }
+
+              onUploadedFile({ name: file.name, pathName: data.path }, fileType)
+            })
+            .catch((err) => {
+              console.log(err)
+              previewList = updateResourcePreviewStatus(previewList, file, 'ERROR')
+              setSelectedFile(previewList)
+
+              if (largeFiles === index + 1) {
+                setIsLoading(false)
+              }
+            })
+        } else {
+          setIsLoading(false)
         }
       })
 
@@ -148,7 +133,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     setSelectedFile(selectedFilesTemp)
   }
 
-  const updateImagePreviewStatus = (list: FilePreviewType[], file: FilePreviewType, status: fileUploadStatus) => {
+  const updateResourcePreviewStatus = (list: FilePreviewType[], file: FilePreviewType, status: fileUploadStatus) => {
     return list.map((item) => {
       if (item.name === file.name) {
         item.status = status
@@ -162,7 +147,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
   return (
     <>
-      <FormRow className={classNames(styles.container, show ? styles.show : styles.hide)}>
+      <FormRow className={classNames(styles.container)}>
         <FormItem>
           <div className={styles.subContainer} style={{ margin: '28px' }}>
             <div className={styles.header}>

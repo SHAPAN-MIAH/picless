@@ -10,19 +10,35 @@ import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
 
+import { ResourceType, SourceType } from '../../../types/PostType.d'
+
 import styles from './CreatePost.module.css'
+import InputTags from '../../../components/InputTags/InputTags'
 
 const CreatePost: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
+  const [showTags, setShowTags] = useState<boolean>(false)
   const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
   const [post, setPost] = useState<string>('')
+
+  const listOfImages: SourceType[] = []
+  const listOfVideos: SourceType[] = []
 
   const onChangeCreatePost = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { target } = e
 
     setPost(target.value)
     setQtyCharactersPost(target.value.length)
+  }
+
+  const onUploadedFile = (source: SourceType, type: ResourceType) => {
+    if (type === 'IMAGE') {
+      listOfImages.push(source)
+    } else {
+      listOfVideos.push(source)
+    }
   }
 
   return (
@@ -61,13 +77,28 @@ const CreatePost: FunctionComponent<{}> = () => {
                 </div>
               </FormItem>
             </FormRow>
+
             {/* UPLOADPHOTO VIEW */}
-            <UploadSourcePost
-              show={showUploadPhotos}
-              onClose={() => {
-                setShowUploadPhotos(false)
-              }}
-            />
+            {showUploadPhotos && (
+              <UploadSourcePost
+                onUploadedFile={onUploadedFile}
+                onClose={() => {
+                  setShowUploadPhotos(false)
+                }}
+              />
+            )}
+
+            {showTags && (
+              <FormRow>
+                <FormItem style={{ padding: '0px !important' }}>
+                  <InputTags
+                    onChange={(tags: string) => {
+                      console.log(tags)
+                    }}
+                  />
+                </FormItem>
+              </FormRow>
+            )}
           </form>
         </div>
 
@@ -84,7 +115,12 @@ const CreatePost: FunctionComponent<{}> = () => {
               </svg>
             </div>
 
-            <div className="quick-post-footer-action text-tooltip-tft-medium" data-title="Insert Tag">
+            <div
+              className="quick-post-footer-action"
+              onClick={() => {
+                setShowTags(!showTags)
+              }}
+            >
               <svg className="quick-post-footer-action-icon icon-tags">
                 <use xlinkHref="#svg-tags" />
               </svg>
@@ -92,9 +128,20 @@ const CreatePost: FunctionComponent<{}> = () => {
           </div>
 
           <div className="quick-post-footer-actions">
-            <p className="button small void">{t('home.createPost.discardButton')}</p>
+            <button type="button" className="button small void">
+              {t('home.createPost.discardButton')}
+            </button>
 
-            <p className="button small secondary">{t('home.createPost.postButton')}</p>
+            <button
+              type="button"
+              className="button small secondary"
+              onClick={() => {
+                console.log(JSON.stringify(listOfImages))
+                console.log(JSON.stringify(listOfVideos))
+              }}
+            >
+              {t('home.createPost.postButton')}
+            </button>
           </div>
         </div>
       </div>

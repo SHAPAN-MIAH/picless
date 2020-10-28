@@ -1,0 +1,54 @@
+.tags {
+  background: #fff;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.tag {
+  display: block;
+  color: #fff;
+
+  font-size: 0.75rem;
+  background: #615dfa;
+  float: left;
+  padding: 0px 12px;
+  border-radius: 10em;
+  margin: 12px 12px 0 0;
+  height: 24px;
+  line-height: 24px;
+}
+
+.tagInput {
+  padding: 5px 10px;
+  box-sizing: border-box;
+  color: #7f8c8d;
+  border: 0;
+  float: left;
+  margin: 10px 0;
+  font-size: 16px;
+  outline: 0;
+}
+
+.removeTag {
+  margin-left: 5px;
+  color: #fff;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+code {
+  font-size: 12px;
+  background: #fcf8d0;
+  display: inline-block;
+  font-family: courier;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+small {
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+  line-height: 16px;
+}

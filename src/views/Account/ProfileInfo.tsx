@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector'
+import { CountryDropdown } from 'react-country-region-selector'
 
 import moment from 'moment'
 

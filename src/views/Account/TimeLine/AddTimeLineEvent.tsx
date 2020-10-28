@@ -1,4 +1,4 @@
-import React, { FunctionComponent, InputHTMLAttributes, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 

@@ -1,26 +1,10 @@
+import { PostType } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
-const baseUrlUser = `${process.env.REACT_APP_BASE_URL_API}/users`
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
-// const baseUrl = `https://localhost:44326/users`
+// const baseUrl = `https://localhost:44326/posts`
 
-export const uploadPostImage = async (bodyData: FormData): Promise<any> => {
-  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
-
-  const requestOptions: RequestInit = {
-    method: 'PUT',
-    headers,
-    body: bodyData,
-  }
-  const url = `${baseUrlUser}/updateuserimage`
-
-  const response = await fetch(url, requestOptions)
-  const body = await response.json()
-
-  return body
-}
-
-export const uploadPostVideo = async (bodyData: FormData): Promise<any> => {
+export const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
@@ -32,7 +16,25 @@ export const uploadPostVideo = async (bodyData: FormData): Promise<any> => {
   const url = `${baseUrl}/uploadpostfile`
 
   const response = await fetch(url, requestOptions)
-  return response
+  const body = await response.json()
+  return body
+}
+
+export const createPost = async (post: PostType) => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(post),
+  }
+
+  const url = `${baseUrl}/addpost`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
 }
 
 // Possible Code for upload images with progress
