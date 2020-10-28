@@ -151,7 +151,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
         <FormItem>
           <div className={styles.subContainer} style={{ margin: '28px' }}>
             <div className={styles.header}>
-              <h6>{t('createpost.uploadsources.title')}</h6>
+              <h6>{t('home.createPost.uploadsources.title')}</h6>
               <a href="#/" style={{ color: '#adafca' }} onClick={() => onClose(false)}>
                 <FontAwesomeIcon icon="times" />
               </a>

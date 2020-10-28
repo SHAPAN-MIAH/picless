@@ -49,7 +49,7 @@ const CreatePost: FunctionComponent<{}> = () => {
             <svg className="option-item-icon icon-blog-posts">
               <use xlinkHref="#svg-blog-posts" />
             </svg>{' '}
-            {t('home.createpost.title')}
+            {t('home.createPost.title')}
           </h3>
         </div>
 
@@ -61,7 +61,7 @@ const CreatePost: FunctionComponent<{}> = () => {
                   <textarea
                     id="quick-post-text"
                     name="quick-post-text"
-                    placeholder={t('home.createpost.placeholderPostText')}
+                    placeholder={t('home.createPost.placeholderPostText')}
                     defaultValue={post}
                     onChange={onChangeCreatePost}
                     minLength={0}
@@ -70,7 +70,7 @@ const CreatePost: FunctionComponent<{}> = () => {
                   {/* "Hi! Share your post here..." */}
                   <p className="form-textarea-limit-text">
                     {qtyCharactersPost >= 1000 && (
-                      <span style={{ color: 'red' }}>{`(${t('home.createpost.error.limitCharacters')})  `}</span>
+                      <span style={{ color: 'red' }}>{`(${t('home.createPost.error.limitCharacters')})  `}</span>
                     )}
                     {`${qtyCharactersPost}/1000`}
                   </p>

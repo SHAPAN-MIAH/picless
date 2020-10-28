@@ -52,7 +52,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             id="tag-line"
             classNameFormInput="small"
             name="tag_line"
-            placeholder={t('profileInfo.interest.addNewTitleInterestField')}
+            placeholder={t('profileInfo.interests.addNewTitleInterestField')}
             defaultValue={interestName}
             onChange={(e) => setInterestName(e.target.value)}
           />
@@ -65,7 +65,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             id="interest-1"
             classNameFormInput="small full"
             name="account_url_username"
-            placeholder={t('profileInfo.addNewDescriptionInterestField')}
+            placeholder={t('profileInfo.interests.addNewDescriptionInterestField')}
             defaultValue={interestDescription}
             onChange={(e) => setInterestDescription(e.target.value)}
             maxLength={500}
@@ -78,12 +78,12 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`+ ${t('interests.cancelNewInterest')}`}
+            {`+ ${t('profileInfo.interests.cancelNewInterestButton')}`}
           </ButtonWithLoader>
         </FormItem>
         <FormItem>
           <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
-            {`+ ${t('interests.addNewInterest')}`}
+            {`+ ${t('profileInfo.interests.addNewInterestButton')}`}
           </ButtonWithLoader>
         </FormItem>
       </FormRow>
