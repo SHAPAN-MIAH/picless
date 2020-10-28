@@ -69,28 +69,17 @@ const UserSettings: FunctionComponent<{}> = () => {
             </div>
 
             <div className="grid-column">
-              <div className="widget-box">
-                <p className="widget-box-title">{t('settings.general')}</p>
+              <form className="form">
+                <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                  <p className="widget-box-title">{t('profileInfo.General')}</p>
 
-                <div className="widget-box-content">
-                  <form className="form">
+                  <div className="widget-box-content">
                     <FormRow classNameRow="split">
                       <FormItem>
-                        <TextInput
-                          type="text"
-                          id="account-full-name"
-                          classNameFormInput="small active"
-                          name="account_full_name"
-                          placeholder={t('settings.fullName')}
-                          defaultValue={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                        />
-                      </FormItem>
-                      <FormItem>
                         <CheckboxForm
-                          id="display-profile-searchbar"
-                          title={t('settings.fields.displayProfileSearchBar')}
-                          description={t('settings.fields.displayProfileSearchBarDescription')}
+                          id="enabled-push-notifications"
+                          title={t('settings.fields.enabledPushNotifications')}
+                          description={t('settings.fields.enabledPushNotifications')}
                           checked={displayProfileSearchBar}
                           onChange={(value: boolean) => {
                             setDisplayProfileSearchBar(value)
@@ -102,14 +91,136 @@ const UserSettings: FunctionComponent<{}> = () => {
                     <FormRow classNameRow="split">
                       <FormItem>
                         <CheckboxForm
-                          id="display-profile-searchbar"
-                          title={t('settings.fields.displayProfileSearchBar')}
-                          description={t('settings.fields.displayProfileSearchBarDescription')}
+                          id="enabled-email-notifications"
+                          title={t('settings.fields.enabledEmailNotifications')}
+                          description={t('settings.fields.enabledEmailNotifications')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
                           }}
                         />
+                      </FormItem>
+                    </FormRow>
+                  </div>
+                </div>
+
+                <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                  <p className="widget-box-title">{t('profileInfo.Notification')}</p>
+
+                  <div className="widget-box-content">
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="notification-comments"
+                          title={t('settings.fields.comments')}
+                          description={t('settings.fields.comments')}
+                          checked={displayProfileSearchBar}
+                          onChange={(value: boolean) => {
+                            setDisplayProfileSearchBar(value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="notification-new-suscriber"
+                          title={t('settings.fields.newSuscriber')}
+                          description={t('settings.fields.newSuscriber')}
+                          checked={displayProfileSearchBar}
+                          onChange={(e: any) => {
+                            setDisplayProfileSearchBar(e.target.value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="notification-tips"
+                          title={t('settings.fields.tips')}
+                          description={t('settings.fields.tips')}
+                          checked={displayProfileSearchBar}
+                          onChange={(e: any) => {
+                            setDisplayProfileSearchBar(e.target.value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="notification-messages"
+                          title={t('settings.fields.messages')}
+                          description={t('settings.fields.messages')}
+                          checked={displayProfileSearchBar}
+                          onChange={(e: any) => {
+                            setDisplayProfileSearchBar(e.target.value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+                  </div>
+                </div>
+
+                <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                  <p className="widget-box-title">{t('profileInfo.PrivacySettings')}</p>
+
+                  <div className="widget-box-content">
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="display-profileInSearchBar"
+                          title={t('settings.fields.displayProfileInSearchBar')}
+                          description={t('settings.fields.displayProfileInSearchBar')}
+                          checked={displayProfileSearchBar}
+                          onChange={(value: boolean) => {
+                            setDisplayProfileSearchBar(value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="display-chatActivity"
+                          title={t('settings.fields.displayChatActivity')}
+                          description={t('settings.fields.displayChatActivity')}
+                          checked={displayProfileSearchBar}
+                          onChange={(e: any) => {
+                            setDisplayProfileSearchBar(e.target.value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <CheckboxForm
+                          id="google-Authenticator"
+                          title={t('settings.fields.googleAuthenticator')}
+                          description={t('settings.fields.googleAuthenticator')}
+                          checked={displayProfileSearchBar}
+                          onChange={(e: any) => {
+                            setDisplayProfileSearchBar(e.target.value)
+                          }}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <div className="form-select">
+                          <label htmlFor="settings-howCanSendMessage">{t('settings.fields.howCanSendMessage')}</label>
+                          <select name="settings-howCanSendMessage" id="settings-howCanSendMessage">
+                            <option id="everyOne">Everyone (Public)</option>
+                            <option id="onlySuscribers">Only Suscribers</option>
+                          </select>
+                        </div>
                       </FormItem>
                     </FormRow>
 
@@ -130,9 +241,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         </ButtonWithLoader>
                       </FormItem>
                     </FormRow>
-                  </form>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
