@@ -44,7 +44,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
     <>
       <FormRow classNameRow="top-border">
         <FormRow>
-          <p>sadfadsf</p>
+          <p>{t('profileInfo.interests.newInterest')}</p>
         </FormRow>
         <FormItem>
           <TextInput
@@ -78,7 +78,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`+ ${t('profileInfo.interests.cancelNewInterestButton')}`}
+            {`${t('profileInfo.interests.cancelNewInterestButton')}`}
           </ButtonWithLoader>
         </FormItem>
         <FormItem>

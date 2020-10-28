@@ -46,6 +46,9 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
 
   return (
     <>
+      <FormRow>
+        <p>{t('profileInfo.timeline.newTimeLineEvent')}</p>
+      </FormRow>
       <FormRow classNameRow="split">
         <FormItem>
           <TextInput
@@ -98,7 +101,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`+ ${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
+            {`${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
           </ButtonWithLoader>
         </FormItem>
         <FormItem>
