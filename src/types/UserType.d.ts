@@ -63,3 +63,16 @@ export type Device = {
   DeviceAttributes: [{ Name: string; Value: string }]
   DeviceLastAuthenticatedDate: string
 }
+
+export interface ProfileUserSettings {
+  enabledPushNotificatoins: boolean
+  enabledEmailNotificatoins: boolean
+  notificationComments: boolean
+  notificationNewSuscriber: boolean
+  notificationTips: boolean
+  notificationsMessage: boolean
+  privacityDisplayProfileInSearchBar: boolean
+  privacityDisplayChatActivity: boolean
+  privacityGoogleAuthenticator: boolean
+  privacityWhoCanSendMessage: string
+}

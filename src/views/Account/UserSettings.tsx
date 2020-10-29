@@ -1,56 +1,75 @@
 import { useTranslation } from 'react-i18next'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
-import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
-
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
-import TextInput from '../../components/Common/TextInput'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
 import CheckboxForm from '../../components/Common/CheckboxForm'
 import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
-import { UserType } from '../../types/UserType.d'
+import { ProfileUserSettings } from '../../types/UserType.d'
+import UserService from '../../services/UserService'
 
 const UserSettings: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const [enabledPushNotificatoins, setEnabledPushNotificatoins] = useState<boolean>(false)
+  const [enabledEmailNotificatoins, setEnabledEmailNotificatoins] = useState<boolean>(false)
+  const [notificationComments, setNotificationComments] = useState<boolean>(false)
+  const [notificationNewSuscriber, setNotificationNewSuscriber] = useState<boolean>(false)
+  const [notificationTips, setNotificationTips] = useState<boolean>(false)
+  const [notificationsMessage, setNotificationsMessage] = useState<boolean>(false)
+  const [privacityDisplayProfileInSearchBar, setprivacityDisplayProfileInSearchBar] = useState<boolean>(false)
+  const [privacityDisplayChatActivity, setPrivacityDisplayChatActivity] = useState<boolean>(false)
+  const [privacityGoogleAuthenticator, setPrivacityGoogleAuthenticator] = useState<boolean>(false)
+  const [privacityWhoCanSendMessage, setPrivacityWhoCanSendMessage] = useState<string>('everyone')
 
-  const error: string = useSelector(errorSelector)
-  const message: string = useSelector(messageSelector)
-  const loading: boolean = useSelector(loadingSelector)
+  const [message, setMessage] = useState<string>('')
+  const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const userData: UserType = useSelector(userSelector)
-
-  const [fullName, setFullName] = useState(userData.fullName)
-  const [displayProfileSearchBar, setDisplayProfileSearchBar] = useState(true)
-
-  const prevUserDataRef = useRef(userData)
-
-  // Will mount
   useEffect(() => {
-    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
-
-    dispatch(getProfile())
-  }, [dispatch])
-
-  // Component Update
-  useEffect(() => {
-    setFullName(userData.fullName)
-
-    prevUserDataRef.current = userData
-  }, [dispatch, userData])
+    UserService.getUserSettings().then((userData: any) => {
+      if (userData) {
+        setEnabledPushNotificatoins(userData.enabledPushNotificatoins)
+        setEnabledEmailNotificatoins(userData.enabledEmailNotificatoins)
+        setNotificationComments(userData.notificationComments)
+        setNotificationNewSuscriber(userData.notificationNewSuscriber)
+        setNotificationTips(userData.notificationTips)
+        setNotificationsMessage(userData.notificationsMessage)
+        setprivacityDisplayProfileInSearchBar(userData.privacityDisplayProfileInSearchBar)
+        setPrivacityDisplayChatActivity(userData.privacityDisplayChatActivity)
+        setPrivacityGoogleAuthenticator(userData.privacityGoogleAuthenticator)
+        setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
+      }
+    })
+  }, []) // Will mount
 
   const saveUserData = () => {
-    const user: UserType = {
-      fullName,
+    setLoading(true)
+
+    const settings: ProfileUserSettings = {
+      enabledPushNotificatoins,
+      enabledEmailNotificatoins,
+      notificationComments,
+      notificationNewSuscriber,
+      notificationTips,
+      notificationsMessage,
+      privacityDisplayProfileInSearchBar,
+      privacityDisplayChatActivity,
+      privacityGoogleAuthenticator,
+      privacityWhoCanSendMessage,
     }
 
-    dispatch(updateProfile(user))
+    UserService.updateUserSettings(settings)
+      .then(() => {
+        setMessage('OK')
+        setLoading(false)
+      })
+      .catch(() => {
+        setError('error')
+        setLoading(false)
+      })
   }
 
   return (
@@ -79,9 +98,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="enabled-push-notifications"
                           title={t('settings.fields.enabledPushNotifications')}
-                          checked={displayProfileSearchBar}
+                          checked={privacityDisplayProfileInSearchBar}
                           onChange={(value: boolean) => {
-                            setDisplayProfileSearchBar(value)
+                            setprivacityDisplayProfileInSearchBar(value)
                           }}
                         />
                       </FormItem>
@@ -92,9 +111,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="enabled-email-notifications"
                           title={t('settings.fields.enabledEmailNotifications')}
-                          checked={displayProfileSearchBar}
+                          checked={enabledEmailNotificatoins}
                           onChange={(e: any) => {
-                            setDisplayProfileSearchBar(e.target.value)
+                            setEnabledEmailNotificatoins(e.target.value)
                           }}
                         />
                       </FormItem>
@@ -111,9 +130,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-comments"
                           title={t('settings.fields.comments')}
-                          checked={displayProfileSearchBar}
+                          checked={notificationComments}
                           onChange={(value: boolean) => {
-                            setDisplayProfileSearchBar(value)
+                            setNotificationComments(value)
                           }}
                         />
                       </FormItem>
@@ -124,9 +143,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-new-suscriber"
                           title={t('settings.fields.newSubscriber')}
-                          checked={displayProfileSearchBar}
+                          checked={notificationNewSuscriber}
                           onChange={(e: any) => {
-                            setDisplayProfileSearchBar(e.target.value)
+                            setNotificationNewSuscriber(e.target.value)
                           }}
                         />
                       </FormItem>
@@ -137,9 +156,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-tips"
                           title={t('settings.fields.tips')}
-                          checked={displayProfileSearchBar}
+                          checked={notificationTips}
                           onChange={(e: any) => {
-                            setDisplayProfileSearchBar(e.target.value)
+                            setNotificationTips(e.target.value)
                           }}
                         />
                       </FormItem>
@@ -150,9 +169,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-messages"
                           title={t('settings.fields.messages')}
-                          checked={displayProfileSearchBar}
+                          checked={notificationsMessage}
                           onChange={(e: any) => {
-                            setDisplayProfileSearchBar(e.target.value)
+                            setNotificationsMessage(e.target.value)
                           }}
                         />
                       </FormItem>
@@ -169,9 +188,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="display-profileInSearchBar"
                           title={t('settings.fields.displayProfileInSearchBar')}
-                          checked={displayProfileSearchBar}
+                          checked={privacityDisplayProfileInSearchBar}
                           onChange={(value: boolean) => {
-                            setDisplayProfileSearchBar(value)
+                            setprivacityDisplayProfileInSearchBar(value)
                           }}
                         />
                       </FormItem>
@@ -182,9 +201,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="display-chatActivity"
                           title={t('settings.fields.displayChatActivity')}
-                          checked={displayProfileSearchBar}
+                          checked={privacityDisplayChatActivity}
                           onChange={(e: any) => {
-                            setDisplayProfileSearchBar(e.target.value)
+                            setPrivacityDisplayChatActivity(e.target.value)
                           }}
                         />
                       </FormItem>
@@ -195,9 +214,9 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="google-Authenticator"
                           title={t('settings.fields.googleAuthenticator')}
-                          checked={displayProfileSearchBar}
+                          checked={privacityGoogleAuthenticator}
                           onChange={(e: any) => {
-                            setDisplayProfileSearchBar(e.target.value)
+                            setPrivacityGoogleAuthenticator(e.target.value)
                           }}
                         />
                       </FormItem>

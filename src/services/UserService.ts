@@ -1,4 +1,4 @@
-import { UploadImageType, UserType } from '../types/UserType.d'
+import { ProfileUserSettings, UploadImageType, UserType } from '../types/UserType.d'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
@@ -31,6 +31,40 @@ const updateUserProfile = async (userData: UserType): Promise<any> => {
   }
 
   const url = `${baseUrl}/updateprofile`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
+const getUserSettings = async (): Promise<ProfileUserSettings> => {
+  const email = await ApiHelper.getEmail()
+
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+  const url = `${baseUrl}/getusersettings?email=${email}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
+const updateUserSettings = async (settings: ProfileUserSettings): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(settings),
+  }
+
+  const url = `${baseUrl}/updateusersettings`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
@@ -79,4 +113,4 @@ const removeDevice = async (deviceKey: string): Promise<any> => {
   return body
 }
 
-export default { getUserProfile, updateUserProfile, uploadUserImages, removeDevice }
+export default { getUserProfile, updateUserProfile, uploadUserImages, removeDevice, updateUserSettings, getUserSettings }
