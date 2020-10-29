@@ -71,7 +71,7 @@ const UserSettings: FunctionComponent<{}> = () => {
             <div className="grid-column">
               <form className="form">
                 <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
-                  <p className="widget-box-title">{t('profileInfo.General')}</p>
+                  <p className="widget-box-title">{t('settings.generalTitle')}</p>
 
                   <div className="widget-box-content">
                     <FormRow classNameRow="split">
@@ -79,7 +79,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="enabled-push-notifications"
                           title={t('settings.fields.enabledPushNotifications')}
-                          description={t('settings.fields.enabledPushNotifications')}
                           checked={displayProfileSearchBar}
                           onChange={(value: boolean) => {
                             setDisplayProfileSearchBar(value)
@@ -93,7 +92,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="enabled-email-notifications"
                           title={t('settings.fields.enabledEmailNotifications')}
-                          description={t('settings.fields.enabledEmailNotifications')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
@@ -105,7 +103,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                 </div>
 
                 <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
-                  <p className="widget-box-title">{t('profileInfo.Notification')}</p>
+                  <p className="widget-box-title">{t('settings.typeNotification')}</p>
 
                   <div className="widget-box-content">
                     <FormRow classNameRow="split">
@@ -113,7 +111,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-comments"
                           title={t('settings.fields.comments')}
-                          description={t('settings.fields.comments')}
                           checked={displayProfileSearchBar}
                           onChange={(value: boolean) => {
                             setDisplayProfileSearchBar(value)
@@ -126,8 +123,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                       <FormItem>
                         <CheckboxForm
                           id="notification-new-suscriber"
-                          title={t('settings.fields.newSuscriber')}
-                          description={t('settings.fields.newSuscriber')}
+                          title={t('settings.fields.newSubscriber')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
@@ -141,7 +137,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-tips"
                           title={t('settings.fields.tips')}
-                          description={t('settings.fields.tips')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
@@ -155,7 +150,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="notification-messages"
                           title={t('settings.fields.messages')}
-                          description={t('settings.fields.messages')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
@@ -167,7 +161,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                 </div>
 
                 <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
-                  <p className="widget-box-title">{t('profileInfo.PrivacySettings')}</p>
+                  <p className="widget-box-title">{t('settings.privacyTitle')}</p>
 
                   <div className="widget-box-content">
                     <FormRow classNameRow="split">
@@ -175,7 +169,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="display-profileInSearchBar"
                           title={t('settings.fields.displayProfileInSearchBar')}
-                          description={t('settings.fields.displayProfileInSearchBar')}
                           checked={displayProfileSearchBar}
                           onChange={(value: boolean) => {
                             setDisplayProfileSearchBar(value)
@@ -189,7 +182,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="display-chatActivity"
                           title={t('settings.fields.displayChatActivity')}
-                          description={t('settings.fields.displayChatActivity')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
@@ -203,7 +195,6 @@ const UserSettings: FunctionComponent<{}> = () => {
                         <CheckboxForm
                           id="google-Authenticator"
                           title={t('settings.fields.googleAuthenticator')}
-                          description={t('settings.fields.googleAuthenticator')}
                           checked={displayProfileSearchBar}
                           onChange={(e: any) => {
                             setDisplayProfileSearchBar(e.target.value)
@@ -215,10 +206,10 @@ const UserSettings: FunctionComponent<{}> = () => {
                     <FormRow classNameRow="split">
                       <FormItem>
                         <div className="form-select">
-                          <label htmlFor="settings-howCanSendMessage">{t('settings.fields.howCanSendMessage')}</label>
+                          <label htmlFor="settings-howCanSendMessage">{t('settings.fields.whoCanSendMessage')}</label>
                           <select name="settings-howCanSendMessage" id="settings-howCanSendMessage">
-                            <option id="everyOne">Everyone (Public)</option>
-                            <option id="onlySuscribers">Only Suscribers</option>
+                            <option id="everyOne">{t('settings.fields.sendEveryone')}</option>
+                            <option id="onlySuscribers">{t('settings.fields.sendOnlySubscribers')}</option>
                           </select>
                         </div>
                       </FormItem>

@@ -141,7 +141,27 @@
 
 
 },
-
+  "settings":{
+    "title":"My Settings",
+    "subTitle":"Account Settings",
+    "generalTitle":"Notification Settings",
+    "typeNotification":"Type Of Notification",
+    "privacyTitle":"Privacy Settings",
+    "fields":{
+      "enabledPushNotifications":"Push Notification",
+      "enabledEmailNotifications":"Email Notification",
+      "comments":"Comments",
+      "newSubscriber":"New Subscriber",
+      "tips":"Tips",
+      "messages":"Messages",
+      "displayProfileInSearchBar":"Display Your Profile In The Search Bar",
+      "displayChatActivity":"Display Chat Activity",
+      "googleAuthenticator":"Multi Factor Authentication",
+      "whoCanSendMessage":"Who Can Send You a Message",
+      "sendEveryone":"Everyone",
+      "sendOnlySubscribers":"Only Subscribers"
+    }
+  },
   "authentication": {
     "welcome": "Welcome to ",
     "welcomeDescription": "The next generation social network community! Connect with your friends and play with our quests and badges gamification system!",
