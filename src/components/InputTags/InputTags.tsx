@@ -25,6 +25,7 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
 
     if (key === ENTER_KEY || key === COMMA_KEY) {
       addTag()
+      return false
     }
   }
 
@@ -63,38 +64,45 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
 
   return (
     <>
-      <div className={styles.tags}>
-        <ul>
-          {tags.map((tag, index) => (
-            <li key={tag + index.toString()} className={styles.tag}>
-              {tag}{' '}
-              <a
-                href="#!"
-                title="Remove tag"
-                className={styles.removeTag}
-                onClick={() => {
-                  removeTag(tag)
-                }}
-              >
-                <FontAwesomeIcon icon="times" />
-              </a>
-            </li>
-          ))}
-        </ul>
-        <input
-          type="text"
-          placeholder="Add tag..."
-          value={value}
-          onChange={handleChange}
-          // ref="tag"
-          className={styles.tagInput}
-          onKeyUp={handleKeyUp}
-          onKeyDown={handleKeyDown}
-        />
+      <div className={(styles.tags, styles.tagsContent)}>
+        <div className={styles.tagList}>
+          <ul>
+            {tags.map((tag, index) => (
+              <li key={tag + index.toString()} className={styles.tag}>
+                {tag}{' '}
+                <a
+                  href="#/"
+                  title="Remove tag"
+                  className={styles.removeTag}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    removeTag(tag)
+                  }}
+                >
+                  <FontAwesomeIcon icon="times" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Add tag..."
+            value={value}
+            onChange={handleChange}
+            // ref="tag"
+            className={styles.tagInput}
+            onKeyUp={handleKeyUp}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
       </div>
-      <small>
-        Press <code>enter</code> or <code>,</code> to add a tag. Press <code>backspace</code> to edit previous tag.
-      </small>
+      <div>
+        <small>
+          Press <code>enter</code> or <code>,</code> to add a tag. Press <code>backspace</code> to edit previous tag.
+        </small>
+      </div>
     </>
   )
 }

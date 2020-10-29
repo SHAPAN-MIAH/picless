@@ -9,17 +9,19 @@ import classNames from 'classnames'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
+import InputTags from '../../../components/InputTags/InputTags'
+import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
 
 import { ResourceType, SourceType } from '../../../types/PostType.d'
 
 import styles from './CreatePost.module.css'
-import InputTags from '../../../components/InputTags/InputTags'
 
 const CreatePost: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
   const [showTags, setShowTags] = useState<boolean>(false)
+  const [showSchedule, setShowSchedule] = useState<boolean>(true)
   const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
   const [post, setPost] = useState<string>('')
 
@@ -54,13 +56,13 @@ const CreatePost: FunctionComponent<{}> = () => {
         </div>
 
         <div className="quick-post-body">
-          <form className="form">
+          <form className="form" onSubmit={(e) => e.preventDefault()}>
             <FormRow className={classNames(!showUploadPhotos ? styles.show : styles.hide)}>
               <FormItem>
                 <div className="form-textarea">
                   <textarea
                     id="quick-post-text"
-                    name="quick-post-text"
+                    name="quick_post_text"
                     placeholder={t('home.createPost.placeholderPostText')}
                     defaultValue={post}
                     onChange={onChangeCreatePost}
@@ -79,26 +81,28 @@ const CreatePost: FunctionComponent<{}> = () => {
             </FormRow>
 
             {/* UPLOADPHOTO VIEW */}
-            {showUploadPhotos && (
-              <UploadSourcePost
-                onUploadedFile={onUploadedFile}
-                onClose={() => {
-                  setShowUploadPhotos(false)
+
+            <UploadSourcePost
+              className={classNames(showUploadPhotos ? styles.show : styles.hide)}
+              onUploadedFile={onUploadedFile}
+              onClose={() => {
+                setShowUploadPhotos(false)
+              }}
+            />
+
+            {/* TAGS VIEW */}
+            <div className={classNames(showTags ? styles.show : styles.hide)}>
+              <InputTags
+                onChange={(tags: string) => {
+                  console.log(tags)
                 }}
               />
-            )}
+            </div>
 
-            {showTags && (
-              <FormRow>
-                <FormItem style={{ padding: '0px !important' }}>
-                  <InputTags
-                    onChange={(tags: string) => {
-                      console.log(tags)
-                    }}
-                  />
-                </FormItem>
-              </FormRow>
-            )}
+            {/* SCHEDULE VIEW */}
+            <div className={classNames(showSchedule ? styles.show : styles.hide)}>
+              <ScheduleMessage startDate={(date) => console.log(date)} endDate={(date) => console.log(date)} />
+            </div>
           </form>
         </div>
 
@@ -123,6 +127,17 @@ const CreatePost: FunctionComponent<{}> = () => {
             >
               <svg className="quick-post-footer-action-icon icon-tags">
                 <use xlinkHref="#svg-tags" />
+              </svg>
+            </div>
+
+            <div
+              className="quick-post-footer-action"
+              onClick={() => {
+                setShowSchedule(!showSchedule)
+              }}
+            >
+              <svg className="menu-item-link-icon icon-events">
+                <use xlinkHref="#svg-events" />
               </svg>
             </div>
           </div>

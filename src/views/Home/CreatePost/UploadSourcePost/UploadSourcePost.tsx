@@ -16,7 +16,7 @@ import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 import styles from './UploadSourcePost.module.css'
 import { ResourceType, SourceType } from '../../../../types/PostType.d'
 
-type UploadSourcePostProp = {
+interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   onClose: any
   onUploadedFile: (source: SourceType, type: ResourceType) => void
 }
@@ -32,7 +32,7 @@ const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST |
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
   const { t } = useTranslation()
-  const { onClose, onUploadedFile } = props
+  const { onClose, onUploadedFile, className } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [selectedFilePreview, setSelectedFilePreview] = useState<filePreview[]>([])
@@ -147,7 +147,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
   return (
     <>
-      <FormRow className={classNames(styles.container)}>
+      <FormRow className={classNames(styles.container, className)}>
         <FormItem>
           <div className={styles.subContainer} style={{ margin: '28px' }}>
             <div className={styles.header}>
