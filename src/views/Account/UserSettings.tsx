@@ -22,7 +22,7 @@ const UserSettings: FunctionComponent<{}> = () => {
   const [privacityDisplayProfileInSearchBar, setprivacityDisplayProfileInSearchBar] = useState<boolean>(false)
   const [privacityDisplayChatActivity, setPrivacityDisplayChatActivity] = useState<boolean>(false)
   const [privacityGoogleAuthenticator, setPrivacityGoogleAuthenticator] = useState<boolean>(false)
-  const [privacityWhoCanSendMessage, setPrivacityWhoCanSendMessage] = useState<string>('everyone')
+  const [privacityWhoCanSendMessage, setPrivacityWhoCanSendMessage] = useState<string>('everyOne')
 
   const [message, setMessage] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -43,7 +43,18 @@ const UserSettings: FunctionComponent<{}> = () => {
         setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
       }
     })
-  }, []) // Will mount
+  }, [
+    enabledPushNotificatoins,
+    enabledEmailNotificatoins,
+    notificationComments,
+    notificationNewSuscriber,
+    notificationTips,
+    notificationsMessage,
+    privacityDisplayProfileInSearchBar,
+    privacityDisplayChatActivity,
+    privacityGoogleAuthenticator,
+    privacityWhoCanSendMessage,
+  ]) // Will mount
 
   const saveUserData = () => {
     setLoading(true)
