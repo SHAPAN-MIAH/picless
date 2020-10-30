@@ -1,6 +1,8 @@
 /* eslint-disable no-script-url */
 import React, { FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import styles from './InputTags.module.css'
 
 const ENTER_KEY = 13
@@ -8,10 +10,13 @@ const COMMA_KEY = 188
 const BACKSPACE_KEY = 8
 
 interface InputTagsProps {
-  onChange: any
+  onChange: (tags: string[]) => void
+  maxTags?: number
 }
 
 const InputTags: FunctionComponent<InputTagsProps> = (props) => {
+  const { t } = useTranslation()
+
   const { onChange } = props
   const [tags, setTags] = useState<string[]>([])
   const [value, setValue] = useState<string>('')
@@ -25,7 +30,6 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
 
     if (key === ENTER_KEY || key === COMMA_KEY) {
       addTag()
-      return false
     }
   }
 
@@ -49,7 +53,7 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
     setTags(tags.concat(tag))
     setValue('')
 
-    onChange(JSON.stringify(tags.concat(tag)))
+    onChange(tags.concat(tag))
   }
 
   const editPrevTag = () => {
@@ -72,7 +76,7 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
                 {tag}{' '}
                 <a
                   href="#/"
-                  title="Remove tag"
+                  title={t('home.createPost.fields.tags')}
                   className={styles.removeTag}
                   onClick={(e) => {
                     e.preventDefault()
@@ -88,7 +92,7 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
         <div>
           <input
             type="text"
-            placeholder="Add tag..."
+            placeholder={t('home.createPost.fields.addTags')}
             value={value}
             onChange={handleChange}
             // ref="tag"
@@ -97,11 +101,6 @@ const InputTags: FunctionComponent<InputTagsProps> = (props) => {
             onKeyDown={handleKeyDown}
           />
         </div>
-      </div>
-      <div>
-        <small>
-          Press <code>enter</code> or <code>,</code> to add a tag. Press <code>backspace</code> to edit previous tag.
-        </small>
       </div>
     </>
   )

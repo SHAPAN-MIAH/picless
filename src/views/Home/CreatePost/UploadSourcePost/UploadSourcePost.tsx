@@ -7,18 +7,18 @@ import Loader from 'react-loader-spinner'
 // import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 
 import classNames from 'classnames'
-import * as PostService from '../../../../services/PostService'
+import PostService from '../../../../services/PostService'
 
 import FormRow from '../../../../components/Common/Form/FormRow'
 import FormItem from '../../../../components/Common/Form/FormItem'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
-import { ResourceType, SourceType } from '../../../../types/PostType.d'
+import { ResourcesType, ResourceType } from '../../../../types/PostType.d'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   onClose: any
-  onUploadedFile: (source: SourceType, type: ResourceType) => void
+  onUploadedFile: (source: ResourcesType) => void
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
@@ -52,8 +52,6 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
           file.url = URL.createObjectURL((target.files as FileList)[i])
           file.status = 'PENDING'
 
-          console.log(file)
-
           files.push(file)
         } else {
           containsInvalidFormat = true
@@ -76,6 +74,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     setIsLoading(true)
 
     const formDataList: FormData[] = []
+    const resources: ResourcesType = { images: [], videos: [] }
     const largeFiles = selectedFile.length
     let previewList: FilePreviewType[] = selectedFile
 
@@ -103,11 +102,16 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               previewList = updateResourcePreviewStatus(previewList, file, 'FINISHED')
               setSelectedFile(previewList)
 
-              if (largeFiles === index + 1) {
-                setIsLoading(false)
+              if (resources && resources.images && fileType === 'IMAGE') {
+                resources.images.push({ name: file.name, pathName: data.path })
+              } else if (resources && resources.videos) {
+                resources.videos.push({ name: file.name, pathName: data.path })
               }
 
-              onUploadedFile({ name: file.name, pathName: data.path }, fileType)
+              if (largeFiles === index + 1) {
+                setIsLoading(false)
+                onUploadedFile(resources)
+              }
             })
             .catch((err) => {
               console.log(err)

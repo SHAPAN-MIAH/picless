@@ -17,8 +17,8 @@ export interface SourceType {
 }
 
 export interface ScheduleType {
-  startDate: Date
-  endDate: Date
+  startDate?: Date | string
+  endDate?: Date | string
 }
 
 export type ResourceType = 'IMAGE' | 'VIDEO'

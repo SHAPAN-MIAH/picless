@@ -4,7 +4,7 @@ import * as ApiHelper from './ApiHelpers'
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
 // const baseUrl = `https://localhost:44326/posts`
 
-export const uploadPostResource = async (bodyData: FormData): Promise<any> => {
+const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
@@ -20,7 +20,7 @@ export const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   return body
 }
 
-export const createPost = async (post: PostType) => {
+const createPost = async (post: PostType) => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -30,6 +30,22 @@ export const createPost = async (post: PostType) => {
   }
 
   const url = `${baseUrl}/addpost`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
+const getPosts = async () => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getpostsbyuser`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
@@ -64,3 +80,9 @@ export const createPost = async (post: PostType) => {
     // send POST request to server
     request.send(data);
     */
+
+export default {
+  uploadPostResource,
+  getPosts,
+  createPost,
+}

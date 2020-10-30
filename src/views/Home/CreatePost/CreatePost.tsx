@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 
 // import 'react-circular-progressbar/dist/styles.css'
+import PostService from '../../../services/PostService'
 
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
@@ -12,7 +13,7 @@ import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
 import InputTags from '../../../components/InputTags/InputTags'
 import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
 
-import { ResourceType, SourceType } from '../../../types/PostType.d'
+import { PostType, ResourcesType } from '../../../types/PostType.d'
 
 import styles from './CreatePost.module.css'
 
@@ -21,26 +22,43 @@ const CreatePost: FunctionComponent<{}> = () => {
 
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
   const [showTags, setShowTags] = useState<boolean>(false)
-  const [showSchedule, setShowSchedule] = useState<boolean>(true)
-  const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
-  const [post, setPost] = useState<string>('')
+  const [showSchedule, setShowSchedule] = useState<boolean>(false)
 
-  const listOfImages: SourceType[] = []
-  const listOfVideos: SourceType[] = []
+  const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
+
+  const [content, setContent] = useState<string>('')
+  const [resourcesList, setResourcesList] = useState<ResourcesType>()
+
+  let hashTagList: string[] = []
+  let scheduleStartDate: Date
+  let scheduleEndDate: Date
 
   const onChangeCreatePost = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { target } = e
 
-    setPost(target.value)
+    setContent(target.value)
     setQtyCharactersPost(target.value.length)
   }
 
-  const onUploadedFile = (source: SourceType, type: ResourceType) => {
-    if (type === 'IMAGE') {
-      listOfImages.push(source)
-    } else {
-      listOfVideos.push(source)
+  const onUploadedFile = (source: ResourcesType) => {
+    console.log(source)
+    setResourcesList(source)
+  }
+
+  const createPost = () => {
+    console.log(resourcesList)
+    const post: PostType = {
+      content,
+      featuredPost: false,
+      hashTags: hashTagList,
+      schedule: {
+        startDate: scheduleStartDate || '',
+        endDate: scheduleEndDate || '',
+      },
+      resources: resourcesList || { images: [], videos: [] },
     }
+
+    PostService.createPost(post)
   }
 
   return (
@@ -64,7 +82,7 @@ const CreatePost: FunctionComponent<{}> = () => {
                     id="quick-post-text"
                     name="quick_post_text"
                     placeholder={t('home.createPost.placeholderPostText')}
-                    defaultValue={post}
+                    defaultValue={content}
                     onChange={onChangeCreatePost}
                     minLength={0}
                     maxLength={1000}
@@ -93,15 +111,24 @@ const CreatePost: FunctionComponent<{}> = () => {
             {/* TAGS VIEW */}
             <div className={classNames(showTags ? styles.show : styles.hide)}>
               <InputTags
-                onChange={(tags: string) => {
-                  console.log(tags)
+                maxTags={5}
+                onChange={(list: string[]) => {
+                  hashTagList = list
                 }}
               />
             </div>
 
             {/* SCHEDULE VIEW */}
-            <div className={classNames(showSchedule ? styles.show : styles.hide)}>
-              <ScheduleMessage startDate={(date) => console.log(date)} endDate={(date) => console.log(date)} />
+            <div className={classNames(styles.scheduleContainer, showSchedule ? styles.show : styles.hide)}>
+              <h6>Schedule post</h6>
+              <ScheduleMessage
+                startDate={(start) => {
+                  scheduleStartDate = start
+                }}
+                endDate={(end) => {
+                  scheduleEndDate = end
+                }}
+              />
             </div>
           </form>
         </div>
@@ -123,6 +150,7 @@ const CreatePost: FunctionComponent<{}> = () => {
               className="quick-post-footer-action"
               onClick={() => {
                 setShowTags(!showTags)
+                setShowSchedule(false)
               }}
             >
               <svg className="quick-post-footer-action-icon icon-tags">
@@ -134,6 +162,7 @@ const CreatePost: FunctionComponent<{}> = () => {
               className="quick-post-footer-action"
               onClick={() => {
                 setShowSchedule(!showSchedule)
+                setShowTags(false)
               }}
             >
               <svg className="menu-item-link-icon icon-events">
@@ -147,14 +176,7 @@ const CreatePost: FunctionComponent<{}> = () => {
               {t('home.createPost.discardButton')}
             </button>
 
-            <button
-              type="button"
-              className="button small secondary"
-              onClick={() => {
-                console.log(JSON.stringify(listOfImages))
-                console.log(JSON.stringify(listOfVideos))
-              }}
-            >
+            <button type="button" className="button small secondary" onClick={createPost}>
               {t('home.createPost.postButton')}
             </button>
           </div>
