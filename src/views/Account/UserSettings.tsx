@@ -22,7 +22,7 @@ const UserSettings: FunctionComponent<{}> = () => {
   const [privacityDisplayProfileInSearchBar, setprivacityDisplayProfileInSearchBar] = useState<boolean>(false)
   const [privacityDisplayChatActivity, setPrivacityDisplayChatActivity] = useState<boolean>(false)
   const [privacityGoogleAuthenticator, setPrivacityGoogleAuthenticator] = useState<boolean>(false)
-  const [privacityWhoCanSendMessage, setPrivacityWhoCanSendMessage] = useState<string>('everyone')
+  const [privacityWhoCanSendMessage, setPrivacityWhoCanSendMessage] = useState<string>('everyOne')
 
   const [message, setMessage] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -43,7 +43,18 @@ const UserSettings: FunctionComponent<{}> = () => {
         setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
       }
     })
-  }, []) // Will mount
+  }, [
+    enabledPushNotificatoins,
+    enabledEmailNotificatoins,
+    notificationComments,
+    notificationNewSuscriber,
+    notificationTips,
+    notificationsMessage,
+    privacityDisplayProfileInSearchBar,
+    privacityDisplayChatActivity,
+    privacityGoogleAuthenticator,
+    privacityWhoCanSendMessage,
+  ]) // Will mount
 
   const saveUserData = () => {
     setLoading(true)
@@ -113,7 +124,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           title={t('settings.fields.enabledEmailNotifications')}
                           checked={enabledEmailNotificatoins}
                           onChange={(e: any) => {
-                            setEnabledEmailNotificatoins(e.target.value)
+                            setEnabledEmailNotificatoins(e)
                           }}
                         />
                       </FormItem>
@@ -145,7 +156,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           title={t('settings.fields.newSubscriber')}
                           checked={notificationNewSuscriber}
                           onChange={(e: any) => {
-                            setNotificationNewSuscriber(e.target.value)
+                            setNotificationNewSuscriber(e)
                           }}
                         />
                       </FormItem>
@@ -158,7 +169,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           title={t('settings.fields.tips')}
                           checked={notificationTips}
                           onChange={(e: any) => {
-                            setNotificationTips(e.target.value)
+                            setNotificationTips(e)
                           }}
                         />
                       </FormItem>
@@ -171,7 +182,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           title={t('settings.fields.messages')}
                           checked={notificationsMessage}
                           onChange={(e: any) => {
-                            setNotificationsMessage(e.target.value)
+                            setNotificationsMessage(e)
                           }}
                         />
                       </FormItem>
@@ -189,7 +200,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           id="display-profileInSearchBar"
                           title={t('settings.fields.displayProfileInSearchBar')}
                           checked={privacityDisplayProfileInSearchBar}
-                          onChange={(value: boolean) => {
+                          onChange={(value: any) => {
                             setprivacityDisplayProfileInSearchBar(value)
                           }}
                         />
@@ -203,7 +214,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           title={t('settings.fields.displayChatActivity')}
                           checked={privacityDisplayChatActivity}
                           onChange={(e: any) => {
-                            setPrivacityDisplayChatActivity(e.target.value)
+                            setPrivacityDisplayChatActivity(e)
                           }}
                         />
                       </FormItem>
@@ -216,7 +227,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                           title={t('settings.fields.googleAuthenticator')}
                           checked={privacityGoogleAuthenticator}
                           onChange={(e: any) => {
-                            setPrivacityGoogleAuthenticator(e.target.value)
+                            setPrivacityGoogleAuthenticator(e)
                           }}
                         />
                       </FormItem>
@@ -226,9 +237,20 @@ const UserSettings: FunctionComponent<{}> = () => {
                       <FormItem>
                         <div className="form-select">
                           <label htmlFor="settings-howCanSendMessage">{t('settings.fields.whoCanSendMessage')}</label>
-                          <select name="settings-howCanSendMessage" id="settings-howCanSendMessage">
-                            <option id="everyOne">{t('settings.fields.sendEveryone')}</option>
-                            <option id="onlySuscribers">{t('settings.fields.sendOnlySubscribers')}</option>
+                          <select
+                            name="settings-howCanSendMessage"
+                            id="settings-howCanSendMessage"
+                            onChange={(e: any) => {
+                              setPrivacityWhoCanSendMessage(e.target.value)
+                            }}
+                            value={privacityWhoCanSendMessage}
+                          >
+                            <option id="everyOne" value="everyOne">
+                              {t('settings.fields.sendEveryone')}
+                            </option>
+                            <option id="onlySuscribers" value="onlySuscribers">
+                              {t('settings.fields.sendOnlySubscribers')}
+                            </option>
                           </select>
                         </div>
                       </FormItem>
