@@ -28,10 +28,10 @@ const CreatePost: FunctionComponent<{}> = () => {
 
   const [content, setContent] = useState<string>('')
   const [resourcesList, setResourcesList] = useState<ResourcesType>()
+  const [tagsList, setTagsList] = useState<string[]>([])
 
-  let hashTagList: string[] = []
-  let scheduleStartDate: Date
-  let scheduleEndDate: Date
+  let scheduleStartDate: Date | null
+  let scheduleEndDate: Date | null
 
   const onChangeCreatePost = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { target } = e
@@ -41,7 +41,6 @@ const CreatePost: FunctionComponent<{}> = () => {
   }
 
   const onUploadedFile = (source: ResourcesType) => {
-    console.log(source)
     setResourcesList(source)
   }
 
@@ -50,7 +49,7 @@ const CreatePost: FunctionComponent<{}> = () => {
     const post: PostType = {
       content,
       featuredPost: false,
-      hashTags: hashTagList,
+      tags: tagsList,
       schedule: {
         startDate: scheduleStartDate || '',
         endDate: scheduleEndDate || '',
@@ -58,7 +57,13 @@ const CreatePost: FunctionComponent<{}> = () => {
       resources: resourcesList || { images: [], videos: [] },
     }
 
-    PostService.createPost(post)
+    PostService.createPost(post).then(() => {
+      cleanCreatePost()
+    })
+  }
+
+  const cleanCreatePost = () => {
+    window.location.reload()
   }
 
   return (
@@ -113,19 +118,16 @@ const CreatePost: FunctionComponent<{}> = () => {
               <InputTags
                 maxTags={5}
                 onChange={(list: string[]) => {
-                  hashTagList = list
+                  setTagsList(list)
                 }}
               />
             </div>
 
             {/* SCHEDULE VIEW */}
             <div className={classNames(styles.scheduleContainer, showSchedule ? styles.show : styles.hide)}>
-              <h6>Schedule post</h6>
               <ScheduleMessage
-                startDate={(start) => {
+                onApplySchedule={(start, end) => {
                   scheduleStartDate = start
-                }}
-                endDate={(end) => {
                   scheduleEndDate = end
                 }}
               />

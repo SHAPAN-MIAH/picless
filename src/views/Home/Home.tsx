@@ -1,11 +1,12 @@
-import FormRow from 'components/Common/Form/FormRow'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { PostType } from 'types/PostType.d'
-import { simpleKeyGenerator } from 'utils/Functions'
 import PostService from '../../services/PostService'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import CreatePost from './CreatePost/CreatePost'
+import FormRow from '../../components/Common/Form/FormRow'
+
+import { PostType } from '../../types/PostType.d'
+import { simpleKeyGenerator } from '../../utils/Functions'
 
 const Home: FunctionComponent<{}> = () => {
   const [posts, setPosts] = useState<PostType[]>()
@@ -28,7 +29,7 @@ const Home: FunctionComponent<{}> = () => {
                   return (
                     <div key={simpleKeyGenerator(5)}>
                       <FormRow>{item.content}</FormRow>
-                      <FormRow>{JSON.stringify(item.hashTags)}</FormRow>
+                      <FormRow>{JSON.stringify(item.tags)}</FormRow>
                     </div>
                   )
                 })}

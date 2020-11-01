@@ -1,7 +1,7 @@
 export interface PostType {
   content: string
   featuredPost: boolean
-  hashTags?: string[]
+  tags?: string[]
   schedule?: ScheduleType
   resources: ResourcesType
 }
