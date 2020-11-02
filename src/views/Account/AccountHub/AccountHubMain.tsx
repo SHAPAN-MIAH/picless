@@ -11,15 +11,17 @@ const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
   const userData = useSelector(userSelector)
 
-  const [imageCover, setImageCover] = useState(userData.coverPicture)
-  const [imageProfile, setImageProfile] = useState(userData.profilePicture)
+  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
 
   const prevUserDataRef = useRef(userData)
 
+  const divRef = useRef(null)
+
   useEffect(() => {
     if (!_.isEqual(userData, prevUserDataRef.current)) {
-      setImageCover(userData.coverPicture)
-      setImageProfile(userData.profilePicture)
+      setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+      setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
 
       prevUserDataRef.current = userData
     }
@@ -28,8 +30,12 @@ const AccountHubMain: FunctionComponent<{}> = () => {
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
-        <div className="user-preview-cover" style={{ background: `url(${process.env.REACT_APP_BUCKET_IMAGES}${imageCover}) center center / cover no-repeat` }}>
-          <img src={process.env.REACT_APP_BUCKET_IMAGES + imageCover} alt="cover-01" style={{ display: 'none' }} />
+        <div
+          ref={divRef}
+          className="user-preview-cover"
+          style={{ background: `url(${imageCover}) center center / cover no-repeat` }}
+        >
+          <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
 
         <div className="user-preview-info">
@@ -41,11 +47,15 @@ const AccountHubMain: FunctionComponent<{}> = () => {
 
               <div className="user-avatar-content">
                 <div
-                  className="hexagon-image-68-74"
+                  className="hex"
                   style={{
-                    background: `url(${process.env.REACT_APP_BUCKET_IMAGES}${imageProfile}) center center / cover no-repeat`,
+                    width: '68px',
+                    height: '74px',
+                    background: `url(${imageProfile}) center center / cover no-repeat`,
                   }}
-                />
+                >
+                  <img src={imageProfile} alt="cover-01" style={{ display: 'none' }} />
+                </div>
               </div>
 
               <div className="user-avatar-progress">

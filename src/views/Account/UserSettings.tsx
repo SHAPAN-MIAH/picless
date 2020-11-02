@@ -43,18 +43,35 @@ const UserSettings: FunctionComponent<{}> = () => {
         setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
       }
     })
-  }, [
-    enabledPushNotificatoins,
-    enabledEmailNotificatoins,
-    notificationComments,
-    notificationNewSuscriber,
-    notificationTips,
-    notificationsMessage,
-    privacityDisplayProfileInSearchBar,
-    privacityDisplayChatActivity,
-    privacityGoogleAuthenticator,
-    privacityWhoCanSendMessage,
-  ]) // Will mount
+  }, []) // Will mount
+
+  // useEffect(() => {
+  //   UserService.getUserSettings().then((userData: any) => {
+  //     if (userData) {
+  //       setEnabledPushNotificatoins(userData.enabledPushNotificatoins)
+  //       setEnabledEmailNotificatoins(userData.enabledEmailNotificatoins)
+  //       setNotificationComments(userData.notificationComments)
+  //       setNotificationNewSuscriber(userData.notificationNewSuscriber)
+  //       setNotificationTips(userData.notificationTips)
+  //       setNotificationsMessage(userData.notificationsMessage)
+  //       setprivacityDisplayProfileInSearchBar(userData.privacityDisplayProfileInSearchBar)
+  //       setPrivacityDisplayChatActivity(userData.privacityDisplayChatActivity)
+  //       setPrivacityGoogleAuthenticator(userData.privacityGoogleAuthenticator)
+  //       setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
+  //     }
+  //   })
+  // }, [
+  //   enabledPushNotificatoins,
+  //   enabledEmailNotificatoins,
+  //   notificationComments,
+  //   notificationNewSuscriber,
+  //   notificationTips,
+  //   notificationsMessage,
+  //   privacityDisplayProfileInSearchBar,
+  //   privacityDisplayChatActivity,
+  //   privacityGoogleAuthenticator,
+  //   privacityWhoCanSendMessage,
+  // ]) // Will mount
 
   const saveUserData = () => {
     setLoading(true)

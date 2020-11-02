@@ -67,6 +67,9 @@ export const userSlice = createSlice({
     },
 
     getProfileSuccess: (state, action: PayloadAction<UserType>) => {
+      // TODO: REMOVE THIS
+      window.localStorage.setItem('userId', (action.payload.id || -1).toString())
+
       return {
         ...state,
         loading: false,

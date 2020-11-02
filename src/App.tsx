@@ -17,6 +17,8 @@ import UserProfile from './views/UserProfile/UserProfile'
 import UserSettings from './views/Account/UserSettings'
 import Home from './views/Home/Home'
 
+import './App.css'
+
 library.add(faPlus, faTimes, faCheck)
 
 function App() {

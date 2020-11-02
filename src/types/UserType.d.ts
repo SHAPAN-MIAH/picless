@@ -65,14 +65,14 @@ export type Device = {
 }
 
 export interface ProfileUserSettings {
-  enabledPushNotificatoins: boolean
-  enabledEmailNotificatoins: boolean
-  notificationComments: boolean
-  notificationNewSuscriber: boolean
-  notificationTips: boolean
-  notificationsMessage: boolean
-  privacityDisplayProfileInSearchBar: boolean
-  privacityDisplayChatActivity: boolean
-  privacityGoogleAuthenticator: boolean
+  enabledPushNotificatoins: boolean | null
+  enabledEmailNotificatoins: boolean | null
+  notificationComments: boolean | null
+  notificationNewSuscriber: boolean | null
+  notificationTips: boolean | null
+  notificationsMessage: boolean | null
+  privacityDisplayProfileInSearchBar: boolean | null
+  privacityDisplayChatActivity: boolean | null
+  privacityGoogleAuthenticator: boolean | null
   privacityWhoCanSendMessage: string
 }

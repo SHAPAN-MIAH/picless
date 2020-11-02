@@ -39,20 +39,24 @@ const updateUserProfile = async (userData: UserType): Promise<any> => {
 }
 
 const getUserSettings = async (): Promise<ProfileUserSettings> => {
-  const email = await ApiHelper.getEmail()
+  try {
+    const email = await ApiHelper.getEmail()
 
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+    const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
-  const requestOptions: RequestInit = {
-    method: 'GET',
-    headers,
+    const requestOptions: RequestInit = {
+      method: 'GET',
+      headers,
+    }
+    const url = `${baseUrl}/getusersettings?email=${email}`
+
+    const response = await fetch(url, requestOptions)
+    const body = await response.json()
+
+    return body
+  } catch (err) {
+    return err
   }
-  const url = `${baseUrl}/getusersettings?email=${email}`
-
-  const response = await fetch(url, requestOptions)
-  const body = await response.json()
-
-  return body
 }
 
 const updateUserSettings = async (settings: ProfileUserSettings): Promise<any> => {

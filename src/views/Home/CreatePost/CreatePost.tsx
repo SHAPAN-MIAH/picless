@@ -92,7 +92,6 @@ const CreatePost: FunctionComponent<{}> = () => {
                     minLength={0}
                     maxLength={1000}
                   />{' '}
-                  {/* "Hi! Share your post here..." */}
                   <p className="form-textarea-limit-text">
                     {qtyCharactersPost >= 1000 && (
                       <span style={{ color: 'red' }}>{`(${t('home.createPost.error.limitCharacters')})  `}</span>
