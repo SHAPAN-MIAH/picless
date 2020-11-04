@@ -49,7 +49,7 @@ const UserHeader: FunctionComponent<{}> = () => {
               </div>
 
               <div className="user-avatar-content">
-                <div className="hexagon-image-82-90" data-src="img/avatar/01.jpg" />
+                <div className="hexagon-image-82-90" data-src={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
               </div>
 
               <div className="user-avatar-progress">
@@ -176,7 +176,7 @@ const UserHeader: FunctionComponent<{}> = () => {
             </div>
 
             <div className="user-stat big">
-              <img className="user-stat-image" src="img/flag/usa.png" alt="flag-usa" />
+              <img className="user-stat-image" src={`${process.env.PUBLIC_URL}/assets/img/flag/usa.png`} alt="flag-usa" />
 
               <p className="user-stat-text">usa</p>
             </div>

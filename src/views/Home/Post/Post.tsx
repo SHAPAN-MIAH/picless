@@ -35,10 +35,6 @@ const Post: FunctionComponent<{ data: any }> = (props) => {
                 <div className="meta-line">
                   <p className="meta-line-link">2 Comments</p>
                 </div>
-
-                <div className="meta-line">
-                  <p className="meta-line-text">0 Shares</p>
-                </div>
               </div>
             </div>
           </div>

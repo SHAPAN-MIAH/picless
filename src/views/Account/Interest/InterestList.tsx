@@ -12,7 +12,6 @@ import TextArea from '../../../components/Common/TextArea'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-import Alert from '../../../components/Common/Alerts/Alerts'
 import AddInterest from './AddInterest'
 
 import { UserInterestType } from '../../../types/UserType.d'
@@ -77,12 +76,6 @@ const InterestList: FunctionComponent<{}> = () => {
   return (
     <>
       {renderContent()}
-
-      {interestList && interestList.length === 0 && (
-        <FormRow>
-          <Alert alertType="WARNING" message={t('profileInfo.interests.hasNoInterests')} style={{ width: '100%' }} />
-        </FormRow>
-      )}
 
       {addInterest && (
         <AddInterest

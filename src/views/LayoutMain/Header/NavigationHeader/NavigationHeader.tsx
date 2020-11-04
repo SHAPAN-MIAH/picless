@@ -15,6 +15,12 @@ const NavigationHeader: FunctionComponent<{}> = () => {
         </li>
 
         <li className="menu-main-item">
+          <Link className="menu-main-item-link" to="/user/messages">
+            {t('header.navigation.messages')}
+          </Link>
+        </li>
+
+        {/* <li className="menu-main-item">
           <a className="menu-main-item-link" href="#/">
             Faqs
           </a>
@@ -52,7 +58,7 @@ const NavigationHeader: FunctionComponent<{}> = () => {
               </a>
             </li>
           </ul>
-        </li>
+        </li> */}
       </ul>
     </nav>
   )

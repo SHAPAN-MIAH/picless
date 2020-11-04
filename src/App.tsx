@@ -14,6 +14,7 @@ import ProfileInfo from './views/Account/ProfileInfo'
 import AccountDevices from './views/Account/AccountDevices'
 import ChangePassword from './views/Account/ChangePassword'
 import UserProfile from './views/UserProfile/UserProfile'
+import Messages from './views/Messages/Messages'
 import UserSettings from './views/Account/UserSettings'
 import Home from './views/Home/Home'
 
@@ -42,6 +43,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
           <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
+          <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
           <Route exact path="/">
             <LayoutUnauthorize />

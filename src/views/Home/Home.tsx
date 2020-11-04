@@ -22,7 +22,7 @@ const Home: FunctionComponent<{}> = () => {
   return (
     <>
       <LayoutMain>
-        <div className="content-grid ">
+        <div className="content-grid">
           <div className="grid grid-3-6-3 mobile-prefer-content">
             <div className="grid-column">{'  '}</div>
             <div className="grid-column">

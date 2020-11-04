@@ -210,7 +210,7 @@ const Header: FunctionComponent<{}> = () => {
           </div>
         </div>
 
-        <div className="header-actions">
+        {/* <div className="header-actions">
           <div className="progress-stat">
             <div className="bar-progress-wrap">
               <p className="bar-progress-info">
@@ -220,7 +220,7 @@ const Header: FunctionComponent<{}> = () => {
 
             <div id="logged-user-level" className="progress-stat-bar" />
           </div>
-        </div>
+        </div> */}
 
         <div className="header-actions">
           <div className="action-list dark">

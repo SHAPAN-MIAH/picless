@@ -6,7 +6,6 @@ import { userTimelineSelector } from '../../../redux/User/UserSelectors'
 
 import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-import Alert from '../../../components/Common/Alerts/Alerts'
 
 import TimeLineEvent from './TimeLineEvent'
 import AddTimeLineEvent from './AddTimeLineEvent'
@@ -57,12 +56,6 @@ const TimeLineList: FunctionComponent<{}> = () => {
   return (
     <>
       {renderContent()}
-
-      {userTimeLineList && userTimeLineList.length === 0 && (
-        <FormRow>
-          <Alert alertType="WARNING" message={t('profileInfo.timeline.hasNoEvents')} style={{ width: '100%' }} />
-        </FormRow>
-      )}
 
       {addTimeLine && (
         <AddTimeLineEvent

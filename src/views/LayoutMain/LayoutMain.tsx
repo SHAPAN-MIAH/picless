@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
+
 import Header from './Header/Header'
 import FloatyBar from './FloatyBar/FloatyBar'
 
@@ -10,7 +11,7 @@ interface LayoutMainProps {
 const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
   const { children } = props
   return (
-    <div>
+    <>
       <NavigationLeftMenu />
 
       {/* CHAT WIDGET */}
@@ -20,7 +21,7 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
       <FloatyBar />
 
       {children}
-    </div>
+    </>
   )
 }
 
