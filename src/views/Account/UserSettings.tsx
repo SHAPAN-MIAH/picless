@@ -30,48 +30,18 @@ const UserSettings: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     UserService.getUserSettings().then((userData: any) => {
-      if (userData) {
-        setEnabledPushNotificatoins(userData.enabledPushNotificatoins)
-        setEnabledEmailNotificatoins(userData.enabledEmailNotificatoins)
-        setNotificationComments(userData.notificationComments)
-        setNotificationNewSuscriber(userData.notificationNewSuscriber)
-        setNotificationTips(userData.notificationTips)
-        setNotificationsMessage(userData.notificationsMessage)
-        setprivacityDisplayProfileInSearchBar(userData.privacityDisplayProfileInSearchBar)
-        setPrivacityDisplayChatActivity(userData.privacityDisplayChatActivity)
-        setPrivacityGoogleAuthenticator(userData.privacityGoogleAuthenticator)
-        setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
-      }
+      setEnabledPushNotificatoins(userData.enabledPushNotificatoins || false)
+      setEnabledEmailNotificatoins(userData.enabledEmailNotificatoins || false)
+      setNotificationComments(userData.notificationComments || false)
+      setNotificationNewSuscriber(userData.notificationNewSuscriber || false)
+      setNotificationTips(userData.notificationTips || false)
+      setNotificationsMessage(userData.notificationsMessage || false)
+      setprivacityDisplayProfileInSearchBar(userData.privacityDisplayProfileInSearchBar || false)
+      setPrivacityDisplayChatActivity(userData.privacityDisplayChatActivity || false)
+      setPrivacityGoogleAuthenticator(userData.privacityGoogleAuthenticator || false)
+      setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage || 'everyOne')
     })
   }, []) // Will mount
-
-  // useEffect(() => {
-  //   UserService.getUserSettings().then((userData: any) => {
-  //     if (userData) {
-  //       setEnabledPushNotificatoins(userData.enabledPushNotificatoins)
-  //       setEnabledEmailNotificatoins(userData.enabledEmailNotificatoins)
-  //       setNotificationComments(userData.notificationComments)
-  //       setNotificationNewSuscriber(userData.notificationNewSuscriber)
-  //       setNotificationTips(userData.notificationTips)
-  //       setNotificationsMessage(userData.notificationsMessage)
-  //       setprivacityDisplayProfileInSearchBar(userData.privacityDisplayProfileInSearchBar)
-  //       setPrivacityDisplayChatActivity(userData.privacityDisplayChatActivity)
-  //       setPrivacityGoogleAuthenticator(userData.privacityGoogleAuthenticator)
-  //       setPrivacityWhoCanSendMessage(userData.privacityWhoCanSendMessage)
-  //     }
-  //   })
-  // }, [
-  //   enabledPushNotificatoins,
-  //   enabledEmailNotificatoins,
-  //   notificationComments,
-  //   notificationNewSuscriber,
-  //   notificationTips,
-  //   notificationsMessage,
-  //   privacityDisplayProfileInSearchBar,
-  //   privacityDisplayChatActivity,
-  //   privacityGoogleAuthenticator,
-  //   privacityWhoCanSendMessage,
-  // ]) // Will mount
 
   const saveUserData = () => {
     setLoading(true)

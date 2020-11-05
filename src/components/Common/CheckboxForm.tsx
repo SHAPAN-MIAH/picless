@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 type CheckboxFormProps = {
@@ -15,6 +15,10 @@ const CheckboxForm: FunctionComponent<CheckboxFormProps> = (props) => {
   const { id, title, description, checked = false, onChange } = props
 
   const [checkState, setCheckState] = useState(checked)
+
+  useEffect(() => {
+    setCheckState(checked)
+  }, [checked])
 
   return (
     <div className="switch-option" id={id}>
