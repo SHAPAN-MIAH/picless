@@ -2,7 +2,8 @@
   "header": {
     "searchPlaceholder": "Search here for people or groups",
     "navigation":{
-      "home":"Home"
+      "home":"Home",
+      "messages":"Messages"
     }
   },
   "navLeftMenu":{
@@ -61,6 +62,11 @@
       },
       "error":{
         "limitCharacters":"Too Long!"
+      },
+      "fields":{
+        "addTags":"Add Tags",
+        "scheduleStart":"Sechedule Start",
+        "scheduleEnd":"Schedule End"
       }
       }
   },
@@ -90,13 +96,15 @@
       "AddedSuccessfully":"Interest Added Successfully",
       "addNewInterestButton":"Add Interest",
       "cancelNewInterestButton":"Cancel",
+      "newInterest":"New Interest",
       "errors":{
         "updatingData":"Error while updating data"
       }
     },
     "errors":{
       "fetchingData":"Some information is still missing",
-      "uploadingAnImage":"Error while uploading the media file"
+      "uploadingAnImage":"Error while uploading the media file",
+      "updatingData":"Error while updating data"
     },
     "timelineTitle":"Timeline",
     "timeline":{
@@ -109,10 +117,11 @@
       "cancelNewTimeLineEventButton":"Cancel",
       "addNewTimeLineEventButton":"Add New Field",
       "AddedSuccessfully":"Event Added Successfully",
+      "newTimeLineEvent":"New Timelime Event",
       "errors":{
-        "addingTimeLine":"Error while adding timeline",
-        "removingTimeLine":"Error while removing timeline",
-        "updatingTimeline":"Error while updating timeline"
+        "addingTimeLine":"Error While Adding Timeline",
+        "removingTimeLine":"Error While Removing Timeline",
+        "updatingTimeline":"Error While Updating Timeline"
       }
     }
   },
