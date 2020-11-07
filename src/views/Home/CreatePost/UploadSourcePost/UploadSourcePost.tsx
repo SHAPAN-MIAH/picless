@@ -14,11 +14,11 @@ import FormItem from '../../../../components/Common/Form/FormItem'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
-import { ResourcesType, ResourceType } from '../../../../types/PostType.d'
+import { SourceType, ResourceType } from '../../../../types/PostType.d'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   onClose: any
-  onUploadedFile: (source: ResourcesType) => void
+  onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
@@ -74,7 +74,9 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     setIsLoading(true)
 
     const formDataList: FormData[] = []
-    const resources: ResourcesType = { images: [], videos: [] }
+    const imageList: SourceType[] = []
+    const videoList: SourceType[] = []
+
     const largeFiles = selectedFile.length
     let previewList: FilePreviewType[] = selectedFile
 
@@ -102,15 +104,15 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               previewList = updateResourcePreviewStatus(previewList, file, 'FINISHED')
               setSelectedFile(previewList)
 
-              if (resources && resources.images && fileType === 'IMAGE') {
-                resources.images.push({ name: file.name, pathName: data.path })
-              } else if (resources && resources.videos) {
-                resources.videos.push({ name: file.name, pathName: data.path })
+              if (imageList && fileType === 'IMAGE') {
+                imageList.push({ name: file.name, pathName: data.path })
+              } else if (videoList) {
+                videoList.push({ name: file.name, pathName: data.path })
               }
 
               if (largeFiles === index + 1) {
                 setIsLoading(false)
-                onUploadedFile(resources)
+                onUploadedFile({ images: imageList, videos: videoList })
               }
             })
             .catch((err) => {

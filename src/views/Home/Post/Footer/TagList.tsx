@@ -1,18 +1,18 @@
 import React, { FunctionComponent } from 'react'
+import { TagType } from '../../../../types/PostType.d'
 
-const TagList: FunctionComponent<{ tags: string[] }> = (prop) => {
+const TagList: FunctionComponent<{ tags: TagType[] }> = (prop) => {
   const { tags } = prop
 
-  // TODO: Change in the service that tags need be in string array
-  const tagList: string[] = tags.toString().split(',')
+  const tagList: TagType[] = tags
 
   return (
     <>
       <div className="tag-list">
         {tagList.map((tag) => {
           return (
-            <span key={tag} className="tag-item secondary">
-              {tag}
+            <span key={`tag-${tag.id}`} className="tag-item secondary">
+              {tag.tagName}
             </span>
           )
         })}

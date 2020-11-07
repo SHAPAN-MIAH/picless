@@ -13,7 +13,7 @@ import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
 import InputTags from '../../../components/InputTags/InputTags'
 import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
 
-import { PostType, ResourcesType } from '../../../types/PostType.d'
+import { PostType, SourceType, TagType } from '../../../types/PostType.d'
 
 import styles from './CreatePost.module.css'
 
@@ -27,7 +27,9 @@ const CreatePost: FunctionComponent<{}> = () => {
   const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
 
   const [content, setContent] = useState<string>('')
-  const [resourcesList, setResourcesList] = useState<ResourcesType>()
+  const [imageList, setImageList] = useState<SourceType[]>()
+  const [videoList, setVideoList] = useState<SourceType[]>()
+
   const [tagsList, setTagsList] = useState<string[]>([])
 
   let scheduleStartDate: Date | null
@@ -40,26 +42,36 @@ const CreatePost: FunctionComponent<{}> = () => {
     setQtyCharactersPost(target.value.length)
   }
 
-  const onUploadedFile = (source: ResourcesType) => {
-    setResourcesList(source)
+  const onUploadedFile = (source: { images: SourceType[]; videos: SourceType[] }) => {
+    setImageList(source.images)
+    setVideoList(source.videos)
   }
 
   const createPost = () => {
-    console.log(resourcesList)
+    const tags = convertToTagType()
     const post: PostType = {
       content,
       featuredPost: false,
-      tags: tagsList,
-      schedule: {
-        startDate: scheduleStartDate || '',
-        endDate: scheduleEndDate || '',
-      },
-      resources: resourcesList || { images: [], videos: [] },
+      tags,
+      startDate: scheduleStartDate || '',
+      endDate: scheduleEndDate || '',
+      images: imageList,
+      videos: videoList,
     }
 
     PostService.createPost(post).then(() => {
       cleanCreatePost()
     })
+  }
+
+  const convertToTagType = (): TagType[] => {
+    const tags: TagType[] = []
+
+    tagsList.forEach((tag) => {
+      tags.push({ tagName: tag })
+    })
+    console.log(tags)
+    return tags
   }
 
   const cleanCreatePost = () => {

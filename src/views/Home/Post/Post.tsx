@@ -8,12 +8,11 @@ import PictureCollage from './Content/PictureCollage'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import VideoCollage from './Content/VideoCollage'
 
-// const Post: FunctionComponent<{ data: PostType }> = (props) => {
-const Post: FunctionComponent<{ data: any }> = (props) => {
+const Post: FunctionComponent<{ data: PostType }> = (props) => {
   const { data } = props
 
-  const listImages: SourceType[] = data.images
-  const listVideos: SourceType[] = data.videos
+  const listImages: SourceType[] = data.images || []
+  const listVideos: SourceType[] = data.videos || []
 
   return (
     <>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPlus, faTimes, faDollarSign, faShareAlt, faComments, faLock } from '@fortawesome/free-solid-svg-icons'
 
 import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
 
@@ -20,7 +20,7 @@ import Home from './views/Home/Home'
 
 import './App.css'
 
-library.add(faPlus, faTimes, faCheck)
+library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock)
 
 function App() {
   const dispatch = useDispatch()

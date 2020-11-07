@@ -3,7 +3,7 @@ import { SourceType } from '../../../../types/PostType.d'
 import { videoUrl } from '../../../../utils/ResourceHelpers'
 
 // const VideoCollage: FunctionComponent<{ source: SourceType[]}> = ()
-const VideoCollage: FunctionComponent<{ sources: any }> = (props) => {
+const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = (props) => {
   const { sources } = props
 
   return (
@@ -12,7 +12,7 @@ const VideoCollage: FunctionComponent<{ sources: any }> = (props) => {
         sources.map((video: any) => {
           return (
             <div key={`video-${video.id}`} className="iframe-wrap">
-              <iframe title={video.name} src={videoUrl(video.path)} allowFullScreen />
+              <iframe title={video.name} src={videoUrl(video.pathName)} allowFullScreen />
             </div>
           )
         })}

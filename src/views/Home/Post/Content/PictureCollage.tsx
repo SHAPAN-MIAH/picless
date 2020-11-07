@@ -1,5 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { FunctionComponent, Fragment, useState } from 'react'
 import Popup from 'reactjs-popup'
 import _ from 'lodash'
@@ -10,10 +10,9 @@ import { SourceType } from '../../../../types/PostType.d'
 
 import 'reactjs-popup/dist/index.css'
 
-// const Picture: FunctionComponent<{ source: SourceType }> = (props) => {
-const PictureModal: FunctionComponent<{ source: any; showMore?: number }> = (props) => {
+const PictureModal: FunctionComponent<{ source: SourceType; showMore?: number }> = (props) => {
   const { source, showMore } = props
-  const pathName = source.path as any
+  const pathName = source.pathName as any
 
   const [showPopup, setShowPopup] = useState(false)
   return (
@@ -25,7 +24,7 @@ const PictureModal: FunctionComponent<{ source: any; showMore?: number }> = (pro
       )}
       <div className="photo-preview">
         <figure className="photo-preview-image">
-          <img src={imageUrl(pathName)} alt={source} />
+          <img src={imageUrl(pathName)} alt={source.name} />
         </figure>
 
         <div className="photo-preview-info" onClick={() => setShowPopup(true)}>
@@ -56,7 +55,7 @@ const PictureModal: FunctionComponent<{ source: any; showMore?: number }> = (pro
           }}
           modal
         >
-          <img src={imageUrl(pathName)} alt="photo-preview-10" />
+          <img src={imageUrl(pathName)} alt={source.name} />
         </Popup>
       </div>
     </div>

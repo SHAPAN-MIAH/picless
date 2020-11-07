@@ -1,14 +1,12 @@
 export interface PostType {
   content: string
   featuredPost: boolean
-  tags?: string[]
+  tags?: TagType[]
   schedule?: ScheduleType
-  resources: ResourcesType
-}
-
-export interface ResourcesType {
   images?: SourceType[]
   videos?: SourceType[]
+  startDate?: Date | string
+  endDate?: Date | string
 }
 
 export interface SourceType {
@@ -16,9 +14,9 @@ export interface SourceType {
   pathName: string
 }
 
-export interface ScheduleType {
-  startDate?: Date | string
-  endDate?: Date | string
+export interface TagType {
+  id?: number
+  tagName: string
 }
 
 export type ResourceType = 'IMAGE' | 'VIDEO'
