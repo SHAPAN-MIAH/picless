@@ -1,6 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
 import UserAvatar from '../../../components/UserAvatar'
+
+import styles from './UserHeader.module.css'
 
 const UserHeader: FunctionComponent<{}> = () => {
   return (
@@ -26,33 +29,37 @@ const UserHeader: FunctionComponent<{}> = () => {
             </p>
           </div>
 
-          <div className="profile-header-social-links-wrap" style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div
+            className="profile-header-social-links-wrap"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
             <div id="profile-header-social-links-slider" className="profile-header-social-links">
               <div className="profile-header-social-link">
-                <a className="social-link" title="Send a tip" style={{ backgroundColor: '#3e3f5e' }} href="#/">
+                <a className={classNames('social-link', styles.optionsBox)} title="Send a tip" href="#/">
                   <FontAwesomeIcon color="white" icon="dollar-sign" />
                 </a>
               </div>
 
               <div className="profile-header-social-link">
-                <a className="social-link" title="Send a tip" style={{ backgroundColor: '#3e3f5e' }} href="#/">
+                <a className={classNames('social-link', styles.optionsBox)} title="Send a message" href="#/">
                   <FontAwesomeIcon color="white" icon="comments" />
                 </a>
               </div>
 
               <div className="profile-header-social-link">
-                <a className="social-link" title="Send a tip" style={{ backgroundColor: '#3e3f5e' }} href="#/">
+                <a className={classNames('social-link', styles.optionsBox)} title="Share profile" href="#/">
                   <FontAwesomeIcon color="white" icon="share-alt" />
                 </a>
               </div>
             </div>
 
-            <div
-              className="profile-header-info-actions"
-              style={{ display: 'flex', justifyContent: 'right', position: 'static' }}
-            >
+            <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
               <p className="profile-header-info-action button secondary">
-                <span className="hide-text-mobile">Suscribe for 10,99€</span>
+                Suscribe
+                <span className="hide-text-mobile"> for 10,99€</span>
                 <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
               </p>
             </div>
