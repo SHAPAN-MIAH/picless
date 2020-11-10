@@ -1,0 +1,19 @@
+.optionsBox {
+  background-color: #3e3f5e;
+}
+
+.suscribeButton {
+  display: flex;
+  justify-content: right;
+  position: static !important;
+
+  padding-left: 10px;
+}
+
+@media only screen and (max-width: 1366px) {
+  /* For mobile phones: */
+  [class*='suscribeButton'] {
+    align-items: flex-end;
+    padding-top: 24px;
+  }
+}
