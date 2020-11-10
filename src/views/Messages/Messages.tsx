@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import LayoutMain from '../LayoutMain/LayoutMain'
-import Message from './Message/Message'
+import ChatMessages from './Converation/Conversation'
 import UserStatus from './UserStatus/UserStatus'
 import UserAvatar from '../../components/UserAvatar'
+import Conversation from './Converation/Conversation'
 
 const Messages: FunctionComponent<{}> = () => {
   const fieldRef = React.useRef<HTMLDivElement>(null)
@@ -104,84 +105,7 @@ const Messages: FunctionComponent<{}> = () => {
                     </div>
                   </div>
 
-                  <div className="chat-widget-conversation" data-simplebar>
-                    <div className="chat-widget-speaker left">
-                      <div className="chat-widget-speaker-avatar">
-                        <div className="user-avatar tiny no-border">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-24-26" data-src="img/avatar/03.jpg" />
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="chat-widget-speaker-message">Hi Marina! It's been a long time!</p>
-
-                      <p className="chat-widget-speaker-timestamp">Yesterday at 8:36PM</p>
-                    </div>
-
-                    <div className="chat-widget-speaker right">
-                      <p className="chat-widget-speaker-message">Hey Nick!</p>
-
-                      <p className="chat-widget-speaker-message">
-                        You're right, it's been a really long time! I think the last time we saw was at Neko's party
-                      </p>
-
-                      <p className="chat-widget-speaker-timestamp">10:05AM</p>
-                    </div>
-
-                    <div className="chat-widget-speaker left">
-                      <div className="chat-widget-speaker-avatar">
-                        <div className="user-avatar tiny no-border">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-24-26" data-src="img/avatar/03.jpg" />
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="chat-widget-speaker-message">Yeah! I remember now! The stream launch party</p>
-
-                      <p className="chat-widget-speaker-message">That reminds me that I wanted to ask you something</p>
-
-                      <p className="chat-widget-speaker-message">Can you stream the new game?</p>
-                    </div>
-                  </div>
-
-                  <form className="chat-widget-form">
-                    <div className="form-row split">
-                      <div className="form-item">
-                        <div className="interactive-input small">
-                          <input
-                            type="text"
-                            id="chat-widget-message-text-2"
-                            name="chat_widget_message_text_2"
-                            placeholder="Write a message..."
-                          />
-
-                          <div className="interactive-input-icon-wrap actionable">
-                            <div className="tooltip-wrap text-tooltip-tft" data-title="Send Photo">
-                              <svg className="interactive-input-icon icon-camera">
-                                <use xlinkHref="#svg-camera" />
-                              </svg>
-                            </div>
-                          </div>
-
-                          <div className="interactive-input-action">
-                            <svg className="interactive-input-action-icon icon-cross-thin">
-                              <use xlinkHref="#svg-cross-thin" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-item auto-width">
-                        <p className="button primary padded">
-                          <svg className="button-icon no-space icon-send-message">
-                            <use xlinkHref="#svg-send-message" />
-                          </svg>
-                        </p>
-                      </div>
-                    </div>
-                  </form>
+                  <Conversation />
                 </div>
               </div>
             </div>
