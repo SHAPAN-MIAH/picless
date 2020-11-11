@@ -1,17 +1,17 @@
-import React, { FunctionComponent } from 'react'
+import React, { forwardRef } from 'react'
 import { MessageType } from '../../../../types/MessagesType.d'
 
-const MessageRight: FunctionComponent<{ message: MessageType }> = (props) => {
+const MessageRight = forwardRef<HTMLDivElement | null, { message: MessageType }>((props, ref) => {
   const { message } = props
 
   return (
     <>
-      <div className="chat-widget-speaker right">
+      <div ref={ref} className="chat-widget-speaker right">
         <p className="chat-widget-speaker-message">{message.message}</p>
-        <p className="chat-widget-speaker-timestamp">{message.date || new Date().toString()}</p>
+        <p className="chat-widget-speaker-timestamp">Yesterday</p>
       </div>
     </>
   )
-}
+})
 
 export default MessageRight

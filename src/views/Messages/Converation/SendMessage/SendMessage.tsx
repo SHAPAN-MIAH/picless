@@ -56,11 +56,11 @@ const SendMessage: FunctionComponent<SendMessageProps> = (props) => {
           </div>
 
           <div className="form-item auto-width">
-            <p className="button primary padded">
+            <button type="submit" className="button primary padded">
               <svg className="button-icon no-space icon-send-message">
                 <use xlinkHref="#svg-send-message" />
               </svg>
-            </p>
+            </button>
           </div>
         </div>
       </form>

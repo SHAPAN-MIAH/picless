@@ -14,12 +14,14 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
   const listImages: SourceType[] = data.images || []
   const listVideos: SourceType[] = data.videos || []
 
+  const datePost = new Date(data.registerDate)
+
   return (
     <>
       <div className="widget-box no-padding">
         <div className="widget-box-status">
           <div className="widget-box-status-content">
-            <HeaderPost />
+            <HeaderPost user={data.users || {}} datePost={datePost} />
             <p className="widget-box-status-text">{data.content}</p>
           </div>
 

@@ -1,4 +1,7 @@
-export interface PostType {
+import { isInterfaceDeclaration } from 'typescript'
+import { UserType } from './UserType.d'
+
+export interface CommonPostType {
   content: string
   featuredPost: boolean
   tags?: TagType[]
@@ -7,6 +10,10 @@ export interface PostType {
   videos?: SourceType[]
   startDate?: Date | string
   endDate?: Date | string
+}
+export interface PostType extends CommonPostType {
+  registerDate: string
+  users: UserType // TODO: CHANGE NAME TO USER
 }
 
 export interface SourceType {

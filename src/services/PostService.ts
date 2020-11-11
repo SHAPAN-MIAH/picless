@@ -1,4 +1,4 @@
-import { PostType } from '../types/PostType.d'
+import { CommonPostType } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
@@ -20,7 +20,7 @@ const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   return body
 }
 
-const createPost = async (post: PostType) => {
+const createPost = async (post: CommonPostType) => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {

@@ -24,7 +24,7 @@ const PictureModal: FunctionComponent<{ source: SourceType; showMore?: number }>
       )}
       <div className="photo-preview">
         <figure className="photo-preview-image">
-          <img src={imageUrl(pathName)} alt={source.name} />
+          <img src={imageUrl(pathName)} alt={source.name} style={{ objectFit: 'cover' }} />
         </figure>
 
         <div className="photo-preview-info" onClick={() => setShowPopup(true)}>
@@ -55,7 +55,7 @@ const PictureModal: FunctionComponent<{ source: SourceType; showMore?: number }>
           }}
           modal
         >
-          <img src={imageUrl(pathName)} alt={source.name} />
+          <img src={imageUrl(pathName)} alt={source.name} style={{ width: 800, height: 600, objectFit: 'contain' }} />
         </Popup>
       </div>
     </div>

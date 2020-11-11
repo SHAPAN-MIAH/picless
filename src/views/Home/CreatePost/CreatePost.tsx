@@ -13,7 +13,7 @@ import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
 import InputTags from '../../../components/InputTags/InputTags'
 import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
 
-import { PostType, SourceType, TagType } from '../../../types/PostType.d'
+import { CommonPostType, SourceType, TagType } from '../../../types/PostType.d'
 
 import styles from './CreatePost.module.css'
 
@@ -49,7 +49,7 @@ const CreatePost: FunctionComponent<{}> = () => {
 
   const createPost = () => {
     const tags = convertToTagType()
-    const post: PostType = {
+    const post: CommonPostType = {
       content,
       featuredPost: false,
       tags,

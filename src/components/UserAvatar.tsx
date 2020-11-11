@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-type AvatarSize = 'BIG' | 'MEDIUM' | 'SMALL'
+type AvatarSize = 'BIG' | 'MEDIUM' | 'SMALL' | 'TINY'
 
 type UserAvatarProps = {
   image: string
@@ -12,6 +12,13 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
 
   return (
     <>
+      {size === 'TINY' && (
+        <div className="user-avatar tiny no-border">
+          <div className="user-avatar-content">
+            <div className="hexagon-image-24-26" data-src={image} />
+          </div>
+        </div>
+      )}
       {size === 'SMALL' && (
         <div className="user-status-avatar">
           <div className="user-avatar small no-outline">
