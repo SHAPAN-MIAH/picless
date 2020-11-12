@@ -29,7 +29,11 @@ const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((pro
   return (
     <>
       <div className="chat-widget-conversation" data-simplebar>
-        {chat || <span>No Messages</span>}
+        {chat || (
+          <div className="chat-widget-speaker right">
+            <p className="chat-widget-speaker-message">No Messages</p>
+          </div>
+        )}
       </div>
     </>
   )

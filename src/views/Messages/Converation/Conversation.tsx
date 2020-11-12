@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import { HubConnectionBuilder } from '@microsoft/signalr/dist/esm/HubConnectionBuilder'
 
+import ChatService from '../../../services/ChatService'
+
+import Chat from './Message/Chat'
 import SendMessage from './SendMessage/SendMessage'
 
 import { MessageType } from '../../../types/MessagesType.d'
-import Chat from './Message/Chat'
 
 const Conversation: FunctionComponent<{}> = () => {
   const [chat, setChat] = useState<MessageType[]>([])
@@ -12,32 +13,29 @@ const Conversation: FunctionComponent<{}> = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const connection = new HubConnectionBuilder()
-      .withUrl(`${process.env.REACT_APP_BASE_URL_API}/hubs/chat`)
-      .withAutomaticReconnect()
-      .build()
+    ChatService.getConnectionChat().then((connection) => {
+      connection
+        .start()
+        .then(() => {
+          connection.on('ReceiveMessage', (message: { message: string; user: string }) => {
+            console.log(message)
+            const updatedChat: MessageType[] = [...latestChat.current]
 
-    connection
-      .start()
-      .then((result) => {
-        console.log('Connected!')
-        connection.on('ReceiveMessage', (message: { message: string; user: string }) => {
-          const updatedChat: MessageType[] = [...latestChat.current]
+            const chatMessage: MessageType = {
+              user: message.user,
+              message: message.message,
+              date: new Date(),
+            }
 
-          const chatMessage: MessageType = {
-            user: message.user,
-            message: message.message,
-            date: new Date(),
-          }
+            updatedChat.push(chatMessage)
 
-          updatedChat.push(chatMessage)
+            setChat(updatedChat)
 
-          setChat(updatedChat)
-
-          latestChat.current = updatedChat
+            latestChat.current = updatedChat
+          })
         })
-      })
-      .catch((e) => console.log('Connection failed: ', e))
+        .catch((e) => console.log('Connection failed: ', e))
+    })
   }, [])
 
   useEffect(() => {
@@ -53,7 +51,7 @@ const Conversation: FunctionComponent<{}> = () => {
     }
 
     try {
-      await fetch(`${process.env.REACT_APP_BASE_URL_API}/chat/messages`, {
+      await fetch(`${process.env.REACT_APP_BASE_URL_API}/chat/messagesprivate`, {
         method: 'POST',
         body: JSON.stringify(chatMessage),
         headers: {

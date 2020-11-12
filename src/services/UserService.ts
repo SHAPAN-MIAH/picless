@@ -117,4 +117,27 @@ const removeDevice = async (deviceKey: string): Promise<any> => {
   return body
 }
 
-export default { getUserProfile, updateUserProfile, uploadUserImages, removeDevice, updateUserSettings, getUserSettings }
+const addFavouriteUser = async (userId: number): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+  const url = `${baseUrl}/addfavoriteuser?userId=${userId}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
+export default {
+  getUserProfile,
+  updateUserProfile,
+  uploadUserImages,
+  removeDevice,
+  updateUserSettings,
+  getUserSettings,
+  addFavouriteUser,
+}

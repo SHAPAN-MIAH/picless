@@ -1,11 +1,21 @@
-import React, { FunctionComponent } from 'react'
+import React, { useEffect, FunctionComponent } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getFavoriteUsers } from '../../redux/Chat/ChatThunks'
+import { loadingSelector, listOfUserSelector } from '../../redux/Chat/ChatSelectors'
+
 import LayoutMain from '../LayoutMain/LayoutMain'
-import ChatMessages from './Converation/Conversation'
 import UserStatus from './UserStatus/UserStatus'
 import UserAvatar from '../../components/UserAvatar'
 import Conversation from './Converation/Conversation'
+import { KeyObject } from 'crypto'
 
 const Messages: FunctionComponent<{}> = () => {
+  const dispatch = useDispatch()
+
+  const loading: boolean = useSelector(loadingSelector)
+  const listOfUser: any[] = useSelector(listOfUserSelector)
+
   const fieldRef = React.useRef<HTMLDivElement>(null)
 
   const showMessages = () => {
@@ -14,6 +24,10 @@ const Messages: FunctionComponent<{}> = () => {
       current.scrollIntoView()
     }
   }
+
+  useEffect(() => {
+    dispatch(getFavoriteUsers())
+  }, [])
 
   return (
     <>
@@ -38,16 +52,19 @@ const Messages: FunctionComponent<{}> = () => {
               <div className="chat-widget-wrap">
                 <div className="chat-widget static">
                   <div className="chat-widget-messages" data-simplebar>
-                    <UserStatus active={false} onClick={showMessages} />
-                    <UserStatus active={false} />
-                    <UserStatus active={false} />
-                    <UserStatus
-                      active={true}
-                      lastMessage={
-                        "You're right, it's been a really long time! I think the last time we saw was at Neko's party"
-                      }
-                    />
-                    <UserStatus active={false} />
+                    {listOfUser &&
+                      listOfUser.map((user) => {
+                        return (
+                          <UserStatus
+                            key={user.id}
+                            user={user.favoriteUser}
+                            active={true}
+                            lastMessage={
+                              "You're right, it's been a really long time! I think the last time we saw was at Neko's party"
+                            }
+                          />
+                        )
+                      })}
                   </div>
 
                   <form className="chat-widget-form">

@@ -6,10 +6,12 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
 import authReducer from './Auth/AuthSlice'
 import userReducer from './User/UserSlice'
+import chatReducer from './Chat/ChatSlice'
 
 const reducers = {
   auth: authReducer,
   user: userReducer,
+  chat: chatReducer,
 }
 
 const persistConfig = {
