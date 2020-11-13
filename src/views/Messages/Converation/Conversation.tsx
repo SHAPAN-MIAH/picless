@@ -25,7 +25,7 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
       connection
         .start()
         .then(() => {
-          setConnectionId(connection.connectionId)
+          setConnectionId(user.connectionId)
 
           console.info(`CONNECTION ID -> ${connection.connectionId}`)
 
@@ -57,10 +57,10 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
   }, [chat])
 
   const sendMessage = async (message: string) => {
-    if (connectionId) {
+    if (user.connectionId) {
       const chatMessage = {
-        user: user.userId,
-        connectionId,
+        user: user.email,
+        connectionId: user.connectionId,
         message,
       }
 
