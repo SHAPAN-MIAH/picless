@@ -57,7 +57,7 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
   }, [chat])
 
   const sendMessage = async (message: string) => {
-    if (user.connectionId) {
+    if (user.email) {
       const chatMessage = {
         user: user.email,
         connectionId: user.connectionId,
