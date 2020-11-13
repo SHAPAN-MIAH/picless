@@ -8,7 +8,9 @@ const getConnectionChat = async (): Promise<HubConnection> => {
   const token = await ApiHelper.getIdToken()
 
   const connection = new HubConnectionBuilder()
-    .withUrl(`${process.env.REACT_APP_BASE_URL_API}/hubs/chat?email=${email}&token=${token}`)
+    .withUrl(`${process.env.REACT_APP_BASE_URL_API}/hubs/chat?email=${email}`, {
+      accessTokenFactory: () => token,
+    })
     .withAutomaticReconnect()
     .build()
 

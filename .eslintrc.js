@@ -26,6 +26,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
 
     'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
   },

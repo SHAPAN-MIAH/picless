@@ -16,12 +16,14 @@ const SendMessage: FunctionComponent<SendMessageProps> = (props) => {
 
     if (isMessageProvided) {
       sendMessage(message)
+
+      setMessage('')
     } else {
       alert('Please insert an user and a message.')
     }
   }
 
-  const onMessageUpdate = (e: any) => {
+  const onMessageUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value)
   }
 
@@ -36,16 +38,17 @@ const SendMessage: FunctionComponent<SendMessageProps> = (props) => {
                 id="chat-widget-message-text-2"
                 name="chat_widget_message_text_2"
                 placeholder="Write a message..."
+                value={message}
                 onChange={onMessageUpdate}
               />
 
-              <div className="interactive-input-icon-wrap actionable">
+              {/* <div className="interactive-input-icon-wrap actionable">
                 <div className="tooltip-wrap text-tooltip-tft" data-title="Send Photo">
                   <svg className="interactive-input-icon icon-camera">
                     <use xlinkHref="#svg-camera" />
                   </svg>
                 </div>
-              </div>
+              </div> */}
 
               <div className="interactive-input-action">
                 <svg className="interactive-input-action-icon icon-cross-thin">
