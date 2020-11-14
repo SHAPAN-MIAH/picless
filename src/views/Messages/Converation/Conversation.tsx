@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import ChatService from '../../../services/ChatService'
+import { userIdSelector } from '../../../redux/User/UserSelectors'
 
 import Chat from './Message/Chat'
 import SendMessage from './SendMessage/SendMessage'
@@ -8,12 +10,16 @@ import SendMessage from './SendMessage/SendMessage'
 import { MessageType } from '../../../types/MessagesType.d'
 // import { UserStatusMessagesType } from '../../../types/ChatType.d'
 import UserAvatar from '../../../components/UserAvatar'
+import { UserType } from '../../../types/UserType.d'
+
+type MessageType = 'TEXT' | 'IMAGE' | 'IMAGE_TEXT' | 'TIP' | 'VIDEO' | 'VIDEO_TEXT'
 
 type ConversationProps = { user: any }
 
 const Conversation: FunctionComponent<ConversationProps> = (props) => {
   const [chat, setChat] = useState<MessageType[]>([])
-  const [connectionId, setConnectionId] = useState<string | null>()
+
+  const currentUserId: UserType = useSelector(userIdSelector)
 
   const { user } = props
 
@@ -25,8 +31,6 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
       connection
         .start()
         .then(() => {
-          setConnectionId(user.connectionId)
-
           console.info(`CONNECTION ID -> ${connection.connectionId}`)
 
           connection.on('ReceiveMessage', (message: { message: string; user: string }) => {
@@ -61,7 +65,10 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
       const chatMessage = {
         user: user.email,
         connectionId: user.connectionId,
+        type: 'TEXT',
         message,
+        senderUserId: currentUserId,
+        receivedUserId: user.userId,
       }
 
       try {
