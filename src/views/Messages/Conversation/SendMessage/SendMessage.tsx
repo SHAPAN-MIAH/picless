@@ -39,6 +39,7 @@ const SendMessage: FunctionComponent<SendMessageProps> = (props) => {
                 name="chat_widget_message_text_2"
                 placeholder="Write a message..."
                 value={message}
+                autoComplete="off"
                 onChange={onMessageUpdate}
               />
 

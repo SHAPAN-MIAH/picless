@@ -1,11 +1,29 @@
 import React, { FunctionComponent } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
+
+import UserService from '../../../services/UserService'
+
 import UserAvatar from '../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
 
-const UserHeader: FunctionComponent<{}> = () => {
+type UserHeaderProps = {
+  userName: string // TODO: TRANSFORM TO NUMBER OR SOMETHING SIMILAR
+}
+
+const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
+  const { userName } = props
+
+  const addToFavorites = () => {
+    UserService.addFavouriteUser(parseInt(userName, 10)).then(() => {
+      alert('User added to favorites')
+    })
+  }
+
+  const suscribe = () => {
+    alert('You are suscribed now')
+  }
   return (
     <>
       <div className="profile-header">
@@ -44,19 +62,29 @@ const UserHeader: FunctionComponent<{}> = () => {
               </div>
 
               <div className="profile-header-social-link">
-                <a className={classNames('social-link', styles.optionsBox)} title="Send a message" href="#/">
+                <a
+                  className={classNames('social-link', styles.optionsBox)}
+                  title="Send a message"
+                  href={`/user/messages/${userName}`}
+                >
                   <FontAwesomeIcon color="white" icon="comments" />
                 </a>
               </div>
 
-              <div className="profile-header-social-link">
+              {/* <div className="profile-header-social-link">
                 <a className={classNames('social-link', styles.optionsBox)} title="Share profile" href="#/">
                   <FontAwesomeIcon color="white" icon="share-alt" />
+                </a>
+              </div> */}
+
+              <div className="profile-header-social-link" onClick={addToFavorites}>
+                <a className={classNames('social-link', styles.optionsBox)} title="Add to Favorites" href="#/">
+                  <FontAwesomeIcon color="white" icon="heart" />
                 </a>
               </div>
             </div>
 
-            <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+            <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribe}>
               <p className="profile-header-info-action button secondary">
                 Suscribe
                 <span className="hide-text-mobile"> for 10,99€</span>

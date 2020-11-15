@@ -30,7 +30,7 @@ const Home: FunctionComponent<{}> = () => {
 
               {!posts ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Loader type="TailSpin" color="#615dfa" height={80} width={80} visible />
+                  <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
                 </div>
               ) : (
                 posts.map((item) => {

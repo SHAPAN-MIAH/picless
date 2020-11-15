@@ -1,9 +1,17 @@
 import React, { FunctionComponent } from 'react'
+import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import { signOut } from '../../../../redux/Auth/AuthThunks'
+
 const AccountSettings: FunctionComponent<{}> = () => {
+  const dispatch = useDispatch()
   const { t } = useTranslation()
+
+  const logout = () => {
+    dispatch(signOut())
+  }
 
   return (
     <>
@@ -119,7 +127,9 @@ const AccountSettings: FunctionComponent<{}> = () => {
             Downloads
           </a> */}
 
-          <p className="dropdown-navigation-button button small secondary">Logout</p>
+          <a className="dropdown-navigation-button button small secondary" href="#/" onClick={logout}>
+            {t('accountSettings.logout')}
+          </a>
         </div>
       </div>
     </>

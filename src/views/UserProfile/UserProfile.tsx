@@ -12,7 +12,7 @@ const UserProfile: FunctionComponent<{}> = () => {
     <>
       <LayoutMain>
         <div className="content-grid">
-          <UserHeader />
+          <UserHeader userName={username} />
 
           <SectionMenu />
 

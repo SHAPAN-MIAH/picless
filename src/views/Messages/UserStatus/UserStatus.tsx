@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import classNames from 'classnames'
+import moment from 'moment'
 
 import UserAvatar from '../../../components/UserAvatar'
-import { UserStatusMessagesType } from '../../../types/ChatType.d'
+import { UserStatusMessagesType } from '../../../types/MessagesType.d'
 
 interface UserStatusProps extends React.BaseHTMLAttributes<HTMLDivElement> {
   statusData: UserStatusMessagesType
@@ -30,7 +31,7 @@ const UserStatus: FunctionComponent<UserStatusProps> = (props) => {
 
           <p className="user-status-text">{statusData.lastMessage?.slice(0, 45)}...</p>
 
-          <p className="user-status-timestamp floaty">2 hours ago</p>
+          <p className="user-status-timestamp floaty">{moment(statusData.lastMessageDate).fromNow()}</p>
         </div>
       </div>
     </>

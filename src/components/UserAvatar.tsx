@@ -15,23 +15,28 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
       {size === 'TINY' && (
         <div className="user-avatar tiny no-border">
           <div className="user-avatar-content">
-            <div className="hexagon-image-24-26" data-src={image} />
+            <div
+              className="hex"
+              style={{ width: '24px', height: '26px', background: `url(${image}) center center / cover no-repeat` }}
+            />
           </div>
         </div>
       )}
       {size === 'SMALL' && (
         <div className="user-status-avatar">
           <div className="user-avatar small no-outline">
-            <div className="user-avatar-content">
-              <div className="hexagon-image-30-32" data-src={image} />
-            </div>
+            {/* <div className="user-avatar-progress">
+              <div className="hex hex-40-44" />
+            </div> */}
 
-            <div className="user-avatar-progress">
-              <div className="hexagon-progress-40-44" />
-            </div>
+            {/* <div key={image} className="user-avatar-progress-border">
+              <div className="hex hex-40-44" />
+            </div> */}
 
-            <div className="user-avatar-progress-border">
-              <div className="hexagon-border-40-44" />
+            <div className="hex hex-border-40-44">
+              <div className="hex hex-border-35-38">
+                <div className="hex hex-30-32 " style={{ background: `url(${image}) center center / cover no-repeat` }} />
+              </div>
             </div>
           </div>
         </div>

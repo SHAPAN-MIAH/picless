@@ -2,7 +2,6 @@ import { ProfileUserSettings, UploadImageType, UserType } from '../types/UserTyp
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
-// const baseUrl = `https://localhost:44326/users`
 
 const getUserProfile = async (): Promise<UserType> => {
   const email = await ApiHelper.getEmail()
@@ -121,13 +120,13 @@ const addFavouriteUser = async (userId: number): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
-    method: 'GET',
+    method: 'POST',
     headers,
   }
   const url = `${baseUrl}/addfavoriteuser?userId=${userId}`
 
   const response = await fetch(url, requestOptions)
-  const body = await response.json()
+  const body = await response
 
   return body
 }

@@ -2,7 +2,16 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faPlus, faTimes, faDollarSign, faShareAlt, faComments, faLock } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheck,
+  faPlus,
+  faTimes,
+  faDollarSign,
+  faShareAlt,
+  faComments,
+  faLock,
+  faHeart,
+} from '@fortawesome/free-solid-svg-icons'
 
 import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
 
@@ -20,7 +29,7 @@ import Home from './views/Home/Home'
 
 import './App.css'
 
-library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock)
+library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock, faHeart)
 
 function App() {
   const dispatch = useDispatch()
@@ -43,6 +52,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
           <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
+          <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
           <Route exact path="/">

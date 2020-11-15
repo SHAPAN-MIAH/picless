@@ -1,38 +1,35 @@
 import React, { useEffect, FunctionComponent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import { getFavoriteUsers, setUserSelected, setUsersFilter } from '../../redux/Chat/ChatThunks'
-import { loadingSelector, getUserListSelector, getUserSelector } from '../../redux/Chat/ChatSelectors'
+import { getUserListSelector, getUserSelector } from '../../redux/Chat/ChatSelectors'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import UserStatus from './UserStatus/UserStatus'
 
-import Conversation from './Converation/Conversation'
+import Conversation from './Conversation/Conversation'
 
-import { UserStatusMessagesType } from '../../types/ChatType.d'
+import { UserStatusMessagesType } from '../../types/MessagesType.d'
 
 const Messages: FunctionComponent<{}> = () => {
   const dispatch = useDispatch()
 
-  const loading: boolean = useSelector(loadingSelector)
+  const { userid } = useParams<{ userid: string }>()
+
   const listOfUser: UserStatusMessagesType[] = useSelector(getUserListSelector)
   const userSelected = useSelector(getUserSelector)
 
-  // const fieldRef = React.useRef<HTMLDivElement>(null)
-
-  // const showMessages = () => {
-  //   const { current } = fieldRef
-  //   if (current) {
-  //     current.scrollIntoView()
-  //   }
-  // }
+  const fieldRef = React.useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     dispatch(getFavoriteUsers())
-
-    return function unMount() {
+    if (userid) {
+      dispatch(setUserSelected(parseInt(userid, 10)))
+    } else if (userSelected) {
+      dispatch(setUserSelected(userSelected.userId))
+    } else {
       dispatch(setUserSelected(null))
-      dispatch(setUsersFilter(''))
     }
   }, [])
 
@@ -40,15 +37,15 @@ const Messages: FunctionComponent<{}> = () => {
     dispatch(setUserSelected(userId))
   }
 
-  const handleFilterByUsers = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUsersFilter(e.target.value))
-  }
+  // const handleFilterByUsers = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   dispatch(setUsersFilter(e.target.value))
+  // }
 
   return (
     <>
       <LayoutMain>
         <div className="content-grid">
-          <div className="grid ">
+          <div className="grid fixed-grid">
             <div className="account-hub-content">
               <div className="section-header">
                 <div className="section-header-info">
@@ -66,7 +63,7 @@ const Messages: FunctionComponent<{}> = () => {
 
               <div className="chat-widget-wrap">
                 <div className="chat-widget static">
-                  <div className="chat-widget-messages" data-simplebar>
+                  <div className="chat-widget-messages">
                     {listOfUser &&
                       listOfUser.map((data: UserStatusMessagesType) => {
                         const isActive = userSelected?.userId === data.userId || false
@@ -100,9 +97,9 @@ const Messages: FunctionComponent<{}> = () => {
                   </form>
                 </div>
 
-                {/* <div className="chat-widget" ref={fieldRef}> */}
-                <div className="chat-widget">
-                  {!!userSelected && <Conversation user={userSelected} />}
+                <div className="chat-widget" ref={fieldRef}>
+                  {!!userSelected && <Conversation key={`conversation-${userSelected.userId}`} user={userSelected} />}
+
                   {!userSelected && (
                     <div className="chat-widget-header">
                       <h2>No user Selected</h2>

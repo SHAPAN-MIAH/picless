@@ -1,4 +1,9 @@
 import React, { forwardRef } from 'react'
+import { useSelector } from 'react-redux'
+
+import * as Utils from '../../../../utils/Functions'
+
+import { userIdSelector } from '../../../../redux/User/UserSelectors'
 
 import MessageLeft from './MessageLeft'
 import MessageRight from './MessageRight'
@@ -8,11 +13,11 @@ import { MessageType } from '../../../../types/MessagesType.d'
 const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((props, ref) => {
   const { messages } = props
 
-  const currentUser = 'User 1'
+  const userId: number = useSelector(userIdSelector)
 
   const chat = messages.map((m, index) => {
     const propsMessage: { key: string; message: MessageType; ref?: any } = {
-      key: m.date.toISOString(),
+      key: Utils.simpleKeyGenerator(5),
       message: m,
     }
 
@@ -20,7 +25,7 @@ const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((pro
       propsMessage.ref = ref
     }
 
-    if (currentUser === m.user) {
+    if (userId === m.fromUserId) {
       return <MessageRight {...propsMessage} />
     }
     return <MessageLeft {...propsMessage} />
@@ -28,7 +33,7 @@ const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((pro
 
   return (
     <>
-      <div className="chat-widget-conversation" data-simplebar>
+      <div className="chat-widget-conversation">
         {chat || (
           <div className="chat-widget-speaker right">
             <p className="chat-widget-speaker-message">No Messages</p>
