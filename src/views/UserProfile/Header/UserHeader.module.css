@@ -10,10 +10,21 @@
   padding-left: 10px;
 }
 
+.socialLinksWrapAdjustment {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media only screen and (max-width: 1366px) {
   /* For mobile phones: */
   [class*='suscribeButton'] {
     align-items: flex-end;
     padding-top: 24px;
+  }
+
+  [class*='socialLinksWrapAdjustment'] {
+    display: flex;
+
+    justify-content: center;
   }
 }

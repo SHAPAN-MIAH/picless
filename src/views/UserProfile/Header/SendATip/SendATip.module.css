@@ -1,0 +1,10 @@
+.mainPopup {
+  padding: 50px;
+}
+
+@media only screen and (max-width: 1366px) {
+  /* For mobile phones: */
+  [class*='mainPopup'] {
+    padding: 15px;
+  }
+}

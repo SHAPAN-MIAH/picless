@@ -23,7 +23,7 @@ const UserStatus: FunctionComponent<UserStatusProps> = (props) => {
         style={{ borderBottom: '1px solid #eaeaf5' }}
       >
         <div className="user-status">
-          <UserAvatar image={process.env.REACT_APP_BUCKET_IMAGES + statusData.coverPicture} />
+          <UserAvatar image={process.env.REACT_APP_BUCKET_IMAGES + statusData.avatarPicture} />
 
           <p className="user-status-title" style={{ margin: '0px' }}>
             <span className="bold">{statusData.fullName}</span>

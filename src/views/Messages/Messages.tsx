@@ -53,12 +53,6 @@ const Messages: FunctionComponent<{}> = () => {
 
                   <h2 className="section-title">Messages</h2>
                 </div>
-
-                <div className="section-header-actions">
-                  <p className="section-header-action">Mark all as Read</p>
-
-                  <p className="section-header-action">Settings</p>
-                </div>
               </div>
 
               <div className="chat-widget-wrap">

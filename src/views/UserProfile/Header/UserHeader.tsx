@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Popup from 'reactjs-popup'
 import classNames from 'classnames'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import UserService from '../../../services/UserService'
 
 import UserAvatar from '../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
+import SendATip from './SendATip/SendATip'
 
 type UserHeaderProps = {
   userName: string // TODO: TRANSFORM TO NUMBER OR SOMETHING SIMILAR
@@ -24,6 +26,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const suscribe = () => {
     alert('You are suscribed now')
   }
+
+  const sendATip = () => {}
   return (
     <>
       <div className="profile-header">
@@ -47,18 +51,19 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
             </p>
           </div>
 
-          <div
-            className="profile-header-social-links-wrap"
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
+          <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
             <div id="profile-header-social-links-slider" className="profile-header-social-links">
               <div className="profile-header-social-link">
-                <a className={classNames('social-link', styles.optionsBox)} title="Send a tip" href="#/">
-                  <FontAwesomeIcon color="white" icon="dollar-sign" />
-                </a>
+                <Popup
+                  modal
+                  trigger={
+                    <a className={classNames('social-link', styles.optionsBox)} title="Send a tip">
+                      <FontAwesomeIcon color="white" icon="dollar-sign" />
+                    </a>
+                  }
+                >
+                  <SendATip />
+                </Popup>
               </div>
 
               <div className="profile-header-social-link">

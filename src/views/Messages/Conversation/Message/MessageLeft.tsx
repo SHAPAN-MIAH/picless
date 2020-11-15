@@ -18,7 +18,7 @@ const MessageLeft = forwardRef<HTMLDivElement | null, { message: MessageType }>(
   let urlAvatar = ''
 
   if (userSelected) {
-    urlAvatar = process.env.REACT_APP_BUCKET_IMAGES + userSelected.coverPicture
+    urlAvatar = process.env.REACT_APP_BUCKET_IMAGES + userSelected.avatarPicture
   }
   return (
     <>

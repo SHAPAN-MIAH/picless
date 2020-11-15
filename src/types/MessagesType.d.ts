@@ -3,7 +3,7 @@ export interface UserStatusMessagesType {
   fullName: string
   userName: string
   email: string
-  coverPicture: string
+  avatarPicture: string
   lastMessage: string
   connectionId?: string
   lastMessageDate: string

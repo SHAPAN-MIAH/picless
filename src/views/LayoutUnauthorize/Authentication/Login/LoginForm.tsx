@@ -52,7 +52,7 @@ const LoginForm = () => {
   const showLoader = currentAction.action === 'LOGIN' && currentAction.status === 'WAITING'
 
   return (
-    <div>
+    <>
       <h2 className="form-box-title">{t('authentication.accountLogin')}</h2>
 
       <form className="form" onSubmit={signIn}>
@@ -125,7 +125,7 @@ const LoginForm = () => {
           {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
         </FormRow>
       </form>
-    </div>
+    </>
   )
 }
 

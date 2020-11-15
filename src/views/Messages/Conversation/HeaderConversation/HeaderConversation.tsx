@@ -15,20 +15,15 @@ const HeaderConversation: FunctionComponent<HeaderConversationProps> = (props) =
   const loading: boolean = useSelector(loadingSelector)
 
   const { user } = props
-  // const [coverPicture, setCoverPicture] = useState<string>(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
 
   const status = (user.connectionId !== null && user.connectionId) !== '' ? 'online' : 'offline'
-
-  useEffect(() => {
-    // setCoverPicture(user.coverPicture)
-  }, [user])
 
   return (
     <>
       <div className="user-status">
         <UserAvatar
           key={`avatar-${user.userId}`}
-          image={process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture}
+          image={process.env.REACT_APP_BUCKET_IMAGES + user.avatarPicture}
           size="SMALL"
         />
         <div className="chat-widget-settings">
