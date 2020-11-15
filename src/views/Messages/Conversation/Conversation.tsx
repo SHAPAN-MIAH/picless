@@ -26,6 +26,8 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
 
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
+  let lastMessage: string = ''
+
   // MountComponent
   useEffect(() => {
     ChatService.getConnectionChat().then((connection) => {
@@ -36,21 +38,25 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
             console.group('ReceiveMessage')
             console.dir(message)
 
-            const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
+            if (lastMessage) {
+              const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
 
-            const chatMessage: MessageType = {
-              user: user.email,
-              connectionId: user.connectionId,
-              type: 'TEXT',
-              message: message.message,
-              registerDate,
-              fromUserId: user.userId,
-              senderUserId: user.userId,
-              toUserId: currentUserId,
-              receivedUserId: currentUserId,
+              const chatMessage: MessageType = {
+                user: user.email,
+                connectionId: user.connectionId,
+                type: 'TEXT',
+                message: message.message,
+                registerDate,
+                fromUserId: user.userId,
+                senderUserId: user.userId,
+                toUserId: currentUserId,
+                receivedUserId: currentUserId,
+              }
+
+              dispatch(addMessageChat(chatMessage))
+
+              lastMessage = message.message
             }
-
-            dispatch(addMessageChat(chatMessage))
           })
         })
         .catch((e) => console.log('Connection failed: ', e))
