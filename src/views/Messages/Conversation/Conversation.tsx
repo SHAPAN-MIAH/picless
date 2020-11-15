@@ -38,7 +38,7 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
             console.group('ReceiveMessage')
             console.dir(message)
 
-            if (lastMessage) {
+            if (lastMessage !== message.message) {
               const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
 
               const chatMessage: MessageType = {
