@@ -34,30 +34,33 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
       connection
         .start()
         .then(() => {
-          connection.on('ReceiveMessage', (message: { registerDate?: string; message: string; user: string }) => {
-            console.group('ReceiveMessage')
-            console.dir(message)
+          connection.on(
+            'ReceiveMessage',
+            (message: { registerDate?: string; message: string; user: string; senderUserId: string }) => {
+              console.group('ReceiveMessage')
+              console.dir(message)
 
-            if (lastMessage !== message.message) {
-              const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
+              if (parseInt(message.senderUserId, 10) === user.userId && lastMessage !== message.message) {
+                const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
 
-              const chatMessage: MessageType = {
-                user: user.email,
-                connectionId: user.connectionId,
-                type: 'TEXT',
-                message: message.message,
-                registerDate,
-                fromUserId: user.userId,
-                senderUserId: user.userId,
-                toUserId: currentUserId,
-                receivedUserId: currentUserId,
+                const chatMessage: MessageType = {
+                  user: user.email,
+                  connectionId: user.connectionId,
+                  type: 'TEXT',
+                  message: message.message,
+                  registerDate,
+                  fromUserId: user.userId,
+                  senderUserId: user.userId,
+                  toUserId: currentUserId,
+                  receivedUserId: currentUserId,
+                }
+
+                dispatch(addMessageChat(chatMessage))
+
+                lastMessage = message.message
               }
-
-              dispatch(addMessageChat(chatMessage))
-
-              lastMessage = message.message
             }
-          })
+          )
         })
         .catch((e) => console.log('Connection failed: ', e))
     })
