@@ -1,13 +1,26 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { signOut } from '../../../redux/Auth/AuthThunks'
+import { userSelector } from '../../../redux/User/UserSelectors'
+import UserAvatar from '../../../components/UserAvatar'
+import { UserType } from '../../../types/UserType.d'
 
 const NavigationLeftMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
+
+  const userData: UserType = useSelector(userSelector)
+
+  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+
+  useEffect(() => {
+    setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+    setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+  }, [userData])
 
   const logout = () => {
     dispatch(signOut())
@@ -17,31 +30,9 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
     <>
       {/* SMALL MENU */}
       <nav id="navigation-widget-small" className="navigation-widget navigation-widget-desktop closed sidebar left delayed">
-        <a className="user-avatar small no-outline online" href="profile-timeline.html">
-          <div className="user-avatar-content">
-            <div className="hexagon-image-30-32" data-src={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
-          </div>
-
-          <div className="user-avatar-progress">
-            <div className="hexagon-progress-40-44" />
-          </div>
-
-          <div className="user-avatar-progress-border">
-            <div className="hexagon-border-40-44" />
-          </div>
-
-          <div className="user-avatar-badge">
-            <div className="user-avatar-badge-border">
-              <div className="hexagon-22-24" />
-            </div>
-
-            <div className="user-avatar-badge-content">
-              <div className="hexagon-dark-16-18" />
-            </div>
-
-            <p className="user-avatar-badge-text">24</p>
-          </div>
-        </a>
+        <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+          <UserAvatar size="SMALL" image={imageProfile} />
+        </Link>
 
         <ul className="menu small">
           <li className="menu-item">
@@ -60,6 +51,19 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
             >
               <svg className="menu-item-link-icon icon-newsfeed">
                 <use xlinkHref="#svg-newsfeed" />
+              </svg>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              style={{ color: '#adafca' }}
+              to="/user/messages"
+              data-title={t('navLeftMenu.messages')}
+            >
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
               </svg>
             </Link>
           </li>
@@ -139,72 +143,27 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
       </nav>
 
       <nav id="navigation-widget" className="navigation-widget navigation-widget-desktop sidebar left hidden" data-simplebar>
-        <figure className="navigation-widget-cover liquid">
-          <img src={`${process.env.PUBLIC_URL}/assets/img/cover/01.jpg`} alt="cover-01" />
-        </figure>
+        <div
+          className="navigation-widget-cover"
+          style={{ background: `url(${imageCover}) center center / cover no-repeat` }}
+        >
+          <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
+        </div>
 
         <div className="user-short-description">
-          <a className="user-short-description-avatar user-avatar medium" href="profile-timeline.html">
-            <div className="user-avatar-border">
-              <div className="hexagon-120-132" />
-            </div>
-
-            <div className="user-avatar-content">
-              <div className="hexagon-image-82-90" data-src={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
-            </div>
-
-            <div className="user-avatar-progress">
-              <div className="hexagon-progress-100-110" />
-            </div>
-
-            <div className="user-avatar-progress-border">
-              <div className="hexagon-border-100-110" />
-            </div>
-
-            <div className="user-avatar-badge">
-              <div className="user-avatar-badge-border">
-                <div className="hexagon-32-36" />
-              </div>
-
-              <div className="user-avatar-badge-content">
-                <div className="hexagon-dark-26-28" />
-              </div>
-
-              <p className="user-avatar-badge-text">24</p>
-            </div>
-          </a>
+          <UserAvatar size="MEDIUM" image={imageProfile} />
 
           <p className="user-short-description-title">
-            <a href="profile-timeline.html">Marina Valentine</a>
+            <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+              {userData.fullName}
+            </Link>
           </p>
 
           <p className="user-short-description-text">
-            <a href="#/">www.gamehuntress.com</a>
+            <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+              www.lupanar.com/{userData.userName}
+            </Link>
           </p>
-        </div>
-
-        <div className="badge-list small">
-          <div className="badge-item">
-            <img src={`${process.env.PUBLIC_URL}/assets/img/badge/gold-s.png`} alt="badge-gold-s" />
-          </div>
-
-          <div className="badge-item">
-            <img src={`${process.env.PUBLIC_URL}/assets/img/badge/age-s.png`} alt="badge-age-s" />
-          </div>
-
-          <div className="badge-item">
-            <img src={`${process.env.PUBLIC_URL}/assets/img/badge/caffeinated-s.png`} alt="badge-caffeinated-s" />
-          </div>
-
-          <div className="badge-item">
-            <img src={`${process.env.PUBLIC_URL}/assets/img/badge/warrior-s.png`} alt="badge-warrior-s" />
-          </div>
-
-          <a className="badge-item" href="profile-badges.html">
-            <img src={`${process.env.PUBLIC_URL}/assets/img/badge/blank-s.png`} alt="badge-blank-s" />
-
-            <p className="badge-item-text">+9</p>
-          </a>
         </div>
 
         <div className="user-stats">
@@ -215,15 +174,15 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
           </div>
 
           <div className="user-stat">
-            <p className="user-stat-title">82</p>
+            <p className="user-stat-title">182</p>
 
-            <p className="user-stat-text">friends</p>
+            <p className="user-stat-text">photos</p>
           </div>
 
           <div className="user-stat">
-            <p className="user-stat-title">5.7k</p>
+            <p className="user-stat-title">50</p>
 
-            <p className="user-stat-text">visits</p>
+            <p className="user-stat-text">videos</p>
           </div>
         </div>
 
@@ -243,6 +202,33 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
                 <use xlinkHref="#svg-newsfeed" />
               </svg>
               {t('navLeftMenu.accountInfo')}
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/user/messages">
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
+              </svg>
+              {t('navLeftMenu.messages')}
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/user/marceloProfile">
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
+              </svg>
+              Profile Test 1 (Marcelo)
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/user/ElDT43">
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
+              </svg>
+              Profile Test 2 (Bruno)
             </Link>
           </li>
 
@@ -344,34 +330,12 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
 
         <div className="navigation-widget-info-wrap">
           <div className="navigation-widget-info">
-            <a className="user-avatar small no-outline" href="profile-timeline.html">
-              <div className="user-avatar-content">
-                <div className="hexagon-image-30-32" data-src={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
-              </div>
-
-              <div className="user-avatar-progress">
-                <div className="hexagon-progress-40-44" />
-              </div>
-
-              <div className="user-avatar-progress-border">
-                <div className="hexagon-border-40-44" />
-              </div>
-
-              <div className="user-avatar-badge">
-                <div className="user-avatar-badge-border">
-                  <div className="hexagon-22-24" />
-                </div>
-
-                <div className="user-avatar-badge-content">
-                  <div className="hexagon-dark-16-18" />
-                </div>
-
-                <p className="user-avatar-badge-text">24</p>
-              </div>
-            </a>
+            <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+              <UserAvatar size="SMALL" image={imageProfile} />
+            </Link>
 
             <p className="navigation-widget-info-title">
-              <a href="profile-timeline.html">Marina Valentine</a>
+              <a href="profile-timeline.html">{userData.fullName}</a>
             </p>
 
             <p className="navigation-widget-info-text">Welcome Back!</p>
@@ -400,6 +364,15 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
                 <use xlinkHref="#svg-newsfeed" />
               </svg>
               {t('navLeftMenu.accountInfo')}
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/account/account-info">
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
+              </svg>
+              {t('navLeftMenu.messages')}
             </Link>
           </li>
 
@@ -489,6 +462,14 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
 
         <Link className="navigation-widget-section-link" to="/account/profile-info">
           {t('navLeftMenu.profileInfo')}
+        </Link>
+
+        <Link className="navigation-widget-section-link" to="/user/marceloProfile">
+          Profile Test 1
+        </Link>
+
+        <Link className="navigation-widget-section-link" to="/user/ElDT43">
+          Profile Test 2
         </Link>
 
         {/* <a className="navigation-widget-section-link" href="hub-profile-social.html">

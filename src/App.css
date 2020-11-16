@@ -71,6 +71,29 @@
   background: linear-gradient(230deg, rgba(97, 93, 250, 1) 15%, rgba(35, 210, 226, 1) 100%);
 }
 
+/*110*/
+.hex-100-110 {
+  width: 100px;
+  height: 110px;
+  position: absolute;
+  top: 3px;
+  left: 2.5px;
+}
+
+.hex-border-124-126 {
+  position: relative;
+  width: 124px;
+  height: 126px;
+  background: white;
+}
+
+.hex-border-148-164 {
+  position: relative;
+  width: 148px;
+  height: 164px;
+  background: linear-gradient(230deg, rgba(97, 93, 250, 1) 15%, rgba(35, 210, 226, 1) 100%);
+}
+
 .fixed-grid {
   margin-top: 0px !important;
 }

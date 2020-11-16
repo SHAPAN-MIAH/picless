@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 const FloatyBar: FunctionComponent<{}> = () => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   return (
     <>

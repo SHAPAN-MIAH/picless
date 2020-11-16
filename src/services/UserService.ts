@@ -20,6 +20,21 @@ const getUserProfile = async (): Promise<UserType> => {
   return body
 }
 
+const getUserProfileByUserName = async (userName: string): Promise<UserType> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+  const url = `${baseUrl}/getprofilebyusername?userName=${userName}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 const updateUserProfile = async (userData: UserType): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
@@ -133,6 +148,7 @@ const addFavouriteUser = async (userId: number): Promise<any> => {
 
 export default {
   getUserProfile,
+  getUserProfileByUserName,
   updateUserProfile,
   uploadUserImages,
   removeDevice,

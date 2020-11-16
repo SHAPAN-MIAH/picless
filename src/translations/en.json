@@ -1,18 +1,19 @@
 {
   "header": {
     "searchPlaceholder": "Search here for people or groups",
-    "navigation":{
-      "home":"Home",
-      "messages":"Messages"
+    "navigation": {
+      "home": "Home",
+      "messages": "Messages"
     }
   },
-  "navLeftMenu":{
-    "logout":"Log Out",
-    "home":"Home",
-    "accountInfo":"Account Info",
-    "profileInfo":"Profile Info"
+  "navLeftMenu": {
+    "logout": "Log Out",
+    "home": "Home",
+    "accountInfo": "Account Info",
+    "profileInfo": "Profile Info",
+    "messages": "Messages"
   },
-  
+
   "passwordStrengthBar": {
     "shortScoreWord": "too short",
     "scoreWords": {
@@ -22,153 +23,153 @@
       "strong": "strong"
     }
   },
-  "accountSidebar":{
+  "accountSidebar": {
     "accountTitle": "Account",
-    "accountDescription":"Change your avatar & cover, update information, email and more!",
-    "accountInfo":"Account Info",
-    "profileInfo":"Profile Info",
-    "accountdevices":"Devices",
-    "changePassword":"Change Password",
-    "logout":"Log Out",
-    "saveButtonText":"Save Changes!",
-    "discardAllButton":"Discard All",
-    "settings":"Account Settings"
+    "accountDescription": "Change your avatar & cover, update information, email and more!",
+    "accountInfo": "Account Info",
+    "profileInfo": "Profile Info",
+    "accountdevices": "Devices",
+    "changePassword": "Change Password",
+    "logout": "Log Out",
+    "saveButtonText": "Save Changes!",
+    "discardAllButton": "Discard All",
+    "settings": "Account Settings"
   },
-  "accountInfo":{
-    "accountTitle":"Account",
-    "accountSubTitle":"Account Info",
-    "personalInfo":"Personal Info",
-    "fullNameField":"Full Name",
-    "accountEmailField":"Account Email",
-    "countryField":"Country",
-    "recoveryEmailField":"Recovery Email",
-    "phoneNumberField":"Phone Number",
-    "urlUserNameField5":"URL Username"
+  "accountInfo": {
+    "accountTitle": "Account",
+    "accountSubTitle": "Account Info",
+    "personalInfo": "Personal Info",
+    "fullNameField": "Full Name",
+    "accountEmailField": "Account Email",
+    "countryField": "Country",
+    "recoveryEmailField": "Recovery Email",
+    "phoneNumberField": "Phone Number",
+    "urlUserNameField5": "URL Username"
   },
-  "accountDevices":{
-    "devicesTitle":"Devices",
-    "devicesSubTitle":"My Devices",
-    "devicesList":"List Of Remebered Devices"
+  "accountDevices": {
+    "devicesTitle": "Devices",
+    "devicesSubTitle": "My Devices",
+    "devicesList": "List Of Remebered Devices"
   },
-  "home":{
-    "createPost":{
-      "title":"Create Post",
-      "placeholderPostText":"Post Text",
-      "discardButton":"Discard Post",
-      "postButton":"Post Now!",
-      "uploadsources":{
-        "title":"Upload Photos Or Videos",
-        "":""
+  "home": {
+    "createPost": {
+      "title": "Create Post",
+      "placeholderPostText": "Post Text",
+      "discardButton": "Discard Post",
+      "postButton": "Post Now!",
+      "uploadsources": {
+        "title": "Upload Photos Or Videos",
+        "": ""
       },
-      "error":{
-        "limitCharacters":"Too Long!"
+      "error": {
+        "limitCharacters": "Too Long!"
       },
-      "fields":{
-        "addTags":"Add Tags",
-        "scheduleStart":"Sechedule Start",
-        "scheduleEnd":"Schedule End"
-      }
-      }
-  },
-  "profileInfo":{
-    "profileInfo":"Profile Info",
-    "aboutYourProfile":"Aboute Your Profile",
-    "changeAvatar":"Change Avatar",
-    "changeCover":"Change Cover",
-    "changeAvatarDescription":"110x110px size minimum",
-    "changeCoverDescription":"1184x300px size minimum",
-    "profileNameField":"Profile Name",
-    "writeDescriptionField":"Write a little description about you..",
-    "interestTitle":"Interests",
-    "taglineField":"Tagline",
-    "countryField":"Country",
-    "birthdayField":"Birthday",
-    "interestsMusicField":"Favourite Music Bands /Artists",
-    "interestsListField":"Things that you really enjoy...",
-    "myProfileTitle":"My Profile",
-    "cityField":"City",
-    "occupationsField":"Occupation",
-    "interests":{
-      "hasNoInterests":"You Has No Interests Yet",
-      "addNewInterest":"Add New Interest",
-      "addNewTitleInterestField":"New Interest Title",
-      "addNewDescriptionInterestField":"New Interest Description",
-      "AddedSuccessfully":"Interest Added Successfully",
-      "addNewInterestButton":"Add Interest",
-      "cancelNewInterestButton":"Cancel",
-      "newInterest":"New Interest",
-      "errors":{
-        "updatingData":"Error while updating data"
-      }
-    },
-    "errors":{
-      "fetchingData":"Some information is still missing",
-      "uploadingAnImage":"Error while uploading the media file",
-      "updatingData":"Error while updating data"
-    },
-    "timelineTitle":"Timeline",
-    "timeline":{
-      "hasNoEvents":"You Has No Events Yet",
-      "addNewEvent":"Add New Event",
-      "addNewTitleTimelineEventField":"Title Or Place",
-      "newYearStarted":"Year Started",
-      "newYearEnded":"Year Ended",
-      "addNewDescriptionEventField":"Event Description",
-      "cancelNewTimeLineEventButton":"Cancel",
-      "addNewTimeLineEventButton":"Add New Field",
-      "AddedSuccessfully":"Event Added Successfully",
-      "newTimeLineEvent":"New Timelime Event",
-      "errors":{
-        "addingTimeLine":"Error While Adding Timeline",
-        "removingTimeLine":"Error While Removing Timeline",
-        "updatingTimeline":"Error While Updating Timeline"
+      "fields": {
+        "addTags": "Add Tags",
+        "scheduleStart": "Sechedule Start",
+        "scheduleEnd": "Schedule End"
       }
     }
   },
-  "changePassword":{
-    "changePasswordTitle":"Change Password",
-    "changeYourPasswordHere":"Change Your Password Here",
-    "oldPasswordField":"Confirm Your Current Password",
-    "newPasswordField":"Your New Password",
-    "passwordRepeatField":"Confirm New Password",
-    "buttonChangePassowrd":"Change Password Now!",
-    "messageSuccessfully":"Your password has been updated sucessfully",
-    "errors":{
-     "NotAuthorizedException":"Incorrect password",
-     "passwordDoesntMatch":"Passwords do not match",
-     "InvalidParameterException":"The new password does not meet the requirements",
-     "LimitExceededException":"Attempt limit exceeded, please try after some minutes"
+  "profileInfo": {
+    "profileInfo": "Profile Info",
+    "aboutYourProfile": "Aboute Your Profile",
+    "changeAvatar": "Change Avatar",
+    "changeCover": "Change Cover",
+    "changeAvatarDescription": "110x110px size minimum",
+    "changeCoverDescription": "1184x300px size minimum",
+    "profileNameField": "Profile Name",
+    "writeDescriptionField": "Write a little description about you..",
+    "interestTitle": "Interests",
+    "taglineField": "Tagline",
+    "countryField": "Country",
+    "birthdayField": "Birthday",
+    "interestsMusicField": "Favourite Music Bands /Artists",
+    "interestsListField": "Things that you really enjoy...",
+    "myProfileTitle": "My Profile",
+    "cityField": "City",
+    "occupationsField": "Occupation",
+    "interests": {
+      "hasNoInterests": "You Has No Interests Yet",
+      "addNewInterest": "Add New Interest",
+      "addNewTitleInterestField": "New Interest Title",
+      "addNewDescriptionInterestField": "New Interest Description",
+      "AddedSuccessfully": "Interest Added Successfully",
+      "addNewInterestButton": "Add Interest",
+      "cancelNewInterestButton": "Cancel",
+      "newInterest": "New Interest",
+      "errors": {
+        "updatingData": "Error while updating data"
+      }
+    },
+    "errors": {
+      "fetchingData": "Some information is still missing",
+      "uploadingAnImage": "Error while uploading the media file",
+      "updatingData": "Error while updating data"
+    },
+    "timelineTitle": "Timeline",
+    "timeline": {
+      "hasNoEvents": "You Has No Events Yet",
+      "addNewEvent": "Add New Event",
+      "addNewTitleTimelineEventField": "Title Or Place",
+      "newYearStarted": "Year Started",
+      "newYearEnded": "Year Ended",
+      "addNewDescriptionEventField": "Event Description",
+      "cancelNewTimeLineEventButton": "Cancel",
+      "addNewTimeLineEventButton": "Add New Field",
+      "AddedSuccessfully": "Event Added Successfully",
+      "newTimeLineEvent": "New Timelime Event",
+      "errors": {
+        "addingTimeLine": "Error While Adding Timeline",
+        "removingTimeLine": "Error While Removing Timeline",
+        "updatingTimeline": "Error While Updating Timeline"
+      }
     }
   },
-"accountSettings":{
-  "changePassword":"Change Password",
-  "myProfileSection":"My Profile",
-  "profileInfo":"Profile Info",
-  "accountSection":"My Account",
-  "accountInfo":"Account Info",
-  "settings":"Account Settings"
-
-
-},
-  "settings":{
-    "title":"My Settings",
-    "subTitle":"Account Settings",
-    "generalTitle":"Notification Settings",
-    "typeNotification":"Type Of Notification",
-    "privacyTitle":"Privacy Settings",
-    "fields":{
-      "enabledPushNotifications":"Push Notification",
-      "enabledEmailNotifications":"Email Notification",
-      "comments":"Comments",
-      "newSubscriber":"New Subscriber",
-      "tips":"Tips",
-      "messages":"Messages",
-      "displayProfileInSearchBar":"Display Your Profile In The Search Bar",
-      "displayChatActivity":"Display Chat Activity",
-      "googleAuthenticator":"Multi Factor Authentication",
-      "whoCanSendMessage":"Who Can Send You a Message",
-      "sendEveryone":"Everyone",
-      "sendOnlySubscribers":"Only Subscribers"
+  "changePassword": {
+    "changePasswordTitle": "Change Password",
+    "changeYourPasswordHere": "Change Your Password Here",
+    "oldPasswordField": "Confirm Your Current Password",
+    "newPasswordField": "Your New Password",
+    "passwordRepeatField": "Confirm New Password",
+    "buttonChangePassowrd": "Change Password Now!",
+    "messageSuccessfully": "Your password has been updated sucessfully",
+    "errors": {
+      "NotAuthorizedException": "Incorrect password",
+      "passwordDoesntMatch": "Passwords do not match",
+      "InvalidParameterException": "The new password does not meet the requirements",
+      "LimitExceededException": "Attempt limit exceeded, please try after some minutes"
+    }
+  },
+  "accountSettings": {
+    "changePassword": "Change Password",
+    "myProfileSection": "My Profile",
+    "profileInfo": "Profile Info",
+    "accountSection": "My Account",
+    "accountInfo": "Account Info",
+    "settings": "Account Settings",
+    "messages": "Messages",
+    "logout": "Logout"
+  },
+  "settings": {
+    "title": "My Settings",
+    "subTitle": "Account Settings",
+    "generalTitle": "Notification Settings",
+    "typeNotification": "Type Of Notification",
+    "privacyTitle": "Privacy Settings",
+    "fields": {
+      "enabledPushNotifications": "Push Notification",
+      "enabledEmailNotifications": "Email Notification",
+      "comments": "Comments",
+      "newSubscriber": "New Subscriber",
+      "tips": "Tips",
+      "messages": "Messages",
+      "displayProfileInSearchBar": "Display Your Profile In The Search Bar",
+      "displayChatActivity": "Display Chat Activity",
+      "googleAuthenticator": "Multi Factor Authentication",
+      "whoCanSendMessage": "Who Can Send You a Message",
+      "sendEveryone": "Everyone",
+      "sendOnlySubscribers": "Only Subscribers"
     }
   },
   "authentication": {
@@ -203,11 +204,11 @@
     "confirmResetPasswordCode": "Please enter the verification code you received in your mailbox, and type a new password",
     "register_password_repeat": "Repeat the new password",
     "sendConfirmNewPassword": "Save new password",
-    
+
     "messages": {
       "successfullyLoggedIn": "You are successfully logged in",
       "successfullyPasswordReset": "Your password has been updated successfully",
-      "RegisterSuccessfully":"You have been registered successfully"
+      "RegisterSuccessfully": "You have been registered successfully"
     },
     "errors": {
       "UsernameExistsException": "An account with the given email already exists.",
@@ -221,8 +222,8 @@
       "emptyVerificationCode": "The verification code filed cannot be empty",
       "InvalidParameterException": "The new password does not meet the requirements",
       "InvalidPasswordException": "Invalid password, please try with new one",
-      "CodeMismatchException":"Incorrect verification code",
-      "CodeDeliveryFailureException":"Imposible to send the verification code to this email address"
+      "CodeMismatchException": "Incorrect verification code",
+      "CodeDeliveryFailureException": "Imposible to send the verification code to this email address"
     }
   }
 }

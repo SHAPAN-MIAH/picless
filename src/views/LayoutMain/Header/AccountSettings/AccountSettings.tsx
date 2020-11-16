@@ -1,13 +1,27 @@
-import React, { FunctionComponent } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import { userSelector } from '../../../../redux/User/UserSelectors'
+
 import { signOut } from '../../../../redux/Auth/AuthThunks'
+import { UserType } from '../../../../types/UserType.d'
+import UserAvatar from '../../../../components/UserAvatar'
 
 const AccountSettings: FunctionComponent<{}> = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
+
+  const userData: UserType = useSelector(userSelector)
+
+  // const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+
+  useEffect(() => {
+    // setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+    setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+  }, [userData])
 
   const logout = () => {
     dispatch(signOut())
@@ -25,40 +39,16 @@ const AccountSettings: FunctionComponent<{}> = () => {
         <div className="dropdown-navigation header-settings-dropdown">
           <div className="dropdown-navigation-header">
             <div className="user-status">
-              <a className="user-status-avatar" href="profile-timeline.html">
-                <div className="user-avatar small no-outline">
-                  <div className="user-avatar-content">
-                    <div className="hexagon-image-30-32" data-src="img/avatar/01.jpg" />
-                  </div>
-
-                  <div className="user-avatar-progress">
-                    <div className="hexagon-progress-40-44" />
-                  </div>
-
-                  <div className="user-avatar-progress-border">
-                    <div className="hexagon-border-40-44" />
-                  </div>
-
-                  <div className="user-avatar-badge">
-                    <div className="user-avatar-badge-border">
-                      <div className="hexagon-22-24" />
-                    </div>
-
-                    <div className="user-avatar-badge-content">
-                      <div className="hexagon-dark-16-18" />
-                    </div>
-
-                    <p className="user-avatar-badge-text">24</p>
-                  </div>
-                </div>
-              </a>
+              <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+                <UserAvatar size="SMALL" image={imageProfile} />
+              </Link>
 
               <p className="user-status-title">
-                <span className="bold">Hi Marina!</span>
+                <span className="bold">Hi {userData.firstName}!</span>
               </p>
 
               <p className="user-status-text small">
-                <a href="profile-timeline.html">@marinavalentine</a>
+                <a href="profile-timeline.html">@{userData.userName}</a>
               </p>
             </div>
           </div>
@@ -67,6 +57,10 @@ const AccountSettings: FunctionComponent<{}> = () => {
 
           <Link className="dropdown-navigation-link" to="/account/profile-info">
             {t('accountSettings.profileInfo')}
+          </Link>
+
+          <Link className="dropdown-navigation-link" to="/user/messages">
+            {t('accountSettings.messages')}
           </Link>
 
           {/* <a className="dropdown-navigation-link" href="hub-profile-social.html">

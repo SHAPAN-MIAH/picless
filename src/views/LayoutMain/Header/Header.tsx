@@ -14,7 +14,7 @@ const Header: FunctionComponent<{}> = () => {
               </svg>
             </div>
 
-            <h1 className="header-brand-text">Vikinger</h1>
+            <h1 className="header-brand-text">Lupanar</h1>
           </div>
         </div>
 

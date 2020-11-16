@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import Popup from 'reactjs-popup'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,16 +9,25 @@ import UserAvatar from '../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
 import SendATip from './SendATip/SendATip'
+import { UserType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {
-  userName: string // TODO: TRANSFORM TO NUMBER OR SOMETHING SIMILAR
+  user: UserType
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
-  const { userName } = props
+  const { user } = props
+
+  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
+  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture)
+
+  useEffect(() => {
+    setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
+    setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture)
+  }, [user])
 
   const addToFavorites = () => {
-    UserService.addFavouriteUser(parseInt(userName, 10)).then(() => {
+    UserService.addFavouriteUser(parseInt(user.userName, 10)).then(() => {
       alert('User added to favorites')
     })
   }
@@ -27,27 +36,26 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     alert('You are suscribed now')
   }
 
-  const sendATip = () => {}
   return (
     <>
       <div className="profile-header">
-        <figure className="profile-header-cover liquid">
-          <img src={`${process.env.PUBLIC_URL}/assets/img/cover/01.jpg`} alt="cover-01" />
-        </figure>
+        <div className="profile-header-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
+          <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
+        </div>
 
         <div className="profile-header-info">
           <div className="user-short-description big">
-            <UserAvatar size="BIG" image={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
+            <UserAvatar size="BIG" image={imageProfile} />
 
             {/* USED FOR MOBILE PROPOUSES */}
-            <UserAvatar size="MEDIUM" image={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
+            <UserAvatar size="MEDIUM" image={imageProfile} />
 
             <p className="user-short-description-title">
-              <a href="profile-timeline.html">USERNAME</a>
+              <a href="profile-timeline.html">{user.userName}</a>
             </p>
 
             <p className="user-short-description-text">
-              <a href="#/">www.gamehuntress.com</a>
+              <a href="#/">www.lupanar.com/{user.userName}</a>
             </p>
           </div>
 
@@ -57,7 +65,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <Popup
                   modal
                   trigger={
-                    <a className={classNames('social-link', styles.optionsBox)} title="Send a tip">
+                    <a href="#/" className={classNames('social-link', styles.optionsBox)} title="Send a tip">
                       <FontAwesomeIcon color="white" icon="dollar-sign" />
                     </a>
                   }
@@ -70,7 +78,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <a
                   className={classNames('social-link', styles.optionsBox)}
                   title="Send a message"
-                  href={`/user/messages/${userName}`}
+                  href={`/user/messages/${user.id}`}
                 >
                   <FontAwesomeIcon color="white" icon="comments" />
                 </a>

@@ -37,8 +37,8 @@ export const setUserSelected = (userId: number | null): AppThunk => async (dispa
   dispatch(Actions.currentChatAddHistory([]))
 
   if (userId) {
-    dispatch(Actions.actionWaiting())
     dispatch(Actions.selectUser(userId))
+    dispatch(Actions.actionWaiting())
     dispatch(getChatHistory(userId))
   }
 }

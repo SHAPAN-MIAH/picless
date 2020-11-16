@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
 import TextInput from '../../../../components/Common/TextInput'
@@ -9,7 +9,7 @@ import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 import styles from './SendATip.module.css'
 
 const SendATip: FunctionComponent<{}> = () => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   const handleSubmit = () => {
     alert('Tip Sended')

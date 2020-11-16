@@ -1,8 +1,11 @@
-import React, { useEffect, FunctionComponent } from 'react'
+import React, { useEffect, FunctionComponent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { HubConnection } from '@microsoft/signalr'
 
-import { getFavoriteUsers, setUserSelected, setUsersFilter } from '../../redux/Chat/ChatThunks'
+import ChatService from '../../services/ChatService'
+
+import { addMessageChat, getFavoriteUsers, sendMessageChat, setUserSelected } from '../../redux/Chat/ChatThunks'
 import { getUserListSelector, getUserSelector } from '../../redux/Chat/ChatSelectors'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
@@ -10,31 +13,106 @@ import UserStatus from './UserStatus/UserStatus'
 
 import Conversation from './Conversation/Conversation'
 
-import { UserStatusMessagesType } from '../../types/MessagesType.d'
+import { MessageType, UserStatusMessagesType } from '../../types/MessagesType.d'
+import { userIdSelector } from '../../redux/User/UserSelectors'
 
 const Messages: FunctionComponent<{}> = () => {
   const dispatch = useDispatch()
 
   const { userid } = useParams<{ userid: string }>()
 
+  const [connection, setConnection] = useState<HubConnection | null>(null)
+
+  const currentUserId: number = useSelector(userIdSelector)
   const listOfUser: UserStatusMessagesType[] = useSelector(getUserListSelector)
   const userSelected = useSelector(getUserSelector)
 
   const fieldRef = React.useRef<HTMLDivElement>(null)
 
+  let lastMessage = ''
+
   useEffect(() => {
     dispatch(getFavoriteUsers())
+
     if (userid) {
-      dispatch(setUserSelected(parseInt(userid, 10)))
+      showUserChat(parseInt(userid, 10))
     } else if (userSelected) {
-      dispatch(setUserSelected(userSelected.userId))
+      showUserChat(userSelected.userId)
     } else {
       dispatch(setUserSelected(null))
     }
+
+    ChatService.getConnectionChat().then((conn) => {
+      setConnection(conn)
+    })
   }, [])
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then(() => {
+          connection.on(
+            'ReceiveMessage',
+            (message: { registerDate?: string; message: string; user: string; senderUserId: string }) => {
+              const uId: string = window.localStorage.getItem('currentChatUserSelected') || '0'
+
+              console.log('User Id')
+              console.log(uId)
+
+              if (parseInt(message.senderUserId, 10) === parseInt(uId, 10) && lastMessage !== message.message) {
+                const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
+
+                const chatMessage: MessageType = {
+                  user: userSelected.email,
+                  connectionId: userSelected.connectionId,
+                  type: 'TEXT',
+                  message: message.message,
+                  registerDate,
+                  fromUserId: userSelected.userId,
+                  senderUserId: userSelected.userId,
+                  toUserId: currentUserId,
+                  receivedUserId: currentUserId,
+                }
+
+                dispatch(addMessageChat(chatMessage))
+
+                lastMessage = message.message
+              }
+            }
+          )
+        })
+        .catch((e) => console.log('Connection failed: ', e))
+    }
+  }, [connection])
 
   const showUserChat = (userId: number) => {
     dispatch(setUserSelected(userId))
+
+    window.localStorage.setItem('currentChatUserSelected', userId.toString())
+  }
+
+  const sendMessage = async (message: string) => {
+    console.log(`User ConnectionId -> ${userSelected?.connectionId}`)
+    if (userSelected?.email) {
+      const chatMessage: MessageType = {
+        user: userSelected.email,
+        connectionId: userSelected.connectionId,
+        type: 'TEXT',
+        message,
+        registerDate: new Date().toISOString(),
+        fromUserId: currentUserId,
+        senderUserId: currentUserId,
+        toUserId: userSelected.userId,
+        receivedUserId: userSelected.userId,
+      }
+
+      try {
+        dispatch(sendMessageChat(chatMessage))
+      } catch (e) {
+        console.log('Sending message failed.', e)
+      }
+    }
   }
 
   // const handleFilterByUsers = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +170,7 @@ const Messages: FunctionComponent<{}> = () => {
                 </div>
 
                 <div className="chat-widget" ref={fieldRef}>
-                  {!!userSelected && <Conversation key={`conversation-${userSelected.userId}`} user={userSelected} />}
+                  {!!userSelected && <Conversation key={userSelected.userId} sendMessage={sendMessage} />}
 
                   {!userSelected && (
                     <div className="chat-widget-header">

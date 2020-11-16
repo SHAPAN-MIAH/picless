@@ -49,7 +49,16 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
           </div>
 
           <div className="user-avatar-content">
-            <div className="hexagon-image-82-90" data-src={image} />
+            <div
+              className="hex"
+              style={{
+                width: '82px',
+                height: '90px',
+                background: `url(${image}) center center / cover no-repeat`,
+              }}
+            >
+              <img src={image} alt="cover-01" style={{ display: 'none' }} />
+            </div>
           </div>
 
           <div className="user-avatar-progress">
@@ -69,7 +78,16 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
           </div>
 
           <div className="user-avatar-content">
-            <div className="hexagon-image-100-110" data-src={`${process.env.PUBLIC_URL}/assets/img/avatar/01.jpg`} />
+            <div
+              className="hex"
+              style={{
+                width: '100px',
+                height: '110px',
+                background: `url(${image}) center center / cover no-repeat`,
+              }}
+            >
+              <img src={image} alt="cover-01" style={{ display: 'none' }} />
+            </div>
           </div>
 
           <div className="user-avatar-progress">

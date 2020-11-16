@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect, useRef, forwardRef } from 'react'
+import React, { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 
 import Loader from 'react-loader-spinner'

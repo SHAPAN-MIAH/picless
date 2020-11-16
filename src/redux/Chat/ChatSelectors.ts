@@ -6,7 +6,16 @@ const usersSelector = (state: any): UserStatusMessagesType[] => state.chat.userL
 const userIdSelector = (state: any): number | null => state.chat.userSelected
 const usersFilter = (state: any): string => state.chat.userFilter
 
-export const getUserSelector = createSelector(
+export const getUserSelector = (state: any): UserStatusMessagesType => {
+  const filter = state.chat.userSelected
+  const { userList } = state.chat
+
+  return userList.find((user: UserStatusMessagesType) => {
+    return user.userId === filter
+  })
+}
+
+export const getUserSelector2 = createSelector(
   [usersSelector, userIdSelector],
   (userList: UserStatusMessagesType[], userSelected: number | null): UserStatusMessagesType | undefined => {
     return userList.find((user) => {
