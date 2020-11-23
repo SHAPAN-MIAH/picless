@@ -6,12 +6,12 @@ import UserAvatar from '../../../../components/UserAvatar'
 
 import { getUserSelector } from '../../../../redux/Chat/ChatSelectors'
 
-import { MessageType, UserStatusMessagesType } from '../../../../types/MessagesType.d'
+import { SingleMessageType, UserStatusMessagesType } from '../../../../types/MessagesType.d'
 
-const MessageLeft = forwardRef<HTMLDivElement | null, { message: MessageType }>((props, ref) => {
+const MessageLeft = forwardRef<HTMLDivElement | null, SingleMessageType>((props, ref) => {
   const userSelected: UserStatusMessagesType | undefined = useSelector(getUserSelector)
 
-  const { message } = props
+  const { message, showAvatar = true, showTime = false } = props
 
   const contentMsg = message.content || message.message
 
@@ -23,13 +23,14 @@ const MessageLeft = forwardRef<HTMLDivElement | null, { message: MessageType }>(
   return (
     <>
       <div ref={ref} className="chat-widget-speaker left">
-        <div className="chat-widget-speaker-avatar">
-          <UserAvatar image={urlAvatar} size="TINY" />
-        </div>
+        {showAvatar && (
+          <div className="chat-widget-speaker-avatar">
+            <UserAvatar image={urlAvatar} size="TINY" />
+          </div>
+        )}
 
         <p className="chat-widget-speaker-message">{contentMsg}</p>
-
-        <p className="chat-widget-speaker-timestamp">{moment(message.registerDate).fromNow()}</p>
+        {showTime && <p className="chat-widget-speaker-timestamp">{moment(message.registerDate).fromNow()}</p>}
       </div>
     </>
   )

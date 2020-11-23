@@ -76,3 +76,16 @@ export interface ProfileUserSettings {
   privacityGoogleAuthenticator: boolean | null
   privacityWhoCanSendMessage: string
 }
+
+export interface UserProfileType extends UserType {
+  numberImages: number
+  numberOfFollowers: number
+  numberVideos: number
+}
+
+export interface TipType {
+  fromId: number
+  toId: number
+  message: string
+  cash: number
+}

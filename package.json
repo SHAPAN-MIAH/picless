@@ -30,6 +30,7 @@
         "react": "^16.13.1",
         "react-circular-progressbar": "^2.0.3",
         "react-country-region-selector": "^3.0.1",
+        "react-currency-input-field": "^2.7.0",
         "react-datepicker": "^3.2.2",
         "react-dom": "^16.13.1",
         "react-i18next": "^11.7.2",

@@ -55,7 +55,7 @@ export const sendMessageChat = (message: MessageType): AppThunk => async (dispat
   try {
     ChatService.sendMessage(message)
       .then(() => {
-        dispatch(addMessageChat(message))
+        dispatch(Actions.currentChatAddOwnMessage(message))
       })
       .catch((err) => {
         console.log('addMessageChat - catch Service')

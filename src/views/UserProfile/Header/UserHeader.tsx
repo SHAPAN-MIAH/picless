@@ -9,10 +9,10 @@ import UserAvatar from '../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
 import SendATip from './SendATip/SendATip'
-import { UserType } from '../../../types/UserType.d'
+import { UserProfileType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {
-  user: UserType
+  user: UserProfileType
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
@@ -27,9 +27,11 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   }, [user])
 
   const addToFavorites = () => {
-    UserService.addFavouriteUser(parseInt(user.userName, 10)).then(() => {
-      alert('User added to favorites')
-    })
+    if (user.id) {
+      UserService.addFavouriteUser(user.id).then(() => {
+        alert('User added to favorites')
+      })
+    }
   }
 
   const suscribe = () => {
@@ -70,7 +72,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                     </a>
                   }
                 >
-                  <SendATip />
+                  <SendATip user={user} />
                 </Popup>
               </div>
 
@@ -122,19 +124,19 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
           <div className="user-stats">
             <div className="user-stat big">
-              <p className="user-stat-title">930</p>
+              <p className="user-stat-title">{user.numberOfFollowers}</p>
 
-              <p className="user-stat-text">posts</p>
+              <p className="user-stat-text">followers</p>
             </div>
 
             <div className="user-stat big">
-              <p className="user-stat-title">182</p>
+              <p className="user-stat-title">{user.numberImages}</p>
 
               <p className="user-stat-text">Photos</p>
             </div>
 
             <div className="user-stat big">
-              <p className="user-stat-title">50</p>
+              <p className="user-stat-title">{user.numberVideos}</p>
 
               <p className="user-stat-text">Videos</p>
             </div>

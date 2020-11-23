@@ -11,6 +11,7 @@ import {
   faComments,
   faLock,
   faHeart,
+  faRedo,
 } from '@fortawesome/free-solid-svg-icons'
 
 import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
@@ -27,9 +28,13 @@ import Messages from './views/Messages/Messages'
 import UserSettings from './views/Account/UserSettings'
 import Home from './views/Home/Home'
 
+import './assets/css/vendor/bootstrap.min.css'
+import './assets/css/vendor/simplebar.css'
+import './assets/css/vendor/tiny-slider.css'
+import './assets/css/styles.min.css'
 import './App.css'
 
-library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock, faHeart)
+library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock, faHeart, faRedo)
 
 function App() {
   const dispatch = useDispatch()
@@ -37,6 +42,49 @@ function App() {
   const routerProps: ProtectedRouteProps = {
     authenticationPath: '/',
   }
+
+  useEffect(() => {
+    // const hexagonScript = document.createElement('script')
+    // hexagonScript.src = '/assets/js/xm_hexagon.min.js'
+    // hexagonScript.async = true
+    // document.body.appendChild(hexagonScript)
+
+    // const accordionScript = document.createElement('script')
+    // accordionScript.src = '/assets/js/xm_accordion.min.js'
+    // accordionScript.async = true
+    // document.body.appendChild(accordionScript)
+
+    // const dropdownScript = document.createElement('script')
+    // dropdownScript.src = '/assets/js/xm_dropdown.min.js'
+    // dropdownScript.async = true
+    // document.body.appendChild(dropdownScript)
+
+    // const popupScript = document.createElement('script')
+    // popupScript.src = '/assets/js/xm_popup.min.js'
+    // popupScript.async = true
+    // document.body.appendChild(popupScript)
+
+    // const progressBarScript = document.createElement('script')
+    // progressBarScript.src = '/assets/js/xm_progressBar.min.js'
+    // progressBarScript.async = true
+    // document.body.appendChild(progressBarScript)
+
+    // const tabScript = document.createElement('script')
+    // tabScript.src = '/assets/js/xm_tab.min.js'
+    // tabScript.async = true
+    // document.body.appendChild(tabScript)
+
+    // const tooltipScript = document.createElement('script')
+    // tooltipScript.src = '/assets/js/xm_tooltip.min.js'
+    // tooltipScript.async = true
+    // document.body.appendChild(tooltipScript)
+
+    const script = document.createElement('script')
+    script.setAttribute('id', 'mainScript')
+    script.src = '/assets/js/app.bundle.min.js'
+    script.async = true
+    document.body.appendChild(script)
+  }, [])
 
   useEffect(() => {
     dispatch(checkUserAuthenticated())

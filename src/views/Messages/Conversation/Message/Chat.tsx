@@ -8,15 +8,16 @@ import { userIdSelector } from '../../../../redux/User/UserSelectors'
 import MessageLeft from './MessageLeft'
 import MessageRight from './MessageRight'
 
-import { MessageType } from '../../../../types/MessagesType.d'
+import { MessageType, SingleMessageTypeRef } from '../../../../types/MessagesType.d'
 
 const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((props, ref) => {
   const { messages } = props
 
   const userId: number = useSelector(userIdSelector)
 
-  const chat = messages.map((m, index) => {
-    const propsMessage: { key: string; message: MessageType; ref?: any } = {
+  let prevMessageUser: MessageType
+  const chat = messages.map((m, index, array) => {
+    const propsMessage: SingleMessageTypeRef = {
       key: Utils.simpleKeyGenerator(5),
       message: m,
     }
@@ -24,6 +25,18 @@ const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((pro
     if (messages.length - 1 === index) {
       propsMessage.ref = ref
     }
+
+    if (prevMessageUser && m.fromUserId === prevMessageUser.fromUserId) {
+      propsMessage.showAvatar = false
+
+      if (array.length >= index + 1 && array[index + 1].fromUserId !== m.fromUserId) {
+        propsMessage.showTime = true
+      }
+    } else {
+      propsMessage.showTime = false
+    }
+
+    prevMessageUser = m
 
     if (userId === m.fromUserId) {
       return <MessageRight {...propsMessage} />

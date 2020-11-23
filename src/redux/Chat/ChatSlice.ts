@@ -56,6 +56,18 @@ export const chatSlice = createSlice({
     currentChatAddMessage: (state, action: PayloadAction<MessageType>) => {
       const message = action.payload
 
+      if (message.fromUserId === state.userSelected) {
+        const messages = state.currentChat.concat(message)
+
+        return { ...state, loading: false, currentChat: messages }
+      }
+
+      return { ...state, loading: false }
+    },
+
+    currentChatAddOwnMessage: (state, action: PayloadAction<MessageType>) => {
+      const message = action.payload
+
       const messages = state.currentChat.concat(message)
 
       return { ...state, loading: false, currentChat: messages }
@@ -75,6 +87,7 @@ export const {
   userFilter,
   currentChatAddHistory,
   currentChatAddMessage,
+  currentChatAddOwnMessage,
 } = chatSlice.actions
 
 // Reducer

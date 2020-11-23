@@ -19,7 +19,7 @@
   /* For mobile phones: */
   [class*='suscribeButton'] {
     align-items: flex-end;
-    padding-top: 24px;
+    padding-top: 7px;
   }
 
   [class*='socialLinksWrapAdjustment'] {

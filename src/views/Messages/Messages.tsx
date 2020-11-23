@@ -13,7 +13,7 @@ import UserStatus from './UserStatus/UserStatus'
 
 import Conversation from './Conversation/Conversation'
 
-import { MessageType, UserStatusMessagesType } from '../../types/MessagesType.d'
+import { MessageType, UserStatusMessagesType, OnReceiveMessageType } from '../../types/MessagesType.d'
 import { userIdSelector } from '../../redux/User/UserSelectors'
 
 const Messages: FunctionComponent<{}> = () => {
@@ -52,48 +52,45 @@ const Messages: FunctionComponent<{}> = () => {
       connection
         .start()
         .then(() => {
-          connection.on(
-            'ReceiveMessage',
-            (message: { registerDate?: string; message: string; user: string; senderUserId: string }) => {
-              const uId: string = window.localStorage.getItem('currentChatUserSelected') || '0'
-
-              console.log('User Id')
-              console.log(uId)
-
-              if (parseInt(message.senderUserId, 10) === parseInt(uId, 10) && lastMessage !== message.message) {
-                const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
-
-                const chatMessage: MessageType = {
-                  user: userSelected.email,
-                  connectionId: userSelected.connectionId,
-                  type: 'TEXT',
-                  message: message.message,
-                  registerDate,
-                  fromUserId: userSelected.userId,
-                  senderUserId: userSelected.userId,
-                  toUserId: currentUserId,
-                  receivedUserId: currentUserId,
-                }
-
-                dispatch(addMessageChat(chatMessage))
-
-                lastMessage = message.message
-              }
-            }
-          )
+          connection.on('ReceiveMessage', (message: OnReceiveMessageType) => {
+            onReceiveMessage(message)
+          })
         })
         .catch((e) => console.log('Connection failed: ', e))
     }
   }, [connection])
 
+  const onReceiveMessage = (message: OnReceiveMessageType) => {
+    console.log(message)
+
+    if (lastMessage !== message.message) {
+      const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
+
+      if (userSelected) {
+        const chatMessage: MessageType = {
+          user: userSelected.email,
+          connectionId: userSelected.connectionId,
+          type: 'TEXT',
+          message: message.message,
+          registerDate,
+          fromUserId: userSelected.userId,
+          senderUserId: userSelected.userId,
+          toUserId: currentUserId,
+          receivedUserId: currentUserId,
+        }
+
+        dispatch(addMessageChat(chatMessage))
+
+        lastMessage = message.message
+      }
+    }
+  }
+
   const showUserChat = (userId: number) => {
     dispatch(setUserSelected(userId))
-
-    window.localStorage.setItem('currentChatUserSelected', userId.toString())
   }
 
   const sendMessage = async (message: string) => {
-    console.log(`User ConnectionId -> ${userSelected?.connectionId}`)
     if (userSelected?.email) {
       const chatMessage: MessageType = {
         user: userSelected.email,

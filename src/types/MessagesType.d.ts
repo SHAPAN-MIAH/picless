@@ -23,4 +23,22 @@ export interface MessageType {
   connectionId?: string
 }
 
+export interface SingleMessageType {
+  message: MessageType
+  showAvatar?: boolean
+  showTime?: boolean
+}
+
+export interface SingleMessageTypeRef extends SingleMessageType {
+  key: string
+  ref?: any
+}
+
+export interface OnReceiveMessageType {
+  registerDate?: string
+  message: string
+  user: string
+  fromUserId: string
+}
+
 export type TypeMessageType = 'TEXT' | 'IMAGE' | 'IMAGE_TEXT' | 'TIP' | 'VIDEO' | 'VIDEO_TEXT'

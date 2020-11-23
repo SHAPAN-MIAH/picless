@@ -2,6 +2,11 @@
   padding: 50px;
 }
 
+.headerTip {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
 @media only screen and (max-width: 1366px) {
   /* For mobile phones: */
   [class*='mainPopup'] {

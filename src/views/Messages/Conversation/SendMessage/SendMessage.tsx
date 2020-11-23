@@ -29,7 +29,7 @@ const SendMessage: FunctionComponent<SendMessageProps> = (props) => {
 
   return (
     <>
-      <form className="chat-widget-form" onSubmit={onSubmit}>
+      <form className="chat-widget-form" onSubmit={onSubmit} style={{ marginTop: '33px' }}>
         <div className="form-row split">
           <div className="form-item">
             <div className="interactive-input small">

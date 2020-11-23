@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { userSelector } from '../../../redux/User/UserSelectors'
 
 import UploadBox from '../../../components/Common/UploadBox'
+import UserAvatar from 'components/UserAvatar'
 
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -64,20 +65,6 @@ const AccountHubMain: FunctionComponent<{}> = () => {
 
               <div className="user-avatar-progress-border">
                 <div className="hexagon-border-84-92" />
-              </div>
-
-              <div className="user-avatar-badge">
-                <div className="user-avatar-badge-border">
-                  <div className="hexagon-28-32" />
-                </div>
-
-                <div className="user-avatar-badge-content">
-                  <div className="hexagon-dark-22-24" />
-                </div>
-
-                <p className="user-avatar-badge-text" style={{ height: '0px' }}>
-                  24
-                </p>
               </div>
             </div>
           </div>

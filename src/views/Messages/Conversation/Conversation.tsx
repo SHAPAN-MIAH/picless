@@ -1,10 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-// import ChatService from '../../../services/ChatService'
-// import { userIdSelector } from '../../../redux/User/UserSelectors'
-
-// import { sendMessageChat, addMessageChat } from '../../../redux/Chat/ChatThunks'
 import { loadingSelector, getCurrentChat, getUserSelector } from '../../../redux/Chat/ChatSelectors'
 
 import Chat from './Message/Chat'
@@ -26,9 +22,6 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
   const currentChat: MessageType[] = useSelector(getCurrentChat)
 
   const chatContainerRef = useRef<HTMLDivElement>(null)
-
-  // MountComponent
-  // useEffect(() => {}, [])
 
   // UpdateComponent
   useEffect(() => {

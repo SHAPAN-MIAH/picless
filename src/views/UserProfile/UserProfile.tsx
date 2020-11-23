@@ -5,17 +5,15 @@ import UserService from '../../services/UserService'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import UserHeader from './Header/UserHeader'
 import SectionMenu from './SectionMenu/SectionMenu'
-import { UserType } from '../../types/UserType.d'
+import { UserProfileType } from '../../types/UserType.d'
 
 const UserProfile: FunctionComponent<{}> = () => {
   const { username } = useParams<{ username: string }>()
 
-  // const [loading, setLoading] = useState<boolean>(true)
-  const [userData, setUserData] = useState<UserType>({})
+  const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
 
   useEffect(() => {
-    UserService.getUserProfileByUserName(username).then((data: UserType) => {
-      // setLoading(false)
+    UserService.getUserProfileByUserName(username).then((data: UserProfileType) => {
       setUserData(data)
     })
   }, [])
