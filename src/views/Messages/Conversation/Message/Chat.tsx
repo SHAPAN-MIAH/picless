@@ -29,7 +29,7 @@ const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((pro
     if (prevMessageUser && m.fromUserId === prevMessageUser.fromUserId) {
       propsMessage.showAvatar = false
 
-      if (array.length >= index + 1 && array[index + 1].fromUserId !== m.fromUserId) {
+      if (array.length > index + 1 && array[index + 1].fromUserId !== m.fromUserId) {
         propsMessage.showTime = true
       }
     } else {

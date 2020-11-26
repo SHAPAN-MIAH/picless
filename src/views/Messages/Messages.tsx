@@ -55,6 +55,11 @@ const Messages: FunctionComponent<{}> = () => {
           connection.on('ReceiveMessage', (message: OnReceiveMessageType) => {
             onReceiveMessage(message)
           })
+
+          connection.on('NodifyOnline', (data: any) => {
+            console.log('ONLINE')
+            console.log(data)
+          })
         })
         .catch((e) => console.log('Connection failed: ', e))
     }
