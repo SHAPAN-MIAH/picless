@@ -24,7 +24,7 @@ const HeaderConversation: FunctionComponent<HeaderConversationProps> = (props) =
 
   const reloadChats = useCallback(() => {
     dispatch(setUserSelected(user.userId))
-  }, [])
+  }, [dispatch, user.userId])
 
   return (
     <>

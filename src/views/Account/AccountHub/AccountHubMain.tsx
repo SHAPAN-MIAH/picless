@@ -6,7 +6,6 @@ import _ from 'lodash'
 import { userSelector } from '../../../redux/User/UserSelectors'
 
 import UploadBox from '../../../components/Common/UploadBox'
-import UserAvatar from 'components/UserAvatar'
 
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()

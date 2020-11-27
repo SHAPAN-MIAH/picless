@@ -23,12 +23,11 @@ const Conversation: FunctionComponent<ConversationProps> = (props) => {
 
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
-  // UpdateComponent
   useEffect(() => {
     if (!loading && chatContainerRef && chatContainerRef.current) {
       chatContainerRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [currentChat])
+  }, [currentChat, loading])
 
   return (
     <>

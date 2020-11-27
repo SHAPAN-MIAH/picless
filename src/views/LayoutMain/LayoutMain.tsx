@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useEffect } from 'react'
+import React, { FunctionComponent, ReactNode } from 'react'
 import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
 
 import Header from './Header/Header'

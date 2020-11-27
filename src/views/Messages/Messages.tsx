@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent, useState } from 'react'
+import React, { useEffect, FunctionComponent, useState, useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { HubConnection } from '@microsoft/signalr'
@@ -27,9 +27,42 @@ const Messages: FunctionComponent<{}> = () => {
   const listOfUser: UserStatusMessagesType[] = useSelector(getUserListSelector)
   const userSelected = useSelector(getUserSelector)
 
-  const fieldRef = React.useRef<HTMLDivElement>(null)
+  const fieldRef = useRef<HTMLDivElement>(null)
+  const lastMessage = useRef<string>('')
 
-  let lastMessage = ''
+  const showUserChat = useCallback(
+    (userId: number) => {
+      dispatch(setUserSelected(userId))
+    },
+    [dispatch]
+  )
+
+  const onReceiveMessage = useCallback(
+    (message: OnReceiveMessageType) => {
+      if (lastMessage.current !== message.message) {
+        const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
+
+        if (userSelected) {
+          const chatMessage: MessageType = {
+            user: userSelected.email,
+            connectionId: userSelected.connectionId,
+            type: 'TEXT',
+            message: message.message,
+            registerDate,
+            fromUserId: userSelected.userId,
+            senderUserId: userSelected.userId,
+            toUserId: currentUserId,
+            receivedUserId: currentUserId,
+          }
+
+          dispatch(addMessageChat(chatMessage))
+
+          lastMessage.current = message.message
+        }
+      }
+    },
+    [currentUserId, dispatch, userSelected]
+  )
 
   useEffect(() => {
     dispatch(getFavoriteUsers())
@@ -42,9 +75,14 @@ const Messages: FunctionComponent<{}> = () => {
       dispatch(setUserSelected(null))
     }
 
-    ChatService.getConnectionChat().then((conn) => {
-      setConnection(conn)
-    })
+    ChatService.getConnectionChat()
+      .then((conn) => {
+        setConnection(conn)
+      })
+      .catch((err) => {
+        alert(err)
+      })
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -63,37 +101,7 @@ const Messages: FunctionComponent<{}> = () => {
         })
         .catch((e) => console.log('Connection failed: ', e))
     }
-  }, [connection])
-
-  const onReceiveMessage = (message: OnReceiveMessageType) => {
-    console.log(message)
-
-    if (lastMessage !== message.message) {
-      const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
-
-      if (userSelected) {
-        const chatMessage: MessageType = {
-          user: userSelected.email,
-          connectionId: userSelected.connectionId,
-          type: 'TEXT',
-          message: message.message,
-          registerDate,
-          fromUserId: userSelected.userId,
-          senderUserId: userSelected.userId,
-          toUserId: currentUserId,
-          receivedUserId: currentUserId,
-        }
-
-        dispatch(addMessageChat(chatMessage))
-
-        lastMessage = message.message
-      }
-    }
-  }
-
-  const showUserChat = (userId: number) => {
-    dispatch(setUserSelected(userId))
-  }
+  }, [connection, onReceiveMessage])
 
   const sendMessage = async (message: string) => {
     if (userSelected?.email) {
