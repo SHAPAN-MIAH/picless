@@ -1,18 +1,39 @@
 import React, { FunctionComponent, useCallback, Suspense } from 'react'
 
 import useSearch from './SearchBarHook'
+import { UserSearchType } from '../../../../types/UserType.d'
 
 const SearchBarItem = React.lazy(() => import('./SearchBarItem/SearchBarItem'))
 
 const SearchBar: FunctionComponent<{}> = () => {
-  const { keyword, items, changeKeyword } = useSearch({ initialKeyword: '' })
+  const { loading, keyword, items, changeKeyword, clear } = useSearch({ initialKeyword: '' })
 
   const onChangeSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      changeKeyword(e.target.value)
+      const query = e.target.value
+      if (!query) {
+        clear()
+      } else {
+        changeKeyword(query)
+      }
     },
-    [changeKeyword]
+    [changeKeyword, clear]
   )
+
+  const renderSearchResults = useCallback(() => {
+    if (items && Object.keys(items).length && items.length) {
+      return (
+        <>
+          {items.slice(0, 5).map((item: UserSearchType) => {
+            console.log(item)
+            return <SearchBarItem key={`search-${item.userId}`} data={item} />
+          })}
+        </>
+      )
+    }
+
+    return <h5>No results</h5>
+  }, [items])
 
   return (
     <>
@@ -23,6 +44,7 @@ const SearchBar: FunctionComponent<{}> = () => {
             id="search-main"
             name="search_main"
             placeholder="Search here for people or groups"
+            autoComplete="false"
             value={keyword}
             onChange={onChangeSearch}
           />
@@ -41,17 +63,18 @@ const SearchBar: FunctionComponent<{}> = () => {
         </div>
 
         <div className="dropdown-box padding-bottom-small header-search-dropdown">
-          <div className="dropdown-box-category">
-            <p className="dropdown-box-category-title">Providers</p>
-          </div>
+          {loading && <h1>Loading ...</h1>}
+          {!loading && (
+            <>
+              <div className="dropdown-box-category">
+                <p className="dropdown-box-category-title">Providers</p>
+              </div>
 
-          <div className="dropdown-box-list small no-scroll">
-            <Suspense fallback="Loading...">
-              {items.map((item: any) => (
-                <SearchBarItem data={item} />
-              ))}
-            </Suspense>
-          </div>
+              <div className="dropdown-box-list small no-scroll">
+                <Suspense fallback="Loading...">{!loading && renderSearchResults()}</Suspense>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

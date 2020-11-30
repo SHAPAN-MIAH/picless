@@ -89,3 +89,10 @@ export interface TipType {
   message: string
   cash: number
 }
+
+export interface UserSearchType {
+  userId: number
+  fullName: string
+  userName: string
+  avatarPicture: string
+}

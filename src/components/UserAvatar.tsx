@@ -3,12 +3,14 @@ import React, { FunctionComponent } from 'react'
 type AvatarSize = 'BIG' | 'MEDIUM' | 'SMALL' | 'TINY'
 
 type UserAvatarProps = {
-  image: string
+  imageName: string
   size?: AvatarSize
 }
 
 const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
-  const { image, size = 'SMALL' } = props
+  const { imageName, size = 'SMALL' } = props
+
+  const imageUrl = process.env.REACT_APP_BUCKET_IMAGES + imageName
 
   return (
     <>
@@ -17,7 +19,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
           <div className="user-avatar-content">
             <div
               className="hex"
-              style={{ width: '24px', height: '26px', background: `url(${image}) center center / cover no-repeat` }}
+              style={{ width: '24px', height: '26px', background: `url(${imageUrl}) center center / cover no-repeat` }}
             />
           </div>
         </div>
@@ -26,7 +28,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
         <div className="user-status-avatar">
           <div className="user-avatar small no-outline">
             {/* <div className="user-avatar-content">
-              <div className="hexagon-image-30-32" data-src={image} />
+              <div className="hexagon-image-30-32" data-src={imageUrl} />
             </div>
 
             <div className="user-avatar-progress">
@@ -39,7 +41,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
 
             <div className="hex hex-border-40-44">
               <div className="hex hex-border-35-38">
-                <div className="hex hex-30-32 " style={{ background: `url(${image}) center center / cover no-repeat` }} />
+                <div className="hex hex-30-32 " style={{ background: `url(${imageUrl}) center center / cover no-repeat` }} />
               </div>
             </div>
           </div>
@@ -58,10 +60,10 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
               style={{
                 width: '82px',
                 height: '90px',
-                background: `url(${image}) center center / cover no-repeat`,
+                background: `url(${imageUrl}) center center / cover no-repeat`,
               }}
             >
-              <img src={image} alt="cover-01" style={{ display: 'none' }} />
+              <img src={imageUrl} alt="cover-01" style={{ display: 'none' }} />
             </div>
           </div>
 
@@ -87,10 +89,10 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
               style={{
                 width: '100px',
                 height: '110px',
-                background: `url(${image}) center center / cover no-repeat`,
+                background: `url(${imageUrl}) center center / cover no-repeat`,
               }}
             >
-              <img src={image} alt="cover-01" style={{ display: 'none' }} />
+              <img src={imageUrl} alt="cover-01" style={{ display: 'none' }} />
             </div>
           </div>
 

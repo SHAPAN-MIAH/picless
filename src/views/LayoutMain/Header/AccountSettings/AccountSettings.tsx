@@ -16,11 +16,11 @@ const AccountSettings: FunctionComponent<{}> = () => {
   const userData: UserType = useSelector(userSelector)
 
   // const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+  const [imageProfile, setImageProfile] = useState(userData.profilePicture)
 
   useEffect(() => {
-    // setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-    setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+    // setImageCover(userData.coverPicture)
+    setImageProfile(userData.profilePicture)
   }, [userData])
 
   const logout = () => {
@@ -40,7 +40,7 @@ const AccountSettings: FunctionComponent<{}> = () => {
           <div className="dropdown-navigation-header">
             <div className="user-status">
               <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-                <UserAvatar size="SMALL" image={imageProfile} />
+                <UserAvatar size="SMALL" imageName={imageProfile} />
               </Link>
 
               <p className="user-status-title">

@@ -19,11 +19,11 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const { user } = props
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
-  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture)
+  const [imageProfile, setImageProfile] = useState(user.profilePicture)
 
   useEffect(() => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
-    setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture)
+    setImageProfile(user.profilePicture)
   }, [user])
 
   const addToFavorites = () => {
@@ -47,10 +47,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
         <div className="profile-header-info">
           <div className="user-short-description big">
-            <UserAvatar size="BIG" image={imageProfile} />
+            <UserAvatar size="BIG" imageName={imageProfile} />
 
             {/* USED FOR MOBILE PROPOUSES */}
-            <UserAvatar size="MEDIUM" image={imageProfile} />
+            <UserAvatar size="MEDIUM" imageName={imageProfile} />
 
             <p className="user-short-description-title">
               <a href="profile-timeline.html">{user.userName}</a>

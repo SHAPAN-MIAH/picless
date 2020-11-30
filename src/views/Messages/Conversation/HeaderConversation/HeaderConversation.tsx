@@ -29,11 +29,7 @@ const HeaderConversation: FunctionComponent<HeaderConversationProps> = (props) =
   return (
     <>
       <div className="user-status">
-        <UserAvatar
-          key={`avatar-${user.userId}`}
-          image={process.env.REACT_APP_BUCKET_IMAGES + user.avatarPicture}
-          size="SMALL"
-        />
+        <UserAvatar key={`avatar-${user.userId}`} imageName={user.avatarPicture} size="SMALL" />
         <div className="chat-widget-settings">
           {loading && <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />}
           {!loading && (

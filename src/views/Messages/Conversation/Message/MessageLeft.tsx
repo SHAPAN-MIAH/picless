@@ -18,14 +18,14 @@ const MessageLeft = forwardRef<HTMLDivElement | null, SingleMessageType>((props,
   let urlAvatar = ''
 
   if (userSelected) {
-    urlAvatar = process.env.REACT_APP_BUCKET_IMAGES + userSelected.avatarPicture
+    urlAvatar = userSelected.avatarPicture
   }
   return (
     <>
       <div ref={ref} className="chat-widget-speaker left">
         {showAvatar && (
           <div className="chat-widget-speaker-avatar">
-            <UserAvatar image={urlAvatar} size="TINY" />
+            <UserAvatar imageName={urlAvatar} size="TINY" />
           </div>
         )}
 

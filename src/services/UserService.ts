@@ -1,5 +1,12 @@
-import { ProfileUserSettings, UploadImageType, UserType, UserProfileType, TipType } from '../types/UserType.d'
 import * as ApiHelper from './ApiHelpers'
+import {
+  ProfileUserSettings,
+  UploadImageType,
+  UserType,
+  UserProfileType,
+  TipType,
+  UserSearchType,
+} from '../types/UserType.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
 
@@ -161,6 +168,22 @@ const sendATip = async (tip: TipType): Promise<any> => {
   return body
 }
 
+const searchUser = async (keyword: string, signal: AbortSignal): Promise<UserSearchType[]> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+    signal,
+  }
+  const url = `${baseUrl}/searchusers?keyword=${keyword}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   getUserProfile,
   getUserProfileByUserName,
@@ -171,4 +194,5 @@ export default {
   getUserSettings,
   addFavouriteUser,
   sendATip,
+  searchUser,
 }

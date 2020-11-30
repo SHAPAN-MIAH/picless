@@ -81,22 +81,45 @@ const AccountSidebar: FunctionComponent<{}> = () => {
                 </a>
               </div>
             </div>
+
+            <div className="sidebar-menu-item">
+              <div className="sidebar-menu-header accordion-trigger-linked">
+                <svg className="sidebar-menu-header-icon icon-settings">
+                  <use xlinkHref="#svg-wallet" />
+                </svg>
+
+                <div className="sidebar-menu-header-control-icon">
+                  <svg className="sidebar-menu-header-control-icon-open icon-minus-small">
+                    <use xlinkHref="#svg-minus-small" />
+                  </svg>
+
+                  <svg className="sidebar-menu-header-control-icon-closed icon-plus-small">
+                    <use xlinkHref="#svg-plus-small" />
+                  </svg>
+                </div>
+
+                <p className="sidebar-menu-header-title">{t('accountSidebar.walletTitle')}</p>
+
+                <p className="sidebar-menu-header-text">{t('accountSidebar.walletDescription')}</p>
+              </div>
+
+              <div className="sidebar-menu-body accordion-content-linked accordion-open">
+                <Link className="sidebar-menu-link" to="/wallet/overview">
+                  {t('accountSidebar.walletOverview')} {/* SHOW LAST MOVEMENTS */}
+                </Link>
+
+                <Link className="sidebar-menu-link" to="/wallet/payments">
+                  {t('accountSidebar.walletPaymentMethods')}
+                </Link>
+
+                <Link className="sidebar-menu-link" to="/wallet/movements">
+                  {t('accountSidebar.walletMyMovements')} {/* REPORT MOVEMENTS */}
+                </Link>
+              </div>
+            </div>
           </div>
 
-          <div className="sidebar-box-footer">
-            {/* <ButtonWithLoader
-                type="button"
-                className="medium primary"
-                onClick={onSaveButton}
-                showLoader={showLoaderButton}
-              >
-                {saveButtonText}
-              </ButtonWithLoader>
-
-              <ButtonWithLoader type="reset" className="button medium white" showLoader={showLoaderButton}>
-                {t('accountSidebar.discardAllButton')}
-              </ButtonWithLoader> */}
-          </div>
+          <div className="sidebar-box-footer" />
         </div>
       </div>
     </div>

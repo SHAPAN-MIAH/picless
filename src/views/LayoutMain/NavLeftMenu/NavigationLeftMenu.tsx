@@ -15,11 +15,11 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
   const userData: UserType = useSelector(userSelector)
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+  const [imageProfile, setImageProfile] = useState(userData.profilePicture)
 
   useEffect(() => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-    setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+    setImageProfile(userData.profilePicture)
   }, [userData])
 
   const logout = () => {
@@ -31,7 +31,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
       {/* SMALL MENU */}
       <nav id="navigation-widget-small" className="navigation-widget navigation-widget-desktop closed sidebar left delayed">
         <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-          <UserAvatar size="SMALL" image={imageProfile} />
+          <UserAvatar size="SMALL" imageName={imageProfile} />
         </Link>
 
         <ul className="menu small">
@@ -151,7 +151,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
         </div>
 
         <div className="user-short-description">
-          <UserAvatar size="MEDIUM" image={imageProfile} />
+          <UserAvatar size="MEDIUM" imageName={imageProfile} />
 
           <p className="user-short-description-title">
             <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
@@ -331,7 +331,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
         <div className="navigation-widget-info-wrap">
           <div className="navigation-widget-info">
             <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-              <UserAvatar size="SMALL" image={imageProfile} />
+              <UserAvatar size="SMALL" imageName={imageProfile} />
             </Link>
 
             <p className="navigation-widget-info-title">

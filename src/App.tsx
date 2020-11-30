@@ -33,6 +33,10 @@ import './assets/css/vendor/simplebar.css'
 import './assets/css/vendor/tiny-slider.css'
 import './assets/css/styles.min.css'
 import './App.css'
+import WalletOverview from './views/Account/WalletOverview'
+import Movements from './views/Account/Movements'
+import PaymentMethods from './views/Account/PaymenMethod'
+import AddCard from './views/Account/Card/AddCard'
 
 library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock, faHeart, faRedo)
 
@@ -99,6 +103,12 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/account/account-devices" component={AccountDevices} />
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
           <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
+
+          <ProtectedRoute {...routerProps} exact path="/wallet/overview" component={WalletOverview} />
+          <ProtectedRoute {...routerProps} exact path="/wallet/payments" component={PaymentMethods} />
+          <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
+          <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
+
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
           <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />

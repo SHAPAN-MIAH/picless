@@ -1,42 +1,23 @@
 import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 
-const SearchBarItem: FunctionComponent<{ data: any }> = (props) => {
+import UserAvatar from '../../../../../components/UserAvatar'
+
+import { UserSearchType } from '../../../../../types/UserType.d'
+
+const SearchBarItem: FunctionComponent<{ data: UserSearchType }> = (props) => {
   const { data } = props
   return (
     <>
-      <a className="dropdown-box-list-item" href="profile-timeline.html">
+      <Link to={`/user/${data.userName}`} className="dropdown-box-list-item">
         <div className="user-status notification">
-          <div className="user-status-avatar">
-            <div className="user-avatar small no-outline">
-              <div className="user-avatar-content">
-                <div className="hexagon-image-30-32" data-src="img/avatar/15.jpg" />
-              </div>
-
-              <div className="user-avatar-progress">
-                <div className="hexagon-progress-40-44" />
-              </div>
-
-              <div className="user-avatar-progress-border">
-                <div className="hexagon-border-40-44" />
-              </div>
-
-              <div className="user-avatar-badge">
-                <div className="user-avatar-badge-border">
-                  <div className="hexagon-22-24" />
-                </div>
-
-                <div className="user-avatar-badge-content">
-                  <div className="hexagon-dark-16-18" />
-                </div>
-
-                <p className="user-avatar-badge-text">7</p>
-              </div>
-            </div>
-          </div>
+          <UserAvatar imageName={data.avatarPicture} size="SMALL" />
 
           <p className="user-status-title">
-            <span className="bold">Tim Rogers</span>
+            <span className="bold">{data.fullName}</span>
           </p>
+
+          <p className="user-status-text">{data.userName}</p>
 
           <div className="user-status-icon">
             <svg className="icon-friend">
@@ -44,7 +25,7 @@ const SearchBarItem: FunctionComponent<{ data: any }> = (props) => {
             </svg>
           </div>
         </div>
-      </a>
+      </Link>
     </>
   )
 }

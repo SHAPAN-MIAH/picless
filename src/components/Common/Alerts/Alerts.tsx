@@ -15,7 +15,7 @@ function Alert(props: AlertProps) {
 
   return (
     <div className={classNames('alert', `alert-${alertType.toLowerCase()}`)} role="alert" style={style}>
-      {message && <span>{message}</span>}
+      {message && <span>{{ message }}</span>}
       {children && <div>{children}</div>}
     </div>
   )

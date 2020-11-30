@@ -25,6 +25,7 @@
   },
   "accountSidebar": {
     "accountTitle": "Account",
+    "walletTitle": "Wallet",
     "accountDescription": "Change your avatar & cover, update information, email and more!",
     "accountInfo": "Account Info",
     "profileInfo": "Profile Info",
@@ -33,7 +34,39 @@
     "logout": "Log Out",
     "saveButtonText": "Save Changes!",
     "discardAllButton": "Discard All",
-    "settings": "Account Settings"
+    "settings": "Account Settings",
+    "walletDescription": "Review your wallet, manage payment and more",
+    "walletOverview": "Overview",
+    "walletPaymentMethods": "Payment Methods",
+    "walletMyMovements": "Movements"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "subTitle": "Overview",
+    "addCardTitle": "Add Card",
+    "movements": "Movements",
+    "lastMovement": "Last Movements",
+    "paymentMethodSubTitle": "Payment Methods",
+    "myCards": "My Cards",
+    "addNewCard": "Add New Card",
+
+    "addCard": {
+      "billingInfoTitle": "Billing Info",
+      "cardDetailsTitle": "Card Details",
+      "streetField": "Street",
+      "cityField": "City",
+      "stateProvinceField": "State / Province",
+      "zipPostalCodeField": "ZIP / Postal Code",
+      "country": "Country",
+      "emailField": "Email",
+      "nameCardField": "Name on the card",
+      "cardNumberField": "Card Number",
+      "expirationMonthField": "MM",
+      "expirationYearField": "YYYY",
+      "ccvField": "CCV",
+
+      "addCardButton": "Submit"
+    }
   },
   "accountInfo": {
     "accountTitle": "Account",
