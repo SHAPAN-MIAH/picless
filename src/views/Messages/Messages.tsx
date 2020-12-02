@@ -5,7 +5,13 @@ import { HubConnection } from '@microsoft/signalr'
 
 import ChatService from '../../services/ChatService'
 
-import { addMessageChat, getFavoriteUsers, sendMessageChat, setUserSelected } from '../../redux/Chat/ChatThunks'
+import {
+  addMessageChat,
+  getFavoriteUsers,
+  sendMessageChat,
+  setUserSelected,
+  changeStatus,
+} from '../../redux/Chat/ChatThunks'
 import { getUserListSelector, getUserSelector } from '../../redux/Chat/ChatSelectors'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
@@ -90,16 +96,19 @@ const Messages: FunctionComponent<{}> = () => {
       connection
         .start()
         .then(() => {
+          notifyOnline()
+
           connection.on('ReceiveMessage', (message: OnReceiveMessageType) => {
             onReceiveMessage(message)
           })
 
-          connection.on('NodifyOnline', (data: any) => {
-            console.log('ONLINE')
-            console.log(data)
+          connection.on('NotifyOnline', (data: number) => {
+            // dispatch(changeStatus(data))
           })
         })
-        .catch((e) => console.log('Connection failed: ', e))
+        .catch((e) => {
+          console.log('Connection failed: ', e)
+        })
     }
   }, [connection, onReceiveMessage])
 
@@ -124,6 +133,10 @@ const Messages: FunctionComponent<{}> = () => {
       }
     }
   }
+
+  const notifyOnline = useCallback(() => {
+    ChatService.notifyConnected(currentUserId)
+  }, [currentUserId])
 
   // const handleFilterByUsers = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   dispatch(setUsersFilter(e.target.value))

@@ -1,6 +1,10 @@
 import React, { FunctionComponent, useCallback, Suspense } from 'react'
+import classNames from 'classnames'
 
-import useSearch from './SearchBarHook'
+import useSearch from '../../../../hooks/useSearch'
+
+import style from './SearchBar.module.css'
+
 import { UserSearchType } from '../../../../types/UserType.d'
 
 const SearchBarItem = React.lazy(() => import('./SearchBarItem/SearchBarItem'))
@@ -37,7 +41,7 @@ const SearchBar: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="header-actions search-bar">
+      <div className={classNames('header-actions search-bar', style.headerActionImportant)}>
         <div className="interactive-input dark">
           <input
             type="text"

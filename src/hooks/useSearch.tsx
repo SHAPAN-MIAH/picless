@@ -1,6 +1,6 @@
 import { Reducer, useReducer } from 'react'
-import UserService from '../../../../services/UserService'
-import { UserSearchType } from '../../../../types/UserType.d'
+import UserService from '../services/UserService'
+import { UserSearchType } from '../types/UserType.d'
 
 interface SearchState {
   loading: boolean

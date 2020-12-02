@@ -1,5 +1,6 @@
-import { CommonPostType } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
+
+import { CommonPostType } from '../types/PostType.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
 // const baseUrl = `https://localhost:44326/posts`

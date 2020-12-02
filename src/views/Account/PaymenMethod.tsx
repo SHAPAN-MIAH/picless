@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import Alert from '../../components/Common/Alerts/Alerts'
-import { Link } from 'react-router-dom'
 
 const PaymentMethods: FunctionComponent<{}> = () => {
   const { t } = useTranslation()

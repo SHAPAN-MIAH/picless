@@ -1,5 +1,9 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
+import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+import { CountryDropdown } from 'react-country-region-selector'
+
+import useWallet from '../../../hooks/useWallet'
 
 import LayoutMain from '../../LayoutMain/LayoutMain'
 import AccountSidebar from '../AccountSidebar/AccountSidebar'
@@ -7,10 +11,45 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import FormItem from '../../../components/Common/Form/FormItem'
 import TextInput from '../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-import { CountryDropdown } from 'react-country-region-selector'
+
+import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
 
 const AddCard: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
+  const { addCard, isLoading } = useWallet()
+
+  const [street, setStreet] = useState('')
+  const [email, setEmail] = useState('')
+  const [state, setState] = useState('')
+  const [nameCard, setNameCard] = useState('')
+  const [city, setCity] = useState('')
+  const [cardNumber, setCardNumber] = useState('')
+  const [postalCode, setPostalCode] = useState('')
+  const [expYear, setExpYear] = useState<number | null>(null)
+  const [expMonth, setExpMonth] = useState<MonthNumbers | null>(null)
+  const [ccv, setCCV] = useState<number | null>(null)
+  const [country, setCountry] = useState('')
+  const [ageOfMajor, setAgeOfMajor] = useState(false)
+
+  const handleAddCard = () => {
+    const cardData: AddCardType = {
+      number: cardNumber,
+      holderName: nameCard,
+      expireMonth: expMonth,
+      expireYear: expYear,
+      ccv,
+      billingAddress: {
+        street,
+        city,
+        state,
+        postalCode,
+        country,
+      },
+    }
+
+    addCard(cardData)
+  }
 
   return (
     <>
@@ -47,8 +86,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small"
                             name="street"
                             placeholder={t('wallet.addCard.streetField')}
-                            // defaultValue={fullName}
-                            // onChange={(e) => setFullName(e.target.value)}
+                            value={street}
+                            onChange={(e) => setStreet(e.target.value)}
                           />
                         </FormItem>
                         <FormItem>
@@ -58,8 +97,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small "
                             name="account_email"
                             placeholder={t('wallet.addCard.emailField')}
-                            // defaultValue={email}
-                            // onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </FormItem>
                       </FormRow>
@@ -72,8 +111,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small"
                             name="city"
                             placeholder={t('wallet.addCard.cityField')}
-                            // defaultValue={urlUserName}
-                            // onChange={(e) => setUrlUserName(e.target.value)}
+                            defaultValue={city}
+                            onChange={(e) => setCity(e.target.value)}
                           />
                         </FormItem>
                         <FormItem>
@@ -83,8 +122,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small "
                             name="name_card"
                             placeholder={t('wallet.addCard.nameCardField')}
-                            // defaultValue={recoveryEmail}
-                            // onChange={(e) => setRecoveryEmail(e.target.value)}
+                            value={nameCard}
+                            onChange={(e) => setNameCard(e.target.value)}
                           />
                         </FormItem>
                       </FormRow>
@@ -97,8 +136,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small"
                             name="state_province"
                             placeholder={t('wallet.addCard.stateProvinceField')}
-                            // defaultValue={urlUserName}
-                            // onChange={(e) => setUrlUserName(e.target.value)}
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
                           />
                         </FormItem>
                         <FormItem>
@@ -108,8 +147,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small"
                             name="card_number"
                             placeholder={t('wallet.addCard.cardNumberField')}
-                            // defaultValue={recoveryEmail}
-                            // onChange={(e) => setRecoveryEmail(e.target.value)}
+                            value={cardNumber}
+                            onChange={(e) => setCardNumber(e.target.value)}
                           />
                         </FormItem>
                       </FormRow>
@@ -122,8 +161,8 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small"
                             name="zip_postal_code"
                             placeholder={t('wallet.addCard.zipPostalCodeField')}
-                            // defaultValue={recoveryEmail}
-                            // onChange={(e) => setRecoveryEmail(e.target.value)}
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
                           />
                         </FormItem>
                         <FormItem>
@@ -135,8 +174,12 @@ const AddCard: FunctionComponent<{}> = () => {
                                 classNameFormInput="small"
                                 name="expiration_month"
                                 placeholder={t('wallet.addCard.expirationMonthField')}
-                                // defaultValue={recoveryEmail}
-                                // onChange={(e) => setRecoveryEmail(e.target.value)}
+                                value={expMonth || ''}
+                                onChange={(e) => {
+                                  if (_.isNumber(e.target.value)) {
+                                    setExpMonth(e.target.value)
+                                  }
+                                }}
                               />
                             </FormItem>
                             <FormItem>
@@ -146,20 +189,27 @@ const AddCard: FunctionComponent<{}> = () => {
                                 classNameFormInput="small"
                                 name="expiration_year"
                                 placeholder={t('wallet.addCard.expirationYearField')}
-                                // defaultValue={recoveryEmail}
-                                // onChange={(e) => setRecoveryEmail(e.target.value)}
+                                value={expYear || ''}
+                                onChange={(e) => {
+                                  if (_.isNumber(e.target.value)) {
+                                    setExpYear(e.target.value)
+                                  }
+                                }}
                               />
                             </FormItem>
                             <FormItem>
-                              {' '}
                               <TextInput
                                 type="text"
                                 id="ccv"
                                 classNameFormInput="small"
                                 name="ccv"
                                 placeholder={t('wallet.addCard.ccvField')}
-                                // defaultValue={recoveryEmail}
-                                // onChange={(e) => setRecoveryEmail(e.target.value)}
+                                value={ccv || ''}
+                                onChange={(e) => {
+                                  if (_.isNumber(e.target.value)) {
+                                    setCCV(e.target.value)
+                                  }
+                                }}
                               />
                             </FormItem>
                           </FormRow>
@@ -173,9 +223,9 @@ const AddCard: FunctionComponent<{}> = () => {
                             <CountryDropdown
                               id="account-country"
                               name="account_country"
-                              value={' '}
+                              value={country}
                               onChange={(val) => {
-                                console.log(val)
+                                setCountry(val)
                               }}
                             />
                           </div>
@@ -186,7 +236,10 @@ const AddCard: FunctionComponent<{}> = () => {
                               type="checkbox"
                               id="payment-method-payoneer"
                               name="payment_method"
-                              value="payment-method-payoneer"
+                              checked={ageOfMajor}
+                              onChange={() => {
+                                setAgeOfMajor(!ageOfMajor)
+                              }}
                             />
 
                             <div className="checkbox-box round" />
@@ -210,7 +263,12 @@ const AddCard: FunctionComponent<{}> = () => {
 
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <ButtonWithLoader type="button" className="small primary" onClick={() => {}} showLoader={false}>
+                          <ButtonWithLoader
+                            type="button"
+                            className="small primary"
+                            onClick={handleAddCard}
+                            showLoader={isLoading}
+                          >
                             {t('wallet.addCard.addCardButton')}
                           </ButtonWithLoader>
                         </FormItem>
