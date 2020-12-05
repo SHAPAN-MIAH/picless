@@ -30,7 +30,10 @@ const addCard = async (card: AddCardType): Promise<any> => {
 
   const url =
     `${baseUrl}/addcreditcard?number=${card.number}&expireMonth=${card.expireMonth}` +
-    `&expireYear=${card.expireYear}&cvc=${card.ccv}&holderName=${card.holderName}`
+    `&expireYear=${card.expireYear}&cvc=${card.ccv}&holderName=${card.holderName}` +
+    `&address=${card.billingAddress.street}&city=${card.billingAddress.city}` +
+    `&state=${card.billingAddress.state}&zipCode=${card.billingAddress.postalCode}` +
+    `&country=${card.billingAddress.country}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()

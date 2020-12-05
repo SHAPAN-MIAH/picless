@@ -43,7 +43,7 @@ const SelectForm = (props: SelectFormProps) => {
           classNameFormInput="small"
           name={name}
           placeholder={placeholder}
-          defaultValue={readOnlyValue}
+          value={readOnlyValue}
           readOnly
         />
       )}

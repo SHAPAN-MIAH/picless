@@ -69,7 +69,7 @@ const ChangePassword: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="old_password"
                           placeholder={t('changePassword.oldPasswordField')}
-                          defaultValue={oldPassword}
+                          value={oldPassword}
                           onChange={(e) => setOldPassword(e.target.value)}
                         />
                       </FormItem>
@@ -83,7 +83,7 @@ const ChangePassword: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="new_Password"
                           placeholder={t('changePassword.newPasswordField')}
-                          defaultValue={newPassword}
+                          value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
                         />
                         <PasswordStrengthBar
@@ -103,7 +103,7 @@ const ChangePassword: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="password_repeat"
                           placeholder={t('changePassword.passwordRepeatField')}
-                          defaultValue={passwordRepeat}
+                          value={passwordRepeat}
                           onChange={(e) => setPasswordRepeat(e.target.value)}
                         />
                       </FormItem>

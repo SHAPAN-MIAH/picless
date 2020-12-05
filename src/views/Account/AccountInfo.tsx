@@ -96,7 +96,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_full_name"
                           placeholder={t('accountInfo.fullNameField')}
-                          defaultValue={fullName}
+                          value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                         />
                       </FormItem>
@@ -107,7 +107,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_email"
                           placeholder={t('accountInfo.accountEmailField')}
-                          defaultValue={email}
+                          value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
                       </FormItem>
@@ -121,7 +121,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_url_username"
                           placeholder={t('accountInfo.urlUserNameField5')}
-                          defaultValue={urlUserName}
+                          value={urlUserName}
                           onChange={(e) => setUrlUserName(e.target.value)}
                         />
                       </FormItem>
@@ -132,7 +132,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="account_recovery_email"
                           placeholder={t('accountInfo.recoveryEmailField')}
-                          defaultValue={recoveryEmail}
+                          value={recoveryEmail}
                           onChange={(e) => setRecoveryEmail(e.target.value)}
                         />
                       </FormItem>
@@ -146,7 +146,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small active"
                           name="phone_number"
                           placeholder={t('accountInfo.phoneNumberField')}
-                          defaultValue={phoneNumber}
+                          value={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                       </FormItem>

@@ -30,7 +30,7 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
             classNameFormInput="small"
             name={`timeline_event_title_${item.id}`}
             placeholder={t('profileInfo.timeline.addNewTitleTimelineEventField')}
-            defaultValue={item.title}
+            value={item.title}
             readOnly
           />
         </FormItem>
@@ -41,7 +41,7 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
               name={`timeline_event_year_started-${item.id}`}
               placeholder={t('profileInfo.timeline.newYearStarted')}
               options={years}
-              defaultValue={item.yearSarted}
+              value={item.yearSarted}
               readOnly
             />
           </FormItem>
@@ -51,7 +51,7 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
               name={`timeline_event_year_ended-${item.id}`}
               placeholder={t('profileInfo.timeline.newYearEnded')}
               options={years}
-              defaultValue={item.yearEnded}
+              value={item.yearEnded}
               readOnly
             />
           </FormItem>
@@ -65,7 +65,7 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
             classNameFormInput="small full"
             name={`timeline_event_description_${item.id}`}
             placeholder={t('profileInfo.timeline.addNewDescriptionEventField')}
-            defaultValue={item.description}
+            value={item.description}
             readOnly
           />
         </FormItem>

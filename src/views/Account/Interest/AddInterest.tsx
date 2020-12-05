@@ -53,7 +53,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             classNameFormInput="small"
             name="tag_line"
             placeholder={t('profileInfo.interests.addNewTitleInterestField')}
-            defaultValue={interestName}
+            value={interestName}
             onChange={(e) => setInterestName(e.target.value)}
           />
         </FormItem>
@@ -66,7 +66,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             classNameFormInput="small full"
             name="account_url_username"
             placeholder={t('profileInfo.interests.addNewDescriptionInterestField')}
-            defaultValue={interestDescription}
+            value={interestDescription}
             onChange={(e) => setInterestDescription(e.target.value)}
             maxLength={500}
           />

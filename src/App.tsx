@@ -12,7 +12,9 @@ import {
   faLock,
   faHeart,
   faRedo,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons'
+import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
 import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
 
@@ -38,7 +40,23 @@ import Movements from './views/Account/Movements'
 import PaymentMethods from './views/Account/PaymenMethod'
 import AddCard from './views/Account/Card/AddCard'
 
-library.add(faPlus, faTimes, faCheck, faDollarSign, faShareAlt, faComments, faLock, faHeart, faRedo)
+library.add(
+  faPlus,
+  faTimes,
+  faCheck,
+  faDollarSign,
+  faShareAlt,
+  faComments,
+  faLock,
+  faHeart,
+  faRedo,
+  faExclamationTriangle,
+  faCcVisa,
+  faCcMastercard,
+  faCcAmex,
+  faCcDinersClub,
+  faCcJcb
+)
 
 function App() {
   const dispatch = useDispatch()

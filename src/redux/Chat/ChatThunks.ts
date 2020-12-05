@@ -65,3 +65,7 @@ export const sendMessageChat = (message: MessageType): AppThunk => async (dispat
     console.error(err)
   }
 }
+
+export const changeStatus = (userId: number): AppThunk => async (dispatch) => {
+  dispatch(Actions.changeStatusOnline(userId))
+}

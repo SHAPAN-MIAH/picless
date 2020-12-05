@@ -56,7 +56,7 @@ const ForgotPasswordNewPassword = () => {
             id="reset-password-code"
             name="reset-password-code"
             placeholder={t('authentication.code')}
-            defaultValue={code}
+            value={code}
             onChange={(e) => setCode(e.target.value)}
           />
         </FormRowItem>
@@ -67,7 +67,7 @@ const ForgotPasswordNewPassword = () => {
             id="register-password"
             name="register_password"
             placeholder={t('authentication.password')}
-            defaultValue={password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <PasswordStrengthBar
@@ -84,7 +84,7 @@ const ForgotPasswordNewPassword = () => {
             id="register-password-repeat"
             name="register_password_repeat"
             placeholder={t('authentication.repeatPassword')}
-            defaultValue={passwordRepeat}
+            value={passwordRepeat}
             onChange={(e) => setPasswordRepeat(e.target.value)}
           />
         </FormRowItem>

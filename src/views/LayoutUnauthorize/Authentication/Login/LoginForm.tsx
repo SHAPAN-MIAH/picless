@@ -62,7 +62,7 @@ const LoginForm = () => {
             id="login-username"
             name="login_username"
             placeholder={t('authentication.usernameOrEmail')}
-            defaultValue={userName}
+            value={userName}
             onChange={(e) => setUserName(e.target.value.toLowerCase())}
           />
         </FormRowItem>
@@ -73,7 +73,7 @@ const LoginForm = () => {
             id="login-password"
             name="login_password"
             placeholder={t('authentication.password')}
-            defaultValue={password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormRowItem>

@@ -45,7 +45,7 @@ const ForgotPasswordEmail = () => {
             id="reset-password-email"
             name="reset-password-email"
             placeholder={t('authentication.resetPasswordEmail')}
-            defaultValue={emailState}
+            value={emailState}
             onChange={(e) => setEmailState(e.target.value)}
           />
         </FormRowItem>

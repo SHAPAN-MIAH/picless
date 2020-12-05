@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useState } from 'react'
-import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { CountryDropdown } from 'react-country-region-selector'
 
-import useWallet from '../../../hooks/useWallet'
+import PaymentService from '../../../services/PaymentService'
 
 import LayoutMain from '../../LayoutMain/LayoutMain'
 import AccountSidebar from '../AccountSidebar/AccountSidebar'
@@ -11,13 +10,16 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import FormItem from '../../../components/Common/Form/FormItem'
 import TextInput from '../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
+import Alert from '../../../components/Common/Alerts/Alerts'
+import InputIconCardProvider from '../../../components/Common/InputIconCardProvider'
 
 import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
 
 const AddCard: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { addCard, isLoading } = useWallet()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const [street, setStreet] = useState('')
   const [email, setEmail] = useState('')
@@ -26,29 +28,46 @@ const AddCard: FunctionComponent<{}> = () => {
   const [city, setCity] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [postalCode, setPostalCode] = useState('')
-  const [expYear, setExpYear] = useState<number | null>(null)
-  const [expMonth, setExpMonth] = useState<MonthNumbers | null>(null)
-  const [ccv, setCCV] = useState<number | null>(null)
+  const [expYear, setExpYear] = useState<string>('')
+  const [expMonth, setExpMonth] = useState<string>('')
+  const [ccv, setCCV] = useState<string>('')
   const [country, setCountry] = useState('')
   const [ageOfMajor, setAgeOfMajor] = useState(false)
 
   const handleAddCard = () => {
-    const cardData: AddCardType = {
-      number: cardNumber,
-      holderName: nameCard,
-      expireMonth: expMonth,
-      expireYear: expYear,
-      ccv,
-      billingAddress: {
-        street,
-        city,
-        state,
-        postalCode,
-        country,
-      },
+    if (street && email && state && nameCard && city && cardNumber && postalCode && expYear && expMonth && ccv && country) {
+      if (ageOfMajor) {
+        const cardData: AddCardType = {
+          number: cardNumber,
+          holderName: nameCard,
+          expireMonth: parseInt(expMonth, 10) as MonthNumbers,
+          expireYear: parseInt(expYear, 10),
+          ccv: parseInt(ccv, 10),
+          billingAddress: {
+            street,
+            city,
+            state,
+            postalCode,
+            country,
+          },
+        }
+        setIsLoading(true)
+        PaymentService.addCard(cardData)
+          .then(() => {
+            setIsLoading(false)
+          })
+          .catch((err) => {
+            console.error(err)
+            setErrorMessage(JSON.stringify(err))
+          })
+      } else {
+        setErrorMessage(
+          'You need to confirm that you are at least 18 years old and the age of majority in your place of residence'
+        )
+      }
+    } else {
+      setErrorMessage('Please fill all required fields')
     }
-
-    addCard(cardData)
   }
 
   return (
@@ -88,6 +107,7 @@ const AddCard: FunctionComponent<{}> = () => {
                             placeholder={t('wallet.addCard.streetField')}
                             value={street}
                             onChange={(e) => setStreet(e.target.value)}
+                            required
                           />
                         </FormItem>
                         <FormItem>
@@ -99,6 +119,7 @@ const AddCard: FunctionComponent<{}> = () => {
                             placeholder={t('wallet.addCard.emailField')}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                           />
                         </FormItem>
                       </FormRow>
@@ -111,8 +132,9 @@ const AddCard: FunctionComponent<{}> = () => {
                             classNameFormInput="small"
                             name="city"
                             placeholder={t('wallet.addCard.cityField')}
-                            defaultValue={city}
+                            value={city}
                             onChange={(e) => setCity(e.target.value)}
+                            required
                           />
                         </FormItem>
                         <FormItem>
@@ -124,6 +146,7 @@ const AddCard: FunctionComponent<{}> = () => {
                             placeholder={t('wallet.addCard.nameCardField')}
                             value={nameCard}
                             onChange={(e) => setNameCard(e.target.value)}
+                            required
                           />
                         </FormItem>
                       </FormRow>
@@ -138,17 +161,21 @@ const AddCard: FunctionComponent<{}> = () => {
                             placeholder={t('wallet.addCard.stateProvinceField')}
                             value={state}
                             onChange={(e) => setState(e.target.value)}
+                            required
                           />
                         </FormItem>
                         <FormItem>
-                          <TextInput
+                          <InputIconCardProvider
                             type="text"
                             id="card-number"
                             classNameFormInput="small"
                             name="card_number"
                             placeholder={t('wallet.addCard.cardNumberField')}
                             value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
+                            required
+                            onChange={(e) => {
+                              setCardNumber(e.target.value)
+                            }}
                           />
                         </FormItem>
                       </FormRow>
@@ -163,6 +190,7 @@ const AddCard: FunctionComponent<{}> = () => {
                             placeholder={t('wallet.addCard.zipPostalCodeField')}
                             value={postalCode}
                             onChange={(e) => setPostalCode(e.target.value)}
+                            required
                           />
                         </FormItem>
                         <FormItem>
@@ -172,14 +200,16 @@ const AddCard: FunctionComponent<{}> = () => {
                                 type="text"
                                 id="expiration-month"
                                 classNameFormInput="small"
+                                size={2}
+                                minLength={2}
+                                maxLength={2}
                                 name="expiration_month"
                                 placeholder={t('wallet.addCard.expirationMonthField')}
-                                value={expMonth || ''}
+                                value={expMonth}
                                 onChange={(e) => {
-                                  if (_.isNumber(e.target.value)) {
-                                    setExpMonth(e.target.value)
-                                  }
+                                  setExpMonth(e.target.value)
                                 }}
+                                required
                               />
                             </FormItem>
                             <FormItem>
@@ -187,29 +217,41 @@ const AddCard: FunctionComponent<{}> = () => {
                                 type="text"
                                 id="expiration-year"
                                 classNameFormInput="small"
+                                size={4}
+                                minLength={4}
+                                maxLength={4}
                                 name="expiration_year"
                                 placeholder={t('wallet.addCard.expirationYearField')}
                                 value={expYear || ''}
                                 onChange={(e) => {
-                                  if (_.isNumber(e.target.value)) {
-                                    setExpYear(e.target.value)
-                                  }
+                                  setExpYear(e.target.value)
                                 }}
+                                onFocus={() => {
+                                  if (expYear === '') setExpYear(new Date().getFullYear().toString().substring(0, 2))
+                                }}
+                                onBlur={() => {
+                                  const splittedYear = new Date().getFullYear().toString().substring(0, 2)
+
+                                  if (expYear === splittedYear) setExpYear('')
+                                }}
+                                required
                               />
                             </FormItem>
                             <FormItem>
                               <TextInput
-                                type="text"
+                                type="password"
                                 id="ccv"
                                 classNameFormInput="small"
+                                size={4}
+                                minLength={3}
+                                maxLength={4}
                                 name="ccv"
                                 placeholder={t('wallet.addCard.ccvField')}
                                 value={ccv || ''}
                                 onChange={(e) => {
-                                  if (_.isNumber(e.target.value)) {
-                                    setCCV(e.target.value)
-                                  }
+                                  setCCV(e.target.value)
                                 }}
+                                required
                               />
                             </FormItem>
                           </FormRow>
@@ -244,9 +286,9 @@ const AddCard: FunctionComponent<{}> = () => {
 
                             <div className="checkbox-box round" />
 
-                            <label className="accordion-trigger-linked" htmlFor="payment-method-payoneer">
-                              Tick here to confirm that you are at least 18 years old and the age of majority in your place
-                              of residence
+                            <label className="" htmlFor="payment-method-payoneer">
+                              <span style={{ color: 'red' }}>*</span> Tick here to confirm that you are at least 18 years old
+                              and the age of majority in your place of residence
                             </label>
 
                             <div className="checkbox-info accordion-content-linked" style={{ display: 'none' }}>
@@ -257,8 +299,8 @@ const AddCard: FunctionComponent<{}> = () => {
                       </FormRow>
 
                       <FormRow>
-                        {/* {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-                      {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />} */}
+                        {errorMessage && <Alert alertType="DANGER" message={t(errorMessage)} style={{ width: '100%' }} />}
+                        {/* {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />} */}
                       </FormRow>
 
                       <FormRow classNameRow="split">

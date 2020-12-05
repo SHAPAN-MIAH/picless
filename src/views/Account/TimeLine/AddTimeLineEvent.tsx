@@ -57,7 +57,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
             classNameFormInput="small"
             name="tag_line"
             placeholder={t('profileInfo.timeline.addNewTitleTimelineEventField')}
-            defaultValue={timelineEventTitle}
+            value={timelineEventTitle}
             onChange={(e) => setTimelineEventTitle(e.target.value)}
           />
         </FormItem>
@@ -68,7 +68,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
               name="timeline_new_year_started"
               placeholder={t('profileInfo.timeline.newYearStarted')}
               options={years}
-              defaultValue={timelineEventDescription}
+              value={timelineEventDescription}
               onChange={(e) => setTimelineEventStarted(e.target.value)}
             />
           </FormItem>
@@ -78,7 +78,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
               name="timeline_new_year_started"
               placeholder={t('profileInfo.timeline.newYearEnded')}
               options={years}
-              defaultValue={timelineEventEnded}
+              value={timelineEventEnded}
               onChange={(e) => setTimelineEventEnded(e.target.value)}
             />
           </FormItem>
@@ -92,7 +92,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
             classNameFormInput="small full"
             name="account_url_username"
             placeholder={t('profileInfo.timeline.addNewDescriptionEventField')}
-            defaultValue={timelineEventDescription}
+            value={timelineEventDescription}
             onChange={eventDescriptionHandler}
             maxLength={500}
           />

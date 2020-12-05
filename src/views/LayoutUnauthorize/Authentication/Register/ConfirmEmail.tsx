@@ -61,7 +61,7 @@ const ConfirmEmail = () => {
             id="verification-code"
             name="verification_code"
             placeholder={t('authentication.code')}
-            defaultValue={code}
+            value={code}
             onChange={(e) => setCode(e.target.value)}
           />
         </FormRowItem>

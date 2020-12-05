@@ -102,7 +102,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small"
                           name="account_profile_name"
                           placeholder={t('profileInfo.profileNameField')}
-                          defaultValue={userName}
+                          value={userName}
                           onChange={(e) => setUserName(e.target.value)}
                         />
                       </FormItem>
@@ -127,7 +127,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small full"
                           name="account_url_username"
                           placeholder={t('profileInfo.writeDescriptionField')}
-                          defaultValue={profileDescription}
+                          value={profileDescription}
                           onChange={(e) => setProfileDescription(e.target.value)}
                         />
                       </FormItem>
@@ -150,7 +150,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small"
                           name="city"
                           placeholder={t('profileInfo.cityField')}
-                          defaultValue={cityName}
+                          value={cityName}
                           onChange={(e) => setCityName(e.target.value)}
                         />
                       </FormItem>
@@ -164,7 +164,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           classNameFormInput="small"
                           name="occupations"
                           placeholder={t('profileInfo.occupationsField')}
-                          defaultValue={occupations}
+                          value={occupations}
                           onChange={(e) => setOccupations(e.target.value)}
                         />
                       </FormItem>

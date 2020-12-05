@@ -50,7 +50,7 @@ const RegisterForm = () => {
             id="register-email"
             name="register_email"
             placeholder={t('authentication.yourEmail')}
-            defaultValue={email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </FormRowItem>
@@ -61,7 +61,7 @@ const RegisterForm = () => {
             id="register-password"
             name="register_password"
             placeholder={t('authentication.password')}
-            defaultValue={password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <PasswordStrengthBar
@@ -78,7 +78,7 @@ const RegisterForm = () => {
             id="register-password-repeat"
             name="register_password_repeat"
             placeholder={t('authentication.repeatPassword')}
-            defaultValue={passwordRepeat}
+            value={passwordRepeat}
             onChange={(e) => setPasswordRepeat(e.target.value)}
           />
         </FormRowItem>

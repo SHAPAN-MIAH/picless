@@ -76,6 +76,25 @@ export const chatSlice = createSlice({
     userFilter: (state, action: PayloadAction<string>) => {
       return { ...state, loading: false, userFilter: action.payload }
     },
+
+    changeStatusOnline: (state, action: PayloadAction<number>) => {
+      const userToUpdate = action.payload
+
+      const updatedUserList = state.userList?.map((user) => {
+        if (user.userId === userToUpdate) {
+          user.connectionId = 'online'
+          return user
+        }
+
+        return user
+      })
+
+      return {
+        ...state,
+        loading: false,
+        userList: updatedUserList,
+      }
+    },
   },
 })
 
@@ -88,6 +107,7 @@ export const {
   currentChatAddHistory,
   currentChatAddMessage,
   currentChatAddOwnMessage,
+  changeStatusOnline,
 } = chatSlice.actions
 
 // Reducer

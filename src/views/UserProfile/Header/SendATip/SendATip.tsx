@@ -59,7 +59,7 @@ const SendATip: FunctionComponent<{ user: UserProfileType }> = (props) => {
               <CurrencyInput
                 id="input-tip"
                 name="input_tip"
-                defaultValue={cash}
+                value={cash}
                 allowDecimals
                 decimalsLimit={2}
                 onChange={(value) => setCash(parseInt(value as string, 10))}
@@ -71,7 +71,7 @@ const SendATip: FunctionComponent<{ user: UserProfileType }> = (props) => {
             id="amount"
             name="amount"
             placeholder="Enter tip amount"
-              defaultValue={cash}
+              value={cash}
               onChange={(e) => setCash(parseInt(e.target.value, 10))}
             /> */}
           </FormRowItem>
@@ -82,7 +82,7 @@ const SendATip: FunctionComponent<{ user: UserProfileType }> = (props) => {
               id="message"
               name="message"
               placeholder="Write me something"
-              defaultValue={message}
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
           </FormRowItem>

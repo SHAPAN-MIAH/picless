@@ -96,3 +96,13 @@
 .fixed-grid {
   margin-top: 0px !important;
 }
+
+.inputErrorField {
+  border-color: red !important;
+}
+
+.inputErrorFieldText {
+  margin-top: 10px;
+  color: #dc3545;
+  font-size: 14px;
+}
