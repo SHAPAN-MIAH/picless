@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import Loader from 'react-loader-spinner'
 import _ from 'lodash'
 
 import PostService from '../../services/PostService'
@@ -9,7 +10,6 @@ import CreatePost from './CreatePost/CreatePost'
 import { PostType } from '../../types/PostType.d'
 import { simpleKeyGenerator } from '../../utils/Functions'
 import Post from './Post/Post'
-import Loader from 'react-loader-spinner'
 
 const Home: FunctionComponent<{}> = () => {
   const [posts, setPosts] = useState<PostType[]>()

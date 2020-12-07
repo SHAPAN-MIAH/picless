@@ -23,7 +23,7 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
               <img
                 alt="asd"
                 style={{ width: '40px', height: '42px' }}
-                src={process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture}
+                src={process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture}
               />
             </div>
           </div>
@@ -40,7 +40,7 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
 
       <p className="user-status-title medium">
         <a className="bold" href="profile-timeline.html">
-          {`${user.fullName} `}
+          {`${user.fullName || user.userName} `}
         </a>
         create a <span className="bold">post</span>
       </p>

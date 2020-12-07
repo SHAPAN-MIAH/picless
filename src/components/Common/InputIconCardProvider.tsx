@@ -1,9 +1,8 @@
-import { IconName } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import { ProviderType } from '../../types/PaymentTypes.d'
 import { getCardProvider } from '../../utils/Card'
+import ProviderIconCard from './ProviderIconCard'
 
 interface InputIconCardProviderProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classNameFormInput?: string
@@ -13,9 +12,9 @@ const InputIconCardProvider = (props: InputIconCardProviderProps) => {
   const { className, placeholder, id, defaultValue, value, required, classNameFormInput, ...rest } = props
 
   const [isFocused, setIsFocused] = useState(false)
-  const [icon, setIcon] = useState<IconName | null>(null)
 
   const [showRequired, setShowRequired] = useState(false)
+  const [provider, setProvider] = useState<string>('')
 
   const inputActive = isFocused || value
 
@@ -24,15 +23,9 @@ const InputIconCardProvider = (props: InputIconCardProviderProps) => {
   }
 
   useEffect(() => {
-    const provider = getCardProvider((value as string) || '')
+    const providerName = getCardProvider((value as string) || '')
 
-    if (provider === 'VISA') setIcon('cc-visa')
-    else if (provider === 'MASTER_CARD') setIcon('cc-mastercard')
-    else if (provider === 'AMERICAN_EXPRESS') setIcon('cc-amex')
-    else if (provider === 'DINNERS') setIcon('cc-diners-club')
-    else if (provider === 'DISCOVER') setIcon('cc-discover')
-    else if (provider === 'JCB') setIcon('cc-jcb')
-    else setIcon(null)
+    if (providerName) setProvider(providerName)
   }, [value])
 
   return (
@@ -64,15 +57,15 @@ const InputIconCardProvider = (props: InputIconCardProviderProps) => {
         maxLength={19}
         {...rest}
       />
-      {icon && (
+      {provider && (
         <div className="form-input-icon" style={{ fontSize: '34px', position: 'absolute', top: '0px', right: '12px' }}>
-          <FontAwesomeIcon color="#3e3f5e" icon={['fab', icon]} />
+          <ProviderIconCard provider={provider} />
         </div>
       )}
 
       {required && showRequired && (
         <p className="inputErrorFieldText">
-          <FontAwesomeIcon color="" icon="exclamation-triangle" /> {placeholder} field is required
+          <FontAwesomeIcon color="red" icon="exclamation-triangle" /> {placeholder} field is required
         </p>
       )}
     </div>

@@ -26,7 +26,7 @@ const TextInput = (props: TextInputProps) => {
           {placeholder} {required && <span style={{ color: 'red' }}>*</span>}
         </label>
         <input
-          value={value}
+          value={value || ''}
           id={id}
           className={classNames(className, required && showRequired ? 'inputErrorField' : '')}
           onBlur={(e) => {

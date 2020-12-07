@@ -37,7 +37,7 @@ import './assets/css/styles.min.css'
 import './App.css'
 import WalletOverview from './views/Account/WalletOverview'
 import Movements from './views/Account/Movements'
-import PaymentMethods from './views/Account/PaymenMethod'
+import PaymentMethods from './views/Account/PaymentMethods'
 import AddCard from './views/Account/Card/AddCard'
 
 library.add(
@@ -131,6 +131,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
+
           <Route exact path="/">
             <LayoutUnauthorize />
           </Route>

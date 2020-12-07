@@ -18,3 +18,21 @@ export interface AddCardType {
   holderName: string
   billingAddress: BillingAddressType
 }
+
+export interface CardType {
+  id: string
+  created: number
+  objectType: string
+  last4: string
+  expMonth: string
+  expYear: number
+  cardholderName: string
+  customerId: string
+  brand: string
+  type: string
+  country: string
+  addressCity: string
+  addressLine1: string
+  addressState: string
+  addressCountry: string
+}
