@@ -32,7 +32,7 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
           classNameFormInput="small full"
           name={`interest_${item.id}`}
           placeholder={item.name}
-          defaultValue={item.description}
+          value={item.description || ''}
           readOnly
         />
       </FormItem>
@@ -57,7 +57,8 @@ const InterestList: FunctionComponent<{}> = () => {
           <>
             <FormRow key={key} classNameRow="split">
               {row.map((interest) => {
-                return <Interest key={interest.id} item={interest} />
+                const intKey = Utils.simpleKeyGenerator(5)
+                return <Interest key={intKey} item={interest} />
               })}
             </FormRow>
             <div style={{ borderTop: '1px solid #eaeaf5', marginTop: '15px', marginBottom: '15px' }} />

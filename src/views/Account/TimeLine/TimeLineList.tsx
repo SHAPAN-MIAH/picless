@@ -26,10 +26,10 @@ const TimeLineList: FunctionComponent<{}> = () => {
         const temporaryKey = simpleKeyGenerator(5)
 
         return (
-          <>
-            <TimeLineEvent key={row.id || temporaryKey} item={row} years={years} />
+          <div key={temporaryKey}>
+            <TimeLineEvent item={row} years={years} />
             <div style={{ borderTop: '1px solid #eaeaf5', marginTop: '30px', marginBottom: '35px' }} />
-          </>
+          </div>
         )
       })
     }

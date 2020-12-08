@@ -7,7 +7,7 @@ interface TextAreaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
 }
 
 const TextArea = (props: TextAreaProps) => {
-  const { placeholder, id, classNameFormInput, defaultValue, onChange, name, limitMessage = 'Max Limit', ...rest } = props
+  const { placeholder, id, classNameFormInput, value, onChange, name, limitMessage = 'Max Limit', ...rest } = props
 
   const [isFocused, setIsFocused] = useState(false)
   const [qtyCharacters, setQtyCharacters] = useState(0)
@@ -22,14 +22,12 @@ const TextArea = (props: TextAreaProps) => {
     // <div className={classNames('form-input', classNameFormInput)}>
     //   <textarea id={id} name={name} placeholder={placeholder} {...rest} />
     // </div>
-    <div
-      className={classNames('form-input small mid-textarea', classNameFormInput, isFocused || defaultValue ? 'active' : '')}
-    >
+    <div className={classNames('form-input small mid-textarea', classNameFormInput, isFocused || value ? 'active' : '')}>
       <label htmlFor={id}>{placeholder}</label>
       <textarea
         id={id}
         name={name}
-        defaultValue={defaultValue}
+        value={value || ''}
         onBlur={(e) => {
           setIsFocused(false)
           if (props.onBlur) props.onBlur(e)

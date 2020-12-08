@@ -23,8 +23,8 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
   const { onAdd, years } = props
 
   const [timelineEventTitle, setTimelineEventTitle] = useState('')
-  const [timelineEventStarted, setTimelineEventStarted] = useState('0')
-  const [timelineEventEnded, setTimelineEventEnded] = useState('0')
+  const [timelineEventStarted, setTimelineEventStarted] = useState('1981')
+  const [timelineEventEnded, setTimelineEventEnded] = useState('1981')
   const [timelineEventDescription, setTimelineEventDescription] = useState('')
 
   const onAddInterest = () => {

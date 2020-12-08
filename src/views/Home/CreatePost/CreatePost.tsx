@@ -99,7 +99,7 @@ const CreatePost: FunctionComponent<{}> = () => {
                     id="quick-post-text"
                     name="quick_post_text"
                     placeholder={t('home.createPost.placeholderPostText')}
-                    defaultValue={content}
+                    value={content || ''}
                     onChange={onChangeCreatePost}
                     minLength={0}
                     maxLength={1000}
