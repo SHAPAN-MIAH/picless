@@ -24,19 +24,17 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
   const { item } = props
 
   return (
-    <>
-      <FormItem>
-        <TextArea
-          type="text"
-          id={`interest-${item.id}`}
-          classNameFormInput="small full"
-          name={`interest_${item.id}`}
-          placeholder={item.name}
-          value={item.description || ''}
-          readOnly
-        />
-      </FormItem>
-    </>
+    <FormItem>
+      <TextArea
+        type="text"
+        id={`interest-${item.id}`}
+        classNameFormInput="small full"
+        name={`interest_${item.id}`}
+        placeholder={item.name}
+        value={item.description || ''}
+        readOnly
+      />
+    </FormItem>
   )
 }
 
@@ -54,15 +52,15 @@ const InterestList: FunctionComponent<{}> = () => {
         const key = Utils.simpleKeyGenerator(5)
 
         return (
-          <>
-            <FormRow key={key} classNameRow="split">
+          <div key={key}>
+            <FormRow classNameRow="split">
               {row.map((interest) => {
                 const intKey = Utils.simpleKeyGenerator(5)
                 return <Interest key={intKey} item={interest} />
               })}
             </FormRow>
             <div style={{ borderTop: '1px solid #eaeaf5', marginTop: '15px', marginBottom: '15px' }} />
-          </>
+          </div>
         )
       })
     }

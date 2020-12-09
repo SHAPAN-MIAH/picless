@@ -27,7 +27,7 @@ const TimeLineList: FunctionComponent<{}> = () => {
 
         return (
           <div key={temporaryKey}>
-            <TimeLineEvent item={row} years={years} />
+            <TimeLineEvent item={row} />
             <div style={{ borderTop: '1px solid #eaeaf5', marginTop: '30px', marginBottom: '35px' }} />
           </div>
         )

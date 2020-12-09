@@ -6,19 +6,17 @@ import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
-import SelectForm, { SelectOptionsType } from '../../../components/Common/SelectForm'
 
 import { UserTimeLineType } from '../../../types/UserType.d'
 
 type TimeLineEventProps = {
   item: UserTimeLineType
-  years: SelectOptionsType[]
 }
 
 const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
   const { t } = useTranslation()
 
-  const { item, years } = props
+  const { item } = props
 
   return (
     <>
@@ -36,22 +34,24 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
         </FormItem>
         <FormRow classNameRow="split">
           <FormItem>
-            <SelectForm
+            <TextInput
+              type="text"
               id={`timeline-event-year-started-${item.id}`}
               name={`timeline_event_year_started-${item.id}`}
+              classNameFormInput="small"
               placeholder={t('profileInfo.timeline.newYearStarted')}
-              options={years}
-              value={item.yearSarted}
+              value={item.yearSarted?.toString()}
               readOnly
             />
           </FormItem>
           <FormItem>
-            <SelectForm
+            <TextInput
+              type="text"
               id={`timeline-event-year-ended-${item.id}`}
+              classNameFormInput="small"
               name={`timeline_event_year_ended-${item.id}`}
               placeholder={t('profileInfo.timeline.newYearEnded')}
-              options={years}
-              value={item.yearEnded}
+              value={item.yearEnded?.toString()}
               readOnly
             />
           </FormItem>
