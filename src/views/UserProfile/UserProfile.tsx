@@ -4,13 +4,15 @@ import UserService from '../../services/UserService'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import UserHeader from './Header/UserHeader'
-import SectionMenu from './SectionMenu/SectionMenu'
-import { UserProfileType } from '../../types/UserType.d'
+import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
+import Alert from '../../components/Common/Alerts/Alerts'
+import { UserTimeLineType, UserInterestType, UserProfileType } from '../../types/UserType.d'
 
 const UserProfile: FunctionComponent<{}> = () => {
   const { username } = useParams<{ username: string }>()
 
   const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
+  const [selectedTab, setSelectedTab] = useState<TabNamesType>('ABOUT')
 
   useEffect(() => {
     UserService.getUserProfileByUserName(username).then((data: UserProfileType) => {
@@ -18,149 +20,140 @@ const UserProfile: FunctionComponent<{}> = () => {
     })
   }, [username])
 
+  const changeTab = (tab: TabNamesType) => {
+    setSelectedTab(tab)
+  }
+
+  const noInterests = 'The user has not yet added interests.'
+  const noTimeLineEvents = 'The user has not yet added events to the timeline.'
+
   return (
     <>
       <LayoutMain>
         <div className="content-grid">
           <UserHeader user={userData} />
 
-          <SectionMenu />
+          <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
 
-          <div className="grid">
-            <div className="grid-column">
-              <div className="widget-box">
-                <div className="widget-box-settings">
-                  <div className="post-settings-wrap">
-                    <div className="post-settings widget-box-post-settings-dropdown-trigger">
-                      <svg className="post-settings-icon icon-more-dots">
-                        <use xlinkHref="#svg-more-dots" />
-                      </svg>
+          {selectedTab === 'ABOUT' && (
+            <div className="grid">
+              <div className="grid-column">
+                <div className="widget-box">
+                  <div className="widget-box-settings">
+                    <div className="post-settings-wrap">
+                      <div className="post-settings widget-box-post-settings-dropdown-trigger">
+                        <svg className="post-settings-icon icon-more-dots">
+                          <use xlinkHref="#svg-more-dots" />
+                        </svg>
+                      </div>
+
+                      <div className="simple-dropdown widget-box-post-settings-dropdown">
+                        <p className="simple-dropdown-link">Widget Settings</p>
+                      </div>
                     </div>
+                  </div>
 
-                    <div className="simple-dropdown widget-box-post-settings-dropdown">
-                      <p className="simple-dropdown-link">Widget Settings</p>
+                  <p className="widget-box-title">Interests</p>
+
+                  <div className="widget-box-content">
+                    <div className="information-block-list">
+                      {userData.userInterest &&
+                        userData.userInterest?.length > 0 &&
+                        userData.userInterest?.map((interest: UserInterestType) => {
+                          return (
+                            <div key={interest.id} className="information-block">
+                              <p className="information-block-title">{interest.name}</p>
+
+                              <p className="information-block-text">{interest.description}</p>
+                            </div>
+                          )
+                        })}
+
+                      {userData.userInterest && userData.userInterest?.length === 0 && (
+                        <Alert alertType="PRIMARY" message={noInterests} style={{ width: '100%' }} />
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <p className="widget-box-title">Interests</p>
+                <div className="widget-box">
+                  <div className="widget-box-settings">
+                    <div className="post-settings-wrap">
+                      <div className="post-settings widget-box-post-settings-dropdown-trigger">
+                        <svg className="post-settings-icon icon-more-dots">
+                          <use xlinkHref="#svg-more-dots" />
+                        </svg>
+                      </div>
 
-                <div className="widget-box-content">
-                  <div className="information-block-list">
-                    <div className="information-block">
-                      <p className="information-block-title">Favourite TV Shows</p>
-
-                      <p className="information-block-text">
-                        Breaking Good, RedDevil, People of Interest, The Running Dead, Found, American Guy, The Last
-                        Windbender, Game of Wars.
-                      </p>
-                    </div>
-
-                    <div className="information-block">
-                      <p className="information-block-title">Favourite Music Bands / Artists</p>
-
-                      <p className="information-block-text">
-                        Iron Maid, DC/AC, Megablow, Kung Fighters, System of a Revenge, Rammstown.
-                      </p>
-                    </div>
-
-                    <div className="information-block">
-                      <p className="information-block-title">Favourite Movies</p>
-
-                      <p className="information-block-text">
-                        The Revengers Saga, The Scarred Wizard and the Fire Crown, Crime Squad, Metal Man, The Dark Rider,
-                        Watchers, The Impossible Heist.
-                      </p>
-                    </div>
-
-                    <div className="information-block">
-                      <p className="information-block-title">Favourite Books</p>
-
-                      <p className="information-block-text">
-                        The Crime of the Century, Egiptian Mythology 101, The Scarred Wizard, Lord of the Wings, Amongst
-                        Gods, The Oracle, A Tale of Air and Water.
-                      </p>
-                    </div>
-
-                    <div className="information-block">
-                      <p className="information-block-title">Favourite Games</p>
-
-                      <p className="information-block-text">
-                        The First of Us, Assassin’s Squad, Dark Assylum, NMAK16, Last Cause 4, Grand Snatch Auto.
-                      </p>
+                      <div className="simple-dropdown widget-box-post-settings-dropdown">
+                        <p className="simple-dropdown-link">Widget Settings</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="widget-box">
-                <div className="widget-box-settings">
-                  <div className="post-settings-wrap">
-                    <div className="post-settings widget-box-post-settings-dropdown-trigger">
-                      <svg className="post-settings-icon icon-more-dots">
-                        <use xlinkHref="#svg-more-dots" />
-                      </svg>
-                    </div>
+                  <p className="widget-box-title">Timeline</p>
 
-                    <div className="simple-dropdown widget-box-post-settings-dropdown">
-                      <p className="simple-dropdown-link">Widget Settings</p>
-                    </div>
-                  </div>
-                </div>
+                  <div className="widget-box-content">
+                    <div className="timeline-information-list">
+                      {userData.userTimeLine &&
+                        userData.userTimeLine?.length > 0 &&
+                        userData.userTimeLine?.map((event: UserTimeLineType) => {
+                          return (
+                            <div key={event.id} className="timeline-information">
+                              <p className="timeline-information-title">{event.title}</p>
 
-                <p className="widget-box-title">Jobs &amp; Education</p>
+                              <p className="timeline-information-date">{`${event.yearSarted} - ${event.yearEnded}`}</p>
 
-                <div className="widget-box-content">
-                  <div className="timeline-information-list">
-                    <div className="timeline-information">
-                      <p className="timeline-information-title">Lead Costume Designer</p>
+                              <p className="timeline-information-text">
+                                Lead Costume Designer for the Amazzo Costumes agency. Im in charge of a ten person group,
+                                overseeing all the proyects and talking to potential clients. I also handle some face to face
+                                interviews for new candidates.
+                              </p>
+                            </div>
+                          )
+                        })}
 
-                      <p className="timeline-information-date">2015 - NOW</p>
-
-                      <p className="timeline-information-text">
-                        Lead Costume Designer for the Amazzo Costumes agency. Im in charge of a ten person group, overseeing
-                        all the proyects and talking to potential clients. I also handle some face to face interviews for new
-                        candidates.
-                      </p>
-                    </div>
-
-                    <div className="timeline-information">
-                      <p className="timeline-information-title">Costume Designer</p>
-
-                      <p className="timeline-information-date">2013 - 2015</p>
-
-                      <p className="timeline-information-text">
-                        Costume Designer for the Jenny Taylors agency. Was in charge of working side by side with the best
-                        designers in order to complete and perfect orders.
-                      </p>
-                    </div>
-
-                    <div className="timeline-information">
-                      <p className="timeline-information-title">Designer Intern</p>
-
-                      <p className="timeline-information-date">2012 - 2013</p>
-
-                      <p className="timeline-information-text">
-                        {/* Intern for the "Jenny Taylors" agency. Was in charge of the communication with the clients and */}
-                        day-to-day chores.
-                      </p>
-                    </div>
-
-                    <div className="timeline-information">
-                      <p className="timeline-information-title">The Antique College of Design</p>
-
-                      <p className="timeline-information-date">2007 - 2012</p>
-
-                      <p className="timeline-information-text">
-                        Bachelor of Costume Design in the Antique College. It was a five years intensive career, plus a
-                        course about Cosplays. Average: A+
-                      </p>
+                      {userData.userTimeLine && userData.userTimeLine?.length === 0 && (
+                        <Alert alertType="PRIMARY" message={noTimeLineEvents} style={{ width: '100%' }} />
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
+
+          {selectedTab === 'POSTS' && (
+            <div className="grid">
+              <div className="grid-column">
+                <div className="widget-box"> </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'FRIENDS' && (
+            <div className="grid">
+              <div className="grid-column">
+                <div className="widget-box"> </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'PHOTOS' && (
+            <div className="grid">
+              <div className="grid-column">
+                <div className="widget-box"> </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'VIDEOS' && (
+            <div className="grid">
+              <div className="grid-column">
+                <div className="widget-box"> </div>
+              </div>
+            </div>
+          )}
         </div>
       </LayoutMain>
       )

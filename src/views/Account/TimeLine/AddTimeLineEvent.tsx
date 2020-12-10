@@ -68,7 +68,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
               name="timeline_new_year_started"
               placeholder={t('profileInfo.timeline.newYearStarted')}
               options={years}
-              value={timelineEventDescription}
+              value={timelineEventStarted}
               onChange={(e) => setTimelineEventStarted(e.target.value)}
             />
           </FormItem>

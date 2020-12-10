@@ -1,49 +1,85 @@
 import React, { FunctionComponent } from 'react'
+import classNames from 'classnames'
 
-const SectionMenu: FunctionComponent<{}> = () => {
+interface SectionMenuProps {
+  onChangeTab: (tab: TabNamesType) => void
+  selectedTab: TabNamesType
+}
+
+export type TabNamesType = 'ABOUT' | 'FRIENDS' | 'PHOTOS' | 'VIDEOS' | 'POSTS'
+
+const SectionMenu: FunctionComponent<SectionMenuProps> = (props) => {
+  const { selectedTab, onChangeTab } = props
+
+  const sectionMenuClasses = 'section-menu-item tns-item tns-slide-active'
   return (
     <>
       <nav className="section-navigation">
         <div id="section-navigation-slider" className="section-menu">
-          <a className="section-menu-item active" href="profile-about.html">
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'ABOUT' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('ABOUT')
+            }}
+          >
             <svg className="section-menu-item-icon icon-profile">
               <use xlinkHref="#svg-profile" />
             </svg>
 
             <p className="section-menu-item-text">About</p>
-          </a>
+          </div>
 
-          <a className="section-menu-item" href="profile-timeline.html">
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'POSTS' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('POSTS')
+            }}
+          >
             <svg className="section-menu-item-icon icon-timeline">
               <use xlinkHref="#svg-timeline" />
             </svg>
 
-            <p className="section-menu-item-text">Timeline</p>
-          </a>
+            <p className="section-menu-item-text">Posts</p>
+          </div>
 
-          <a className="section-menu-item" href="profile-friends.html">
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'FRIENDS' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('FRIENDS')
+            }}
+          >
             <svg className="section-menu-item-icon icon-friend">
               <use xlinkHref="#svg-friend" />
             </svg>
 
             <p className="section-menu-item-text">Friends</p>
-          </a>
+          </div>
 
-          <a className="section-menu-item" href="profile-photos.html">
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'PHOTOS' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('PHOTOS')
+            }}
+          >
             <svg className="section-menu-item-icon icon-photos">
               <use xlinkHref="#svg-photos" />
             </svg>
 
             <p className="section-menu-item-text">Photos</p>
-          </a>
+          </div>
 
-          <a className="section-menu-item" href="profile-videos.html">
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'VIDEOS' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('VIDEOS')
+            }}
+          >
             <svg className="section-menu-item-icon icon-videos">
               <use xlinkHref="#svg-videos" />
             </svg>
 
             <p className="section-menu-item-text">Videos</p>
-          </a>
+          </div>
         </div>
 
         <div id="section-navigation-slider-controls" className="slider-controls">
