@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TextInput from './TextInput'
 
 export type SelectOptionsType = {
@@ -12,19 +12,25 @@ interface SelectFormProps extends React.SelectHTMLAttributes<HTMLSelectElement> 
 }
 
 const SelectForm = (props: SelectFormProps) => {
-  const { name, placeholder, id, options, readOnly = false, ...rest } = props
+  const { name, placeholder, id, options, readOnly = false, value, ...rest } = props
 
-  const readOnlyValue = rest.defaultValue === 0 ? '1981' : rest.defaultValue
+  const readOnlyValue = rest.defaultValue === 0 ? '' : rest.defaultValue
+
+  useEffect(() => {
+    if (!value || value === '') {
+      options.unshift({ value: '', name: 'Select option' })
+    }
+  }, [options])
 
   return (
     <>
       {!readOnly && (
         <div className="form-select">
           <label htmlFor={id}>{placeholder}</label>
-          <select id={id} name={name} {...rest}>
+          <select id={id} name={name} value={value || ''} {...rest}>
             {options.map((option) => {
               return (
-                <option key={option.value} value={option.value}>
+                <option key={option.value} value={option.value || ''}>
                   {option.name}
                 </option>
               )

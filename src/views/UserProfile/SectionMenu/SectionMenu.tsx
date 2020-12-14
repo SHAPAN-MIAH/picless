@@ -43,19 +43,6 @@ const SectionMenu: FunctionComponent<SectionMenuProps> = (props) => {
           </div>
 
           <div
-            className={classNames(sectionMenuClasses, selectedTab === 'FRIENDS' ? 'active' : '')}
-            onClick={() => {
-              onChangeTab('FRIENDS')
-            }}
-          >
-            <svg className="section-menu-item-icon icon-friend">
-              <use xlinkHref="#svg-friend" />
-            </svg>
-
-            <p className="section-menu-item-text">Friends</p>
-          </div>
-
-          <div
             className={classNames(sectionMenuClasses, selectedTab === 'PHOTOS' ? 'active' : '')}
             onClick={() => {
               onChangeTab('PHOTOS')

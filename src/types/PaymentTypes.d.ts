@@ -36,3 +36,15 @@ export interface CardType {
   addressState: string
   addressCountry: string
 }
+
+export interface PlansType {
+  id: string
+  created: number
+  objectType: string
+  amount: number
+  currency: string
+  interval: string
+  intervalCount: number
+  name: string
+  trialPeriodDays: number
+}

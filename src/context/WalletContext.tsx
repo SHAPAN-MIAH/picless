@@ -9,7 +9,6 @@ interface WalletContextProps {
 const defaultContextValues: WalletContextProps = {
   cards: [] as CardType[],
   setCards: (value: any): void => {
-    console.warn('afadsfsd')
     console.warn(JSON.stringify(value))
   },
 }

@@ -61,10 +61,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
             </p>
           </div>
 
-          <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
-            <div id="profile-header-social-links-slider" className="profile-header-social-links">
-              <div className="profile-header-social-link">
-                <Popup
+          {/* <Popup
                   modal
                   trigger={
                     <a href="#/" className={classNames('social-link', styles.optionsBox)} title="Send a tip">
@@ -73,38 +70,24 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                   }
                 >
                   <SendATip user={user} />
-                </Popup>
-              </div>
-
-              <div className="profile-header-social-link">
-                <a
-                  className={classNames('social-link', styles.optionsBox)}
-                  title="Send a message"
-                  href={`/user/messages/${user.id}`}
-                >
-                  <FontAwesomeIcon color="white" icon="comments" />
-                </a>
-              </div>
-
-              {/* <div className="profile-header-social-link">
-                <a className={classNames('social-link', styles.optionsBox)} title="Share profile" href="#/">
-                  <FontAwesomeIcon color="white" icon="share-alt" />
-                </a>
-              </div> */}
-
-              <div className="profile-header-social-link" onClick={addToFavorites}>
-                <a className={classNames('social-link', styles.optionsBox)} title="Add to Favorites" href="#/">
-                  <FontAwesomeIcon color="white" icon="heart" />
-                </a>
-              </div>
-            </div>
-
+                </Popup> */}
+          <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
             <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribe}>
-              <p className="profile-header-info-action button secondary">
+              <p className="profile-header-info-action button primary">
                 Suscribe
                 <span className="hide-text-mobile"> for 10,99€</span>
                 <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
               </p>
+            </div>
+
+            <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+              <a
+                title="Send a message"
+                href={`/user/messages/${user.id}`}
+                className="profile-header-info-action button secondary"
+              >
+                <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span> Message
+              </a>
             </div>
           </div>
 

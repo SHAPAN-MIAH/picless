@@ -1,0 +1,13 @@
+[
+  { "value": "Accountant", "name": "Accountant" },
+  { "value": "Assistant Manager / Manager", "name": "Assistant Manager / Manager" },
+  { "value": "Cashier / Clerk / Server", "name": "Cashier / Clerk / Server" },
+  { "value": "Construction / Electrician", "name": "Construction / Electrician" },
+  { "value": "Driver / Florist / Other Laborer", "name": "Driver / Florist / Other Laborer" },
+  { "value": "Engineer", "name": "Engineer" },
+  { "value": "Machinist / Mechanic", "name": "Machinist / Mechanic" },
+  { "value": "Medical Technicial / Therapist", "name": "Medical Technicial / Therapist" },
+  { "value": "Programmer", "name": "Programmer" },
+  { "value": "Sales", "name": "Sales" },
+  { "value": "Other", "name": "Other" }
+]

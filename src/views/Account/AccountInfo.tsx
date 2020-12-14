@@ -7,15 +7,20 @@ import _ from 'lodash'
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
 import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
 
+import professions from '../../constants/professions.json'
+import plans from '../../constants/plans.json'
+
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
 import TextInput from '../../components/Common/TextInput'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
-
-import { UserType } from '../../types/UserType.d'
+import SelectForm, { SelectOptionsType } from '../../components/Common/SelectForm'
 import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
+
+import { UserType } from '../../types/UserType.d'
+import { PlansType } from '../../types/PaymentTypes.d'
 
 const AccountInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -32,6 +37,16 @@ const AccountInfo: FunctionComponent<{}> = () => {
   const [urlUserName, setUrlUserName] = useState(userData.userName)
   const [recoveryEmail, setRecoveryEmail] = useState(userData.emailRecovery)
   const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber)
+  const [occupation, setOccupation] = useState(userData.occupation)
+  const [plan, setPlan] = useState('') // TODO: ADD THE CORRECT FIELD
+
+  const professionList: SelectOptionsType[] = professions
+
+  const plansList = (): SelectOptionsType[] => {
+    return plans.map((data: PlansType) => {
+      return { value: data.id, name: `${data.name} | (${data.currency} ${data.amount})` }
+    })
+  }
 
   const prevUserDataRef = useRef(userData)
 
@@ -39,18 +54,20 @@ const AccountInfo: FunctionComponent<{}> = () => {
     dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
 
     dispatch(getProfile())
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     if (!_.isEqual(userData, prevUserDataRef.current)) {
       dispatch(getProfile())
     }
-
+    // TODO: ADD THE OCCUPATION AND PLAN FIELD
     setFullName(userData.fullName)
     setEmail(userData.email)
     setUrlUserName(userData.userName)
     setRecoveryEmail(userData.emailRecovery)
     setPhoneNumber(userData.phoneNumber)
+    setOccupation('')
+    setPlan('')
 
     prevUserDataRef.current = userData
   }, [dispatch, userData])
@@ -148,6 +165,30 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           placeholder={t('accountInfo.phoneNumberField')}
                           value={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <SelectForm
+                          id="occupation"
+                          name="occupation"
+                          placeholder={t('accountInfo.occupationField')}
+                          options={professionList}
+                          value={occupation}
+                          onChange={(e) => setOccupation(e.target.value)}
+                        />
+                      </FormItem>
+                    </FormRow>
+
+                    <FormRow classNameRow="split">
+                      <FormItem> </FormItem>
+                      <FormItem>
+                        <SelectForm
+                          id="subscription-price"
+                          name="subscription_price"
+                          placeholder={t('accountInfo.subscriptionPriceField')}
+                          options={plansList()}
+                          value={plan}
+                          onChange={(e) => setPlan(e.target.value)}
                         />
                       </FormItem>
                     </FormRow>

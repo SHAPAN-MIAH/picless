@@ -32,6 +32,7 @@ export interface UserType {
   gender?: any
   language?: any
   tagLine?: string
+  occupation?: string
   userInterest?: UserInterestType[]
   userTimeLine?: UserTimeLineType[]
 }

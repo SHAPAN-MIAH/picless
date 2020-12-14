@@ -1,0 +1,79 @@
+[
+  {
+    "id": "plan_SG8sJSo4ERI5ghLiZhuWy7pu",
+    "created": 1606237107,
+    "objectType": "plan",
+    "amount": 5,
+    "currency": "EUR",
+    "interval": "month",
+    "intervalCount": 1,
+    "name": "EUR5M1",
+    "trialPeriodDays": 0
+  },
+  {
+    "id": "plan_1k3KIMDAkve7clSD0kRiFCUL",
+    "created": 1606237093,
+    "objectType": "plan",
+    "amount": 5,
+    "currency": "EUR",
+    "interval": "month",
+    "intervalCount": 1,
+    "name": "EUR5M1",
+    "trialPeriodDays": 0
+  },
+  {
+    "id": "plan_OcudyC3tjDIQnLd9r0lVvvOg",
+    "created": 1606233641,
+    "objectType": "plan",
+    "amount": 5,
+    "currency": "EUR",
+    "interval": "month",
+    "intervalCount": 1,
+    "name": "EUR5M1",
+    "trialPeriodDays": 0
+  },
+  {
+    "id": "plan_gYmMKWjVJvyy0cZm5erGjJ7F",
+    "created": 1606231324,
+    "objectType": "plan",
+    "amount": 499,
+    "currency": "EUR",
+    "interval": "day",
+    "intervalCount": 10,
+    "name": "Example plan",
+    "trialPeriodDays": 0
+  },
+  {
+    "id": "plan_1S5Yd1H0KRG9IvvarNbicCTo",
+    "created": 1605809815,
+    "objectType": "plan",
+    "amount": 499,
+    "currency": "EUR",
+    "interval": "day",
+    "intervalCount": 10,
+    "name": "Example plan",
+    "trialPeriodDays": 0
+  },
+  {
+    "id": "plan_dHO28HkYDxsCWYrJzF5LHToJ",
+    "created": 1605809583,
+    "objectType": "plan",
+    "amount": 499,
+    "currency": "EUR",
+    "interval": "day",
+    "intervalCount": 10,
+    "name": "Example plan",
+    "trialPeriodDays": 0
+  },
+  {
+    "id": "plan_Free",
+    "created": 1605809583,
+    "objectType": "plan",
+    "amount": 0,
+    "currency": "EUR",
+    "interval": "day",
+    "intervalCount": 10,
+    "name": "FREE Plan",
+    "trialPeriodDays": 0
+  }
+]

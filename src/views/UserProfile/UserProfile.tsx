@@ -131,14 +131,6 @@ const UserProfile: FunctionComponent<{}> = () => {
             </div>
           )}
 
-          {selectedTab === 'FRIENDS' && (
-            <div className="grid">
-              <div className="grid-column">
-                <div className="widget-box"> </div>
-              </div>
-            </div>
-          )}
-
           {selectedTab === 'PHOTOS' && (
             <div className="grid">
               <div className="grid-column">
