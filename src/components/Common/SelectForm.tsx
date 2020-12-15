@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import TextInput from './TextInput'
+import * as Utils from '../../utils/Functions'
 
 export type SelectOptionsType = {
   value: string
@@ -29,6 +30,8 @@ const SelectForm = (props: SelectFormProps) => {
           <label htmlFor={id}>{placeholder}</label>
           <select id={id} name={name} value={value || ''} {...rest}>
             {options.map((option) => {
+              const key = option.value || Utils.simpleKeyGenerator(5)
+
               return (
                 <option key={option.value} value={option.value || ''}>
                   {option.name}

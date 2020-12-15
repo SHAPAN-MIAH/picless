@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -58,6 +58,12 @@ library.add(
   faCcJcb
 )
 
+declare global {
+  interface Window {
+    tpl: { load: () => void }
+  }
+}
+
 function App() {
   const dispatch = useDispatch()
 
@@ -66,55 +72,12 @@ function App() {
   }
 
   useEffect(() => {
-    // const hexagonScript = document.createElement('script')
-    // hexagonScript.src = '/assets/js/xm_hexagon.min.js'
-    // hexagonScript.async = true
-    // document.body.appendChild(hexagonScript)
-
-    // const accordionScript = document.createElement('script')
-    // accordionScript.src = '/assets/js/xm_accordion.min.js'
-    // accordionScript.async = true
-    // document.body.appendChild(accordionScript)
-
-    // const dropdownScript = document.createElement('script')
-    // dropdownScript.src = '/assets/js/xm_dropdown.min.js'
-    // dropdownScript.async = true
-    // document.body.appendChild(dropdownScript)
-
-    // const popupScript = document.createElement('script')
-    // popupScript.src = '/assets/js/xm_popup.min.js'
-    // popupScript.async = true
-    // document.body.appendChild(popupScript)
-
-    // const progressBarScript = document.createElement('script')
-    // progressBarScript.src = '/assets/js/xm_progressBar.min.js'
-    // progressBarScript.async = true
-    // document.body.appendChild(progressBarScript)
-
-    // const tabScript = document.createElement('script')
-    // tabScript.src = '/assets/js/xm_tab.min.js'
-    // tabScript.async = true
-    // document.body.appendChild(tabScript)
-
-    // const tooltipScript = document.createElement('script')
-    // tooltipScript.src = '/assets/js/xm_tooltip.min.js'
-    // tooltipScript.async = true
-    // document.body.appendChild(tooltipScript)
-
-    const script = document.createElement('script')
-    script.setAttribute('id', 'mainScript')
-    script.src = '/assets/js/app.bundle.min.js'
-    script.async = true
-    document.body.appendChild(script)
-  }, [])
-
-  useEffect(() => {
     dispatch(checkUserAuthenticated())
   }, [dispatch])
 
   return (
     <>
-      <Router forceRefresh>
+      <Router>
         <Switch>
           <ProtectedRoute {...routerProps} exact path="/account/account-info" component={AccountInfo} />
           <ProtectedRoute {...routerProps} exact path="/account/profile-info" component={ProfileInfo} />

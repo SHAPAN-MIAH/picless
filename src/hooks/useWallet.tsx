@@ -11,11 +11,12 @@ const useWallet = () => {
 
   useEffect(() => {
     setLoading(true)
+
     PaymentService.getCards().then((cardList: CardType[]) => {
       setCards(cardList)
       setLoading(false)
     })
-  }, [setCards])
+  }, [])
 
   return {
     loading,
