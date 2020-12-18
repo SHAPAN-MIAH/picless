@@ -22,12 +22,14 @@ const getCards = async (): Promise<CardType[]> => {
 // TODO: CHANGE TO BODY Fields
 const addCard = async (card: AddCardType): Promise<any> => {
   // const headers = await ApiHelper.requestHeaders({ type: 'formData' })
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+  //const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
     method: 'POST',
     headers,
-    body: Mapper.cardToServiceParameters(card),
+    body: JSON.stringify(card),
+    //body: Mapper.cardToServiceParameters(card),
   }
 
   const url = `${baseUrl}/addcreditcard`
