@@ -1,13 +1,46 @@
 [
-  { "value": "Accountant", "name": "Accountant" },
-  { "value": "Assistant Manager / Manager", "name": "Assistant Manager / Manager" },
-  { "value": "Cashier / Clerk / Server", "name": "Cashier / Clerk / Server" },
-  { "value": "Construction / Electrician", "name": "Construction / Electrician" },
-  { "value": "Driver / Florist / Other Laborer", "name": "Driver / Florist / Other Laborer" },
-  { "value": "Engineer", "name": "Engineer" },
-  { "value": "Machinist / Mechanic", "name": "Machinist / Mechanic" },
-  { "value": "Medical Technicial / Therapist", "name": "Medical Technicial / Therapist" },
-  { "value": "Programmer", "name": "Programmer" },
-  { "value": "Sales", "name": "Sales" },
-  { "value": "Other", "name": "Other" }
+  {
+    "name": "Accountant",
+    "value": "2"
+  },
+  {
+    "name": "Assistant Manager / Manager",
+    "value": "3"
+  },
+  {
+    "name": "Cashier / Clerk / Server",
+    "value": "4"
+  },
+  {
+    "name": "Construction / Electrician",
+    "value": "5"
+  },
+  {
+    "name": "Driver / Florist / Other Laborer",
+    "value": "6"
+  },
+  {
+    "name": "Engineer",
+    "value": "7"
+  },
+  {
+    "name": "Machinist / Mechanic",
+    "value": "8"
+  },
+  {
+    "name": "Medical Technicial / Therapist",
+    "value": "9"
+  },
+  {
+    "name": "Programmer",
+    "value": "10"
+  },
+  {
+    "name": "Sales",
+    "value": "11"
+  },
+  {
+    "name": "Other",
+    "value": "12"
+  }
 ]

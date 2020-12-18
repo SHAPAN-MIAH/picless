@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import { actionFail } from '../../../redux/User/UserSlice'
-import { userSelector } from '../../../redux/User/UserSelectors'
+import { userSelector, errorSelector } from '../../../redux/User/UserSelectors'
 import { addInterest } from '../../../redux/User/UserThunks'
 
 import FormItem from '../../../components/Common/Form/FormItem'
@@ -24,7 +24,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
 
   const [interestName, setInterestName] = useState('')
   const [interestDescription, setInterestDescription] = useState('')
-
+  const [errorMessage, setErrorMessage] = useState('')
   const onAddInterest = () => {
     if (interestName && interestDescription) {
       const interest: UserInterestType = {
@@ -36,7 +36,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
       dispatch(addInterest(interest))
       onAdd()
     } else {
-      dispatch(actionFail({ uiMessage: 'profileInfo.interest.error.nameOrDescriptionEmpty', err: '' }))
+      setErrorMessage(t('profileInfo.interest.error.nameOrDescriptionEmpty'))
     }
   }
 
@@ -72,9 +72,12 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
           />
         </FormItem>
       </FormRow>
-      <FormRow>
-        <p style={{ color: 'red' }}>Message Error when added an interest</p>
-      </FormRow>
+      {errorMessage !== '' && (
+        <FormRow>
+          <p style={{ color: 'red' }}>{errorMessage}</p>
+        </FormRow>
+      )}
+
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>

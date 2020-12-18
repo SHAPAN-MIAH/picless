@@ -27,17 +27,23 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
   const [timelineEventEnded, setTimelineEventEnded] = useState('1981')
   const [timelineEventDescription, setTimelineEventDescription] = useState('')
 
-  const onAddInterest = () => {
-    const timelineEvent: UserTimeLineType = {
-      userId: userData.id,
-      title: timelineEventTitle,
-      yearSarted: timelineEventStarted,
-      yearEnded: timelineEventEnded,
-      description: timelineEventDescription,
-    }
+  const [errorMessage, setErrorMessage] = useState('')
 
-    dispatch(addTimelineEvent(timelineEvent))
-    onAdd()
+  const onAddTimelineEvent = () => {
+    if (timelineEventTitle && timelineEventDescription) {
+      const timelineEvent: UserTimeLineType = {
+        userId: userData.id,
+        title: timelineEventTitle,
+        yearSarted: timelineEventStarted,
+        yearEnded: timelineEventEnded,
+        description: timelineEventDescription,
+      }
+
+      dispatch(addTimelineEvent(timelineEvent))
+      onAdd()
+    } else {
+      setErrorMessage(t('profileInfo.timeline.error.nameOrDescriptionEmpty'))
+    }
   }
 
   const eventDescriptionHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -98,6 +104,13 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
           />
         </FormItem>
       </FormRow>
+
+      {errorMessage !== '' && (
+        <FormRow>
+          <p style={{ color: 'red' }}>{errorMessage}</p>
+        </FormRow>
+      )}
+
       <FormRow classNameRow="split">
         <FormItem>
           <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
@@ -105,7 +118,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
           </ButtonWithLoader>
         </FormItem>
         <FormItem>
-          <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
+          <ButtonWithLoader type="button" className="small secondary" onClick={onAddTimelineEvent} showLoader={false}>
             {`+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
           </ButtonWithLoader>
         </FormItem>

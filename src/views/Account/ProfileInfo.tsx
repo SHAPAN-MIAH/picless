@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, FormEvent, FunctionComponent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { CountryDropdown } from 'react-country-region-selector'
@@ -7,8 +7,6 @@ import moment from 'moment'
 
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
 import { cleanState, getProfile, updateProfile } from '../../redux/User/UserThunks'
-
-import { UserType } from '../../types/UserType.d'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
@@ -22,6 +20,10 @@ import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
+import SelectForm, { SelectOptionsType } from '../../components/Common/SelectForm'
+import { UserType, OccupationType } from '../../types/UserType.d'
+
+import professions from '../../constants/professions.json'
 
 const ProfileInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -33,30 +35,35 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const userData: UserType = useSelector(userSelector)
 
   const [userName, setUserName] = useState(userData.userName)
-  const [occupations, setOccupations] = useState(userData.tagLine || '') // TODO:
   const [profileDescription, setProfileDescription] = useState(userData.profileDescription)
   const [countryName, setCountry] = useState(userData.countryName)
   const [cityName, setCityName] = useState(userData.cityName)
   const [birthDate, setBirthdate] = useState<Date | null>(userData.birthDate ? moment(userData.birthDate).toDate() : null)
+  const [occupation, setOccupation] = useState<OccupationType | null>(userData.occupation || null)
+  const [updateFields, setUpdateFields] = useState<boolean>(true)
 
-  const prevUserDataRef = useRef(userData)
+  const professionList: SelectOptionsType[] = professions
 
   useEffect(() => {
-    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
-
     dispatch(getProfile())
+
+    return () => {
+      dispatch(cleanState())
+    }
   }, [dispatch])
 
   useEffect(() => {
-    setUserName(userData.fullName)
-    setOccupations(userData.tagLine || '')
-    setProfileDescription(userData.profileDescription)
-    setCountry(userData.countryName)
-    setCityName(userData.cityName)
-    setBirthdate(userData.birthDate ? moment(userData.birthDate).toDate() : null)
+    if (updateFields) {
+      setUserName(userData.fullName)
+      setOccupation(userData.occupation || null)
+      setProfileDescription(userData.profileDescription)
+      setCountry(userData.countryName)
+      setCityName(userData.cityName)
+      setBirthdate(userData.birthDate ? moment(userData.birthDate).toDate() : null)
 
-    prevUserDataRef.current = userData
-  }, [userData, dispatch])
+      setUpdateFields(false)
+    }
+  }, [userData])
 
   const saveUserData = () => {
     let user: UserType = {
@@ -65,12 +72,25 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       profileDescription,
       countryName,
       cityName,
-      // occupations,
+      occupationId: occupation?.id,
     }
 
     if (birthDate) user = { ...user, birthDate }
     dispatch(updateProfile(user))
   }
+
+  const onOccupationHandle = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const occupationValue = professionList.find((o) => {
+        return o.value === e.target.value
+      })
+
+      if (occupationValue) {
+        setOccupation({ id: parseInt(occupationValue?.value, 10), name: occupationValue?.name })
+      }
+    },
+    [occupation]
+  )
 
   return (
     <LayoutMain>
@@ -157,22 +177,17 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                     </FormRow>
 
                     <FormRow>
+                      <FormItem> </FormItem>
                       <FormItem>
-                        <TextInput
-                          type="text"
-                          id="occupations"
-                          classNameFormInput="small"
-                          name="occupations"
-                          placeholder={t('profileInfo.occupationsField')}
-                          value={occupations}
-                          onChange={(e) => setOccupations(e.target.value)}
+                        <SelectForm
+                          id="occupation"
+                          name="occupation"
+                          placeholder={t('accountInfo.occupationField')}
+                          options={professionList}
+                          value={occupation?.id || ''}
+                          onChange={onOccupationHandle}
                         />
                       </FormItem>
-                    </FormRow>
-
-                    <FormRow>
-                      {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-                      {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
                     </FormRow>
                   </div>
                 </div>
@@ -194,6 +209,17 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                     <TimeLineList />
                   </div>
                 </div>
+
+                {(error || message) && (
+                  <div className="widget-box" style={{ marginTop: '20px' }}>
+                    <div className="widget-box-content">
+                      <FormRow>
+                        {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
+                        {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
+                      </FormRow>
+                    </div>
+                  </div>
+                )}
 
                 <div className="widget-box" style={{ marginTop: '20px' }}>
                   <div className="widget-box-content">

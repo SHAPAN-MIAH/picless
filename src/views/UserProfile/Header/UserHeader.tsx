@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import UserService from '../../../services/UserService'
+import PaymentService from '../../../services/PaymentService'
 
 import UserAvatar from '../../../components/UserAvatar'
 
@@ -11,11 +11,12 @@ import styles from './UserHeader.module.css'
 import { UserProfileType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {
+  isSuscribed: boolean
   user: UserProfileType
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
-  const { user } = props
+  const { user, isSuscribed = false } = props
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
   const [imageProfile, setImageProfile] = useState(user.profilePicture)
@@ -25,11 +26,12 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setImageProfile(user.profilePicture)
   }, [user])
 
-  const addToFavorites = () => {
+  const suscribeToUser = () => {
     if (user.id) {
-      UserService.addFavouriteUser(user.id).then(() => {
-        alert('User added to favorites')
-      })
+      // PaymentService.suscribeToUser(user.id, user.pla)
+      // UserService.addFavouriteUser(user.id).then(() => {
+      //   alert('User added to favorites')
+      // })
     }
   }
 
@@ -60,24 +62,16 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
             </p>
           </div>
 
-          {/* <Popup
-                  modal
-                  trigger={
-                    <a href="#/" className={classNames('social-link', styles.optionsBox)} title="Send a tip">
-                      <FontAwesomeIcon color="white" icon="dollar-sign" />
-                    </a>
-                  }
-                >
-                  <SendATip user={user} />
-                </Popup> */}
           <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
-            <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribe}>
-              <p className="profile-header-info-action button primary">
-                Suscribe
-                <span className="hide-text-mobile"> for 10,99€</span>
-                <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
-              </p>
-            </div>
+            {!isSuscribed && (
+              <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribeToUser}>
+                <p className="profile-header-info-action button primary">
+                  Suscribe
+                  <span className="hide-text-mobile"> for 10,99€</span>
+                  <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
+                </p>
+              </div>
+            )}
 
             <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
               <a

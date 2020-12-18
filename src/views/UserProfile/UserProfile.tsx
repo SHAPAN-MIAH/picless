@@ -12,11 +12,13 @@ const UserProfile: FunctionComponent<{}> = () => {
   const { username } = useParams<{ username: string }>()
 
   const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
+  const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
   const [selectedTab, setSelectedTab] = useState<TabNamesType>('ABOUT')
 
   useEffect(() => {
     UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
       setUserData(data.user)
+      setIsSuscribed(data.isSuscribe)
     })
   }, [username])
 
@@ -31,7 +33,7 @@ const UserProfile: FunctionComponent<{}> = () => {
     <>
       <LayoutMain>
         <div className="content-grid">
-          <UserHeader user={userData} />
+          <UserHeader user={userData} isSuscribed={isSuscribed} />
 
           <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
 
@@ -39,20 +41,6 @@ const UserProfile: FunctionComponent<{}> = () => {
             <div className="grid">
               <div className="grid-column">
                 <div className="widget-box">
-                  <div className="widget-box-settings">
-                    <div className="post-settings-wrap">
-                      <div className="post-settings widget-box-post-settings-dropdown-trigger">
-                        <svg className="post-settings-icon icon-more-dots">
-                          <use xlinkHref="#svg-more-dots" />
-                        </svg>
-                      </div>
-
-                      <div className="simple-dropdown widget-box-post-settings-dropdown">
-                        <p className="simple-dropdown-link">Widget Settings</p>
-                      </div>
-                    </div>
-                  </div>
-
                   <p className="widget-box-title">Interests</p>
 
                   <div className="widget-box-content">
@@ -77,20 +65,6 @@ const UserProfile: FunctionComponent<{}> = () => {
                 </div>
 
                 <div className="widget-box">
-                  <div className="widget-box-settings">
-                    <div className="post-settings-wrap">
-                      <div className="post-settings widget-box-post-settings-dropdown-trigger">
-                        <svg className="post-settings-icon icon-more-dots">
-                          <use xlinkHref="#svg-more-dots" />
-                        </svg>
-                      </div>
-
-                      <div className="simple-dropdown widget-box-post-settings-dropdown">
-                        <p className="simple-dropdown-link">Widget Settings</p>
-                      </div>
-                    </div>
-                  </div>
-
                   <p className="widget-box-title">Timeline</p>
 
                   <div className="widget-box-content">

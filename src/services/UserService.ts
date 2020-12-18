@@ -138,20 +138,20 @@ const removeDevice = async (deviceKey: string): Promise<any> => {
   return body
 }
 
-const addFavouriteUser = async (userId: number): Promise<any> => {
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+// const addFavouriteUser = async (userId: number): Promise<any> => {
+//   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
-  const requestOptions: RequestInit = {
-    method: 'POST',
-    headers,
-  }
-  const url = `${baseUrl}/addfavoriteuser?userId=${userId}`
+//   const requestOptions: RequestInit = {
+//     method: 'POST',
+//     headers,
+//   }
+//   const url = `${baseUrl}/addfavoriteuser?userId=${userId}`
 
-  const response = await fetch(url, requestOptions)
-  const body = await response
+//   const response = await fetch(url, requestOptions)
+//   const body = await response
 
-  return body
-}
+//   return body
+// }
 
 // TODO: CHANGE TO BODY Fields
 const sendATip = async (tip: TipType): Promise<any> => {
@@ -194,7 +194,7 @@ export default {
   removeDevice,
   updateUserSettings,
   getUserSettings,
-  addFavouriteUser,
+  //addFavouriteUser,
   sendATip,
   searchUser,
 }

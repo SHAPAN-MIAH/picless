@@ -32,7 +32,9 @@ export interface UserType {
   gender?: any
   language?: any
   tagLine?: string
-  occupation?: string
+  planId?: string
+  occupationId?: number
+  occupation?: OccupationType
   userInterest?: UserInterestType[]
   userTimeLine?: UserTimeLineType[]
 }
@@ -101,4 +103,9 @@ export interface UserSearchType {
 export type ServiceUserProfileType = {
   user: UserProfileType
   isSuscribe: boolean
+}
+
+export type OccupationType = {
+  id: number
+  name: string
 }

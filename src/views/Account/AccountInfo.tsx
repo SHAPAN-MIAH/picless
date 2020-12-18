@@ -1,13 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import _ from 'lodash'
 
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
 import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
 
-import professions from '../../constants/professions.json'
 import plans from '../../constants/plans.json'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
@@ -37,10 +34,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
   const [urlUserName, setUrlUserName] = useState(userData.userName)
   const [recoveryEmail, setRecoveryEmail] = useState(userData.emailRecovery)
   const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber)
-  const [occupation, setOccupation] = useState(userData.occupation)
   const [plan, setPlan] = useState('') // TODO: ADD THE CORRECT FIELD
-
-  const professionList: SelectOptionsType[] = professions
+  const [updateFields, setUpdateFields] = useState<boolean>(true)
 
   const plansList = (): SelectOptionsType[] => {
     return plans.map((data: PlansType) => {
@@ -48,37 +43,36 @@ const AccountInfo: FunctionComponent<{}> = () => {
     })
   }
 
-  const prevUserDataRef = useRef(userData)
-
   useEffect(() => {
-    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
-
     dispatch(getProfile())
-  }, [])
+
+    return () => {
+      dispatch(cleanState())
+    }
+  }, [dispatch])
 
   useEffect(() => {
-    if (!_.isEqual(userData, prevUserDataRef.current)) {
-      dispatch(getProfile())
-    }
-    // TODO: ADD THE OCCUPATION AND PLAN FIELD
-    setFullName(userData.fullName)
-    setEmail(userData.email)
-    setUrlUserName(userData.userName)
-    setRecoveryEmail(userData.emailRecovery)
-    setPhoneNumber(userData.phoneNumber)
-    setOccupation('')
-    setPlan('')
+    if (updateFields) {
+      setFullName(userData.fullName)
+      setEmail(userData.email)
+      setUrlUserName(userData.userName)
+      setRecoveryEmail(userData.emailRecovery)
+      setPhoneNumber(userData.phoneNumber)
+      setPlan(userData.planId || '')
 
-    prevUserDataRef.current = userData
-  }, [dispatch, userData])
+      setUpdateFields(false)
+    }
+  }, [userData])
 
   const saveUserData = () => {
     const user: UserType = {
+      ...userData,
       fullName,
       email,
       userName: urlUserName,
       emailRecovery: recoveryEmail,
       phoneNumber,
+      planId: plan,
     }
 
     dispatch(updateProfile(user))
@@ -167,20 +161,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                       </FormItem>
-                      <FormItem>
-                        <SelectForm
-                          id="occupation"
-                          name="occupation"
-                          placeholder={t('accountInfo.occupationField')}
-                          options={professionList}
-                          value={occupation}
-                          onChange={(e) => setOccupation(e.target.value)}
-                        />
-                      </FormItem>
-                    </FormRow>
 
-                    <FormRow classNameRow="split">
-                      <FormItem> </FormItem>
                       <FormItem>
                         <SelectForm
                           id="subscription-price"
