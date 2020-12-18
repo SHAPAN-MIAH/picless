@@ -72,15 +72,17 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               </div>
             )}
 
-            <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
-              <a
-                title="Send a message"
-                href={`/user/messages/${user.id}`}
-                className="profile-header-info-action button secondary"
-              >
-                <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span> Message
-              </a>
-            </div>
+            {isSuscribed && (
+              <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+                <a
+                  title="Send a message"
+                  href={`/user/messages/${user.id}`}
+                  className="profile-header-info-action button secondary"
+                >
+                  <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span> Message
+                </a>
+              </div>
+            )}
           </div>
 
           <div id="profile-header-social-links-slider-controls" className="slider-controls">
