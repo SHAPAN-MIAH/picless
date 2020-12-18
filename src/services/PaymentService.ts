@@ -48,15 +48,21 @@ const getSuscriptionPlans = async (): Promise<CardType[]> => {
   return body
 }
 
-const suscribeToUser = async (planId: any, userToSuscribe: number): Promise<any> => {
+const suscribeToUser = async (planId: any, userIdToSuscribe: number): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('planId', planId)
+  bodyData.append('userIdToSuscribe', userIdToSuscribe.toString())
 
   const requestOptions: RequestInit = {
     method: 'POST',
     headers,
+    body: bodyData,
+    // body: JSON.stringify({ planId, userIdToSuscribe }),
   }
 
-  const url = `${baseUrl}/createsuscription?planId=${planId}&userIdToSuscribe=${userToSuscribe}`
+  const url = `${baseUrl}/createsuscription`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
