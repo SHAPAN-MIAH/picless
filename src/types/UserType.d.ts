@@ -101,7 +101,7 @@ export interface UserSearchType {
 }
 
 export type ServiceUserProfileType = {
-  code?: number
+  code?: string
   message?: string
   user: UserProfileType
   isSuscribe: boolean

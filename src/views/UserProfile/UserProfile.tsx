@@ -18,7 +18,7 @@ const UserProfile: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
-      if (data.code !== 0) {
+      if (data.code !== '0') {
         history.push('/error')
       } else {
         setUserData(data.user)
