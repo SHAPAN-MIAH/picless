@@ -28,8 +28,12 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
   const suscribeToUser = () => {
     if (user.id && user.planId) {
-      PaymentService.suscribeToUser(user.planId, user.id).then(() => {
-        alert('User added to favorites')
+      PaymentService.suscribeToUser(user.planId, user.id).then((data: any) => {
+        if (data.code === 0) {
+          alert('User added to favorites')
+        } else {
+          alert(`Error ${data.code} => ${data.message}`)
+        }
       })
     }
   }

@@ -138,28 +138,19 @@ const removeDevice = async (deviceKey: string): Promise<any> => {
   return body
 }
 
-// const addFavouriteUser = async (userId: number): Promise<any> => {
-//   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
-
-//   const requestOptions: RequestInit = {
-//     method: 'POST',
-//     headers,
-//   }
-//   const url = `${baseUrl}/addfavoriteuser?userId=${userId}`
-
-//   const response = await fetch(url, requestOptions)
-//   const body = await response
-
-//   return body
-// }
-
-// TODO: CHANGE TO BODY Fields
 const sendATip = async (tip: TipType): Promise<any> => {
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('fromId', tip.fromId.toString())
+  bodyData.append('toId', tip.toId.toString())
+  bodyData.append('cash', tip.cash.toString())
+  bodyData.append('message', tip.message)
 
   const requestOptions: RequestInit = {
     method: 'POST',
     headers,
+    body: bodyData,
   }
 
   const url = `${baseUrl}/sendatip?fromId=${tip.fromId}&toId=${tip.toId}&message=${tip.message}&cash=${tip.cash}`
@@ -186,6 +177,21 @@ const searchUser = async (keyword: string, signal: AbortSignal): Promise<UserSea
   return body
 }
 
+const getSubscriptions = async (): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+  const url = `${baseUrl}/getsuscribers`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   getUserProfile,
   getUserProfileByUserName,
@@ -194,7 +200,7 @@ export default {
   removeDevice,
   updateUserSettings,
   getUserSettings,
-  //addFavouriteUser,
   sendATip,
   searchUser,
+  getSubscriptions,
 }

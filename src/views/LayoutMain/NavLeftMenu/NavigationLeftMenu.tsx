@@ -58,6 +58,18 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
           <li className="menu-item">
             <Link
               className="menu-item-link text-tooltip-tfr"
+              to="/account/my-subscriptions"
+              data-title={t('navLeftMenu.mySubscriptions')}
+            >
+              <svg className="menu-item-link-icon icon-newsfeed">
+                <use xlinkHref="#svg-newsfeed" />
+              </svg>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              className="menu-item-link text-tooltip-tfr"
               style={{ color: '#adafca' }}
               to="/user/messages"
               data-title={t('navLeftMenu.messages')}
@@ -166,26 +178,6 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
           </p>
         </div>
 
-        <div className="user-stats">
-          <div className="user-stat">
-            <p className="user-stat-title">930</p>
-
-            <p className="user-stat-text">posts</p>
-          </div>
-
-          <div className="user-stat">
-            <p className="user-stat-title">182</p>
-
-            <p className="user-stat-text">photos</p>
-          </div>
-
-          <div className="user-stat">
-            <p className="user-stat-title">50</p>
-
-            <p className="user-stat-text">videos</p>
-          </div>
-        </div>
-
         <ul className="menu">
           <li className="menu-item">
             <Link className="menu-item-link" to="/user/home">
@@ -202,6 +194,15 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
                 <use xlinkHref="#svg-newsfeed" />
               </svg>
               {t('navLeftMenu.accountInfo')}
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/account/my-subscriptions">
+              <svg className="menu-item-link-icon icon-newsfeed">
+                <use xlinkHref="#svg-newsfeed" />
+              </svg>
+              {t('navLeftMenu.mySubscriptions')}
             </Link>
           </li>
 
@@ -368,7 +369,16 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
           </li>
 
           <li className="menu-item">
-            <Link className="menu-item-link" to="/account/account-info">
+            <Link className="menu-item-link" to="/account/my-subscriptions">
+              <svg className="menu-item-link-icon icon-newsfeed">
+                <use xlinkHref="#svg-newsfeed" />
+              </svg>
+              {t('navLeftMenu.mySubscriptions')}
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/account/messages">
               <svg className="menu-item-link-icon icon-forums">
                 <use xlinkHref="#svg-forums" />
               </svg>
@@ -462,6 +472,10 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
 
         <Link className="navigation-widget-section-link" to="/account/profile-info">
           {t('navLeftMenu.profileInfo')}
+        </Link>
+
+        <Link className="navigation-widget-section-link" to="/account/my-subscriptions">
+          {t('navLeftMenu.mySubscriptions')}
         </Link>
 
         <Link className="navigation-widget-section-link" to="/user/marceloProfile">

@@ -39,6 +39,7 @@ import WalletOverview from './views/Account/WalletOverview'
 import Movements from './views/Account/Movements'
 import PaymentMethods from './views/Account/PaymentMethods'
 import AddCard from './views/Account/Card/AddCard'
+import Subscriptions from './views/Account/Subscriptions/Subscriptions'
 
 library.add(
   faPlus,
@@ -81,6 +82,7 @@ function App() {
         <Switch>
           <ProtectedRoute {...routerProps} exact path="/account/account-info" component={AccountInfo} />
           <ProtectedRoute {...routerProps} exact path="/account/profile-info" component={ProfileInfo} />
+          <ProtectedRoute {...routerProps} exact path="/account/my-subscriptions" component={Subscriptions} />
           <ProtectedRoute {...routerProps} exact path="/account/account-devices" component={AccountDevices} />
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
           <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
