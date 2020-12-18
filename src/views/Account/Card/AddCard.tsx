@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CountryDropdown } from 'react-country-region-selector'
+import { useHistory } from 'react-router-dom'
 
 import PaymentService from '../../../services/PaymentService'
 
@@ -17,6 +18,7 @@ import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
 
 const AddCard: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+  const history = useHistory()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
@@ -52,11 +54,19 @@ const AddCard: FunctionComponent<{}> = () => {
           },
         }
         setIsLoading(true)
+
         PaymentService.addCard(cardData)
-          .then(() => {
+          .then((data: any) => {
             setIsLoading(false)
+
+            if (data.code === 0) {
+              history.push('/wallet/payments')
+            } else if (data.message && data.code !== 0) {
+              setErrorMessage(data.message)
+            }
           })
           .catch((err) => {
+            setIsLoading(false)
             console.error(err)
             setErrorMessage(JSON.stringify(err))
           })

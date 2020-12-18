@@ -10,11 +10,11 @@ import TextInput from '../../../../components/Common/TextInput'
 import FormRow from '../../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
-import { UserProfileType, TipType } from '../../../../types/UserType.d'
+import { UserType, TipType } from '../../../../types/UserType.d'
 
 import styles from './SendATip.module.css'
 
-const SendATip: FunctionComponent<{ user: UserProfileType }> = (props) => {
+const SendATip: FunctionComponent<{ user: UserType }> = (props) => {
   const { user } = props
   const userId: number = useSelector(userIdSelector)
 

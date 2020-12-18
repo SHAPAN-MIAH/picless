@@ -3,9 +3,9 @@ import {
   ProfileUserSettings,
   UploadImageType,
   UserType,
-  UserProfileType,
   TipType,
   UserSearchType,
+  ServiceUserProfileType,
 } from '../types/UserType.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
@@ -27,7 +27,7 @@ const getUserProfile = async (): Promise<UserType> => {
   return body
 }
 
-const getUserProfileByUserName = async (userName: string): Promise<UserProfileType> => {
+const getUserProfileByUserName = async (userName: string): Promise<ServiceUserProfileType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -153,6 +153,7 @@ const addFavouriteUser = async (userId: number): Promise<any> => {
   return body
 }
 
+// TODO: CHANGE TO BODY Fields
 const sendATip = async (tip: TipType): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
@@ -160,6 +161,7 @@ const sendATip = async (tip: TipType): Promise<any> => {
     method: 'POST',
     headers,
   }
+
   const url = `${baseUrl}/sendatip?fromId=${tip.fromId}&toId=${tip.toId}&message=${tip.message}&cash=${tip.cash}`
 
   const response = await fetch(url, requestOptions)

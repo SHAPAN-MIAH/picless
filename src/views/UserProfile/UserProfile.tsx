@@ -6,7 +6,7 @@ import LayoutMain from '../LayoutMain/LayoutMain'
 import UserHeader from './Header/UserHeader'
 import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
 import Alert from '../../components/Common/Alerts/Alerts'
-import { UserTimeLineType, UserInterestType, UserProfileType } from '../../types/UserType.d'
+import { UserTimeLineType, UserInterestType, UserProfileType, ServiceUserProfileType } from '../../types/UserType.d'
 
 const UserProfile: FunctionComponent<{}> = () => {
   const { username } = useParams<{ username: string }>()
@@ -15,8 +15,8 @@ const UserProfile: FunctionComponent<{}> = () => {
   const [selectedTab, setSelectedTab] = useState<TabNamesType>('ABOUT')
 
   useEffect(() => {
-    UserService.getUserProfileByUserName(username).then((data: UserProfileType) => {
-      setUserData(data)
+    UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
+      setUserData(data.user)
     })
   }, [username])
 

@@ -1,4 +1,3 @@
-import { isInterfaceDeclaration } from 'typescript'
 import { UserType } from './UserType.d'
 
 export interface CommonPostType {

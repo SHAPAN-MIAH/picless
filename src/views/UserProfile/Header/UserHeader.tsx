@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import Popup from 'reactjs-popup'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -8,7 +7,7 @@ import UserService from '../../../services/UserService'
 import UserAvatar from '../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
-import SendATip from './SendATip/SendATip'
+
 import { UserProfileType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {

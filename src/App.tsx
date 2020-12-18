@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {

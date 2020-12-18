@@ -33,7 +33,7 @@ const SelectForm = (props: SelectFormProps) => {
               const key = option.value || Utils.simpleKeyGenerator(5)
 
               return (
-                <option key={option.value} value={option.value || ''}>
+                <option key={key} value={option.value || ''}>
                   {option.name}
                 </option>
               )

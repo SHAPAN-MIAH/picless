@@ -97,3 +97,8 @@ export interface UserSearchType {
   userName: string
   avatarPicture: string
 }
+
+export type ServiceUserProfileType = {
+  user: UserProfileType
+  isSuscribe: boolean
+}

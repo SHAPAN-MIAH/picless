@@ -1,7 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent } from 'react'
+import Popup from 'reactjs-popup'
+import SendATip from '../../../UserProfile/Header/SendATip/SendATip'
 import Reactions from './Reactions'
 
-const FooterPost: FunctionComponent<{}> = () => {
+const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
+  const { user } = props
   return (
     <>
       <div className="post-options">
@@ -25,13 +29,20 @@ const FooterPost: FunctionComponent<{}> = () => {
           <p className="post-option-text">Comment</p>
         </div>
 
-        <div className="post-option">
-          <svg className="post-option-icon icon-share">
-            <use xlinkHref="#svg-share" />
-          </svg>
+        <Popup
+          modal
+          trigger={
+            <div className="post-option">
+              <div className="post-option-icon">
+                <FontAwesomeIcon color="#adafca" icon="dollar-sign" />
+              </div>
 
-          <p className="post-option-text">Share</p>
-        </div>
+              <p className="post-option-text">Send a tip</p>
+            </div>
+          }
+        >
+          <SendATip user={user} />
+        </Popup>
       </div>
     </>
   )

@@ -41,7 +41,7 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
           </div>
         </div>
 
-        <FooterPost />
+        <FooterPost user={data.users || {}} />
       </div>
     </>
   )
