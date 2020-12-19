@@ -20,7 +20,7 @@ const HeaderConversation: FunctionComponent<HeaderConversationProps> = (props) =
 
   const { user } = props
 
-  const status = (user.connectionId !== null && user.connectionId) !== '' ? 'online' : 'offline'
+  const status = user.connectionId ? 'online' : 'offline'
 
   const reloadChats = useCallback(() => {
     dispatch(setUserSelected(user.userId))

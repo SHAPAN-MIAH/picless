@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import _ from 'lodash'
 
 import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
 import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
@@ -34,8 +35,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
   const [urlUserName, setUrlUserName] = useState(userData.userName)
   const [recoveryEmail, setRecoveryEmail] = useState(userData.emailRecovery)
   const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber)
-  const [plan, setPlan] = useState('') // TODO: ADD THE CORRECT FIELD
-  const [updateFields, setUpdateFields] = useState<boolean>(true)
+  const [plan, setPlan] = useState('')
 
   const plansList = (): SelectOptionsType[] => {
     return plans.map((data: PlansType) => {
@@ -43,26 +43,29 @@ const AccountInfo: FunctionComponent<{}> = () => {
     })
   }
 
+  const prevUserDataRef = useRef(userData)
+
   useEffect(() => {
+    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
+
     dispatch(getProfile())
-
-    return () => {
-      dispatch(cleanState())
-    }
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
-    if (updateFields) {
-      setFullName(userData.fullName)
-      setEmail(userData.email)
-      setUrlUserName(userData.userName)
-      setRecoveryEmail(userData.emailRecovery)
-      setPhoneNumber(userData.phoneNumber)
-      setPlan(userData.planId || '')
-
-      setUpdateFields(false)
+    if (!_.isEqual(userData, prevUserDataRef.current)) {
+      dispatch(getProfile())
     }
-  }, [userData])
+    // TODO: ADD THE OCCUPATION AND PLAN FIELD
+    setFullName(userData.fullName)
+    setEmail(userData.email)
+    setUrlUserName(userData.userName)
+    setRecoveryEmail(userData.emailRecovery)
+    setPhoneNumber(userData.phoneNumber)
+
+    setPlan(userData.planId || '')
+
+    prevUserDataRef.current = userData
+  }, [dispatch, userData])
 
   const saveUserData = () => {
     const user: UserType = {

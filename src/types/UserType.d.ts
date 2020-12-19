@@ -100,6 +100,12 @@ export interface UserSearchType {
   avatarPicture: string
 }
 
+export interface SubscriptorListType {
+  id: number
+  registerDate: Date
+  suscribeUser: UserProfileType
+}
+
 export type ServiceUserProfileType = {
   code?: string
   message?: string

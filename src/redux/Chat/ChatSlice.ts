@@ -80,19 +80,19 @@ export const chatSlice = createSlice({
     changeStatusOnline: (state, action: PayloadAction<number>) => {
       const userToUpdate = action.payload
 
-      const updatedUserList = state.userList?.map((user) => {
-        if (user.userId === userToUpdate) {
-          user.connectionId = 'online'
-          return user
-        }
-
-        return user
-      })
-
       return {
         ...state,
         loading: false,
-        userList: updatedUserList,
+        userList: state.userList.map((usr) => {
+          if (usr.userId === userToUpdate) {
+            const u = {
+              ...usr,
+              connectionId: 'online',
+            }
+            return u
+          }
+          return usr
+        }),
       }
     },
   },

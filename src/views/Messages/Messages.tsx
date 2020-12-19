@@ -43,8 +43,39 @@ const Messages: FunctionComponent<{}> = () => {
     [dispatch]
   )
 
-  const onReceiveMessage = useCallback(
-    (message: OnReceiveMessageType) => {
+  useEffect(() => {
+    dispatch(getFavoriteUsers())
+
+    if (userid) {
+      showUserChat(parseInt(userid, 10))
+    } else if (userSelected) {
+      showUserChat(userSelected.userId)
+    } else {
+      dispatch(setUserSelected(null))
+    }
+
+    ChatService.getConnectionChat()
+      .then((conn) => {
+        conn.on('ReceiveMessage', (message: OnReceiveMessageType) => {
+          console.log(message)
+          onReceiveMessage(message)
+        })
+
+        conn.on('NotifyOnline', (data: number) => {
+          dispatch(changeStatus(data))
+        })
+
+        conn.start()
+
+        notifyOnline()
+
+        setConnection(conn)
+      })
+      .catch((err) => {
+        alert(err)
+      })
+
+    const onReceiveMessage = (message: OnReceiveMessageType) => {
       if (lastMessage.current !== message.message) {
         const registerDate = message.registerDate ? message.registerDate : new Date().toISOString()
 
@@ -66,51 +97,17 @@ const Messages: FunctionComponent<{}> = () => {
           lastMessage.current = message.message
         }
       }
-    },
-    [currentUserId, dispatch, userSelected]
-  )
-
-  useEffect(() => {
-    dispatch(getFavoriteUsers())
-
-    if (userid) {
-      showUserChat(parseInt(userid, 10))
-    } else if (userSelected) {
-      showUserChat(userSelected.userId)
-    } else {
-      dispatch(setUserSelected(null))
     }
 
-    ChatService.getConnectionChat()
-      .then((conn) => {
-        setConnection(conn)
-      })
-      .catch((err) => {
-        alert(err)
-      })
+    const notifyOnline = () => {
+      ChatService.notifyConnected(currentUserId)
+    }
+
+    return () => {
+      connection?.stop()
+    }
     // eslint-disable-next-line
   }, [])
-
-  useEffect(() => {
-    if (connection) {
-      connection
-        .start()
-        .then(() => {
-          notifyOnline()
-
-          connection.on('ReceiveMessage', (message: OnReceiveMessageType) => {
-            onReceiveMessage(message)
-          })
-
-          connection.on('NotifyOnline', (data: number) => {
-            // dispatch(changeStatus(data))
-          })
-        })
-        .catch((e) => {
-          console.log('Connection failed: ', e)
-        })
-    }
-  }, [connection, onReceiveMessage])
 
   const sendMessage = async (message: string) => {
     if (userSelected?.email) {
@@ -133,14 +130,6 @@ const Messages: FunctionComponent<{}> = () => {
       }
     }
   }
-
-  const notifyOnline = useCallback(() => {
-    ChatService.notifyConnected(currentUserId)
-  }, [currentUserId])
-
-  // const handleFilterByUsers = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(setUsersFilter(e.target.value))
-  // }
 
   return (
     <>
@@ -167,7 +156,7 @@ const Messages: FunctionComponent<{}> = () => {
                       })}
                   </div>
 
-                  <form className="chat-widget-form" style={{ marginTop: '31px' }}>
+                  {/* <form className="chat-widget-form" style={{ marginTop: '31px' }}>
                     <div className="interactive-input small">
                       <input
                         type="text"
@@ -189,7 +178,7 @@ const Messages: FunctionComponent<{}> = () => {
                         </svg>
                       </div>
                     </div>
-                  </form>
+                  </form> */}
                 </div>
 
                 <div className="chat-widget" ref={fieldRef}>

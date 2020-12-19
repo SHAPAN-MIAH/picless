@@ -6,6 +6,7 @@ import {
   TipType,
   UserSearchType,
   ServiceUserProfileType,
+  SubscriptorListType,
 } from '../types/UserType.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
@@ -177,7 +178,7 @@ const searchUser = async (keyword: string, signal: AbortSignal): Promise<UserSea
   return body
 }
 
-const getSubscriptions = async (): Promise<any> => {
+const getSubscriptions = async (): Promise<SubscriptorListType[]> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {

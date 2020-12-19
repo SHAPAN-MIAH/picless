@@ -43,7 +43,7 @@ const getFavoriteUsers = async (): Promise<any> => {
     headers,
   }
 
-  const url = `${baseUrlUsers}/getfavoriteusers`
+  const url = `${baseUrlUsers}/getsuscribersmessages`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()

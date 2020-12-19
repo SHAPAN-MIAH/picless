@@ -1,9 +1,22 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
+import { SubscriptorListType } from '../../../../types/UserType.d'
+
+import UserService from '../../../../services/UserService'
+
 import Subscriptor from './Subscriptor'
 
 const SubscriptionList: FunctionComponent<{}> = () => {
   const [loading, setLoading] = useState(false)
+  const [subscriptions, setSubscriptions] = useState<SubscriptorListType[]>([])
+
+  useEffect(() => {
+    setLoading(true)
+    UserService.getSubscriptions().then((data: SubscriptorListType[]) => {
+      setLoading(false)
+      setSubscriptions(data)
+    })
+  }, [])
 
   if (loading) {
     return (
@@ -17,8 +30,8 @@ const SubscriptionList: FunctionComponent<{}> = () => {
 
   return (
     <>
-      {[1, 2, 3, 4, 5, 6].map((number: any) => {
-        return <Subscriptor key={number} />
+      {subscriptions.map((subscriptor: SubscriptorListType) => {
+        return <Subscriptor key={subscriptor.id} subscriptor={subscriptor} />
       })}
     </>
   )
