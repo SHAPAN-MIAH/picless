@@ -1,15 +1,20 @@
 import React, { FunctionComponent } from 'react'
+import Popup from 'reactjs-popup'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { CardType } from '../../../../../types/PaymentTypes.d'
 import ProviderIconCard from '../../../../../components/Common/ProviderIconCard'
-import Popup from 'reactjs-popup'
+import useWallet from '../../../../../hooks/useWallet'
 
 const CardItem: FunctionComponent<{ card: CardType }> = (props) => {
   const { card } = props
 
+  const { defaultCard } = useWallet()
+
   return (
     <>
       <div className="table-row medium">
-        <div className="table-column padded">
+        <div className="table-column ">
           <div className="product-preview tiny">
             <div style={{ fontSize: '40px', marginRight: '20px' }}>
               <ProviderIconCard provider={card.brand} />
@@ -23,17 +28,17 @@ const CardItem: FunctionComponent<{ card: CardType }> = (props) => {
           </div>
         </div>
 
-        <div className="table-column padded">
+        <div className="table-column padded-right">
           <p className="table-title">{card.cardholderName}</p>
         </div>
 
-        <div className="table-column padded">
+        <div className="table-column padded-right">
           <p className="table-title">
             {card.expMonth} / {card.expYear}
           </p>
         </div>
 
-        <div className="table-column padded">
+        <div className="table-column padded-right">
           <p className="table-title">
             <Popup
               trigger={<span className="highlighted">Billing address</span>}
@@ -54,6 +59,15 @@ const CardItem: FunctionComponent<{ card: CardType }> = (props) => {
 
         <div className="table-column padded-right">
           <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
+            <div className="action-request accept" title="Delete" style={{ marginRight: '5px' }}>
+              {defaultCard?.defaultCardId === card.id && (
+                <FontAwesomeIcon color="#ffd765" icon="star" title="Default Card" />
+              )}
+              {defaultCard?.defaultCardId !== card.id && (
+                <FontAwesomeIcon color="#8f91ac" icon="star" title="Mark as default card" />
+              )}
+            </div>
+
             <div className="action-request decline" title="Delete">
               <svg className="action-request-icon icon-cross">
                 <use xlinkHref="#svg-cross" />

@@ -11,15 +11,16 @@ import styles from './UserHeader.module.css'
 import { UserProfileType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {
-  isSuscribed: boolean
+  isSuscribe: boolean
   user: UserProfileType
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
-  const { user, isSuscribed = false } = props
+  const { user, isSuscribe } = props
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
   const [imageProfile, setImageProfile] = useState(user.profilePicture)
+  const [subscribed, setSubscribed] = useState(isSuscribe || false)
 
   useEffect(() => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
@@ -30,7 +31,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     if (user.id && user.planId) {
       PaymentService.suscribeToUser(user.planId, user.id).then((data: any) => {
         if (data.code === 0) {
-          alert('User added to favorites')
+          setSubscribed(true)
+          alert('You are subscribed')
         } else {
           alert(`Error ${data.code} => ${data.message}`)
         }
@@ -62,7 +64,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
           </div>
 
           <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
-            {!isSuscribed && (
+            {!subscribed && (
               <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribeToUser}>
                 <p className="profile-header-info-action button primary">
                   Suscribe
@@ -72,7 +74,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               </div>
             )}
 
-            {isSuscribed && (
+            {subscribed && (
               <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
                 <a
                   title="Send a message"

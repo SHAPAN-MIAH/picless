@@ -13,6 +13,7 @@ import {
   faHeart,
   faRedo,
   faExclamationTriangle,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
@@ -56,7 +57,8 @@ library.add(
   faCcMastercard,
   faCcAmex,
   faCcDinersClub,
-  faCcJcb
+  faCcJcb,
+  faStar
 )
 
 declare global {

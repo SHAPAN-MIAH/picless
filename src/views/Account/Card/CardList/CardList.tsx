@@ -29,7 +29,7 @@ const CardList: FunctionComponent<{}> = () => {
             <div className="table-wrap" data-simplebar>
               <div className="table table-downloads split-rows">
                 <div className="table-header">
-                  <div className="table-header-column">
+                  <div className="table-header-column padded">
                     <p className="table-header-title">Provider</p>
                   </div>
 
@@ -41,9 +41,9 @@ const CardList: FunctionComponent<{}> = () => {
                     <p className="table-header-title">Expires</p>
                   </div>
 
-                  <div className="table-header-column"> </div>
+                  <div className="table-header-column padded"> </div>
 
-                  <div className="table-header-column "> </div>
+                  <div className="table-header-column padded"> </div>
                 </div>
 
                 <div className="table-body same-color-rows">

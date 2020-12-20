@@ -1,5 +1,5 @@
 import * as ApiHelper from './ApiHelpers'
-import { AddCardType, CardType } from '../types/PaymentTypes.d'
+import { AddCardType, CardType, DefaultCardType } from '../types/PaymentTypes.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
 
@@ -68,6 +68,7 @@ const suscribeToUser = async (planId: any, userIdToSuscribe: number): Promise<an
   const body = await response.json()
   return body
 }
+
 const getBalance = async (): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
@@ -83,4 +84,41 @@ const getBalance = async (): Promise<any> => {
   return body
 }
 
-export default { getCards, addCard, getSuscriptionPlans, suscribeToUser, getBalance }
+const getDefaultCard = async (): Promise<DefaultCardType> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getdefaultcard`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
+const addCreditToWallet = async (amount: number, currency: string, description: string): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('amount', amount.toString())
+  bodyData.append('userIdToSuscribe', currency)
+  bodyData.append('description', description)
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData,
+    // body: JSON.stringify({ planId, userIdToSuscribe }),
+  }
+
+  const url = `${baseUrl}/addcharge`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
+export default { getCards, addCard, getSuscriptionPlans, suscribeToUser, getBalance, getDefaultCard, addCreditToWallet }

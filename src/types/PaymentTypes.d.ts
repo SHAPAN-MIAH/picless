@@ -35,6 +35,7 @@ export interface CardType {
   addressLine1: string
   addressState: string
   addressCountry: string
+  isDefaultCard?: boolean
 }
 
 export interface PlansType {
@@ -47,4 +48,9 @@ export interface PlansType {
   intervalCount: number
   name: string
   trialPeriodDays: number
+}
+
+export interface DefaultCardType {
+  code: string
+  defaultCardId: string
 }

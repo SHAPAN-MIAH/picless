@@ -35,7 +35,7 @@ const UserProfile: FunctionComponent<{}> = () => {
     <>
       <LayoutMain>
         <div className="content-grid">
-          <UserHeader user={userData} isSuscribed={isSuscribed} />
+          <UserHeader user={userData} isSuscribe={isSuscribed} />
 
           <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
 
