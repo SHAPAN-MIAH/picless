@@ -13,19 +13,22 @@ const UserProfile: FunctionComponent<{}> = () => {
   const { username } = useParams<{ username: string }>()
 
   const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
+  const [loading, setLoading] = useState<boolean>(false)
   const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
   const [selectedTab, setSelectedTab] = useState<TabNamesType>('ABOUT')
 
   useEffect(() => {
+    setLoading(true)
     UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
       if (data.code !== '0') {
         history.push('/error')
       } else {
+        setLoading(false)
         setUserData(data.user)
         setIsSuscribed(data.isSuscribe)
       }
     })
-  }, [username])
+  }, [])
 
   const changeTab = (tab: TabNamesType) => {
     setSelectedTab(tab)
@@ -35,40 +38,45 @@ const UserProfile: FunctionComponent<{}> = () => {
     <>
       <LayoutMain>
         <div className="content-grid">
-          <UserHeader user={userData} isSuscribe={isSuscribed} />
+          {loading && <h1>Loading ...</h1>}
+          {!loading && (
+            <>
+              <UserHeader user={userData} isSuscribe={isSuscribed} />
 
-          <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
+              <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
 
-          {selectedTab === 'ABOUT' && <AboutTab user={userData} />}
+              {selectedTab === 'ABOUT' && <AboutTab user={userData} />}
 
-          {selectedTab === 'POSTS' && (
-            <div className="grid">
-              <div className="grid-column">
-                <div className="widget-box">
-                  <h3>POSTS</h3>
+              {selectedTab === 'POSTS' && (
+                <div className="grid">
+                  <div className="grid-column">
+                    <div className="widget-box">
+                      <h3>POSTS</h3>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          )}
+              )}
 
-          {selectedTab === 'PHOTOS' && (
-            <div className="grid">
-              <div className="grid-column">
-                <div className="widget-box">
-                  <h3>PHOTOS</h3>{' '}
+              {selectedTab === 'PHOTOS' && (
+                <div className="grid">
+                  <div className="grid-column">
+                    <div className="widget-box">
+                      <h3>PHOTOS</h3>{' '}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          )}
+              )}
 
-          {selectedTab === 'VIDEOS' && (
-            <div className="grid">
-              <div className="grid-column">
-                <div className="widget-box">
-                  <h3>VIDEOS</h3>
+              {selectedTab === 'VIDEOS' && (
+                <div className="grid">
+                  <div className="grid-column">
+                    <div className="widget-box">
+                      <h3>VIDEOS</h3>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              )}
+            </>
           )}
         </div>
       </LayoutMain>

@@ -11,7 +11,7 @@ import styles from './UserHeader.module.css'
 import { UserProfileType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {
-  isSuscribe: boolean
+  isSuscribe: boolean | null
   user: UserProfileType
 }
 
@@ -20,12 +20,13 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
   const [imageProfile, setImageProfile] = useState(user.profilePicture)
-  const [subscribed, setSubscribed] = useState(isSuscribe || false)
+  const [subscribed, setSubscribed] = useState(isSuscribe)
 
   useEffect(() => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
     setImageProfile(user.profilePicture)
-  }, [user])
+    setSubscribed(isSuscribe)
+  }, [user, isSuscribe])
 
   const suscribeToUser = () => {
     if (user.id && user.planId) {

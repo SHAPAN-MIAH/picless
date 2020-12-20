@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
+import MovementList from './Movements/MovementsList'
 
 const Movements: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -30,7 +31,7 @@ const Movements: FunctionComponent<{}> = () => {
                       <div className="form-input-decorated">
                         <div className="form-input small active">
                           <label htmlFor="statement-from-date">From Date</label>
-                          <input type="text" id="statement-from-date" name="statement_from_date" value="02/22/2019" />
+                          <input type="text" id="statement-from-date" name="statement_from_date" value="" />
                         </div>
 
                         <svg className="form-input-icon icon-events">
@@ -41,7 +42,7 @@ const Movements: FunctionComponent<{}> = () => {
                       <div className="form-input-decorated">
                         <div className="form-input small active">
                           <label htmlFor="statement-to-date">To Date</label>
-                          <input type="text" id="statement-to-date" name="statement_to_date" value="11/14/2019" />
+                          <input type="text" id="statement-to-date" name="statement_to_date" value="" />
                         </div>
 
                         <svg className="form-input-icon icon-events">
@@ -57,10 +58,6 @@ const Movements: FunctionComponent<{}> = () => {
                     </div>
                   </form>
                 </div>
-
-                <div className="section-filters-bar-actions">
-                  <p className="button secondary">Download Statement</p>
-                </div>
               </div>
 
               <div className="table-wrap" data-simplebar>
@@ -71,7 +68,7 @@ const Movements: FunctionComponent<{}> = () => {
                     </div>
 
                     <div className="table-header-column padded-left">
-                      <p className="table-header-title">Item</p>
+                      <p className="table-header-title">Description</p>
                     </div>
 
                     <div className="table-header-column centered padded">
@@ -79,432 +76,18 @@ const Movements: FunctionComponent<{}> = () => {
                     </div>
 
                     <div className="table-header-column centered padded">
-                      <p className="table-header-title">Code</p>
+                      <p className="table-header-title">Card</p>
                     </div>
 
                     <div className="table-header-column centered padded">
                       <p className="table-header-title">Price</p>
                     </div>
 
-                    <div className="table-header-column centered padded">
-                      <p className="table-header-title">Cut</p>
-                    </div>
-
-                    <div className="table-header-column centered padded">
-                      <p className="table-header-title">Earning</p>
-                    </div>
-
                     <div className="table-header-column padded-left" />
                   </div>
 
                   <div className="table-body same-color-rows">
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 15th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Pixel Diamond Gaming Magazine</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK1287</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$26</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$13</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 15th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Twitch Stream UI Pack</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK1364</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$12</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$6</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 14th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Pixel Diamond Gaming Magazine</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK7638</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$26</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$13</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 14th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Twitch Stream UI Pack</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK7285</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$12</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$6</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 14th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Twitch Stream UI Pack</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK9673</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$12</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$6</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 12th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Gaming Coin Badges Pack</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Purchase</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK2589</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$6</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">-</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">-$6</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap negative">
-                          <svg className="percentage-diff-icon icon-minus-small">
-                            <use xlinkHref="#svg-minus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 9th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">People Illustrations Pack 01</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Purchase</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK3146</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$5</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">-</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">-$5</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap negative">
-                          <svg className="percentage-diff-icon icon-minus-small">
-                            <use xlinkHref="#svg-minus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 9th, 2019</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Pixel Diamond Gaming Magazine</span>
-                        </a>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK4577</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$26</p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-
-                      <div className="table-column centered padded">
-                        <p className="table-title">$13</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="table-row micro">
-                      <div className="table-column">
-                        <p className="table-text">
-                          <span className="light">Nov 9th, 2019</span>
-                        </p>
-                      </div>
-                      <div className="table-column padded-left">
-                        <a className="table-link" href="marketplace-product.html">
-                          <span className="highlighted">Emerald Dragon Digital Marketplace</span>
-                        </a>
-                      </div>
-                      <div className="table-column centered padded">
-                        <p className="table-title">Sale</p>
-                      </div>
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">VK6379</span>
-                        </p>
-                      </div>
-                      <div className="table-column centered padded">
-                        <p className="table-title">$24</p>
-                      </div>
-                      <div className="table-column centered padded">
-                        <p className="table-text">
-                          <span className="light">50%</span>
-                        </p>
-                      </div>
-                      <div className="table-column centered padded">
-                        <p className="table-title">$12</p>
-                      </div>
-
-                      <div className="table-column padded-left">
-                        <div className="percentage-diff-icon-wrap positive">
-                          <svg className="percentage-diff-icon icon-plus-small">
-                            <use xlinkHref="#svg-plus-small" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
+                    <MovementList />
                   </div>
                 </div>
               </div>

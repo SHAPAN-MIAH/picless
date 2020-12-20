@@ -115,6 +115,10 @@ const AccountSidebar: FunctionComponent<{}> = () => {
                 <Link className="sidebar-menu-link" to="/wallet/movements">
                   {t('accountSidebar.walletMyMovements')} {/* REPORT MOVEMENTS */}
                 </Link>
+
+                <Link className="sidebar-menu-link" to="/wallet/payments/add-founds">
+                  {t('accountSidebar.walletAddFounds')} {/* ADD FOUNDS */}
+                </Link>
               </div>
             </div>
           </div>

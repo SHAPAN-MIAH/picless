@@ -14,6 +14,7 @@ import {
   faRedo,
   faExclamationTriangle,
   faStar,
+  faCreditCard,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
@@ -41,6 +42,7 @@ import Movements from './views/Account/Movements'
 import PaymentMethods from './views/Account/PaymentMethods'
 import AddCard from './views/Account/Card/AddCard'
 import Subscriptions from './views/Account/Subscriptions/Subscriptions'
+import AddFounds from './views/Account/AddFounds'
 
 library.add(
   faPlus,
@@ -58,12 +60,13 @@ library.add(
   faCcAmex,
   faCcDinersClub,
   faCcJcb,
-  faStar
+  faStar,
+  faCreditCard
 )
 
 declare global {
   interface Window {
-    tpl: { load: () => void }
+    tpl: { load: (modulesNames?: string[]) => void }
   }
 }
 
@@ -92,6 +95,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/wallet/overview" component={WalletOverview} />
           <ProtectedRoute {...routerProps} exact path="/wallet/payments" component={PaymentMethods} />
           <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
+          <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-founds" component={AddFounds} />
           <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
 
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />

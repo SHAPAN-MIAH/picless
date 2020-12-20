@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import { SubscriptorListType } from '../../../../types/UserType.d'
-import UserAvatar from '../../../../components/UserAvatar'
 
 interface SubscriptorProps {
   subscriptor: SubscriptorListType
@@ -8,14 +7,10 @@ interface SubscriptorProps {
 
 const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
   const { subscriptor } = props
-  const { suscribeUser, registerDate } = subscriptor
+  const { suscribeUser } = subscriptor
 
   const imageCover = process.env.REACT_APP_BUCKET_IMAGES + suscribeUser.coverPicture
   const imageProfile = process.env.REACT_APP_BUCKET_IMAGES + suscribeUser.profilePicture
-
-  useEffect(() => {
-    window.tpl.load() // Fix template problems
-  }, [])
 
   return (
     <>

@@ -11,6 +11,10 @@
     "home": "Home",
     "accountInfo": "Account Info",
     "profileInfo": "Profile Info",
+    "addFounds": "Add Founds",
+    "addCard": "Add Card",
+    "mySubscriptions": "My Subscriptions",
+    "walletOverview": "Wallet Overview",
     "messages": "Messages"
   },
 
@@ -38,7 +42,8 @@
     "walletDescription": "Review your wallet, manage payment and more",
     "walletOverview": "Overview",
     "walletPaymentMethods": "Payment Methods",
-    "walletMyMovements": "Movements"
+    "walletMyMovements": "Movements",
+    "walletAddFounds": "Add Founds"
   },
   "wallet": {
     "title": "Wallet",
@@ -49,6 +54,7 @@
     "paymentMethodSubTitle": "Payment Methods",
     "myCards": "My Cards",
     "addNewCard": "Add New Card",
+    "myMovementsSubTitle": "My Movements",
 
     "addCard": {
       "billingInfoTitle": "Billing Info",

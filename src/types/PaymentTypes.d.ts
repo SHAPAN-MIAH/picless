@@ -54,3 +54,32 @@ export interface DefaultCardType {
   code: string
   defaultCardId: string
 }
+
+export interface FraudDetails {
+  ipAddress?: any
+  ipCountry?: any
+  email?: any
+  userAgent?: any
+  acceptLanguage?: any
+}
+
+export interface MovementType {
+  id: string
+  created: number
+  objectType: string
+  amount: number
+  amountRefunded: number
+  currency: string
+  description?: any
+  card: CardType
+  customerId: string
+  captured: boolean
+  refunded: boolean
+  disputed: boolean
+  fraudDetails: FraudDetails
+}
+
+export interface ServiceMovementType {
+  hasMore: boolean
+  list: MovementType[]
+}

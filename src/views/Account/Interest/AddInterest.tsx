@@ -2,8 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import { actionFail } from '../../../redux/User/UserSlice'
-import { userSelector, errorSelector } from '../../../redux/User/UserSelectors'
+import { userSelector } from '../../../redux/User/UserSelectors'
 import { addInterest } from '../../../redux/User/UserThunks'
 
 import FormItem from '../../../components/Common/Form/FormItem'

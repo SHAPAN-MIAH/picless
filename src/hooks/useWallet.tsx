@@ -2,36 +2,60 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import PaymentService from '../services/PaymentService'
 
 import WalletContext from '../context/WalletContext'
-import { CardType, DefaultCardType } from '../types/PaymentTypes.d'
+import { CardType, MovementType, ServiceMovementType } from '../types/PaymentTypes.d'
 
 const useWallet = () => {
-  const { cards, setCards } = useContext(WalletContext.context)
+  const { cards, setCards, defaultCard, setDefaultCard, balance, setBalance } = useContext(WalletContext.context)
 
   const [loading, setLoading] = useState(false)
-  const [defaultCard, setDefaultCard] = useState<DefaultCardType | null>()
+  const [movements, setMovements] = useState<MovementType[]>([])
 
   useEffect(() => {
+    if (!cards || cards.length === 0) {
+      setLoading(true)
+
+      PaymentService.getCards().then((cardList: CardType[]) => {
+        setCards(cardList)
+        setLoading(false)
+      })
+
+      PaymentService.getDefaultCard().then((data: any) => {
+        setDefaultCard(data)
+      })
+
+      PaymentService.getBalance().then((data: any) => {
+        if (data.code === 0) setBalance(parseFloat(data.value))
+      })
+    }
+  }, [])
+
+  const addFoundsToWallet = useCallback((amount: number, description: string) => {
+    PaymentService.addCreditToWallet(amount, 'EUR', description)
+  }, [])
+
+  const getMovements = useCallback(() => {
     setLoading(true)
-
-    PaymentService.getCards().then((cardList: CardType[]) => {
-      setCards(cardList)
+    PaymentService.getMovements().then((data: ServiceMovementType) => {
+      setMovements(data.list)
       setLoading(false)
-    })
-
-    PaymentService.getDefaultCard().then((data: any) => {
-      setDefaultCard(data)
     })
   }, [])
 
-  const addCreditToWallet = useCallback((amount: number, description: string) => {
-    PaymentService.addCreditToWallet(amount, 'EUR', description).then(() => {})
+  const updateBalance = useCallback(() => {
+    PaymentService.getBalance().then((data: any) => {
+      if (data.code === 0) setBalance(parseFloat(data.value))
+    })
   }, [])
 
   return {
     loading,
     cards,
     defaultCard,
-    addCredit: addCreditToWallet,
+    currentBalance: balance,
+    movements,
+    getMovements,
+    addFounds: addFoundsToWallet,
+    updateBalance,
   }
 }
 export default useWallet

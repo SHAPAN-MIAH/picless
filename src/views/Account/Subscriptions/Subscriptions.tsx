@@ -54,13 +54,13 @@ const Subscriptions: FunctionComponent<{}> = () => {
               <div className="section-pager-controls">
                 <div className="slider-control left disabled">
                   <svg className="slider-control-icon icon-small-arrow">
-                    <use xlinkHref="#svg-small-arrow"></use>
+                    <use xlinkHref="#svg-small-arrow"> </use>
                   </svg>
                 </div>
 
                 <div className="slider-control right">
                   <svg className="slider-control-icon icon-small-arrow">
-                    <use xlinkHref="#svg-small-arrow"></use>
+                    <use xlinkHref="#svg-small-arrow"> </use>
                   </svg>
                 </div>
               </div>

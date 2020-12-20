@@ -17,6 +17,7 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
   useEffect(() => {
     if (window.tpl) {
       window.tpl.load()
+
       dispatchEvent(new Event('load'))
     }
   }, [location])

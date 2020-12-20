@@ -1,5 +1,5 @@
 import * as ApiHelper from './ApiHelpers'
-import { AddCardType, CardType, DefaultCardType } from '../types/PaymentTypes.d'
+import { AddCardType, CardType, DefaultCardType, ServiceMovementType } from '../types/PaymentTypes.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
 
@@ -59,7 +59,6 @@ const suscribeToUser = async (planId: any, userIdToSuscribe: number): Promise<an
     method: 'POST',
     headers,
     body: bodyData,
-    // body: JSON.stringify({ planId, userIdToSuscribe }),
   }
 
   const url = `${baseUrl}/createsuscription`
@@ -77,7 +76,7 @@ const getBalance = async (): Promise<any> => {
     headers,
   }
 
-  const url = `${baseUrl}/getuserbalance`
+  const url = `${process.env.REACT_APP_BASE_URL_API}/users/getuserbalance`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
@@ -99,19 +98,33 @@ const getDefaultCard = async (): Promise<DefaultCardType> => {
   return body
 }
 
+const getMovements = async (): Promise<ServiceMovementType> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getcharges`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 const addCreditToWallet = async (amount: number, currency: string, description: string): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('amount', amount.toString())
-  bodyData.append('userIdToSuscribe', currency)
+  bodyData.append('currency', currency)
   bodyData.append('description', description)
 
   const requestOptions: RequestInit = {
     method: 'POST',
     headers,
     body: bodyData,
-    // body: JSON.stringify({ planId, userIdToSuscribe }),
   }
 
   const url = `${baseUrl}/addcharge`
@@ -121,4 +134,13 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
   return body
 }
 
-export default { getCards, addCard, getSuscriptionPlans, suscribeToUser, getBalance, getDefaultCard, addCreditToWallet }
+export default {
+  getCards,
+  addCard,
+  getSuscriptionPlans,
+  suscribeToUser,
+  getBalance,
+  getDefaultCard,
+  addCreditToWallet,
+  getMovements,
+}

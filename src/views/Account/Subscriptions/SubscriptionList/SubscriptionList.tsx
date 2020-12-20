@@ -15,6 +15,10 @@ const SubscriptionList: FunctionComponent<{}> = () => {
     UserService.getSubscriptions().then((data: SubscriptorListType[]) => {
       setLoading(false)
       setSubscriptions(data)
+
+      if (window.tpl) {
+        window.tpl.load(['user-avatar', 'liquidify'])
+      }
     })
   }, [])
 
