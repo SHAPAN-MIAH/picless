@@ -50,6 +50,21 @@ const useWallet = () => {
     })
   }, [])
 
+  const changeDefaultCard = useCallback((cardId: string) => {
+    PaymentService.changeDefaultCard(cardId).then((data: any) => {
+      if (data.code === '0') {
+        getDefaultCard()
+        alert('changed default card successfully')
+      }
+    })
+  }, [])
+
+  const getDefaultCard = useCallback(() => {
+    PaymentService.getDefaultCard().then((data: any) => {
+      setDefaultCard(data)
+    })
+  }, [])
+
   const updateCards = useCallback(() => {
     setLoading(true)
 
@@ -74,6 +89,7 @@ const useWallet = () => {
     getMovements,
     addFounds: addFoundsToWallet,
     removeCard,
+    changeDefaultCard,
     updateCards,
     updateBalance,
   }

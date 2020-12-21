@@ -53,6 +53,25 @@ const removeCard = async (cardId: string): Promise<any> => {
   return body
 }
 
+const changeDefaultCard = async (cardId: string): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('cardId', cardId)
+
+  const requestOptions: RequestInit = {
+    method: 'PUT',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/updatedefaultcard`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 const getSuscriptionPlans = async (): Promise<CardType[]> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
@@ -158,6 +177,7 @@ export default {
   getCards,
   addCard,
   removeCard,
+  changeDefaultCard,
   getSuscriptionPlans,
   suscribeToUser,
   getBalance,

@@ -12,11 +12,16 @@ import { CardType } from '../../../../types/PaymentTypes.d'
 const CardList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { cards, loading, defaultCard, removeCard } = useWallet()
+  const { cards, loading, defaultCard, changeDefaultCard, removeCard } = useWallet()
 
   const onRemoveCard = (cardId: string) => {
     removeCard(cardId)
   }
+
+  const onChangeDefaultCard = (cardId: string) => {
+    changeDefaultCard(cardId)
+  }
+
   return (
     <>
       {loading && <h4>Loading ...</h4>}
@@ -54,7 +59,15 @@ const CardList: FunctionComponent<{}> = () => {
                   {cards.map((card: CardType) => {
                     const isDefault: boolean = card.id === defaultCard?.defaultCardId
 
-                    return <CardItem key={`id-${card.id}`} card={card} isDefault={isDefault} onRemoveCard={onRemoveCard} />
+                    return (
+                      <CardItem
+                        key={`id-${card.id}`}
+                        card={card}
+                        isDefault={isDefault}
+                        onChangeDefaultCard={onChangeDefaultCard}
+                        onRemoveCard={onRemoveCard}
+                      />
+                    )
                   })}
                 </div>
               </div>

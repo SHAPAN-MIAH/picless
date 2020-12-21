@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react'
+import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -8,11 +8,12 @@ import ProviderIconCard from '../../../../../components/Common/ProviderIconCard'
 type CardItemProps = {
   card: CardType
   isDefault: boolean
+  onChangeDefaultCard: (cardId: string) => void
   onRemoveCard: (cardId: string) => void
 }
 
 const CardItem: FunctionComponent<CardItemProps> = (props) => {
-  const { card, isDefault, onRemoveCard } = props
+  const { card, isDefault, onChangeDefaultCard, onRemoveCard } = props
 
   return (
     <>
@@ -62,7 +63,14 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
 
         <div className="table-column padded-right">
           <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
-            <div className="action-request accept" title="Delete" style={{ marginRight: '5px' }}>
+            <div
+              className="action-request accept"
+              title=""
+              style={{ marginRight: '5px' }}
+              onClick={() => {
+                onChangeDefaultCard(card.id)
+              }}
+            >
               {isDefault && <FontAwesomeIcon color="#ffd765" icon="star" title="Default Card" />}
               {!isDefault && <FontAwesomeIcon color="#8f91ac" icon="star" title="Mark as default card" />}
             </div>
