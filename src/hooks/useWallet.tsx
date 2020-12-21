@@ -41,6 +41,24 @@ const useWallet = () => {
     })
   }, [])
 
+  const removeCard = useCallback((cardId: string) => {
+    PaymentService.removeCard(cardId).then((data: any) => {
+      if (data.code === '0') {
+        updateCards()
+        alert('Remove card successfully')
+      }
+    })
+  }, [])
+
+  const updateCards = useCallback(() => {
+    setLoading(true)
+
+    PaymentService.getCards().then((cardList: CardType[]) => {
+      setCards(cardList)
+      setLoading(false)
+    })
+  }, [])
+
   const updateBalance = useCallback(() => {
     PaymentService.getBalance().then((data: any) => {
       if (data.code === 0) setBalance(parseFloat(data.value))
@@ -55,6 +73,8 @@ const useWallet = () => {
     movements,
     getMovements,
     addFounds: addFoundsToWallet,
+    removeCard,
+    updateCards,
     updateBalance,
   }
 }

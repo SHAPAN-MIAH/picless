@@ -17,6 +17,7 @@ const getCards = async (): Promise<CardType[]> => {
   const body = await response.json()
   return body
 }
+
 const addCard = async (card: AddCardType): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
@@ -27,6 +28,25 @@ const addCard = async (card: AddCardType): Promise<any> => {
   }
 
   const url = `${baseUrl}/addcreditcard`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
+const removeCard = async (cardId: string): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('cardId', cardId)
+
+  const requestOptions: RequestInit = {
+    method: 'DELETE',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/deletecard`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
@@ -137,6 +157,7 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
 export default {
   getCards,
   addCard,
+  removeCard,
   getSuscriptionPlans,
   suscribeToUser,
   getBalance,

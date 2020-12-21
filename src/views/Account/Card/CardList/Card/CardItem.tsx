@@ -1,15 +1,18 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback } from 'react'
 import Popup from 'reactjs-popup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { CardType } from '../../../../../types/PaymentTypes.d'
 import ProviderIconCard from '../../../../../components/Common/ProviderIconCard'
-import useWallet from '../../../../../hooks/useWallet'
 
-const CardItem: FunctionComponent<{ card: CardType }> = (props) => {
-  const { card } = props
+type CardItemProps = {
+  card: CardType
+  isDefault: boolean
+  onRemoveCard: (cardId: string) => void
+}
 
-  const { defaultCard } = useWallet()
+const CardItem: FunctionComponent<CardItemProps> = (props) => {
+  const { card, isDefault, onRemoveCard } = props
 
   return (
     <>
@@ -60,15 +63,17 @@ const CardItem: FunctionComponent<{ card: CardType }> = (props) => {
         <div className="table-column padded-right">
           <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
             <div className="action-request accept" title="Delete" style={{ marginRight: '5px' }}>
-              {defaultCard?.defaultCardId === card.id && (
-                <FontAwesomeIcon color="#ffd765" icon="star" title="Default Card" />
-              )}
-              {defaultCard?.defaultCardId !== card.id && (
-                <FontAwesomeIcon color="#8f91ac" icon="star" title="Mark as default card" />
-              )}
+              {isDefault && <FontAwesomeIcon color="#ffd765" icon="star" title="Default Card" />}
+              {!isDefault && <FontAwesomeIcon color="#8f91ac" icon="star" title="Mark as default card" />}
             </div>
 
-            <div className="action-request decline" title="Delete">
+            <div
+              className="action-request decline"
+              title="Delete"
+              onClick={() => {
+                onRemoveCard(card.id)
+              }}
+            >
               <svg className="action-request-icon icon-cross">
                 <use xlinkHref="#svg-cross" />
               </svg>
