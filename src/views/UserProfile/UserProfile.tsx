@@ -26,6 +26,10 @@ const UserProfile: FunctionComponent<{}> = () => {
         setLoading(false)
         setUserData(data.user)
         setIsSuscribed(data.isSuscribe)
+
+        if (window.tpl) {
+          window.tpl.load(['user-avatar', 'liquidify'])
+        }
       }
     })
   }, [])

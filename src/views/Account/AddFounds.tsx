@@ -8,6 +8,7 @@ import FormItem from '../../components/Common/Form/FormItem'
 import FormRow from '../../components/Common/Form/FormRow'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
+import TextInput from 'components/Common/TextInput'
 
 const AddFounds: FunctionComponent<{}> = () => {
   const [currentAmount, setCurrentAmount] = useState<number>(0)
@@ -17,6 +18,7 @@ const AddFounds: FunctionComponent<{}> = () => {
 
   const onAddAmount = (amount: number) => {
     if (amount > 0) setCurrentAmount(currentAmount + amount)
+    else if (amount < 0) alert('sdfds')
     else setCurrentAmount(amount)
   }
 
@@ -107,27 +109,18 @@ const AddFounds: FunctionComponent<{}> = () => {
 
                       <FormRow>
                         <FormItem>
-                          <div className="form-counter-wrap">
-                            <label>Amount</label>
-
-                            <div className="form-counter full with-currency">
-                              <p className="form-counter-value">{currentAmount}</p>
-
-                              <div className="form-counter-controls">
-                                <div className="form-counter-control form-counter-control-increase">
-                                  <svg className="form-counter-icon icon-small-arrow">
-                                    <use xlinkHref="#svg-small-arrow" />
-                                  </svg>
-                                </div>
-
-                                <div className="form-counter-control form-counter-control-decrease">
-                                  <svg className="form-counter-icon icon-small-arrow">
-                                    <use xlinkHref="#svg-small-arrow" />
-                                  </svg>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          <TextInput
+                            type="text"
+                            id="expiration-month"
+                            classNameFormInput="small"
+                            name="expiration_month"
+                            placeholder="Amount"
+                            value={currentAmount || 0}
+                            onChange={(e) => {
+                              setCurrentAmount(parseFloat(e.target.value))
+                            }}
+                            required
+                          />
                         </FormItem>
                       </FormRow>
 
