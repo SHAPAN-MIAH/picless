@@ -32,7 +32,7 @@ const UserProfile: FunctionComponent<{}> = () => {
         }
       }
     })
-  }, [])
+  }, [username])
 
   const changeTab = (tab: TabNamesType) => {
     setSelectedTab(tab)
