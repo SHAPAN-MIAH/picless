@@ -1,4 +1,7 @@
 import React, { FunctionComponent } from 'react'
+
+import { unixTimestampToDate } from '../../../utils/Helpers'
+
 import { MovementType } from '../../../types/PaymentTypes.d'
 
 type MovementProps = {
@@ -13,7 +16,7 @@ const Movement: FunctionComponent<MovementProps> = (props) => {
       <div className="table-row micro">
         <div className="table-column">
           <p className="table-text">
-            <span className="light">{item.created}</span>
+            <span className="light">{unixTimestampToDate(item.created, 'MM/DD/YYYY HH:mm')}</span>
           </p>
         </div>
 

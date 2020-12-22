@@ -1,22 +1,17 @@
 import React, { useState, useEffect, FunctionComponent } from 'react'
-import { useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 
 import UserService from '../../services/UserService'
 
-import { userSelector } from '../../redux/User/UserSelectors'
-
 import LayoutMain from '../LayoutMain/LayoutMain'
 import UserHeader from './Header/UserHeader'
 import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
-import { UserProfileType, ServiceUserProfileType, UserType } from '../../types/UserType.d'
+import { UserProfileType, ServiceUserProfileType } from '../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
 
 const UserProfile: FunctionComponent<{}> = () => {
   const history = useHistory()
   const { username } = useParams<{ username: string }>()
-
-  const user: UserType = useSelector(userSelector)
 
   const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
   const [loading, setLoading] = useState<boolean>(false)
