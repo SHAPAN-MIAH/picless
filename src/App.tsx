@@ -66,7 +66,7 @@ library.add(
 
 declare global {
   interface Window {
-    tpl: { load: (modulesNames?: string[]) => void }
+    tpl: { core: any; plugin: any; load: (modulesNames?: string[]) => void }
   }
 }
 

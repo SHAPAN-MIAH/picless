@@ -402,7 +402,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
             </Link>
 
             <p className="navigation-widget-info-title">
-              <a href="profile-timeline.html">{userData.fullName}</a>
+              <a href={`/user/${userData.userName}`}>{userData.fullName}</a>
             </p>
 
             <p className="navigation-widget-info-text">Welcome Back!</p>
@@ -480,7 +480,7 @@ const NavigationLeftMenu: FunctionComponent<{}> = () => {
           </li>
 
           <li className="menu-item">
-            <Link className="menu-item-link" to="/account/messages">
+            <Link className="menu-item-link" to="/user/messages">
               <svg className="menu-item-link-icon icon-forums">
                 <use xlinkHref="#svg-forums" />
               </svg>
