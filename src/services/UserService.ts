@@ -157,8 +157,7 @@ const sendATip = async (tip: TipType): Promise<any> => {
   const url = `${baseUrl}/sendatip?fromId=${tip.fromId}&toId=${tip.toId}&message=${tip.message}&cash=${tip.cash}`
 
   const response = await fetch(url, requestOptions)
-  const body = await response
-
+  const body = await response.json()
   return body
 }
 
