@@ -1,14 +1,16 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import PaymentService from '../../../services/PaymentService'
+import { userSelector } from '../../../redux/User/UserSelectors'
 
 import UserAvatar from '../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
 
-import { UserProfileType } from '../../../types/UserType.d'
+import { UserProfileType, UserType } from '../../../types/UserType.d'
 
 type UserHeaderProps = {
   isSuscribe: boolean | null
@@ -21,6 +23,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
   const [imageProfile, setImageProfile] = useState(user.profilePicture)
   const [subscribed, setSubscribed] = useState(isSuscribe)
+
+  const userData: UserType = useSelector(userSelector)
 
   useEffect(() => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
@@ -64,29 +68,32 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
             </p>
           </div>
 
-          <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
-            {!subscribed && (
-              <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribeToUser}>
-                <p className="profile-header-info-action button primary">
-                  Suscribe
-                  <span className="hide-text-mobile"> for 10,99€</span>
-                  <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
-                </p>
-              </div>
-            )}
+          {user.userName !== userData.userName && (
+            <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
+              {!subscribed && (
+                <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribeToUser}>
+                  <p className="profile-header-info-action button primary">
+                    Suscribe
+                    <span className="hide-text-mobile"> for 10,99€</span>
+                    <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
+                  </p>
+                </div>
+              )}
 
-            {subscribed && (
-              <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
-                <a
-                  title="Send a message"
-                  href={`/user/messages/${user.id}`}
-                  className="profile-header-info-action button secondary"
-                >
-                  <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span> Message
-                </a>
-              </div>
-            )}
-          </div>
+              {subscribed && (
+                <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+                  <a
+                    title="Send a message"
+                    href={`/user/messages/${user.id}`}
+                    className="profile-header-info-action button secondary"
+                  >
+                    <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span>{' '}
+                    Message
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
 
           <div id="profile-header-social-links-slider-controls" className="slider-controls">
             <div className="slider-control left">
