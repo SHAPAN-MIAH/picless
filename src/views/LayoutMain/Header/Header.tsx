@@ -3,8 +3,15 @@ import React, { FunctionComponent } from 'react'
 import AccountSettings from './AccountSettings/AccountSettings'
 import NavigationHeader from './NavigationHeader/NavigationHeader'
 import SearchBar from './SearchBar/SearchBar'
+import useMenu from '../../../hooks/useMenu'
 
 const Header: FunctionComponent<{}> = () => {
+  const { showMenu, setShowMenu } = useMenu()
+
+  const handleMenu = () => {
+    setShowMenu(!showMenu)
+  }
+
   return (
     <>
       <header className="header">
@@ -21,13 +28,13 @@ const Header: FunctionComponent<{}> = () => {
         </div>
 
         <div className="header-actions">
-          <div className="sidemenu-trigger navigation-widget-trigger">
+          <div className="sidemenu-trigger" onClick={handleMenu}>
             <svg className="icon-grid">
               <use xlinkHref="#svg-grid" />
             </svg>
           </div>
 
-          <div className="mobilemenu-trigger navigation-widget-mobile-trigger">
+          <div className="mobilemenu-trigger" onClick={handleMenu}>
             <div className="burger-icon inverted">
               <div className="burger-icon-bar" />
 

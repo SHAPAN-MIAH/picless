@@ -94,4 +94,5 @@ const useWallet = () => {
     updateBalance,
   }
 }
+
 export default useWallet

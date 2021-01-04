@@ -6,7 +6,7 @@ import AccountSidebar from './AccountSidebar/AccountSidebar'
 import LayoutMain from '../LayoutMain/LayoutMain'
 
 import CardList from './Card/CardList/CardList'
-import WalletContextProvider from '../../context/WalletContext'
+import { WalletContextProvider } from '../../context/WalletContext'
 
 const PaymentMethods: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
