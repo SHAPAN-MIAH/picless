@@ -4,6 +4,7 @@ import AccountSettings from './AccountSettings/AccountSettings'
 import NavigationHeader from './NavigationHeader/NavigationHeader'
 import SearchBar from './SearchBar/SearchBar'
 import useMenu from '../../../hooks/useMenu'
+import LiquidImage from '../../../components/Common/LiquidImage'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
@@ -69,9 +70,11 @@ const Header: FunctionComponent<{}> = () => {
                   <div className="dropdown-box-list-item">
                     <div className="cart-item-preview">
                       <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <figure className="picture medium round liquid">
-                          <img src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/01.jpg`} alt="item-01" />
-                        </figure>
+                        <LiquidImage
+                          className="picture medium round"
+                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/01.jpg`}
+                          alt="item-01"
+                        />
                       </a>
 
                       <p className="cart-item-preview-title">
@@ -95,9 +98,11 @@ const Header: FunctionComponent<{}> = () => {
                   <div className="dropdown-box-list-item">
                     <div className="cart-item-preview">
                       <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <figure className="picture medium round liquid">
-                          <img src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/11.jpg`} alt="item-11" />
-                        </figure>
+                        <LiquidImage
+                          className="picture medium round"
+                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/11.jpg`}
+                          alt="item-11"
+                        />
                       </a>
 
                       <p className="cart-item-preview-title">
@@ -121,9 +126,11 @@ const Header: FunctionComponent<{}> = () => {
                   <div className="dropdown-box-list-item">
                     <div className="cart-item-preview">
                       <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <figure className="picture medium round liquid">
-                          <img src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/10.jpg`} alt="item-10" />
-                        </figure>
+                        <LiquidImage
+                          className="picture medium round"
+                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/10.jpg`}
+                          alt="item-10"
+                        />
                       </a>
 
                       <p className="cart-item-preview-title">
@@ -147,9 +154,11 @@ const Header: FunctionComponent<{}> = () => {
                   <div className="dropdown-box-list-item">
                     <div className="cart-item-preview">
                       <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <figure className="picture medium round liquid">
-                          <img src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/04.jpg`} alt="item-04" />
-                        </figure>
+                        <LiquidImage
+                          className="picture medium round"
+                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/04.jpg`}
+                          alt="item-04"
+                        />
                       </a>
 
                       <p className="cart-item-preview-title">

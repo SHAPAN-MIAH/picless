@@ -17,7 +17,7 @@ const SubscriptionList: FunctionComponent<{}> = () => {
       setSubscriptions(data)
 
       if (window.tpl) {
-        window.tpl.load(['user-avatar', 'liquidify'])
+        window.tpl.load(['user-avatar'])
       }
     })
   }, [])

@@ -20,6 +20,7 @@ const UserProfile: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     setLoading(true)
+
     UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
       if (data.code !== '0') {
         history.push('/error')
@@ -29,7 +30,7 @@ const UserProfile: FunctionComponent<{}> = () => {
         setIsSuscribed(data.isSuscribe)
 
         if (window.tpl) {
-          window.tpl.load(['user-avatar', 'liquidify'])
+          window.tpl.load(['user-avatar'])
         }
       }
     })

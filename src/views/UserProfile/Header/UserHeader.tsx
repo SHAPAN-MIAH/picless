@@ -95,20 +95,6 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
             </div>
           )}
 
-          <div id="profile-header-social-links-slider-controls" className="slider-controls">
-            <div className="slider-control left">
-              <svg className="slider-control-icon icon-small-arrow">
-                <use xlinkHref="#svg-small-arrow" />
-              </svg>
-            </div>
-
-            <div className="slider-control right">
-              <svg className="slider-control-icon icon-small-arrow">
-                <use xlinkHref="#svg-small-arrow" />
-              </svg>
-            </div>
-          </div>
-
           <div className="user-stats">
             <div className="user-stat big">
               <p className="user-stat-title">{user.numberOfFollowers}</p>

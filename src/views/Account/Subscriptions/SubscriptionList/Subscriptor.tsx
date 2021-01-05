@@ -1,4 +1,7 @@
 import React, { FunctionComponent } from 'react'
+
+import LiquidImage from '../../../../components/Common/LiquidImage'
+
 import { SubscriptorListType } from '../../../../types/UserType.d'
 
 interface SubscriptorProps {
@@ -15,9 +18,7 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
   return (
     <>
       <div className="user-preview landscape">
-        <figure className="user-preview-cover liquid">
-          <img src={imageCover} alt="cover-04" />
-        </figure>
+        <LiquidImage className="user-preview-cover" src={imageCover} alt="cover-04" />
 
         <div className="user-preview-info">
           <div className="user-short-description landscape tiny">
