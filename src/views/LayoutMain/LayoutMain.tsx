@@ -4,6 +4,8 @@ import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
 import Header from './Header/Header'
 import FloatyBar from './FloatyBar/FloatyBar'
 import MainLoader from '../../components/MainLoading/MainLoading'
+import Notifications from '../../components/Notification/Notification'
+
 import { ApplicationContextProvider } from '../../context/ApplicationContext'
 
 interface LayoutMainProps {
@@ -16,8 +18,12 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
   return (
     <>
       <MainLoader />
+
       <ApplicationContextProvider>
         <NavigationLeftMenu />
+
+        <Notifications />
+
         {/* CHAT WIDGET */}
         <Header />
         <FloatyBar />

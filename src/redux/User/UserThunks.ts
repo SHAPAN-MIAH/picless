@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import { AppThunk } from '../store'
 
 import * as Actions from './UserSlice'
@@ -14,6 +15,7 @@ export const getProfile = (): AppThunk => async (dispatch) => {
 
   try {
     const userData = await UserService.getUserProfile()
+
     dispatch(Actions.getProfileSuccess(userData))
   } catch (err) {
     dispatch(Actions.actionFail({ uiMessage: 'profileInfo.errors.fetchingData', err }))
@@ -24,7 +26,11 @@ export const updateProfile = (userData: UserType): AppThunk => async (dispatch) 
   dispatch(Actions.actionWaiting())
 
   try {
-    const data = await UserService.updateUserProfile(userData)
+    const updateProfilePromise = UserService.updateUserProfile(userData)
+
+    toast.promise(updateProfilePromise, { loading: 'Saving data ...', success: 'Saved', error: 'Error Saving the data' })
+
+    const data = await updateProfilePromise
 
     dispatch(Actions.updateProfileSuccess())
     dispatch(Actions.getProfileSuccess(data))

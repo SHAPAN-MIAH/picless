@@ -43,6 +43,7 @@ import PaymentMethods from './views/Account/PaymentMethods'
 import AddCard from './views/Account/Card/AddCard'
 import Subscriptions from './views/Account/Subscriptions/Subscriptions'
 import AddFounds from './views/Account/AddFounds'
+import TestView from './views/TestView/TestView'
 
 library.add(
   faPlus,
@@ -102,6 +103,8 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
+
+          <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
 
           <Route exact path="/">
             <LayoutUnauthorize />

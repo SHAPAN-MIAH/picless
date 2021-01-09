@@ -81,7 +81,6 @@ export const userSlice = createSlice({
       return {
         ...state,
         loading: false,
-        message: 'profileInfo.userUpdated',
       }
     },
 
