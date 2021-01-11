@@ -11,7 +11,6 @@ export const checkUserAuthenticated = (): AppThunk => async (dispatch) => {
   try {
     await Auth.currentSession()
       .then(async (user) => {
-        dispatchEvent(new Event('load'))
         const userTokenId = await user.getIdToken()
 
         const token = userTokenId.getJwtToken()

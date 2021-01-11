@@ -1,33 +1,100 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 // import i18n from 'i18next'
 
-import { errorSelector, messageSelector, getAction } from '../../../../redux/Auth/AuthSelectors'
-import { login, showForgotPasswordEmail } from '../../../../redux/Auth/AuthThunks'
+import useRouter from '../../../../hooks/useRouter'
+
+import AuthService from '../../../../services/AuthService'
+
+import TextInput from '../../../../components/Common/TextInput'
+import SimpleCheckboxForm from '../../../../components/Common/SimpleCheckboxForm'
+import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+
+import Alert from '../../../../components/Common/Alerts/Alerts'
 
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
+import useAuth from '../../../../hooks/useAuth'
 
-import TextInput from '../../../../components/Common/TextInput'
+import { CurrentView } from './Login'
 
-import Alert from '../../../../components/Common/Alerts/Alerts'
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+type FormValues = {
+  username: string
+  password: string
+  rememberMe: boolean
+}
 
-const LoginForm = () => {
+const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> = (props) => {
   const { t } = useTranslation()
 
-  const error: string = useSelector(errorSelector)
-  const message: string = useSelector(messageSelector)
-  const currentAction = useSelector(getAction)
-  const dispatch = useDispatch()
+  const { changeView } = props
 
-  // const [userName, setUserName] = useState('')
-  // const [password, setPassword] = useState('')
-  const [userName, setUserName] = useState('marcelo@lup20.uk')
-  const [password, setPassword] = useState('Nokia2000')
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required(t(`authentication.errors.emailRequired`))
+      .email(t(`authentication.errors.enterValidEmailAddress`)),
+    password: Yup.string()
+      .transform((x) => (x === '' ? undefined : x))
+      .required(t(`authentication.errors.passwordRequired`)),
+  })
 
-  const [rememberMe, setRememberMe] = useState(false)
+  const router = useRouter()
+  const { setIsAuthenticated } = useAuth()
+  const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const [messages, setMessages] = useState<string>('')
+  const [generalError, setGeneralError] = useState<string>('')
+
+  const onSubmit = (data: FormValues) => {
+    const { username, password, rememberMe } = data
+    return AuthService.login(username, password)
+      .then(async (user) => {
+        if (user.attributes.email_verified) {
+          user.getCachedDeviceKeyAndPassword()
+
+          setIsAuthenticated(true)
+
+          // const token = user.signInUserSession.idToken.jwtToken
+          // const userAuth = { email: username, token }
+
+          const remembeDevicerOrNot = {
+            onSuccess: (): void => {
+              setMessages(`authentication.messages.successfullyLoggedIn`)
+              router.push('/user/home')
+            },
+            onFailure: (err: any) => {
+              setIsAuthenticated(false)
+              setGeneralError(`authentication.errors.${err.code}`)
+            },
+          }
+
+          // Remember device
+          if (rememberMe) {
+            user.setDeviceStatusRemembered(remembeDevicerOrNot)
+          } else {
+            user.setDeviceStatusNotRemembered(remembeDevicerOrNot)
+          }
+        } else {
+          setGeneralError(`authentication.errors.confirmYourEmailAccount`)
+        }
+      })
+      .catch((err) => {
+        setIsAuthenticated(false)
+
+        if (err.code) {
+          setGeneralError(`authentication.errors.${err.code}`)
+        } else {
+          setGeneralError(`authentication.errors.UnknownError`)
+        }
+      })
+  }
+
   // const [language, setLanguage] = useState('en')
 
   // const changeLanguage = () => {
@@ -43,86 +110,80 @@ const LoginForm = () => {
   //   i18n.changeLanguage(currentLanguage)
   // }
 
-  const signIn = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    dispatch(login(userName, password, rememberMe))
-  }
-
-  const showLoader = currentAction.action === 'LOGIN' && currentAction.status === 'WAITING'
+  // TO TEST Purposes
+  useEffect(() => {
+    setValue('username', 'marcelo@lup20.uk')
+    setValue('password', 'Nokia2000')
+  }, [])
 
   return (
     <>
       <h2 className="form-box-title">{t('authentication.accountLogin')}</h2>
 
-      <form className="form" onSubmit={signIn}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <FormRowItem>
-          <TextInput
+          <Controller
+            control={control}
+            as={TextInput}
             type="text"
-            id="login-username"
-            name="login_username"
+            name="username"
+            defaultValue=""
             placeholder={t('authentication.usernameOrEmail')}
-            value={userName}
-            onChange={(e) => setUserName(e.target.value.toLowerCase())}
+            errorMessage={errors.username?.message}
           />
         </FormRowItem>
 
         <FormRowItem>
-          <TextInput
+          <Controller
+            control={control}
+            as={TextInput}
             type="password"
-            id="login-password"
-            name="login_password"
+            name="password"
+            defaultValue=""
             placeholder={t('authentication.password')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            errorMessage={errors.password?.message}
           />
         </FormRowItem>
 
         <FormRow classNameRow="space-between">
           <div className="form-item">
-            <div className="checkbox-wrap">
-              <input
-                type="checkbox"
-                id="login-remember"
-                name="login_remember"
-                defaultChecked={rememberMe}
-                onChange={(e) => {
-                  setRememberMe(e.target.checked)
-                }}
-              />
-
-              <div className="checkbox-box">
-                <svg className="icon-cross">
-                  <use xlinkHref="#svg-cross" />
-                </svg>
-              </div>
-
-              <label htmlFor="login-remember">{t('authentication.rememberMe')}</label>
-            </div>
+            <Controller
+              control={control}
+              name="rememberMe"
+              defaultValue={false}
+              render={(propsController) => (
+                <SimpleCheckboxForm
+                  name={propsController.name}
+                  ref={propsController.ref}
+                  defaultValue={propsController.value}
+                  placeholder={t('authentication.rememberMe')}
+                  onChange={(e) => propsController.onChange(e.target.checked)}
+                />
+              )}
+            />
           </div>
 
           <div className="form-item">
-            <a
+            <p
               className="form-link"
-              href="#/"
               onClick={() => {
-                dispatch(showForgotPasswordEmail(userName))
+                changeView('FORGOT_PASSWORD_EMAIL')
               }}
             >
               {t('authentication.forgotPassword')}
-            </a>
+            </p>
           </div>
         </FormRow>
 
         <FormRow>
-          <ButtonWithLoader type="submit" className="button medium secondary" showLoader={showLoader}>
+          <ButtonWithLoader type="submit" className="button medium secondary" showLoader={formState.isSubmitting}>
             {t('authentication.loginToYourAccount')}
           </ButtonWithLoader>
         </FormRow>
 
         <FormRow>
-          {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-          {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
+          {generalError && <Alert alertType="DANGER" message={t(generalError)} style={{ width: '100%' }} />}
+          {messages && <Alert alertType="PRIMARY" message={t(messages)} style={{ width: '100%' }} />}
         </FormRow>
       </form>
     </>

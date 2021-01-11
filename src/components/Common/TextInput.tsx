@@ -5,10 +5,23 @@ import React, { useState } from 'react'
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classNameFormInput?: string
   iconName?: string
+  errorMessage?: string // Used to show messages from react-hook-form
 }
 
-const TextInput = (props: TextInputProps) => {
-  const { className, placeholder, id, defaultValue, value, required, classNameFormInput, iconName, ...rest } = props
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
+  const {
+    name,
+    className,
+    placeholder,
+    id,
+    defaultValue,
+    value,
+    required,
+    classNameFormInput,
+    iconName,
+    errorMessage,
+    ...rest
+  } = props
 
   const [isFocused, setIsFocused] = useState(false)
   const [showRequired, setShowRequired] = useState(false)
@@ -26,8 +39,9 @@ const TextInput = (props: TextInputProps) => {
           {placeholder} {required && <span style={{ color: 'red' }}>*</span>}
         </label>
         <input
-          value={value || ''}
-          id={id}
+          value={value}
+          name={name}
+          ref={ref}
           className={classNames(className, required && showRequired ? 'inputErrorField' : '')}
           onBlur={(e) => {
             setIsFocused(false)
@@ -40,6 +54,7 @@ const TextInput = (props: TextInputProps) => {
             setIsFocused(true)
             if (props.onFocus) props.onFocus(e)
           }}
+          id={id}
           required={required}
           {...rest}
         />
@@ -55,9 +70,15 @@ const TextInput = (props: TextInputProps) => {
             <FontAwesomeIcon icon="exclamation-triangle" /> {placeholder} field is required
           </p>
         )}
+
+        {errorMessage && (
+          <p className="inputErrorFieldText">
+            <FontAwesomeIcon icon="exclamation-triangle" /> {errorMessage}
+          </p>
+        )}
       </div>
     </>
   )
-}
+})
 
 export default TextInput

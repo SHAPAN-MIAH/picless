@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Login from './Authentication/Login/Login'
@@ -7,13 +7,6 @@ import NavLoginRegister from './NavLoginRegister/NavLoginRegister'
 
 const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-
-  useEffect(() => {
-    if (window.tpl) {
-      window.tpl.load()
-      dispatchEvent(new Event('load'))
-    }
-  }, [])
 
   return (
     <div className="landing">

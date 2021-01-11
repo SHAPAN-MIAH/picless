@@ -1,11 +1,13 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 import { useTranslation } from 'react-i18next'
-import { useSelector, useDispatch } from 'react-redux'
+
 import PasswordStrengthBar from 'react-password-strength-bar'
 
-import { userAuthSelector, errorSelector, getAction, messageSelector } from '../../../../../redux/Auth/AuthSelectors'
-import { resetPassword } from '../../../../../redux/Auth/AuthThunks'
+import AuthService from '../../../../../services/AuthService'
 
 import FormRow from '../../../../../components/Common/Form/FormRow'
 import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
@@ -13,26 +15,52 @@ import TextInput from '../../../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 import Alert from '../../../../../components/Common/Alerts/Alerts'
 
-const ForgotPasswordNewPassword = () => {
+type FormValues = {
+  code: string
+  password: string
+  confirmPassword: string
+}
+
+type ForgotPasswordNewPasswordProps = { username: string; backToLogin: (message?: string) => void }
+
+const ForgotPasswordNewPassword: FunctionComponent<ForgotPasswordNewPasswordProps> = (props) => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
 
-  const error: string = useSelector(errorSelector)
-  const message: string = useSelector(messageSelector)
-  const currentAction = useSelector(getAction)
-  const userAuth = useSelector(userAuthSelector)
+  const validationSchema = Yup.object().shape({
+    code: Yup.string().required(t(`authentication.errors.codeRequired`)),
+    password: Yup.string()
+      .transform((x) => (x === '' ? undefined : x))
+      .required(t(`authentication.errors.passwordRequired`))
+      .min(4, 'Password must be at least 4 characters'),
+    confirmPassword: Yup.string()
+      .transform((x) => (x === '' ? undefined : x))
+      .when('password', (password: string, schema: any): any => {
+        if (password) return schema.required('authentication.errors.confirmPasswordRequired')
+      })
+      .oneOf([Yup.ref('password')], 'authentication.errors.passwordDoesntMatch'),
+  })
 
-  const [code, setCode] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordRepeat, setPasswordRepeat] = useState('')
+  const { control, handleSubmit, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
 
-  const onResetPassword = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const { username, backToLogin } = props
 
-    dispatch(resetPassword(userAuth.email, code, password, passwordRepeat))
+  const [generalError, setGeneralError] = useState<string>('')
+
+  const onResetPassword = (data: FormValues) => {
+    return AuthService.resetPassword(username, data.code, data.password)
+      .then(() => {
+        backToLogin()
+      })
+      .catch((err) => {
+        if (err.code) {
+          setGeneralError(`authentication.errors.${err.code}`)
+        } else {
+          setGeneralError(`authentication.errors.UnknownError`)
+        }
+      })
   }
-
-  const showLoader = currentAction.action === 'FORGOT_PASSWORD_NEW_PASSWORD' && currentAction.status === 'WAITING'
 
   const scoreWords = [
     t('passwordStrengthBar.scoreWords.weak'),
@@ -45,60 +73,69 @@ const ForgotPasswordNewPassword = () => {
     <div>
       <h2 className="form-box-title">{t('authentication.enterResetPasswordVerificationCode')}</h2>
 
-      <form className="form" onSubmit={onResetPassword}>
+      <form className="form" onSubmit={handleSubmit(onResetPassword)}>
         <FormRow>
           <p>{t('authentication.confirmResetPasswordCode')}</p>
         </FormRow>
 
         <FormRowItem>
-          <TextInput
+          <Controller
+            control={control}
+            as={TextInput}
             type="text"
-            id="reset-password-code"
-            name="reset-password-code"
+            name="code"
+            defaultValue=""
             placeholder={t('authentication.code')}
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            errorMessage={errors.code?.message}
           />
         </FormRowItem>
 
         <FormRowItem>
-          <TextInput
-            type="password"
-            id="register-password"
-            name="register_password"
-            placeholder={t('authentication.password')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <PasswordStrengthBar
-            password={password}
-            shortScoreWord={t('passwordStrengthBar.shortScoreWord')}
-            scoreWords={scoreWords}
-            minLength={6}
+          <Controller
+            control={control}
+            name="password"
+            defaultValue=""
+            render={(propsController) => (
+              <>
+                <TextInput
+                  type="password"
+                  name={propsController.name}
+                  ref={propsController.ref}
+                  value={propsController.value}
+                  placeholder={t('authentication.password')}
+                  onChange={(e) => propsController.onChange(e.target.value)}
+                  id="register-password"
+                />
+                <PasswordStrengthBar
+                  password={propsController.value}
+                  shortScoreWord={t('passwordStrengthBar.shortScoreWord')}
+                  scoreWords={scoreWords}
+                  minLength={6}
+                />
+              </>
+            )}
           />
         </FormRowItem>
 
         <FormRowItem>
-          <TextInput
+          <Controller
+            control={control}
+            as={TextInput}
             type="password"
-            id="register-password-repeat"
-            name="register_password_repeat"
+            name="confirmPassword"
+            defaultValue=""
             placeholder={t('authentication.repeatPassword')}
-            value={passwordRepeat}
-            onChange={(e) => setPasswordRepeat(e.target.value)}
+            errorMessage={errors.confirmPassword?.message}
           />
         </FormRowItem>
 
         <FormRow>
-          <ButtonWithLoader type="submit" className="button medium primary" showLoader={showLoader}>
+          <ButtonWithLoader type="submit" className="button medium primary" showLoader={formState.isSubmitting}>
             {t('authentication.sendConfirmNewPassword')}
           </ButtonWithLoader>
         </FormRow>
 
-        <FormRow>
-          {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-          {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
-        </FormRow>
+        <FormRow>{generalError && <Alert alertType="DANGER" message={t(generalError)} style={{ width: '100%' }} />}</FormRow>
       </form>
     </div>
   )

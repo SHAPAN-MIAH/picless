@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-
-import { useHistory } from 'react-router-dom'
-// import i18n from 'i18next'
-
-import { getAction } from '../../../../redux/Auth/AuthSelectors'
+import React, { FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import LoginForm from './LoginForm'
-import ForgotPasswordEmail from './ForgotPassword/ForgotPasswordEmail'
-import ForgotPasswordNewPassword from './ForgotPassword/ForgotPasswordNewPassword'
 
-const Login = () => {
-  const history = useHistory()
+import ForgotPassword from './ForgotPassword/ForgotPassword'
+import Alert from '../../../../components/Common/Alerts/Alerts'
 
-  useEffect(() => {
-    if (currentAction.action === 'LOGIN' && currentAction.status === 'FINISHED') {
-      history.push('/account/account-info')
-    }
-  })
+export type CurrentView = 'LOGIN' | 'FORGOT_PASSWORD_EMAIL' | 'FORGOT_PASSWORD_NEW_PASSWORD'
 
-  const currentAction = useSelector(getAction)
+const Login: FunctionComponent<{}> = () => {
+  const { t } = useTranslation()
+  const [currentView, setCurrentView] = useState<CurrentView>('LOGIN')
+  const [messages, setMessages] = useState<string>('')
 
-  const showForgotPasswordEmail = currentAction.action === 'FORGOT_PASSWORD_EMAIL'
-  const showForgotPasswordNewPassword = currentAction.action === 'FORGOT_PASSWORD_NEW_PASSWORD'
+  const showLogin = currentView === 'LOGIN'
+
+  const changeView = (view: CurrentView) => {
+    setCurrentView(view)
+  }
+
+  const backToLogin = (message?: string) => {
+    setCurrentView('LOGIN')
+    if (message) setMessages(message)
+  }
 
   return (
     <div className="form-box login-register-form-element" style={{ display: 'block' }}>
@@ -32,9 +32,10 @@ const Login = () => {
         alt="rocket"
       />
 
-      {!showForgotPasswordEmail && !showForgotPasswordNewPassword && <LoginForm />}
-      {showForgotPasswordEmail && <ForgotPasswordEmail />}
-      {showForgotPasswordNewPassword && <ForgotPasswordNewPassword />}
+      {showLogin && <LoginForm changeView={changeView} />}
+      {!showLogin && <ForgotPassword backToLogin={backToLogin} />}
+
+      {messages && <Alert alertType="PRIMARY" message={t(messages)} style={{ width: '100%' }} />}
     </div>
   )
 }
