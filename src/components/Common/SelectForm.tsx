@@ -12,7 +12,7 @@ interface SelectFormProps extends React.SelectHTMLAttributes<HTMLSelectElement> 
   readOnly?: boolean
 }
 
-const SelectForm = (props: SelectFormProps) => {
+const SelectForm = React.forwardRef<HTMLSelectElement, SelectFormProps>((props, ref) => {
   const { name, placeholder, id, options, readOnly = false, value, ...rest } = props
 
   const readOnlyValue = rest.defaultValue === 0 ? '' : rest.defaultValue
@@ -28,7 +28,7 @@ const SelectForm = (props: SelectFormProps) => {
       {!readOnly && (
         <div className="form-select">
           <label htmlFor={id}>{placeholder}</label>
-          <select id={id} name={name} value={value || ''} {...rest}>
+          <select id={id} name={name} value={value || ''} ref={ref} {...rest}>
             {options.map((option) => {
               const key = option.value || Utils.simpleKeyGenerator(5)
 
@@ -58,6 +58,6 @@ const SelectForm = (props: SelectFormProps) => {
       )}
     </>
   )
-}
+})
 
 export default SelectForm

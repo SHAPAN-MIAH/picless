@@ -1,10 +1,14 @@
-import { useTranslation } from 'react-i18next'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import toast from 'react-hot-toast'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 
-import { userSelector, loadingSelector, messageSelector, errorSelector } from '../../redux/User/UserSelectors'
-import { getProfile, updateProfile, cleanState } from '../../redux/User/UserThunks'
+import useUser from '../../hooks/useUser'
+
+import UserService from 'services/UserService'
 
 import plans from '../../constants/plans.json'
 
@@ -20,22 +24,40 @@ import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 import { UserType } from '../../types/UserType.d'
 import { PlansType } from '../../types/PaymentTypes.d'
 
+type FormValues = {
+  fullName: string
+  email: string
+  userName: string
+  recoveryEmail: string
+  phoneNumber: string
+  planId: string
+}
+type formFieldsNames = 'fullName' | 'email' | 'userName' | 'recoveryEmail' | 'phoneNumber' | 'planId'
+const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'recoveryEmail', 'phoneNumber', 'planId']
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
 const AccountInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
 
-  const error: string = useSelector(errorSelector)
-  const message: string = useSelector(messageSelector)
-  const loading: boolean = useSelector(loadingSelector)
+  const { getUser, setUser } = useUser()
 
-  const userData: UserType = useSelector(userSelector)
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    fullName: Yup.string(),
+    email: Yup.string().email('Please enter an valid email'),
+    userName: Yup.string().required('User name field is required'),
+    emailRecovery: Yup.string().email('Please enter an valid email').nullable(),
+    phoneNumber: Yup.string().matches(phoneRegExp, { message: 'Phone number is not valid', excludeEmptyString: true }),
+    planId: Yup.string(),
+  })
 
-  const [fullName, setFullName] = useState(userData.fullName)
-  const [email, setEmail] = useState(userData.email)
-  const [urlUserName, setUrlUserName] = useState(userData.userName)
-  const [recoveryEmail, setRecoveryEmail] = useState(userData.emailRecovery)
-  const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber)
-  const [plan, setPlan] = useState('')
+  const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const [generalError, setGeneralError] = useState('')
+  const [messages, setMessages] = useState('')
 
   const plansList = (): SelectOptionsType[] => {
     return plans.map((data: PlansType) => {
@@ -43,42 +65,40 @@ const AccountInfo: FunctionComponent<{}> = () => {
     })
   }
 
-  const prevUserDataRef = useRef(userData)
-
   useEffect(() => {
-    dispatch(cleanState()) // TODO: MOVE TO UNMOUNT
-
-    dispatch(getProfile())
+    getUser()
+      .then((user) => {
+        formFields.forEach((field: string) => {
+          const value = _.get(user, field)
+          setValue(field as formFieldsNames, value || '')
+        })
+      })
+      .catch((err) => {
+        setGeneralError(err.message)
+      })
   }, [])
 
-  useEffect(() => {
-    if (!_.isEqual(userData, prevUserDataRef.current)) {
-      dispatch(getProfile())
-    }
-    // TODO: ADD THE OCCUPATION AND PLAN FIELD
-    setFullName(userData.fullName)
-    setEmail(userData.email)
-    setUrlUserName(userData.userName)
-    setRecoveryEmail(userData.emailRecovery)
-    setPhoneNumber(userData.phoneNumber)
+  const saveData = (data: FormValues) => {
+    console.log(data)
 
-    setPlan(userData.planId || '')
+    return getUser().then((user) => {
+      formFields.forEach((field: string) => {
+        const dataAttr = _.get(data, field)
+        _.set(user, field, dataAttr)
+      })
 
-    prevUserDataRef.current = userData
-  }, [dispatch, userData])
+      const toastPromise = UserService.updateUserProfile(user)
 
-  const saveUserData = () => {
-    const user: UserType = {
-      ...userData,
-      fullName,
-      email,
-      userName: urlUserName,
-      emailRecovery: recoveryEmail,
-      phoneNumber,
-      planId: plan,
-    }
-
-    dispatch(updateProfile(user))
+      return toast
+        .promise(toastPromise, {
+          loading: 'Saving account information ...',
+          success: 'The account information has been successfully saved',
+          error: 'Error Saving the account information',
+        })
+        .then((newUserData: UserType) => {
+          setUser(newUserData)
+        })
+    })
   }
 
   return (
@@ -101,94 +121,98 @@ const AccountInfo: FunctionComponent<{}> = () => {
                 <p className="widget-box-title">{t('accountInfo.personalInfo')}</p>
 
                 <div className="widget-box-content">
-                  <form className="form">
+                  <form className="form" onSubmit={handleSubmit(saveData)}>
                     <FormRow classNameRow="split">
                       <FormItem>
-                        <TextInput
+                        <Controller
+                          control={control}
+                          as={TextInput}
                           type="text"
-                          id="account-full-name"
-                          classNameFormInput="small active"
-                          name="account_full_name"
+                          name="fullName"
+                          defaultValue=""
                           placeholder={t('accountInfo.fullNameField')}
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
+                          classNameFormInput="small active"
+                          errorMessage={errors.fullName?.message}
                         />
                       </FormItem>
                       <FormItem>
-                        <TextInput
+                        <Controller
+                          control={control}
+                          as={TextInput}
                           type="text"
-                          id="account-email"
-                          classNameFormInput="small active"
-                          name="account_email"
+                          name="email"
+                          defaultValue=""
                           placeholder={t('accountInfo.accountEmailField')}
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          classNameFormInput="small active"
+                          errorMessage={errors.email?.message}
                         />
                       </FormItem>
                     </FormRow>
 
                     <FormRow classNameRow="split">
                       <FormItem>
-                        <TextInput
+                        <Controller
+                          control={control}
+                          as={TextInput}
                           type="text"
-                          id="account-url-username"
+                          name="userName"
+                          defaultValue=""
+                          placeholder={t('accountInfo.urlUserNameField')}
                           classNameFormInput="small active"
-                          name="account_url_username"
-                          placeholder={t('accountInfo.urlUserNameField5')}
-                          value={urlUserName}
-                          onChange={(e) => setUrlUserName(e.target.value)}
+                          errorMessage={errors.userName?.message}
                         />
                       </FormItem>
                       <FormItem>
-                        <TextInput
+                        <Controller
+                          control={control}
+                          as={TextInput}
                           type="text"
-                          id="account-recovery-email"
-                          classNameFormInput="small active"
-                          name="account_recovery_email"
+                          name="recoveryEmail"
+                          defaultValue=""
                           placeholder={t('accountInfo.recoveryEmailField')}
-                          value={recoveryEmail}
-                          onChange={(e) => setRecoveryEmail(e.target.value)}
+                          classNameFormInput="small active"
+                          errorMessage={errors.recoveryEmail?.message}
                         />
                       </FormItem>
                     </FormRow>
 
                     <FormRow classNameRow="split">
                       <FormItem>
-                        <TextInput
+                        <Controller
+                          control={control}
+                          as={TextInput}
                           type="text"
-                          id="phone-number"
-                          classNameFormInput="small active"
-                          name="phone_number"
+                          name="phoneNumber"
+                          defaultValue=""
                           placeholder={t('accountInfo.phoneNumberField')}
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          classNameFormInput="small active"
+                          errorMessage={errors.phoneNumber?.message}
                         />
                       </FormItem>
 
                       <FormItem>
-                        <SelectForm
+                        <Controller
+                          control={control}
+                          as={SelectForm}
                           id="subscription-price"
-                          name="subscription_price"
+                          name="planId"
                           placeholder={t('accountInfo.subscriptionPriceField')}
                           options={plansList()}
-                          value={plan}
-                          onChange={(e) => setPlan(e.target.value)}
                         />
                       </FormItem>
                     </FormRow>
 
                     <FormRow>
-                      {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-                      {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
+                      {generalError && <Alert alertType="DANGER" message={t(generalError)} style={{ width: '100%' }} />}
+                      {messages && <Alert alertType="PRIMARY" message={t(messages)} style={{ width: '100%' }} />}
                     </FormRow>
 
                     <FormRow classNameRow="split">
                       <FormItem>
                         <ButtonWithLoader
-                          type="button"
-                          className="medium primary"
-                          onClick={saveUserData}
-                          showLoader={loading}
+                          type="submit"
+                          className="button medium secondary"
+                          showLoader={formState.isSubmitting}
                         >
                           {t('accountSidebar.saveButtonText')}
                         </ButtonWithLoader>

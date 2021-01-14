@@ -43,7 +43,7 @@ const getUserProfileByUserName = async (userName: string): Promise<ServiceUserPr
   return body
 }
 
-const updateUserProfile = async (userData: UserType): Promise<any> => {
+const updateUserProfile = async (userData: UserType): Promise<UserType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {

@@ -1,20 +1,50 @@
-import { useContext, useEffect } from 'react'
+import _ from 'lodash'
+import { useContext } from 'react'
 import UserContext from '../context/UserContext'
 import UserService from '../services/UserService'
 
-const useUser = () => {
+import { UserType } from '../types/UserType.d'
+
+type UseUserReturn = { getUser: () => Promise<UserType>; setUser: (userData: UserType) => boolean }
+
+const useUser = (): UseUserReturn => {
   const { user, setUser } = useContext(UserContext.context)
 
-  useEffect(() => {
-    if (!user) {
-      UserService.getUserProfile().then((userData) => {
-        setUser(userData)
-      })
+  const getCurrentUser = (): Promise<UserType> => {
+    const promise = new Promise<UserType>((resolve, reject) => {
+      if (_.isEmpty(user)) {
+        UserService.getUserProfile()
+          .then((userData) => {
+            setUser(userData)
+
+            resolve(userData)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      } else {
+        resolve(user)
+      }
+    })
+
+    return promise
+  }
+
+  const setCurrentUser = (userData: UserType): boolean => {
+    try {
+      setUser(userData)
+
+      return true
+    } catch (err) {
+      console.error(err)
+
+      return false
     }
-  }, [])
+  }
 
   return {
-    user,
+    getUser: getCurrentUser,
+    setUser: setCurrentUser,
   }
 }
 

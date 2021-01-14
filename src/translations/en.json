@@ -83,7 +83,7 @@
     "countryField": "Country",
     "recoveryEmailField": "Recovery Email",
     "phoneNumberField": "Phone Number",
-    "urlUserNameField5": "URL Username",
+    "urlUserNameField": "URL Username",
     "occupationField": "Occupation",
     "subscriptionPriceField": "Subscription price / per Month"
   },
