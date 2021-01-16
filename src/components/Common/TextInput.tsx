@@ -55,7 +55,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((props, ref
             if (props.onFocus) props.onFocus(e)
           }}
           id={id}
-          required={required}
           {...rest}
         />
 
@@ -63,12 +62,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((props, ref
           <svg className={`form-input-icon icon-${iconName}`}>
             <use xlinkHref={`#svg-${iconName}`} />
           </svg>
-        )}
-
-        {required && showRequired && (
-          <p className="inputErrorFieldText">
-            <FontAwesomeIcon icon="exclamation-triangle" /> {placeholder} field is required
-          </p>
         )}
 
         {errorMessage && (

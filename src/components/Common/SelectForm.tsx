@@ -21,7 +21,7 @@ const SelectForm = React.forwardRef<HTMLSelectElement, SelectFormProps>((props, 
     if (!value || value === '') {
       options.unshift({ value: '', name: 'Select option' })
     }
-  }, [options])
+  }, [options, value])
 
   return (
     <>

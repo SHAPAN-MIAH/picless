@@ -1,8 +1,11 @@
 import React, { FunctionComponent, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import * as Yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { userSelector } from '../../../redux/User/UserSelectors'
+import useUser from '../../../hooks/useUser'
+
 import { addInterest } from '../../../redux/User/UserThunks'
 
 import FormItem from '../../../components/Common/Form/FormItem'
@@ -11,84 +14,107 @@ import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 
-import { UserType, UserInterestType } from '../../../types/UserType.d'
+import { UserInterestType } from '../../../types/UserType.d'
 
+type FormValues = {
+  name: string
+  description: string
+}
 const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
 
-  const userData: UserType = useSelector(userSelector)
+  const { getUser, updateUser } = useUser()
+
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('User name field is required'),
+    description: Yup.string().max(500).min(1),
+  })
+
+  const { control, handleSubmit, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
 
   const { onAdd } = props
 
-  const [interestName, setInterestName] = useState('')
-  const [interestDescription, setInterestDescription] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const onAddInterest = () => {
-    if (interestName && interestDescription) {
-      const interest: UserInterestType = {
-        userId: userData.id,
-        name: interestName,
-        description: interestDescription,
-      }
 
-      dispatch(addInterest(interest))
-      onAdd()
-    } else {
-      setErrorMessage(t('profileInfo.interest.error.nameOrDescriptionEmpty'))
-    }
+  const onAddInterest = () => {
+    // if (interestName && interestDescription) {
+    //   const interest: UserInterestType = {
+    //     userId: userData.id,
+    //     name: interestName,
+    //     description: interestDescription,
+    //   }
+    //   dispatch(addInterest(interest))
+    //   onAdd()
+    // } else {
+    //   setErrorMessage(t('profileInfo.interest.error.nameOrDescriptionEmpty'))
+    // }
+  }
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data)
   }
 
   return (
     <>
-      <FormRow classNameRow="top-border">
-        <FormRow>
-          <p>{t('profileInfo.interests.newInterest')}</p>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <FormRow classNameRow="top-border">
+          <FormRow>
+            <p>{t('profileInfo.interests.newInterest')}</p>
+          </FormRow>
+          <FormItem>
+            <Controller
+              control={control}
+              as={TextInput}
+              type="text"
+              name="name"
+              defaultValue=""
+              required
+              placeholder={t('profileInfo.interests.addNewTitleInterestField')}
+              classNameFormInput="small active"
+              errorMessage={errors.name?.message}
+            />
+          </FormItem>
         </FormRow>
-        <FormItem>
-          <TextInput
-            type="text"
-            id="tag-line"
-            classNameFormInput="small"
-            name="tag_line"
-            placeholder={t('profileInfo.interests.addNewTitleInterestField')}
-            value={interestName || ''}
-            onChange={(e) => setInterestName(e.target.value)}
-          />
-        </FormItem>
-      </FormRow>
-      <FormRow>
-        <FormItem>
-          <TextArea
-            type="text"
-            id="interest-1"
-            classNameFormInput="small full"
-            name="account_url_username"
-            placeholder={t('profileInfo.interests.addNewDescriptionInterestField')}
-            value={interestDescription || ''}
-            onChange={(e) => setInterestDescription(e.target.value)}
-            maxLength={500}
-          />
-        </FormItem>
-      </FormRow>
-      {errorMessage !== '' && (
         <FormRow>
-          <p style={{ color: 'red' }}>{errorMessage}</p>
+          <FormItem>
+            <Controller
+              control={control}
+              as={TextArea}
+              name="description"
+              defaultValue=""
+              classNameFormInput="small full"
+              placeholder={t('profileInfo.interests.addNewDescriptionInterestField')}
+              errorMessage={errors.description?.message}
+            />
+          </FormItem>
         </FormRow>
-      )}
+        {errorMessage !== '' && (
+          <FormRow>
+            <p style={{ color: 'red' }}>{errorMessage}</p>
+          </FormRow>
+        )}
 
-      <FormRow classNameRow="split">
-        <FormItem>
-          <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`${t('profileInfo.interests.cancelNewInterestButton')}`}
-          </ButtonWithLoader>
-        </FormItem>
-        <FormItem>
-          <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
-            {`+ ${t('profileInfo.interests.addNewInterestButton')}`}
-          </ButtonWithLoader>
-        </FormItem>
-      </FormRow>
+        <FormRow classNameRow="split">
+          <FormItem>
+            <ButtonWithLoader
+              type="submit"
+              className="small white"
+              onClick={() => onAdd()}
+              showLoader={formState.isSubmitting}
+            >
+              {`${t('profileInfo.interests.cancelNewInterestButton')}`}
+            </ButtonWithLoader>
+          </FormItem>
+          <FormItem>
+            <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
+              {`+ ${t('profileInfo.interests.addNewInterestButton')}`}
+            </ButtonWithLoader>
+          </FormItem>
+        </FormRow>
+      </form>
     </>
   )
 }

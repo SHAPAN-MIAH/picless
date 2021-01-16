@@ -12,7 +12,7 @@ const useAuth = () => {
       if (userTokenId) setIsAuthenticated(true)
       else setIsAuthenticated(false)
     })
-  }, [])
+  }, [setIsAuthenticated])
 
   return {
     isAuthenticated,

@@ -60,9 +60,6 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
 
           setIsAuthenticated(true)
 
-          // const token = user.signInUserSession.idToken.jwtToken
-          // const userAuth = { email: username, token }
-
           const remembeDevicerOrNot = {
             onSuccess: (): void => {
               setMessages(`authentication.messages.successfullyLoggedIn`)
@@ -114,7 +111,7 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
   useEffect(() => {
     setValue('username', 'marcelo@lup20.uk')
     setValue('password', 'Nokia2000')
-  }, [])
+  }, [setValue])
 
   return (
     <>

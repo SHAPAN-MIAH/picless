@@ -1,13 +1,25 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 
 interface TextAreaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   classNameFormInput?: string
   limitMessage?: string
+  errorMessage?: string // Used to show messages from react-hook-form
 }
 
-const TextArea = (props: TextAreaProps) => {
-  const { placeholder, id, classNameFormInput, value, onChange, name, limitMessage = 'Max Limit', ...rest } = props
+const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, ref) => {
+  const {
+    placeholder,
+    id,
+    classNameFormInput,
+    value,
+    onChange,
+    name,
+    limitMessage = 'Max Limit',
+    errorMessage,
+    ...rest
+  } = props
 
   const [isFocused, setIsFocused] = useState(false)
   const [qtyCharacters, setQtyCharacters] = useState(0)
@@ -19,14 +31,12 @@ const TextArea = (props: TextAreaProps) => {
   }
 
   return (
-    // <div className={classNames('form-input', classNameFormInput)}>
-    //   <textarea id={id} name={name} placeholder={placeholder} {...rest} />
-    // </div>
     <div className={classNames('form-input small mid-textarea', classNameFormInput, isFocused || value ? 'active' : '')}>
       <label htmlFor={id}>{placeholder}</label>
       <textarea
         id={id}
         name={name}
+        ref={ref}
         value={value || ''}
         onBlur={(e) => {
           setIsFocused(false)
@@ -45,8 +55,14 @@ const TextArea = (props: TextAreaProps) => {
           {`${qtyCharacters}/${rest.maxLength}`}
         </p>
       )}
+
+      {errorMessage && (
+        <p className="inputErrorFieldText">
+          <FontAwesomeIcon icon="exclamation-triangle" /> {errorMessage}
+        </p>
+      )}
     </div>
   )
-}
+})
 
 export default TextArea

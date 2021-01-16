@@ -1,16 +1,27 @@
 import _ from 'lodash'
-import { useContext } from 'react'
+import { useCallback, useContext } from 'react'
+import toast from 'react-hot-toast'
 import UserContext from '../context/UserContext'
 import UserService from '../services/UserService'
 
 import { UserType } from '../types/UserType.d'
 
-type UseUserReturn = { getUser: () => Promise<UserType>; setUser: (userData: UserType) => boolean }
+type UseUserReturn = {
+  getUser: () => Promise<UserType>
+  updateUser: (userData: Partial<UserType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
+}
+type ToastPromiseOptions = { loading: string; success: string; error: string }
+
+const defaultToastOptions = {
+  loading: 'Saving information ...',
+  success: 'The form has been successfully saved',
+  error: 'Error Saving the form',
+}
 
 const useUser = (): UseUserReturn => {
   const { user, setUser } = useContext(UserContext.context)
 
-  const getCurrentUser = (): Promise<UserType> => {
+  const getCurrentUser = useCallback((): Promise<UserType> => {
     const promise = new Promise<UserType>((resolve, reject) => {
       if (_.isEmpty(user)) {
         UserService.getUserProfile()
@@ -28,23 +39,28 @@ const useUser = (): UseUserReturn => {
     })
 
     return promise
-  }
+  }, [setUser, user])
 
-  const setCurrentUser = (userData: UserType): boolean => {
-    try {
-      setUser(userData)
+  const updateUser = useCallback(
+    (userData: Partial<UserType>, toastOptions: ToastPromiseOptions = defaultToastOptions): Promise<boolean> => {
+      return getCurrentUser().then((u: UserType) => {
+        const updated = { ...u, ...userData }
 
-      return true
-    } catch (err) {
-      console.error(err)
+        const toastPromise = UserService.updateUserProfile(updated)
 
-      return false
-    }
-  }
+        return toast.promise(toastPromise, toastOptions).then((newUserData: UserType) => {
+          setUser(newUserData)
+
+          return true
+        })
+      })
+    },
+    [setUser, getCurrentUser]
+  )
 
   return {
     getUser: getCurrentUser,
-    setUser: setCurrentUser,
+    updateUser,
   }
 }
 

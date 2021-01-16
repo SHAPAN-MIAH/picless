@@ -12,7 +12,7 @@ const MovementList: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     getMovements()
-  }, [])
+  }, [getMovements])
 
   if (loading) {
     return (

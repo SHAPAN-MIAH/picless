@@ -10,13 +10,13 @@ interface DatePickerFormProps extends ReactDatePickerProps {
   iconName?: string
 }
 
-const DatePickerForm = (props: DatePickerFormProps) => {
+const DatePickerForm = React.forwardRef<HTMLInputElement, DatePickerFormProps>((props, ref) => {
   const { classNameFormInput, id, placeholderText, iconName, customInputRef, ...rest } = props
 
   const InputText: React.FunctionComponent<any> = ({ value, onClick }) => (
     <div className={classNames('form-input', classNameFormInput, value ? 'active' : '')}>
       <label htmlFor={id}>{placeholderText}</label>
-      <input type="text" defaultValue={value} onClick={onClick} />
+      <input type="text" ref={ref} defaultValue={value} onClick={onClick} />
       {iconName && (
         <svg className={`form-input-icon icon-${iconName}`}>
           <use xlinkHref={`#svg-${iconName}`} />
@@ -35,6 +35,6 @@ const DatePickerForm = (props: DatePickerFormProps) => {
       {...rest}
     />
   )
-}
+})
 
 export default DatePickerForm

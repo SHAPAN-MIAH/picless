@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -8,8 +8,6 @@ import { useTranslation } from 'react-i18next'
 
 import useUser from '../../hooks/useUser'
 
-import UserService from 'services/UserService'
-
 import plans from '../../constants/plans.json'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
@@ -18,7 +16,6 @@ import TextInput from '../../components/Common/TextInput'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
 import SelectForm, { SelectOptionsType } from '../../components/Common/SelectForm'
-import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
 import { UserType } from '../../types/UserType.d'
@@ -32,7 +29,7 @@ type FormValues = {
   phoneNumber: string
   planId: string
 }
-type formFieldsNames = 'fullName' | 'email' | 'userName' | 'recoveryEmail' | 'phoneNumber' | 'planId'
+type formFieldsNames = keyof FormValues
 const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'recoveryEmail', 'phoneNumber', 'planId']
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -40,12 +37,12 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const AccountInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { getUser, setUser } = useUser()
+  const { getUser, updateUser } = useUser()
 
   // Validations Fields
   const validationSchema = Yup.object().shape({
     fullName: Yup.string(),
-    email: Yup.string().email('Please enter an valid email'),
+    email: Yup.string().email('Please enter an valid email').required('Account email field is required'),
     userName: Yup.string().required('User name field is required'),
     emailRecovery: Yup.string().email('Please enter an valid email').nullable(),
     phoneNumber: Yup.string().matches(phoneRegExp, { message: 'Phone number is not valid', excludeEmptyString: true }),
@@ -55,9 +52,6 @@ const AccountInfo: FunctionComponent<{}> = () => {
   const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
-
-  const [generalError, setGeneralError] = useState('')
-  const [messages, setMessages] = useState('')
 
   const plansList = (): SelectOptionsType[] => {
     return plans.map((data: PlansType) => {
@@ -74,31 +68,27 @@ const AccountInfo: FunctionComponent<{}> = () => {
         })
       })
       .catch((err) => {
-        setGeneralError(err.message)
+        toast.error(err.message)
       })
-  }, [])
+  }, [getUser, setValue])
 
   const saveData = (data: FormValues) => {
-    console.log(data)
+    const formData: any[] = []
+    formFields.forEach((field: string) => {
+      const dataAttr = _.get(data, field)
 
-    return getUser().then((user) => {
-      formFields.forEach((field: string) => {
-        const dataAttr = _.get(data, field)
-        _.set(user, field, dataAttr)
-      })
-
-      const toastPromise = UserService.updateUserProfile(user)
-
-      return toast
-        .promise(toastPromise, {
-          loading: 'Saving account information ...',
-          success: 'The account information has been successfully saved',
-          error: 'Error Saving the account information',
-        })
-        .then((newUserData: UserType) => {
-          setUser(newUserData)
-        })
+      formData.push(dataAttr)
     })
+
+    const dataToSubmit: Partial<UserType> = _.zipObject(formFields, formData)
+
+    const toastOptions = {
+      loading: 'Saving account information ...',
+      success: 'The account information has been successfully saved',
+      error: 'Error Saving the account information',
+    }
+
+    return updateUser(dataToSubmit, toastOptions)
   }
 
   return (
@@ -142,6 +132,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           type="text"
                           name="email"
                           defaultValue=""
+                          required
                           placeholder={t('accountInfo.accountEmailField')}
                           classNameFormInput="small active"
                           errorMessage={errors.email?.message}
@@ -157,6 +148,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           type="text"
                           name="userName"
                           defaultValue=""
+                          required
                           placeholder={t('accountInfo.urlUserNameField')}
                           classNameFormInput="small active"
                           errorMessage={errors.userName?.message}
@@ -200,11 +192,6 @@ const AccountInfo: FunctionComponent<{}> = () => {
                           options={plansList()}
                         />
                       </FormItem>
-                    </FormRow>
-
-                    <FormRow>
-                      {generalError && <Alert alertType="DANGER" message={t(generalError)} style={{ width: '100%' }} />}
-                      {messages && <Alert alertType="PRIMARY" message={t(messages)} style={{ width: '100%' }} />}
                     </FormRow>
 
                     <FormRow classNameRow="split">

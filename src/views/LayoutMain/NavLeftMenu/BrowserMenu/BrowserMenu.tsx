@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -8,14 +9,13 @@ import useMenu from '../../../../hooks/useMenu'
 import { userSelector } from '../../../../redux/User/UserSelectors'
 import UserAvatar from '../../../../components/UserAvatar'
 import { UserType } from '../../../../types/UserType.d'
-import classNames from 'classnames'
 
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const userData: UserType = useSelector(userSelector)
 
-  const { showMenu, setShowMenu } = useMenu()
+  const { showMenu } = useMenu()
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
   const [imageProfile, setImageProfile] = useState(userData.profilePicture)

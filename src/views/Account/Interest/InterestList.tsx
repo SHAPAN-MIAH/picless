@@ -1,10 +1,8 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-
 import _ from 'lodash'
 
-import { userInterestSelector } from '../../../redux/User/UserSelectors'
+import useUser from '../../../hooks/useUser'
 
 import * as Utils from '../../../utils/Functions'
 
@@ -14,7 +12,7 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import AddInterest from './AddInterest'
 
-import { UserInterestType } from '../../../types/UserType.d'
+import { UserInterestType, UserType } from '../../../types/UserType.d'
 
 interface InterestProps {
   item: UserInterestType
@@ -41,9 +39,17 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
 const InterestList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const interestList: UserInterestType[] = useSelector(userInterestSelector)
+  const { getUser } = useUser()
+
+  const [interestList, setInterestList] = useState<UserInterestType[]>([])
 
   const [addInterest, setAddInterest] = useState(false)
+
+  useEffect(() => {
+    getUser().then((user: UserType) => {
+      setInterestList(user.userInterest || [])
+    })
+  }, [getUser, setInterestList])
 
   const renderContent = () => {
     if (interestList && interestList.length > 0) {

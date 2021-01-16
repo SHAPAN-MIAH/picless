@@ -34,7 +34,7 @@ const UserProfile: FunctionComponent<{}> = () => {
         }
       }
     })
-  }, [username])
+  }, [username, history])
 
   const changeTab = (tab: TabNamesType) => {
     setSelectedTab(tab)

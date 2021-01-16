@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCheck,
