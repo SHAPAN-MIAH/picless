@@ -45,7 +45,8 @@
         "reactjs-popup": "^2.0.4",
         "redux-persist": "^6.0.0",
         "reselect": "^4.0.0",
-        "typescript": "^3.8.3"
+        "typescript": "^3.8.3",
+        "webrtc-adapter": "^7.7.0"
     },
     "scripts": {
         "start": "react-scripts start",
