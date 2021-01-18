@@ -1,7 +1,9 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import useWallet from '../../hooks/useWallet'
+
+import securionpay
 
 import FormItem from '../../components/Common/Form/FormItem'
 
@@ -16,6 +18,30 @@ const AddFounds: FunctionComponent<{}> = () => {
   const { addFounds, updateBalance } = useWallet()
   const history = useHistory()
 
+  useEffect(() => {
+
+    const script = document.createElement('script')
+    script.setAttribute('id', 'mainScriptSecurionPay')
+    script.src = 'https://securionpay.com/js/securionpay.js'
+    script.async = true
+    document.body.appendChild(script)
+
+
+    /*
+        Securionpay.setPublicKey("pk_test_5J20kvAzvHhqhhPHK2vl6Tk9");
+
+        SecurionPay.verifyThreeDSecure({
+                    amount: 5000,
+                    currency: 'USD',
+                    card: 'card_px9I2RPch9mkJs2YDkpHT331' //cardid
+                }, verifyThreeDSecureCallback);
+    */ 
+
+
+  }, [])
+
+
+
   const onAddAmount = (amount: number) => {
     if (amount > 0) setCurrentAmount(currentAmount + amount)
     else if (amount < 0) alert('sdfds')
@@ -23,7 +49,7 @@ const AddFounds: FunctionComponent<{}> = () => {
   }
 
   const addCredits = () => {
-    addFounds(currentAmount, 'Add founds to wallet')
+    addFounds(currentAmount, 'Add founds to wallet', '')
     updateBalance()
     history.push('/wallet/overview')
   }
