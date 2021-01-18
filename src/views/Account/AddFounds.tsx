@@ -2,45 +2,27 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import useWallet from '../../hooks/useWallet'
-
-import securionpay
-
 import FormItem from '../../components/Common/Form/FormItem'
 
 import FormRow from '../../components/Common/Form/FormRow'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
-import TextInput from 'components/Common/TextInput'
+import TextInput from '../../components/Common/TextInput'
 
 const AddFounds: FunctionComponent<{}> = () => {
   const [currentAmount, setCurrentAmount] = useState<number>(0)
+  const SecurionPay = window.Securionpay
 
   const { addFounds, updateBalance } = useWallet()
   const history = useHistory()
 
   useEffect(() => {
-
     const script = document.createElement('script')
     script.setAttribute('id', 'mainScriptSecurionPay')
     script.src = 'https://securionpay.com/js/securionpay.js'
     script.async = true
     document.body.appendChild(script)
-
-
-    /*
-        Securionpay.setPublicKey("pk_test_5J20kvAzvHhqhhPHK2vl6Tk9");
-
-        SecurionPay.verifyThreeDSecure({
-                    amount: 5000,
-                    currency: 'USD',
-                    card: 'card_px9I2RPch9mkJs2YDkpHT331' //cardid
-                }, verifyThreeDSecureCallback);
-    */ 
-
-
   }, [])
-
-
 
   const onAddAmount = (amount: number) => {
     if (amount > 0) setCurrentAmount(currentAmount + amount)
@@ -49,9 +31,20 @@ const AddFounds: FunctionComponent<{}> = () => {
   }
 
   const addCredits = () => {
+    SecurionPay.setPublicKey('pk_test_5J20kvAzvHhqhhPHK2vl6Tk9')
+
+    SecurionPay.verifyThreeDSecure(
+      {
+        amount: 5000,
+        currency: 'USD',
+        card: 'card_px9I2RPch9mkJs2YDkpHT331', // cardid
+      },
+      (token: any) => {
+        alert(JSON.stringify(token))
+      }
+    )
     addFounds(currentAmount, 'Add founds to wallet', '')
     updateBalance()
-    history.push('/wallet/overview')
   }
 
   return (
