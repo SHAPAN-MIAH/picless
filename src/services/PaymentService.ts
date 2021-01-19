@@ -159,6 +159,7 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
   bodyData.append('amount', amount.toString())
   bodyData.append('currency', currency)
   bodyData.append('description', description)
+  bodyData.append('tokenId', token)
 
   const requestOptions: RequestInit = {
     method: 'POST',

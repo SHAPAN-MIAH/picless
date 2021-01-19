@@ -8,9 +8,11 @@ import FormRow from '../../components/Common/Form/FormRow'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
 import TextInput from '../../components/Common/TextInput'
+import PaymentService from '../../services/PaymentService'
 
 const AddFounds: FunctionComponent<{}> = () => {
   const [currentAmount, setCurrentAmount] = useState<number>(0)
+  const [newAmount, setNewAmount] = useState<number>(0)
   const SecurionPay = window.Securionpay
 
   const { addFounds, updateBalance } = useWallet()
@@ -25,26 +27,35 @@ const AddFounds: FunctionComponent<{}> = () => {
   }, [])
 
   const onAddAmount = (amount: number) => {
-    if (amount > 0) setCurrentAmount(currentAmount + amount)
-    else if (amount < 0) alert('sdfds')
+    if (amount > 0) {
+      setCurrentAmount(currentAmount + amount)
+      setNewAmount(amount * 100)
+    } else if (amount < 0) alert('sdfds')
     else setCurrentAmount(amount)
   }
 
   const addCredits = () => {
-    SecurionPay.setPublicKey('pk_test_5J20kvAzvHhqhhPHK2vl6Tk9')
+    PaymentService.getDefaultCard().then((data: any) => {
+      if (data.code === '0') {
+        SecurionPay.setPublicKey('pk_test_5J20kvAzvHhqhhPHK2vl6Tk9')
 
-    SecurionPay.verifyThreeDSecure(
-      {
-        amount: 5000,
-        currency: 'USD',
-        card: 'card_px9I2RPch9mkJs2YDkpHT331', // cardid
-      },
-      (token: any) => {
-        alert(JSON.stringify(token))
+        SecurionPay.verifyThreeDSecure(
+          {
+            amount: newAmount,
+            currency: 'USD',
+            card: data.defaultCardId,
+          },
+          (token: any) => {
+            if (token.error) {
+              alert(JSON.stringify(token))
+            } else {
+              addFounds(newAmount, 'Add founds to wallet', token.id)
+              updateBalance()
+            }
+          }
+        )
       }
-    )
-    addFounds(currentAmount, 'Add founds to wallet', '')
-    updateBalance()
+    })
   }
 
   return (
