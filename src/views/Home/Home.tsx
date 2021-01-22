@@ -16,6 +16,10 @@ const Home: FunctionComponent<{}> = () => {
   useEffect(() => {
     PostService.getPosts().then((data: PostType[]) => {
       setPosts(_.reverse(data))
+
+      if (window.tpl) {
+        window.tpl.load(['user-avatar'])
+      }
     })
   }, [])
 

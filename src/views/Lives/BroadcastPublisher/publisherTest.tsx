@@ -1,20 +1,21 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react'
 import WebRTCAdaptor from '../../../assets/js/webrtc_adaptor'
+import { SoundMeter } from '../../../assets/js/soundmeter'
 import LayoutMain from '../../LayoutMain/LayoutMain'
 
-const streamingName = 'lupanarStream'
+const streamingName = 'lupanarStreamc'
 const bitrate = 900 // 900 ~ 2500
 const maxVideoBitrateKbps = bitrate
 let webRTCAdaptor: any = {}
 let autoRepublishIntervalJob: any
-const rtmpForward = true
+const rtmpForward = false
 
 const appName = 'WebRTCAppEE'
 
 const path = `antmedia.lup20.uk/${appName}/websocket?rtmpForward=${rtmpForward}`
 const websocketURL = `wss://${path}`
 const mediaConstraints = { video: true, audio: true }
-const sdpConstraints = { OfferToReceiveAudio: true, OfferToReceiveVideo: true }
+const sdpConstraints = { OfferToReceiveAudio: false, OfferToReceiveVideo: false }
 const pc_config = {
   iceServers: [
     {
@@ -32,8 +33,8 @@ const PublisherTest: FunctionComponent<{}> = () => {
       mediaConstraints,
       peerconnection_config: pc_config,
       sdp_constraints: sdpConstraints,
-      localVideoId: 'localVideo',
-      debug: true,
+      localVideoId: videoRef,
+      debug: false,
       bandwidth: maxVideoBitrateKbps,
       callback: (info: any, obj: any) => {
         console.log(info)
@@ -41,6 +42,7 @@ const PublisherTest: FunctionComponent<{}> = () => {
         if (info === 'initialized') {
           if (true) {
             webRTCAdaptor.publish(streamingName, '')
+            enableAudioLevel()
           }
         } else if (info === 'publish_started') {
           if (autoRepublishIntervalJob == null) {
@@ -48,6 +50,8 @@ const PublisherTest: FunctionComponent<{}> = () => {
               checkAndRepublishIfRequired()
             }, 3000)
           }
+        } else if (info === 'refreshConnection') {
+          checkAndRepublishIfRequired()
         }
       },
       callbackError: (error: any, message: string) => {
@@ -66,6 +70,20 @@ const PublisherTest: FunctionComponent<{}> = () => {
       webRTCAdaptor.closeWebSocket()
       initWebRTCAdaptor()
     }
+  }
+
+  function enableAudioLevel() {
+    // Put variables in global scope to make them available to the
+    // browser console.
+    window.stream = webRTCAdaptor.localStream
+    window.soundMeter = new SoundMeter(webRTCAdaptor.audioContext)
+    // eslint-disable-next-line prefer-destructuring
+    const soundMeter = window.soundMeter
+
+    soundMeter.connectToSource(window.stream, (e: any) => {
+      console.log('SOUNDMETER')
+      console.log(e)
+    })
   }
 
   const startCamera = async () => {
@@ -96,7 +114,7 @@ const PublisherTest: FunctionComponent<{}> = () => {
                   <button type="button" className="btn btn-danger" onClick={stopBroadcasting}>
                     Stop broadcast
                   </button>
-                  <video id="localVideo" ref={videoRef} autoPlay controls muted playsInline />
+                  <video id="localVideo" ref={videoRef} autoPlay controls playsInline />
                 </div>
               </div>
               <div className="grid-column"> </div>

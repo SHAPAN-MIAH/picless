@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
 import SendATip from '../../../UserProfile/Header/SendATip/SendATip'
-import Reactions from './Reactions'
 
 const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
   const { user } = props
@@ -15,10 +14,8 @@ const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
               <use xlinkHref="#svg-thumbs-up" />
             </svg>
 
-            <p className="post-option-text">React!</p>
+            <p className="post-option-text">Like</p>
           </div>
-
-          <Reactions />
         </div>
 
         <div className="post-option">
