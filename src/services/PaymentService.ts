@@ -152,13 +152,14 @@ const getMovements = async (): Promise<ServiceMovementType> => {
   return body
 }
 
-const addCreditToWallet = async (amount: number, currency: string, description: string): Promise<any> => {
+const addCreditToWallet = async (amount: number, currency: string, description: string, token: string): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('amount', amount.toString())
   bodyData.append('currency', currency)
   bodyData.append('description', description)
+  bodyData.append('tokenId', token)
 
   const requestOptions: RequestInit = {
     method: 'POST',

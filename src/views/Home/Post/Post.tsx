@@ -7,6 +7,7 @@ import PictureCollage from './Content/PictureCollage'
 
 import { PostType, SourceType } from '../../../types/PostType.d'
 import VideoCollage from './Content/VideoCollage'
+import PictureGallery from './Content/PictureGallery'
 
 const Post: FunctionComponent<{ data: PostType }> = (props) => {
   const { data } = props
@@ -25,13 +26,13 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
             <p className="widget-box-status-text">{data.content}</p>
           </div>
 
-          {listImages && listImages.length > 0 && <PictureCollage sources={listImages} />}
+          {listImages && listImages.length > 0 && <PictureGallery sources={listImages} />}
           {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
 
           <div className="widget-box-status-content">
             {data.tags && <TagList tags={data.tags || []} />}
 
-            <div className="content-actions">
+            <div className="content-actions" style={{ flexDirection: 'row-reverse' }}>
               <div className="content-action">
                 <div className="meta-line">
                   <p className="meta-line-link">2 Comments</p>

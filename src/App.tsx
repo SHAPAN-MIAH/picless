@@ -44,6 +44,7 @@ import AddCard from './views/Account/Card/AddCard'
 import Subscriptions from './views/Account/Subscriptions/Subscriptions'
 import AddFounds from './views/Account/AddFounds'
 import PublisherTest from './views/Lives/BroadcastPublisher/publisherTest'
+import Viewer from './views/Lives/BroadcastViewer/Viewer'
 
 library.add(
   faPlus,
@@ -68,6 +69,9 @@ library.add(
 declare global {
   interface Window {
     tpl: { core: any; plugin: any; load: (modulesNames?: string[]) => void }
+    stream: any
+    soundMeter: any
+    Securionpay: any
   }
 }
 
@@ -105,6 +109,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
 
           <ProtectedRoute {...routerProps} exact path="/live/test/publisher" component={PublisherTest} />
+          <ProtectedRoute {...routerProps} exact path="/live/test/viewer" component={Viewer} />
 
           <Route exact path="/">
             <LayoutUnauthorize />
