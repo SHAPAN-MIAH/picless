@@ -24,7 +24,7 @@ const Header: FunctionComponent<{}> = () => {
               </svg>
             </div>
 
-            <h1 className="header-brand-text">Lupanar</h1>
+            <h1 className="header-brand-text">{process.env.REACT_APP_WEBSITE_NAME}</h1>
           </div>
         </div>
 

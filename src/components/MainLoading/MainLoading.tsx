@@ -11,7 +11,7 @@ const MainLoader: FunctionComponent<{}> = () => {
         </div>
 
         <div className="page-loader-info">
-          <p className="page-loader-info-title">Lupanar</p>
+          <p className="page-loader-info-title">{process.env.REACT_APP_WEBSITE_NAME}</p>
 
           <p className="page-loader-info-text">Loading...</p>
         </div>

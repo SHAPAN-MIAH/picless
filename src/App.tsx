@@ -15,6 +15,10 @@ import {
   faExclamationTriangle,
   faStar,
   faCreditCard,
+  faSatelliteDish,
+  faExpand,
+  faSyncAlt,
+  faStopCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
@@ -57,6 +61,10 @@ library.add(
   faHeart,
   faRedo,
   faExclamationTriangle,
+  faSatelliteDish,
+  faExpand,
+  faSyncAlt,
+  faStopCircle,
   faCcVisa,
   faCcMastercard,
   faCcAmex,

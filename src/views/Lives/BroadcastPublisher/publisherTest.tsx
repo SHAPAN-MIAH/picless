@@ -114,7 +114,6 @@ const PublisherTest: FunctionComponent<{}> = () => {
                   <button type="button" className="btn btn-danger" onClick={stopBroadcasting}>
                     Stop broadcast
                   </button>
-                  <video id="localVideo" ref={videoRef} autoPlay controls playsInline />
                 </div>
               </div>
               <div className="grid-column"> </div>

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import DatePickerForm from '../../../../components/Common/DatePickerForm/DatePickerForm'
+import DatePickerForm from '../../../../../components/Common/DatePickerForm/DatePickerForm'
 
 import styles from './ScheduleMessage.module.css'
 
