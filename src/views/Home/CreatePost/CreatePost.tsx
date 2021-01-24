@@ -7,7 +7,7 @@ export type TabNamesType = 'STATUS' | 'LIVE' | 'POLL'
 
 const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => void }> = (props) => {
   const { selectedTab } = props
-  const [currentTab, setCurrentTab] = useState<TabNamesType>('LIVE')
+  const [currentTab, setCurrentTab] = useState<TabNamesType>('STATUS')
 
   const changeTab = (tabName: TabNamesType) => {
     setCurrentTab(tabName)

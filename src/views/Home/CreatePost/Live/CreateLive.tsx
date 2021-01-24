@@ -1,8 +1,5 @@
-import React, { FunctionComponent, useState, useRef, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import WebRTCAdaptor from '../../../../assets/js/webrtc_adaptor'
-import { SoundMeter } from '../../../../assets/js/soundmeter'
 
 import TextInput from '../../../../components/Common/TextInput'
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
@@ -10,9 +7,6 @@ import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import useLive from '../../../../hooks/useLive'
-
-type LiveStatusType = 'WAITING' | 'ON_AIR'
-type AvailableDeviceType = { deviceId: string; selected: boolean }
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
