@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FunctionComponent } from 'react'
 import classNames from 'classnames'
 
@@ -6,7 +7,7 @@ interface SectionMenuProps {
   selectedTab: TabNamesType
 }
 
-export type TabNamesType = 'ABOUT' | 'FRIENDS' | 'PHOTOS' | 'VIDEOS' | 'POSTS'
+export type TabNamesType = 'ABOUT' | 'FRIENDS' | 'PHOTOS' | 'VIDEOS' | 'POSTS' | 'LIVE'
 
 const SectionMenu: FunctionComponent<SectionMenuProps> = (props) => {
   const { selectedTab, onChangeTab } = props
@@ -16,19 +17,6 @@ const SectionMenu: FunctionComponent<SectionMenuProps> = (props) => {
     <>
       <nav className="section-navigation">
         <div id="section-navigation-slider" className="section-menu">
-          <div
-            className={classNames(sectionMenuClasses, selectedTab === 'ABOUT' ? 'active' : '')}
-            onClick={() => {
-              onChangeTab('ABOUT')
-            }}
-          >
-            <svg className="section-menu-item-icon icon-profile">
-              <use xlinkHref="#svg-profile" />
-            </svg>
-
-            <p className="section-menu-item-text">About</p>
-          </div>
-
           <div
             className={classNames(sectionMenuClasses, selectedTab === 'POSTS' ? 'active' : '')}
             onClick={() => {
@@ -66,6 +54,32 @@ const SectionMenu: FunctionComponent<SectionMenuProps> = (props) => {
             </svg>
 
             <p className="section-menu-item-text">Videos</p>
+          </div>
+
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'LIVE' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('LIVE')
+            }}
+          >
+            <svg className="section-menu-item-icon icon-streams">
+              <use xlinkHref="#svg-streams" />
+            </svg>
+
+            <p className="section-menu-item-text">Live</p>
+          </div>
+
+          <div
+            className={classNames(sectionMenuClasses, selectedTab === 'ABOUT' ? 'active' : '')}
+            onClick={() => {
+              onChangeTab('ABOUT')
+            }}
+          >
+            <svg className="section-menu-item-icon icon-profile">
+              <use xlinkHref="#svg-profile" />
+            </svg>
+
+            <p className="section-menu-item-text">About</p>
           </div>
         </div>
 

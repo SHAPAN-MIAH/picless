@@ -8,6 +8,7 @@ import UserHeader from './Header/UserHeader'
 import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
 import { UserProfileType, ServiceUserProfileType } from '../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
+import LiveTab from './SectionTab/LiveTab'
 
 const UserProfile: FunctionComponent<{}> = () => {
   const history = useHistory()
@@ -63,11 +64,13 @@ const UserProfile: FunctionComponent<{}> = () => {
                 </div>
               )}
 
+              {selectedTab === 'LIVE' && <LiveTab />}
+
               {selectedTab === 'PHOTOS' && (
                 <div className="grid">
                   <div className="grid-column">
                     <div className="widget-box">
-                      <h3>PHOTOS</h3>{' '}
+                      <h3>PHOTOS</h3>
                     </div>
                   </div>
                 </div>

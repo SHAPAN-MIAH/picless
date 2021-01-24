@@ -17,50 +17,60 @@ const AboutTab: FunctionComponent<AboutTabProps> = (props) => {
 
   return (
     <>
-      <div className="grid">
+      <div className="grid grid-3-9 mobile-prefer-content">
         <div className="grid-column">
           <div className="widget-box">
-            <p className="widget-box-title">About me</p>
+            <p className="widget-box-title">About Me</p>
 
             <div className="widget-box-content">
-              <div className="information-block-list">
-                <div className="information-block">
-                  <h6 className="information-block-title">Name</h6>
-                  <p className="information-block-text">{user.fullName}</p>
+              <p className="paragraph">{user.profileDescription}</p>
+
+              <div className="information-line-list">
+                <div className="information-line">
+                  <p className="information-line-title">Name</p>
+
+                  <p className="information-line-text">{user.fullName}</p>
                 </div>
 
-                <div className="information-block">
-                  <p className="information-block-title">Description</p>
-                  <p className="information-block-text">{user.profileDescription}</p>
+                <div className="information-line">
+                  <p className="information-line-title">Joined</p>
+
+                  <p className="information-line-text">{user.registrationDate}</p>
                 </div>
 
-                {user.birthDate && (
-                  <div className="information-block">
-                    <p className="information-block-title">DOB</p>
-                    <p className="information-block-text">{moment(user.birthDate).format('LL')}</p>
-                  </div>
-                )}
+                <div className="information-line">
+                  <p className="information-line-title">City</p>
 
-                <div className="information-block">
-                  <p className="information-block-title">Country</p>
-                  <p className="information-block-text">{user.countryName}</p>
+                  <p className="information-line-text">{user.cityName}</p>
                 </div>
 
-                <div className="information-block">
-                  <p className="information-block-title">City</p>
-                  <p className="information-block-text">{user.cityName}</p>
+                <div className="information-line">
+                  <p className="information-line-title">Country</p>
+
+                  <p className="information-line-text">{user.countryName}</p>
+                </div>
+
+                <div className="information-line">
+                  <p className="information-line-title">Age</p>
+
+                  <p className="information-line-text">[ADDD] {user.birthDate}</p>
                 </div>
 
                 {user.occupation && (
-                  <div className="information-block">
-                    <p className="information-block-title">Occupation</p>
-                    <p className="information-block-text">{user.occupation?.name}</p>
+                  <div className="information-line">
+                    <p className="information-line-title">Occupation</p>
+
+                    <p className="information-line-text">{user.occupation?.name}</p>
                   </div>
                 )}
               </div>
             </div>
           </div>
+        </div>
 
+        {/* sdfsdfds */}
+
+        <div className="grid-column">
           <div className="widget-box">
             <p className="widget-box-title">Interests</p>
 
