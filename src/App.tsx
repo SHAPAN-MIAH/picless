@@ -1,26 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faCheck,
-  faPlus,
-  faTimes,
-  faDollarSign,
-  faShareAlt,
-  faComments,
-  faLock,
-  faHeart,
-  faRedo,
-  faExclamationTriangle,
-  faStar,
-  faCreditCard,
-  faSatelliteDish,
-  faExpand,
-  faSyncAlt,
-  faStopCircle,
-} from '@fortawesome/free-solid-svg-icons'
-import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
 import ProtectedRoute, { ProtectedRouteProps } from './routes/ProtectedRoute'
 
@@ -36,11 +16,6 @@ import Messages from './views/Messages/Messages'
 import UserSettings from './views/Account/UserSettings'
 import Home from './views/Home/Home'
 
-import './assets/css/vendor/bootstrap.min.css'
-import './assets/css/vendor/simplebar.css'
-import './assets/css/vendor/tiny-slider.css'
-import './assets/css/styles.min.css'
-import './App.css'
 import WalletOverview from './views/Account/WalletOverview'
 import Movements from './views/Account/Movements'
 import PaymentMethods from './views/Account/PaymentMethods'
@@ -50,29 +25,15 @@ import AddFounds from './views/Account/AddFounds'
 import PublisherTest from './views/Lives/BroadcastPublisher/publisherTest'
 import Viewer from './views/Lives/BroadcastViewer/Viewer'
 
-library.add(
-  faPlus,
-  faTimes,
-  faCheck,
-  faDollarSign,
-  faShareAlt,
-  faComments,
-  faLock,
-  faHeart,
-  faRedo,
-  faExclamationTriangle,
-  faSatelliteDish,
-  faExpand,
-  faSyncAlt,
-  faStopCircle,
-  faCcVisa,
-  faCcMastercard,
-  faCcAmex,
-  faCcDinersClub,
-  faCcJcb,
-  faStar,
-  faCreditCard
-)
+import './utils/Icons'
+
+import './assets/css/vendor/bootstrap.min.css'
+import './assets/css/vendor/simplebar.css'
+import './assets/css/vendor/tiny-slider.css'
+import './assets/css/styles.min.css'
+import './App.css'
+
+import PublisherTest2 from './views/Lives/BroadcastPublisher/publisherTest2'
 
 declare global {
   interface Window {
@@ -117,6 +78,7 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
 
           <ProtectedRoute {...routerProps} exact path="/live/test/publisher" component={PublisherTest} />
+          <ProtectedRoute {...routerProps} exact path="/live/test/pub" component={PublisherTest2} />
           <ProtectedRoute {...routerProps} exact path="/live/test/viewer" component={Viewer} />
 
           <Route exact path="/">
