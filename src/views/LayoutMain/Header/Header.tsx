@@ -25,27 +25,23 @@ const Header: FunctionComponent<{}> = () => {
             </div>
 
             <h1 className="header-brand-text">{process.env.REACT_APP_WEBSITE_NAME}</h1>
-          </div>
-        </div>
 
-        <div className="header-actions">
-          <div className="sidemenu-trigger" onClick={handleMenu}>
-            <svg className="icon-grid">
-              <use xlinkHref="#svg-grid" />
-            </svg>
-          </div>
+            <div className="sidemenu-trigger" onClick={handleMenu}>
+              <svg className="icon-grid">
+                <use xlinkHref="#svg-grid" />
+              </svg>
+            </div>
 
-          <div className="mobilemenu-trigger" onClick={handleMenu}>
-            <div className="burger-icon inverted">
-              <div className="burger-icon-bar" />
+            <div className="mobilemenu-trigger" onClick={handleMenu}>
+              <div className="burger-icon inverted">
+                <div className="burger-icon-bar" />
 
-              <div className="burger-icon-bar" />
+                <div className="burger-icon-bar" />
 
-              <div className="burger-icon-bar" />
+                <div className="burger-icon-bar" />
+              </div>
             </div>
           </div>
-
-          <NavigationHeader />
         </div>
 
         <SearchBar />
