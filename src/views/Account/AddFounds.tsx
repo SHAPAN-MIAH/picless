@@ -12,7 +12,6 @@ import PaymentService from '../../services/PaymentService'
 
 const AddFounds: FunctionComponent<{}> = () => {
   const [currentAmount, setCurrentAmount] = useState<number>(0)
-  const [newAmount, setNewAmount] = useState<number>(0)
   const SecurionPay = window.Securionpay
 
   const { addFounds, updateBalance } = useWallet()
@@ -28,16 +27,19 @@ const AddFounds: FunctionComponent<{}> = () => {
 
   const onAddAmount = (amount: number) => {
     if (amount > 0) {
-      setCurrentAmount(currentAmount + amount)
-      setNewAmount(amount * 100)
-    } else if (amount < 0) alert('sdfds')
+      const newValue = currentAmount + amount
+
+      setCurrentAmount(newValue)
+    } else if (amount < 0) alert('Error')
     else setCurrentAmount(amount)
   }
 
   const addCredits = () => {
     PaymentService.getDefaultCard().then((data: any) => {
       if (data.code === '0') {
-        SecurionPay.setPublicKey('pk_test_5J20kvAzvHhqhhPHK2vl6Tk9')
+        const newAmount = currentAmount * 100
+
+        SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
 
         SecurionPay.verifyThreeDSecure(
           {
