@@ -18,9 +18,11 @@ import {
   faStopCircle,
   faChevronCircleLeft,
   faChevronCircleRight,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
+// COMMON ICONS
 library.add(
   faPlus,
   faTimes,
@@ -38,11 +40,8 @@ library.add(
   faStopCircle,
   faChevronCircleLeft,
   faChevronCircleRight,
-  faCcVisa,
-  faCcMastercard,
-  faCcAmex,
-  faCcDinersClub,
-  faCcJcb,
-  faStar,
-  faCreditCard
+  faBars
 )
+
+// BRAND ICONS
+library.add(faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb, faStar, faCreditCard)
