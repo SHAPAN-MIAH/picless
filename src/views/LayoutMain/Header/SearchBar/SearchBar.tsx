@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useCallback, Suspense } from 'react'
+import Loader from 'react-loader-spinner'
 import classNames from 'classnames'
 
 import useSearch from '../../../../hooks/useSearch'
@@ -36,7 +37,11 @@ const SearchBar: FunctionComponent<{}> = () => {
       )
     }
 
-    return <h5>No results</h5>
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <h5>No results</h5>
+      </div>
+    )
   }, [items])
 
   return (
@@ -67,7 +72,11 @@ const SearchBar: FunctionComponent<{}> = () => {
         </div>
 
         <div className="dropdown-box padding-bottom-small header-search-dropdown">
-          {loading && <h1>Loading ...</h1>}
+          {loading && (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+            </div>
+          )}
           {!loading && (
             <>
               <div className="dropdown-box-category">
