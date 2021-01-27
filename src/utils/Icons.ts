@@ -19,6 +19,8 @@ import {
   faChevronCircleLeft,
   faChevronCircleRight,
   faBars,
+  faMicrophone,
+  faMicrophoneSlash,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCcVisa, faCcMastercard, faCcAmex, faCcDinersClub, faCcJcb } from '@fortawesome/free-brands-svg-icons'
 
@@ -40,7 +42,9 @@ library.add(
   faStopCircle,
   faChevronCircleLeft,
   faChevronCircleRight,
-  faBars
+  faBars,
+  faMicrophone,
+  faMicrophoneSlash
 )
 
 // BRAND ICONS

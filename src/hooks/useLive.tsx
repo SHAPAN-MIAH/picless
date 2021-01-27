@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import { SoundMeter } from '../assets/js/soundmeter'
+import { identity } from 'lodash'
 
 type AvailableDeviceType = { deviceId: string; selected: boolean }
 type LiveStatusType = 'WAITING' | 'ON_AIR'
@@ -30,6 +31,7 @@ const useLive = () => {
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
   const [liveStatus, setLiveStatus] = useState<LiveStatusType>('WAITING')
+  const [micToggle, setMicToggle] = useState<boolean>(true)
 
   useEffect(() => {
     initWebRTCAdaptor()
@@ -150,13 +152,22 @@ const useLive = () => {
     webRTCAdaptor.stop(streamingName)
   }
 
+  const audioToggle = (): void => {
+    if (micToggle) webRTCAdaptor.muteLocalMic()
+    else webRTCAdaptor.unmuteLocalMic()
+
+    setMicToggle(!micToggle)
+  }
+
   return {
     videoRef,
+    audioStatus: micToggle,
     availableDevices,
     changeVideoDevice,
     liveStatus,
     publish,
     stop,
+    audioToggle,
   }
 }
 

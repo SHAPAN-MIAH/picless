@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Prompt } from 'react-router-dom'
 
 import TextInput from '../../../../components/Common/TextInput'
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
@@ -7,12 +8,11 @@ import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import useLive from '../../../../hooks/useLive'
-import { Prompt } from 'react-router-dom'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { videoRef, availableDevices, changeVideoDevice, liveStatus, publish, stop } = useLive()
+  const { videoRef, availableDevices, changeVideoDevice, liveStatus, publish, stop, audioStatus, audioToggle } = useLive()
 
   const [liveName, setLiveName] = useState<string>('')
 
@@ -69,7 +69,9 @@ const CreateLive: FunctionComponent<{}> = () => {
       <div className="quick-post-footer-actions">
         {liveStatus === 'WAITING' && <WaitingLiveFooter disabled={availableDevices.length === 0} startLive={startLive} />}
 
-        {liveStatus === 'ON_AIR' && <OnAirLiveFooter stopLive={stopLive} />}
+        {liveStatus === 'ON_AIR' && (
+          <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} />
+        )}
       </div>
     </>
   )

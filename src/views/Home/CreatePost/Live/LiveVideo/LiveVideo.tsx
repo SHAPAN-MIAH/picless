@@ -29,11 +29,6 @@ const LiveVideo = React.forwardRef<HTMLVideoElement | null, LiveVideoProps>((pro
               )}
             </div>
             <div className={style.videoCenter}> </div>
-            {/* <div className={style.videoBottom}>
-              <div className={style.fullScreenButton} onClick={goFullScreen}>
-                <FontAwesomeIcon icon="expand" size="lg" />
-              </div>
-            </div> */}
           </div>
         )}
         {numberOfVideoDevices === 0 && (

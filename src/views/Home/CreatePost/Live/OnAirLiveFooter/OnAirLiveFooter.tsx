@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import style from './OnAirLiveFooter.module.css'
 
-const OnAirLiveFooter: FunctionComponent<{ stopLive: () => void }> = (props) => {
-  const { stopLive } = props
+type OnAirLiveFooterProps = { stopLive: () => void; audioStatus: boolean; changeAudioStatus: () => void }
+
+const OnAirLiveFooter: FunctionComponent<OnAirLiveFooterProps> = (props) => {
+  const { stopLive, audioStatus, changeAudioStatus } = props
 
   return (
     <>
@@ -20,13 +22,33 @@ const OnAirLiveFooter: FunctionComponent<{ stopLive: () => void }> = (props) => 
       </div>
 
       <div className="post-options">
-        <div className={classNames('post-option-wrap', style.stopLiveButton)} onClick={stopLive}>
-          <div className={classNames('post-option reaction-options-dropdown-trigger')}>
-            <FontAwesomeIcon icon="stop-circle" />
-            <p className="post-option-text " style={{ marginLeft: '10px' }}>
-              Stop Live
-            </p>
-          </div>
+        <div className={classNames('post-option', style.stopLiveButton)} onClick={stopLive}>
+          <FontAwesomeIcon icon="stop-circle" />
+          <p className="post-option-text " style={{ marginLeft: '10px' }}>
+            Stop Live
+          </p>
+        </div>
+
+        <div className="post-option" onClick={changeAudioStatus}>
+          {audioStatus && (
+            <>
+              <FontAwesomeIcon icon="microphone" color="#adafca" />
+
+              <p className="post-option-text " style={{ marginLeft: '10px' }}>
+                Mute
+              </p>
+            </>
+          )}
+
+          {!audioStatus && (
+            <>
+              <FontAwesomeIcon icon="microphone-slash" color="tomato" />
+
+              <p className="post-option-text " style={{ marginLeft: '10px' }}>
+                Unmute
+              </p>
+            </>
+          )}
         </div>
 
         <div className="post-option">

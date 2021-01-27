@@ -1,7 +1,7 @@
-.stopLiveButton :hover {
+.stopLiveButton:hover {
   color: tomato;
 }
 
-.stopLiveButton p :hover {
-  color: tomato;
+.stopLiveButton p:hover {
+  color: tomato !important;
 }
