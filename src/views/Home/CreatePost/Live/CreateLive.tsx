@@ -7,6 +7,7 @@ import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import useLive from '../../../../hooks/useLive'
+import { Prompt } from 'react-router-dom'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -22,6 +23,12 @@ const CreateLive: FunctionComponent<{}> = () => {
     }
   }, [liveStatus])
 
+  useEffect(() => {
+    return () => {
+      stopLive()
+    }
+  }, [])
+
   const startLive = () => {
     publish()
   }
@@ -30,27 +37,11 @@ const CreateLive: FunctionComponent<{}> = () => {
     stop()
   }
 
-  // const goFullScreen = () => {
-  //   if (videoRef.current) {
-  //     const video: any = videoRef.current
-
-  //     if (video.requestFullscreen) {
-  //       video.requestFullscreen()
-  //     } else if (video.mozRequestFullScreen) {
-  //       video.mozRequestFullScreen() // Firefox
-  //     } else if (video.webkitRequestFullscreen) {
-  //       video.webkitRequestFullscreen() // Chrome
-  //     } else if (video.webkitEnterFullscreen) {
-  //       video.webkitEnterFullscreen() // Safari
-  //     } else {
-  //       alert('nada')
-  //     }
-  //   }
-  // }
-
   return (
     <>
       <div className="quick-post-body">
+        <Prompt when={liveStatus === 'ON_AIR'} message="You're in live session. Are you sure you want to leave?" />
+
         {liveStatus === 'WAITING' && (
           <div style={{ padding: '25px' }}>
             <FormRowItem>
