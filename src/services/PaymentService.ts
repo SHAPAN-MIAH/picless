@@ -1,5 +1,5 @@
 import * as ApiHelper from './ApiHelpers'
-import { AddCardType, CardType, DefaultCardType, ServiceMovementType } from '../types/PaymentTypes.d'
+import { AddCardType, CardType, DefaultCardType, ServiceMovementType, SubscritionPlanOption } from '../types/PaymentTypes.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
 
@@ -174,6 +174,23 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
   return body
 }
 
+const getPlanOptions = async (planId: string): Promise<SubscritionPlanOption[]> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  planId = 'USD1MG'
+
+  const url = `${baseUrl}/getplanoptions?planName=${planId}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body.list
+}
+
 export default {
   getCards,
   addCard,
@@ -185,4 +202,5 @@ export default {
   getDefaultCard,
   addCreditToWallet,
   getMovements,
+  getPlanOptions,
 }

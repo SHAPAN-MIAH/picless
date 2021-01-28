@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 
 import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import { SoundMeter } from '../assets/js/soundmeter'
-import { identity } from 'lodash'
 
 type AvailableDeviceType = { deviceId: string; selected: boolean }
 type LiveStatusType = 'WAITING' | 'ON_AIR'

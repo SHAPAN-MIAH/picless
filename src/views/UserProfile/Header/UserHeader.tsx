@@ -2,8 +2,8 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Popup from 'reactjs-popup'
 
-import PaymentService from '../../../services/PaymentService'
 import { userSelector } from '../../../redux/User/UserSelectors'
 
 import UserAvatar from '../../../components/UserAvatar'
@@ -11,6 +11,7 @@ import UserAvatar from '../../../components/UserAvatar'
 import styles from './UserHeader.module.css'
 
 import { UserProfileType, UserType } from '../../../types/UserType.d'
+import SubscribePopup from './SubscribePopup/SubscribePopup'
 
 type UserHeaderProps = {
   isSuscribe: boolean | null
@@ -32,18 +33,18 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setSubscribed(isSuscribe)
   }, [user, isSuscribe])
 
-  const suscribeToUser = () => {
-    if (user.id && user.planId) {
-      PaymentService.suscribeToUser(user.planId, user.id).then((data: any) => {
-        if (data.code === 0) {
-          setSubscribed(true)
-          alert('You are subscribed')
-        } else {
-          alert(`Error ${data.code} => ${data.message}`)
-        }
-      })
-    }
-  }
+  // const suscribeToUser = () => {
+  //   if (user.id && user.planId) {
+  //     PaymentService.suscribeToUser(user.planId, user.id).then((data: any) => {
+  //       if (data.code === 0) {
+  //         setSubscribed(true)
+  //         alert('You are subscribed')
+  //       } else {
+  //         alert(`Error ${data.code} => ${data.message}`)
+  //       }
+  //     })
+  //   }
+  // }
 
   return (
     <>
@@ -71,13 +72,21 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
           {user.userName !== userData.userName && (
             <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
               {!subscribed && (
-                <div className={classNames('profile-header-info-actions', styles.suscribeButton)} onClick={suscribeToUser}>
-                  <p className="profile-header-info-action button primary">
-                    Suscribe
-                    <span className="hide-text-mobile"> for 10,99€</span>
-                    <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
-                  </p>
-                </div>
+                <Popup
+                  modal
+                  contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+                  position="center center"
+                  trigger={
+                    <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+                      <p className="profile-header-info-action button primary">
+                        Suscribe
+                        <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
+                      </p>
+                    </div>
+                  }
+                >
+                  <SubscribePopup />
+                </Popup>
               )}
 
               {subscribed && (
