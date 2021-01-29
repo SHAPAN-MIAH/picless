@@ -35,6 +35,7 @@ import 'reactjs-popup/dist/index.css'
 import './App.css'
 
 import PublisherTest2 from './views/Lives/BroadcastPublisher/publisherTest2'
+import UserProfileContextProvider from './context/UserProfileContext'
 
 declare global {
   interface Window {
@@ -76,7 +77,10 @@ function App() {
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
           <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
           <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
-          <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
+
+          <UserProfileContextProvider>
+            <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
+          </UserProfileContextProvider>
 
           <ProtectedRoute {...routerProps} exact path="/live/test/publisher" component={PublisherTest} />
           <ProtectedRoute {...routerProps} exact path="/live/test/pub" component={PublisherTest2} />

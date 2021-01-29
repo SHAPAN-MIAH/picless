@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FunctionComponent } from 'react'
+import React, { useState, useEffect, FunctionComponent, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import UserService from '../../services/UserService'
@@ -9,12 +9,15 @@ import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
 import { UserProfileType, ServiceUserProfileType } from '../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
 import LiveTab from './SectionTab/LiveTab'
+import UserProfileContext, { UserProfileContextProvider } from '../../context/UserProfileContext'
 
 const UserProfile: FunctionComponent<{}> = () => {
   const history = useHistory()
   const { username } = useParams<{ username: string }>()
 
-  const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
+  const { setUserProfile } = useContext(UserProfileContext.context)
+
+  // const [userData, setUserData] = useState<UserProfileType>({} as UserProfileType)
   const [loading, setLoading] = useState<boolean>(false)
   const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
   const [selectedTab, setSelectedTab] = useState<TabNamesType>('ABOUT')
@@ -27,7 +30,10 @@ const UserProfile: FunctionComponent<{}> = () => {
         history.push('/error')
       } else {
         setLoading(false)
-        setUserData(data.user)
+
+        setUserProfile(data.user)
+
+        // setUserData(data.user)
         setIsSuscribed(data.isSuscribe)
 
         if (window.tpl) {
@@ -48,11 +54,11 @@ const UserProfile: FunctionComponent<{}> = () => {
           {loading && <h1>Loading ...</h1>}
           {!loading && (
             <>
-              <UserHeader user={userData} isSuscribe={isSuscribed} />
+              <UserHeader isSuscribe={isSuscribed} />
 
               <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
 
-              {selectedTab === 'ABOUT' && <AboutTab user={userData} />}
+              {selectedTab === 'ABOUT' && <AboutTab />}
 
               {selectedTab === 'POSTS' && (
                 <div className="grid">

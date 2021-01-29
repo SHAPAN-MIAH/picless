@@ -1,16 +1,13 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import moment from 'moment'
 
 import Alert from '../../../components/Common/Alerts/Alerts'
 
 import { UserProfileType, UserInterestType, UserTimeLineType } from '../../../types/UserType.d'
+import UserProfileContext from '../../../context/UserProfileContext'
 
-type AboutTabProps = {
-  user: UserProfileType
-}
-
-const AboutTab: FunctionComponent<AboutTabProps> = (props) => {
-  const { user } = props
+const AboutTab: FunctionComponent<{}> = () => {
+  const { user } = useContext(UserProfileContext.context)
 
   const noInterests = 'The user has not yet added interests.'
   const noTimeLineEvents = 'The user has not yet added events to the timeline.'
