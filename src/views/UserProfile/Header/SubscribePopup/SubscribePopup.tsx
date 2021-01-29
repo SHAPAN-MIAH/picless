@@ -107,7 +107,7 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
   const subscribeToUser = (token: any) => {
     if (user.id && user.planId && selectedPlan) {
-      PaymentService.suscribeToUser(user.planId, user.id, token.id, selectedPlan?.amount)
+      PaymentService.suscribeToUser(selectedPlan?.id, user.id, token.id, selectedPlan?.amount)
         .then((data: any) => {
           if (data.code === 0) {
             alert('You are subscribed')
