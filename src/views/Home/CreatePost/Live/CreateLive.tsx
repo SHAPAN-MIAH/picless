@@ -8,11 +8,24 @@ import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import useLive from '../../../../hooks/useLive'
+import LiveChat from 'components/LiveChat/LiveChat'
+import { send } from 'process'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { videoRef, availableDevices, changeVideoDevice, liveStatus, publish, stop, audioStatus, audioToggle } = useLive()
+  const {
+    videoRef,
+    chatRef,
+    availableDevices,
+    changeVideoDevice,
+    liveStatus,
+    publish,
+    stop,
+    audioStatus,
+    audioToggle,
+    sendMessageChat,
+  } = useLive()
 
   const [liveName, setLiveName] = useState<string>('')
 
@@ -72,6 +85,10 @@ const CreateLive: FunctionComponent<{}> = () => {
         {liveStatus === 'ON_AIR' && (
           <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} />
         )}
+      </div>
+
+      <div className="widget-box no-padding">
+        <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />
       </div>
     </>
   )

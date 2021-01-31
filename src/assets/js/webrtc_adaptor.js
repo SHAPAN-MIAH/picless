@@ -932,6 +932,7 @@ export default class WebRTCAdaptor {
         streamId,
         event,
       }
+
       this.callback('data_received', obj)
     }
 
@@ -1019,8 +1020,8 @@ export default class WebRTCAdaptor {
   }
 
   closePeerConnection(streamId) {
-    if (this.remotePeerConnection[streamId] != null) {
-      if (this.remotePeerConnection[streamId].dataChannel != null) {
+    if (this.remotePeerConnection[streamId] !== null) {
+      if (this.remotePeerConnection[streamId].dataChannel !== null) {
         this.remotePeerConnection[streamId].dataChannel.close()
       }
       if (this.remotePeerConnection[streamId].signalingState !== 'closed') {
@@ -1034,21 +1035,21 @@ export default class WebRTCAdaptor {
       }
     }
 
-    if (this.remotePeerConnectionStats[streamId] != null) {
-      clearInterval(this.remotePeerConnectionStats[streamId].timerId)
+    if (this.remotePeerConnectionStats[streamId] !== null) {
+      if (this.remotePeerConnectionStats[streamId].timerId) clearInterval(this.remotePeerConnectionStats[streamId].timerId)
       delete this.remotePeerConnectionStats[streamId]
     }
   }
 
   signallingState(streamId) {
-    if (this.remotePeerConnection[streamId] != null) {
+    if (this.remotePeerConnection[streamId] !== null) {
       return this.remotePeerConnection[streamId].signalingState
     }
     return null
   }
 
   iceConnectionState(streamId) {
-    if (this.remotePeerConnection[streamId] != null) {
+    if (this.remotePeerConnection[streamId] !== null) {
       return this.remotePeerConnection[streamId].iceConnectionState
     }
     return null
@@ -1511,8 +1512,8 @@ export default class WebRTCAdaptor {
     this.webSocketAdaptor.send(JSON.stringify(jsCmd))
   }
 
-  sendData(streamId, message) {
+  sendData(streamId, messageObj) {
     const { dataChannel } = this.remotePeerConnection[streamId]
-    dataChannel.send(message)
+    dataChannel.send(messageObj)
   }
 }

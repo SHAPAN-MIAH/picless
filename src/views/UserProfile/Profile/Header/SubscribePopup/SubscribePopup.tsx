@@ -1,17 +1,17 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
 
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
-import FormRow from '../../../../components/Common/Form/FormRow'
-import FormRowItem from '../../../../components/Common/Form/FormRowItem'
-import UserAvatar from '../../../../components/UserAvatar'
-import SelectForm, { SelectOptionsType } from '../../../../components/Common/SelectForm'
+import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
+import FormRow from '../../../../../components/Common/Form/FormRow'
+import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
+import UserAvatar from '../../../../../components/UserAvatar'
+import SelectForm, { SelectOptionsType } from '../../../../../components/Common/SelectForm'
 
-import { PlansType, SubscritionPlanOption } from '../../../../types/PaymentTypes.d'
+import { PlansType, SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 
 import styles from './SubscribePopup.module.css'
-import PaymentService from '../../../../services/PaymentService'
-import useWallet from '../../../../hooks/useWallet'
-import UserProfileContext from '../../../../context/UserProfileContext'
+import PaymentService from '../../../../../services/PaymentService'
+import useWallet from '../../../../../hooks/useWallet'
+import UserProfileContext from '../../../../../context/UserProfileContext'
 
 const SubscribePopup: FunctionComponent<{}> = () => {
   // const userData: UserType = useSelector(userSelector)

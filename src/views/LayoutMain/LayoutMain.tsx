@@ -5,6 +5,7 @@ import Header from './Header/Header'
 import FloatyBar from './FloatyBar/FloatyBar'
 import MainLoader from '../../components/MainLoading/MainLoading'
 import { ApplicationContextProvider } from '../../context/ApplicationContext'
+import { UserProfileContextProvider } from '../../context/UserProfileContext'
 
 interface LayoutMainProps {
   children: ReactNode
@@ -17,11 +18,13 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
     <>
       <MainLoader />
       <ApplicationContextProvider>
-        <NavigationLeftMenu />
-        {/* CHAT WIDGET */}
-        <Header />
-        <FloatyBar />
-        {children}
+        <UserProfileContextProvider>
+          <NavigationLeftMenu />
+          {/* CHAT WIDGET */}
+          <Header />
+          <FloatyBar />
+          {children}
+        </UserProfileContextProvider>
       </ApplicationContextProvider>
     </>
   )

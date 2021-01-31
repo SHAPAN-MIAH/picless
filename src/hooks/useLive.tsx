@@ -1,22 +1,26 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import { SoundMeter } from '../assets/js/soundmeter'
+import useLiveChat, { LiveChatMessageType } from './useLiveChat'
+import { userSelector } from '../redux/User/UserSelectors'
+import { useSelector } from 'react-redux'
+import { UserType } from '../types/UserType'
 
 type AvailableDeviceType = { deviceId: string; selected: boolean }
 type LiveStatusType = 'WAITING' | 'ON_AIR'
 
-const streamingName = 'lupanarStreamc'
+const streamingName = 'lupanarStream' // ADDED INTO PROPSs
 const bitrate = 900 // 900 ~ 2500
 const maxVideoBitrateKbps = bitrate
 let webRTCAdaptor: any = {}
 let autoRepublishIntervalJob: any
 
-const appName = 'WebRTCAppEE'
+const appName = process.env.REACT_APP_ANTMEDIA_APPNAME
 
-const websocketURL = `wss://antmedia.lup20.uk/${appName}/websocket?rtmpForward=false`
 const mediaConstraints = { video: true, audio: true }
 const sdpConstraints = { OfferToReceiveAudio: false, OfferToReceiveVideo: false }
+const websocketURL = `${process.env.REACT_APP_WEBSOCKET_MAIN_URL}/${appName}/websocket?rtmpForward=false`
 const pc_config = {
   iceServers: [
     {
@@ -27,6 +31,10 @@ const pc_config = {
 
 const useLive = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
+
+  const { addMessage, chatRef } = useLiveChat()
+
+  const userData: UserType = useSelector(userSelector)
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
   const [liveStatus, setLiveStatus] = useState<LiveStatusType>('WAITING')
@@ -78,6 +86,10 @@ const useLive = () => {
           })
 
           setAvailableDevices(videoDevices)
+        } else if (info === 'data_received') {
+          addMessage(JSON.parse(obj.event.data))
+
+          // alert(`Data received: ${obj.event.data} type: ${obj.event.type} for stream: ${obj.streamId}`)
         }
       },
       callbackError: (error: any, message: string) => {
@@ -158,8 +170,33 @@ const useLive = () => {
     setMicToggle(!micToggle)
   }
 
+  const sendMessageChat = (message: string) => {
+    try {
+      const iceState = webRTCAdaptor.iceConnectionState(streamingName)
+
+      if (iceState !== null && iceState !== 'failed' && iceState !== 'disconnected') {
+        const dataMessage = {
+          userName: userData.userName,
+          text: message,
+          type: 'TEXT',
+          isStreamer: true,
+        }
+
+        webRTCAdaptor.sendData(streamingName, JSON.stringify(dataMessage))
+
+        addMessage(dataMessage as LiveChatMessageType)
+      } else {
+        alert('WebRTC publishing is not active. Please click Start Publishing first')
+      }
+    } catch (exception) {
+      console.error(exception)
+      alert("Message cannot be sent. Make sure you've enabled data channel on server web panel")
+    }
+  }
+
   return {
     videoRef,
+    chatRef,
     audioStatus: micToggle,
     availableDevices,
     changeVideoDevice,
@@ -167,6 +204,7 @@ const useLive = () => {
     publish,
     stop,
     audioToggle,
+    sendMessageChat,
   }
 }
 

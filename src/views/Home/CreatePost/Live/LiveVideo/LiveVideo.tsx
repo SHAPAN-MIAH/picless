@@ -16,8 +16,7 @@ const LiveVideo = React.forwardRef<HTMLVideoElement | null, LiveVideoProps>((pro
   return (
     <>
       <div className={style.container}>
-        {!isMobile && <video {...rest} ref={ref} autoPlay muted playsInline />}
-        {isMobile && <video {...rest} ref={ref} autoPlay muted playsInline />}
+        <video {...rest} ref={ref} autoPlay muted playsInline />
 
         {numberOfVideoDevices > 0 && (
           <div className={style.overlay}>

@@ -100,7 +100,7 @@ export default class WebSocketAdaptor {
   }
 
   sendPing() {
-    var jsCmd = {
+    const jsCmd = {
       command: 'ping',
     }
     this.wsConn.send(JSON.stringify(jsCmd))
@@ -116,7 +116,7 @@ export default class WebSocketAdaptor {
       return
     }
     this.wsConn.send(text)
-    console.log('sent message:' + text)
+    console.log(`sent message:${JSON.stringify(text)}`)
   }
 
   isConnected() {
