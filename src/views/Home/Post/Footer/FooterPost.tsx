@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
-import SendATip from '../../../UserProfile/Header/SendATip/SendATip'
+import SendATip from '../../../UserProfile/Profile/Header/SendATip/SendATip'
 
 const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
   const { user } = props
