@@ -9,7 +9,7 @@ export type LiveChatMessageType = {
   isStreamer?: boolean
 }
 
-const colors = ['#4eb2fd', '#615dfa', 'rgba(97, 93, 250, .2)', 'rgba(253, 67, 80, .2)']
+const colors = ['#1CFF4D', '#33CDE8', '#4B45FF', '#DE33E8', '#FF5938']
 
 const useLiveChat = () => {
   const chatRef = useRef<HTMLDivElement>(null)
@@ -23,15 +23,18 @@ const useLiveChat = () => {
       const msgIsStreamer = document.createElement('span')
       msgIsStreamer.innerHTML = '&#x2605;'
       msgIsStreamer.style.color = '#fecc06'
-      msgIsStreamer.style.fontSize = '24px'
+      msgIsStreamer.style.fontSize = '20px'
       msgIsStreamer.style.marginRight = '7px'
 
       msg.appendChild(msgIsStreamer)
     }
 
     if (data.text === 'SENDATIP') {
+      msg.style.marginTop = '15px'
+
       const msgTip = document.createElement('div')
       msgTip.className = 'chat-widget-speaker right'
+
       const msgText = document.createElement('p')
       msgText.className = 'chat-widget-speaker-message'
       msgText.innerHTML = `${data.userName} send a tip`
@@ -42,19 +45,26 @@ const useLiveChat = () => {
       const msgUser = document.createElement('span')
       msgUser.style.color = color
       msgUser.style.marginRight = '7px'
+      msgUser.style.fontSize = '12px'
       const msgUserContent = document.createTextNode(`${data.userName}: `)
       msgUser.appendChild(msgUserContent)
 
       msg.appendChild(msgUser)
 
       const msgText = document.createElement('span')
+      msgText.style.fontSize = '12px'
       const msgTextContent = document.createTextNode(`${data.text}`)
 
       msgText.appendChild(msgTextContent)
       msg.appendChild(msgText)
     }
 
-    chatRef.current?.appendChild(msg)
+    const chatContainer = chatRef.current
+
+    if (chatContainer) {
+      chatContainer.appendChild(msg)
+      chatContainer.scrollTop = chatContainer.scrollHeight || 0
+    }
   }
 
   return {

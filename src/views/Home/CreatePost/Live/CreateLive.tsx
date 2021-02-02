@@ -8,8 +8,7 @@ import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import useLive from '../../../../hooks/useLive'
-import LiveChat from 'components/LiveChat/LiveChat'
-import { send } from 'process'
+import LiveChat from '../../../../components/LiveChat/LiveChat'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -28,6 +27,7 @@ const CreateLive: FunctionComponent<{}> = () => {
   } = useLive()
 
   const [liveName, setLiveName] = useState<string>('')
+  const [toggleChat, setToggleChat] = useState<boolean>(true)
 
   useEffect(() => {
     if (videoRef.current) {
@@ -48,6 +48,10 @@ const CreateLive: FunctionComponent<{}> = () => {
 
   const stopLive = () => {
     stop()
+  }
+
+  const onToggleChat = () => {
+    setToggleChat(!toggleChat)
   }
 
   return (
@@ -80,16 +84,16 @@ const CreateLive: FunctionComponent<{}> = () => {
         </FormRowItem>
       </div>
       <div className="quick-post-footer-actions">
-        {liveStatus === 'WAITING' && <WaitingLiveFooter disabled={availableDevices.length === 0} startLive={startLive} />}
+        {liveStatus === 'WAITING' && (
+          <WaitingLiveFooter disabled={availableDevices.length === 0} startLive={startLive} onToggleChat={onToggleChat} />
+        )}
 
         {liveStatus === 'ON_AIR' && (
           <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} />
         )}
       </div>
 
-      <div className="widget-box no-padding">
-        <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />
-      </div>
+      <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
     </>
   )
 }

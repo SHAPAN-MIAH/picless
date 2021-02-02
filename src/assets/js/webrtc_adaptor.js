@@ -717,7 +717,7 @@ export default class WebRTCAdaptor {
     this.publishMode = 'screen+camera'
 
     let audioConstraint = false
-    if (typeof this.mediaConstraints.audio !== 'undefined' && this.mediaConstraints.audio != false) {
+    if (typeof this.mediaConstraints.audio !== 'undefined' && this.mediaConstraints.audio !== false) {
       audioConstraint = this.mediaConstraints.audio
     }
     this.getUserMedia(this.mediaConstraints, audioConstraint, streamId)
@@ -827,7 +827,7 @@ export default class WebRTCAdaptor {
   updateVideoTrack(stream, streamId, mediaConstraints, onEndedCallback, stopDesktop) {
     if (this.remotePeerConnection[streamId] != null) {
       const videoTrackSender = this.remotePeerConnection[streamId].getSenders().find(function (s) {
-        return s.track.kind == 'video'
+        return s.track.kind === 'video'
       })
 
       if (videoTrackSender) {
@@ -1020,8 +1020,8 @@ export default class WebRTCAdaptor {
   }
 
   closePeerConnection(streamId) {
-    if (this.remotePeerConnection[streamId] !== null) {
-      if (this.remotePeerConnection[streamId].dataChannel !== null) {
+    if (this.remotePeerConnection[streamId]) {
+      if (this.remotePeerConnection[streamId].dataChannel) {
         this.remotePeerConnection[streamId].dataChannel.close()
       }
       if (this.remotePeerConnection[streamId].signalingState !== 'closed') {
@@ -1035,21 +1035,21 @@ export default class WebRTCAdaptor {
       }
     }
 
-    if (this.remotePeerConnectionStats[streamId] !== null) {
+    if (this.remotePeerConnectionStats[streamId]) {
       if (this.remotePeerConnectionStats[streamId].timerId) clearInterval(this.remotePeerConnectionStats[streamId].timerId)
       delete this.remotePeerConnectionStats[streamId]
     }
   }
 
   signallingState(streamId) {
-    if (this.remotePeerConnection[streamId] !== null) {
+    if (this.remotePeerConnection[streamId]) {
       return this.remotePeerConnection[streamId].signalingState
     }
     return null
   }
 
   iceConnectionState(streamId) {
-    if (this.remotePeerConnection[streamId] !== null) {
+    if (this.remotePeerConnection[streamId]) {
       return this.remotePeerConnection[streamId].iceConnectionState
     }
     return null
@@ -1099,7 +1099,7 @@ export default class WebRTCAdaptor {
         },
         false
       )
-    } else if (this.remotePeerConnection != null) {
+    } else if (this.remotePeerConnection !== null) {
       const track = this.localStream.getVideoTracks()[0]
       track.enabled = true
     }
@@ -1118,7 +1118,7 @@ export default class WebRTCAdaptor {
    * if there is audio it calls callbackError with "AudioAlreadyActive" parameter
    */
   unmuteLocalMic() {
-    if (this.remotePeerConnection != null) {
+    if (this.remotePeerConnection !== null) {
       const track = this.localStream.getAudioTracks()[0]
       track.enabled = true
     } else {
@@ -1279,7 +1279,7 @@ export default class WebRTCAdaptor {
         const senders = this.remotePeerConnection[streamId].getSenders()
 
         for (let i = 0; i < senders.length; i++) {
-          if (senders[i].track != null && senders[i].track.kind == 'video') {
+          if (senders[i].track != null && senders[i].track.kind === 'video') {
             videoSender = senders[i]
             break
           }

@@ -30,7 +30,7 @@ const LiveChat = React.forwardRef<HTMLDivElement | null, LiveChatProps>((props, 
   return (
     <>
       <div className="chat-widget-header"> LIVE</div>
-      <div ref={ref} className="chat-widget-conversation">
+      <div ref={ref} className="chat-widget-conversation" style={{ overflowY: 'scroll' }}>
         {' '}
       </div>
 

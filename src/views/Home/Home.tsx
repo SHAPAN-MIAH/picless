@@ -57,7 +57,7 @@ const Home: FunctionComponent<{}> = () => {
                 </>
               )}
             </div>
-            <div className="grid-column">{'  '}</div>
+            <div className="grid-column"> </div>
           </div>
         </div>
       </LayoutMain>

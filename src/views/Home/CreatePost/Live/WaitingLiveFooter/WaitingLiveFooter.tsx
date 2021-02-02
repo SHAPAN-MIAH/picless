@@ -3,8 +3,10 @@ import classNames from 'classnames'
 import React, { FunctionComponent } from 'react'
 import CheckboxForm from '../../../../../components/Common/CheckboxForm'
 
-const WaitingLiveFooter: FunctionComponent<{ startLive: () => void; disabled: boolean }> = (props) => {
-  const { startLive, disabled } = props
+const WaitingLiveFooter: FunctionComponent<{ startLive: () => void; disabled: boolean; onToggleChat: () => void }> = (
+  props
+) => {
+  const { startLive, disabled, onToggleChat } = props
 
   return (
     <>
@@ -13,9 +15,9 @@ const WaitingLiveFooter: FunctionComponent<{ startLive: () => void; disabled: bo
           <CheckboxForm
             id="allow-chat"
             title="Allow chat"
-            checked={false}
-            onChange={(e: any) => {
-              // setEnabledEmailNotificatoins(e)
+            checked
+            onChange={() => {
+              onToggleChat()
             }}
           />
         </div>
