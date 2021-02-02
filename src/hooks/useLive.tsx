@@ -156,11 +156,13 @@ const useLive = () => {
   }
 
   const stop = () => {
-    if (autoRepublishIntervalJob != null) {
-      clearInterval(autoRepublishIntervalJob)
-      autoRepublishIntervalJob = null
+    if (liveStatus === 'ON_AIR') {
+      if (autoRepublishIntervalJob != null) {
+        clearInterval(autoRepublishIntervalJob)
+        autoRepublishIntervalJob = null
+      }
+      webRTCAdaptor.stop(streamingName)
     }
-    webRTCAdaptor.stop(streamingName)
   }
 
   const audioToggle = (): void => {

@@ -86,6 +86,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
                   name="quick_post_text"
                   placeholder={t('home.createPost.placeholderPostText')}
                   value={content || ''}
+                  className={styles.quickPostText}
                   onChange={onChangeCreatePost}
                   minLength={0}
                   maxLength={1000}
