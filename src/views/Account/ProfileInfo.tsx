@@ -96,8 +96,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   return (
     <LayoutMain>
       <div className="content-grid">
-        <div className="grid grid-3-9">
-          <AccountSidebar />
+        <div className="grid grid-2-7-2">
           <div className="account-hub-content">
             <div className="section-header">
               <div className="section-header-info">

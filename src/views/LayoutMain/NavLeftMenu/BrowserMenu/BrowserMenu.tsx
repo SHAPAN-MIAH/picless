@@ -2,18 +2,19 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 
 import useMenu from '../../../../hooks/useMenu'
 
 import UserAvatar from '../../../../components/UserAvatar'
 import { UserType } from '../../../../types/UserType.d'
 import useUser from '../../../../hooks/useUser'
+import useAuth from '../../../../hooks/useAuth'
 
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const { getUser } = useUser()
+  const { signOut } = useAuth()
 
   const { showMenu } = useMenu()
 
@@ -138,16 +139,19 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           </li>
 
           <li className="menu-item">
-            <Link
+            <a
+              href=""
               className="menu-item-link text-tooltip-tfr"
               style={{ color: '#adafca' }}
-              to="/user/messages"
-              data-title={t('navLeftMenu.messages')}
+              data-title={t('navLeftMenu.logout')}
+              onClick={() => {
+                signOut()
+              }}
             >
-              <svg className="menu-item-link-icon icon-forums">
-                <use xlinkHref="#svg-forums" />
+              <svg className="menu-item-link-icon icon-private">
+                <use xlinkHref="#svg-private" />
               </svg>
-            </Link>
+            </a>
           </li>
         </ul>
       </nav>
@@ -252,12 +256,18 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           </li>
 
           <li className="menu-item">
-            <Link className="menu-item-link" to="/user/messages">
-              <svg className="menu-item-link-icon icon-forums">
-                <use xlinkHref="#svg-forums" />
+            <a
+              href=""
+              className="menu-item-link"
+              onClick={() => {
+                signOut()
+              }}
+            >
+              <svg className="menu-item-link-icon icon-private">
+                <use xlinkHref="#svg-private" />
               </svg>
-              {t('navLeftMenu.messages')}
-            </Link>
+              {t('navLeftMenu.logout')}
+            </a>
           </li>
         </ul>
       </nav>

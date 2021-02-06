@@ -21,7 +21,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
   }, [getUser])
 
   return (
-    <div className="grid grid-3-3-3 centered">
+    <div className="grid grid-3-3-3">
       <div className="user-preview small fixed-height">
         <div className="user-preview-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
