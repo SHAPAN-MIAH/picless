@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import SearchBar from './SearchBar/SearchBar'
 import useMenu from '../../../hooks/useMenu'
+import { Link } from 'react-router-dom'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
@@ -62,9 +63,7 @@ const Header: FunctionComponent<{}> = () => {
 
             <div className="action-list-item-wrap">
               <div className="action-list-item">
-                <svg className="action-list-item-icon icon-messages">
-                  <use xlinkHref="#svg-messages" />
-                </svg>
+                <FontAwesomeIcon icon="plus" size="lg" color="#8b88ff " />
               </div>
             </div>
 
@@ -359,9 +358,11 @@ const Header: FunctionComponent<{}> = () => {
 
           <div className="action-item-wrap">
             <div className="action-item dark">
-              <svg className="action-item-icon icon-messages">
-                <use xlinkHref="#svg-messages" />
-              </svg>
+              <Link to="/user/messages" data-title="Messages">
+                <svg className="action-item-icon icon-messages">
+                  <use xlinkHref="#svg-messages" />
+                </svg>
+              </Link>
             </div>
           </div>
 

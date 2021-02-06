@@ -7,7 +7,7 @@ import { imageUrl } from '../../../../utils/ResourceHelpers'
 import { SourceType } from '../../../../types/PostType.d'
 
 import 'react-image-gallery/styles/css/image-gallery.css'
-import styles from './PictureGallery.module.css'
+// import styles from './PictureGallery.module.css'
 
 const mapToImageGallery = (sources: SourceType[]): ReactImageGalleryItem[] => {
   return sources.map((item: SourceType) => {

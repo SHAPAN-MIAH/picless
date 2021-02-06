@@ -30,7 +30,6 @@ const SearchBar: FunctionComponent<{}> = () => {
       return (
         <>
           {items.slice(0, 5).map((item: UserSearchType) => {
-            console.log(item)
             return <SearchBarItem key={`search-${item.userId}`} data={item} />
           })}
         </>

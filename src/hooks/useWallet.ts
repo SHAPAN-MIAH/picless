@@ -43,30 +43,6 @@ const useWallet = () => {
     })
   }, [])
 
-  const removeCard = useCallback((cardId: string) => {
-    PaymentService.removeCard(cardId).then((data: any) => {
-      if (data.code === '0') {
-        updateCards()
-        alert('Remove card successfully')
-      }
-    })
-  }, [])
-
-  const changeDefaultCard = useCallback((cardId: string) => {
-    PaymentService.changeDefaultCard(cardId).then((data: any) => {
-      if (data.code === '0') {
-        getDefaultCard()
-        alert('changed default card successfully')
-      }
-    })
-  }, [])
-
-  const getDefaultCard = useCallback(() => {
-    PaymentService.getDefaultCard().then((data: any) => {
-      setDefaultCard(data)
-    })
-  }, [])
-
   const updateCards = useCallback(() => {
     setLoading(true)
 
@@ -74,13 +50,43 @@ const useWallet = () => {
       setCards(cardList)
       setLoading(false)
     })
-  }, [])
+  }, [setCards, setLoading])
+
+  const removeCard = useCallback(
+    (cardId: string) => {
+      PaymentService.removeCard(cardId).then((data: any) => {
+        if (data.code === '0') {
+          updateCards()
+          alert('Remove card successfully')
+        }
+      })
+    },
+    [updateCards]
+  )
+
+  const getDefaultCard = useCallback(() => {
+    PaymentService.getDefaultCard().then((data: any) => {
+      setDefaultCard(data)
+    })
+  }, [setDefaultCard])
+
+  const changeDefaultCard = useCallback(
+    (cardId: string) => {
+      PaymentService.changeDefaultCard(cardId).then((data: any) => {
+        if (data.code === '0') {
+          getDefaultCard()
+          alert('changed default card successfully')
+        }
+      })
+    },
+    [getDefaultCard]
+  )
 
   const updateBalance = useCallback(() => {
     PaymentService.getBalance().then((data: any) => {
       if (data.code === 0) setBalance(parseFloat(data.value))
     })
-  }, [])
+  }, [setBalance])
 
   return {
     loading,

@@ -7,7 +7,6 @@ import MainLoader from '../../components/MainLoading/MainLoading'
 import Notifications from '../../components/Notification/Notification'
 
 import { ApplicationContextProvider } from '../../context/ApplicationContext'
-import { UserProfileContextProvider } from '../../context/UserProfileContext'
 
 interface LayoutMainProps {
   children: ReactNode
@@ -20,16 +19,14 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
     <>
       <MainLoader />
       <ApplicationContextProvider>
-        <UserProfileContextProvider>
-          <NavigationLeftMenu />
+        <NavigationLeftMenu />
 
-          <Notifications />
-          
-          {/* CHAT WIDGET */}
-          <Header />
-          <FloatyBar />
-          {children}
-        </UserProfileContextProvider>
+        <Notifications />
+
+        {/* CHAT WIDGET */}
+        <Header />
+        <FloatyBar />
+        {children}
       </ApplicationContextProvider>
     </>
   )

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Controller, useForm } from 'react-hook-form'
@@ -6,20 +6,19 @@ import { useTranslation } from 'react-i18next'
 
 import useUser from '../../../hooks/useUser'
 
-import { addInterest } from '../../../redux/User/UserThunks'
-
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 
-import { UserInterestType } from '../../../types/UserType.d'
+import { UserInterestType, UserType } from '../../../types/UserType.d'
 
 type FormValues = {
   name: string
   description: string
 }
+
 const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
   const { t } = useTranslation()
 
@@ -28,33 +27,35 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
   // Validations Fields
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('User name field is required'),
-    description: Yup.string().max(500).min(1),
+    description: Yup.string().required('Description field is required').max(500).min(1),
   })
 
-  const { control, handleSubmit, errors, formState } = useForm<FormValues>({
+  const { control, handleSubmit, errors, getValues, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
 
   const { onAdd } = props
 
-  const [errorMessage, setErrorMessage] = useState('')
+  const onSubmit = () => {
+    getUser().then((user) => {
+      const interest: UserInterestType = {
+        userId: user.id,
+        name: getValues().name,
+        description: getValues().description,
+      }
 
-  const onAddInterest = () => {
-    // if (interestName && interestDescription) {
-    //   const interest: UserInterestType = {
-    //     userId: userData.id,
-    //     name: interestName,
-    //     description: interestDescription,
-    //   }
-    //   dispatch(addInterest(interest))
-    //   onAdd()
-    // } else {
-    //   setErrorMessage(t('profileInfo.interest.error.nameOrDescriptionEmpty'))
-    // }
-  }
+      const dataToSubmit: Partial<UserType> = { userInterest: user.userInterest?.concat(interest) }
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+      const toastOptions = {
+        loading: 'Saving account information ...',
+        success: 'The account information has been successfully saved',
+        error: 'Error Saving the account information',
+      }
+
+      return updateUser(dataToSubmit, toastOptions).then(() => {
+        onAdd()
+      })
+    })
   }
 
   return (
@@ -91,11 +92,6 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             />
           </FormItem>
         </FormRow>
-        {errorMessage !== '' && (
-          <FormRow>
-            <p style={{ color: 'red' }}>{errorMessage}</p>
-          </FormRow>
-        )}
 
         <FormRow classNameRow="split">
           <FormItem>
@@ -109,7 +105,7 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
             </ButtonWithLoader>
           </FormItem>
           <FormItem>
-            <ButtonWithLoader type="button" className="small secondary" onClick={onAddInterest} showLoader={false}>
+            <ButtonWithLoader type="submit" className="small secondary" showLoader={false}>
               {`+ ${t('profileInfo.interests.addNewInterestButton')}`}
             </ButtonWithLoader>
           </FormItem>

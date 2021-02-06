@@ -29,8 +29,8 @@ export default class WebSocketAdaptor {
     this.wsConn.onmessage = (event) => {
       var obj = JSON.parse(event.data)
 
-      if (obj.command == 'start') {
-        //this command is received first, when publishing so playmode is false
+      if (obj.command === 'start') {
+        // this command is received first, when publishing so playmode is false
 
         if (this.debug) {
           console.debug('received start command')

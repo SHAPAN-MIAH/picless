@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react'
 import FooterPost from './Footer/FooterPost'
 import HeaderPost from './Header/HeaderPost'
 import TagList from './Footer/TagList'
-import PictureCollage from './Content/PictureCollage'
+// import PictureCollage from './Content/PictureCollage'
 
 import { PostType, SourceType } from '../../../types/PostType.d'
 import VideoCollage from './Content/VideoCollage'

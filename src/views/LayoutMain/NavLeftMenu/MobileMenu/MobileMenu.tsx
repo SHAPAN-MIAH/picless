@@ -2,31 +2,31 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { userSelector } from '../../../../redux/User/UserSelectors'
 import UserAvatar from '../../../../components/UserAvatar'
-import { signOut } from '../../../../redux/Auth/AuthThunks'
 
 import { UserType } from '../../../../types/UserType.d'
 import useMenu from '../../../../hooks/useMenu'
+import useUser from '../../../../hooks/useUser'
+import useAuth from '../../../../hooks/useAuth'
 
 const MobileMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
 
   const { showMenu, setShowMenu } = useMenu()
+  const { signOut } = useAuth()
+  const { getUser } = useUser()
 
-  const userData: UserType = useSelector(userSelector)
-
-  const [imageProfile, setImageProfile] = useState(userData.profilePicture)
+  const [user, setUser] = useState<UserType>()
 
   useEffect(() => {
-    setImageProfile(userData.profilePicture)
-  }, [userData, showMenu])
+    getUser().then((userData: UserType) => {
+      setUser(userData)
+    })
+  }, [user, showMenu])
 
   const logout = () => {
-    dispatch(signOut())
+    signOut()
   }
 
   const handleCloseMenu = () => {
@@ -48,18 +48,18 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
         <div className="navigation-widget-info-wrap">
           <div className="navigation-widget-info">
-            <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-              <UserAvatar size="SMALL" imageName={imageProfile} />
+            <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+              <UserAvatar size="SMALL" imageName={user?.profilePicture} />
             </Link>
 
             <p className="navigation-widget-info-title">
-              <a href={`/user/${userData.userName}`}>{userData.fullName}</a>
+              <a href={`/user/${user?.userName}`}>{user?.fullName}</a>
             </p>
 
             <p className="navigation-widget-info-text">Welcome Back!</p>
           </div>
 
-          <a className="navigation-widget-info-button button small secondary" href="#/" onClick={logout}>
+          <a className="navigation-widget-info-button button small secondary" href="" onClick={logout}>
             {t('navLeftMenu.logout')}
           </a>
         </div>

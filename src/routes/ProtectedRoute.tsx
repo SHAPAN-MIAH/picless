@@ -3,26 +3,26 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
-// import { userAuthSelector } from '../redux/Auth/AuthSelectors'
-
 export interface ProtectedRouteProps extends RouteProps {
   authenticationPath: string
 }
 
 const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
-  // const user = useSelector(userAuthSelector)
-  const { isAuthenticated } = useAuth()
-  const location = useLocation()
+  const { isAuthenticated, checkAuthenticated } = useAuth()
 
   const { authenticationPath } = props
 
+  const location = useLocation()
+
   useEffect(() => {
+    checkAuthenticated()
+
     if (window.tpl) {
       window.tpl.load()
 
       dispatchEvent(new Event('load'))
     }
-  }, [location])
+  }, [location, isAuthenticated])
 
   if (!isAuthenticated) {
     const renderComponent = () => <Redirect to={{ pathname: authenticationPath }} />

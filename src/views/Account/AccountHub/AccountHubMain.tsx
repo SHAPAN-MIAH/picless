@@ -1,40 +1,29 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import _ from 'lodash'
 
-import { userSelector } from '../../../redux/User/UserSelectors'
+import useUser from '../../../hooks/useUser'
 
 import UploadBox from '../../../components/Common/UploadBox'
 
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-  const userData = useSelector(userSelector)
 
-  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-  const [imageProfile, setImageProfile] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
+  const { getUser } = useUser()
 
-  const prevUserDataRef = useRef(userData)
-
-  const divRef = useRef(null)
+  const [imageCover, setImageCover] = useState()
+  const [imageProfile, setImageProfile] = useState()
 
   useEffect(() => {
-    if (!_.isEqual(userData, prevUserDataRef.current)) {
-      setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-      setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + userData.profilePicture)
-
-      prevUserDataRef.current = userData
-    }
-  }, [userData])
+    getUser().then((user) => {
+      setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
+      setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture)
+    })
+  }, [getUser])
 
   return (
     <div className="grid grid-3-3-3 centered">
       <div className="user-preview small fixed-height">
-        <div
-          ref={divRef}
-          className="user-preview-cover"
-          style={{ background: `url(${imageCover}) center center / cover no-repeat` }}
-        >
+        <div className="user-preview-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
 

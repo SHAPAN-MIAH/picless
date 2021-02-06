@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 
 import useWallet from '../../hooks/useWallet'
 import FormItem from '../../components/Common/Form/FormItem'
@@ -15,7 +15,7 @@ const AddFounds: FunctionComponent<{}> = () => {
   const SecurionPay = window.Securionpay
 
   const { addFounds, updateBalance } = useWallet()
-  const history = useHistory()
+  // const history = useHistory()
 
   useEffect(() => {
     const script = document.createElement('script')

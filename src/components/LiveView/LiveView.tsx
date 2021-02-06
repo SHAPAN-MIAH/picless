@@ -22,7 +22,7 @@ const LiveView: FunctionComponent<LiveViewProps> = (props) => {
           controls
           playsInline
           autoPlay
-          style={{ width: 'inherit', position: 'relative', zIndex: 0 }}
+          style={{ width: 'inherit', position: 'relative', zIndex: 0, maxHeight: '615px' }}
         />
         {/* Use it if is not autoplayable */}
         <div style={{ position: 'absolute', top: '50%', left: '50%', display: 'none' }} onClick={handlePlay}>

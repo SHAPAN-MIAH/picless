@@ -40,7 +40,7 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
               name={`timeline_event_year_started-${item.id}`}
               classNameFormInput="small"
               placeholder={t('profileInfo.timeline.newYearStarted')}
-              value={item.yearSarted?.toString()}
+              value={item.yearSarted?.toString() || 1981}
               readOnly
             />
           </FormItem>
@@ -51,7 +51,7 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
               classNameFormInput="small"
               name={`timeline_event_year_ended-${item.id}`}
               placeholder={t('profileInfo.timeline.newYearEnded')}
-              value={item.yearEnded?.toString()}
+              value={item.yearEnded?.toString() || 1981}
               readOnly
             />
           </FormItem>

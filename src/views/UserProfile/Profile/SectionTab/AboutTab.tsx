@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useContext } from 'react'
-import moment from 'moment'
 
 import Alert from '../../../../components/Common/Alerts/Alerts'
 
-import { UserProfileType, UserInterestType, UserTimeLineType } from '../../../../types/UserType'
+import { UserInterestType, UserTimeLineType } from '../../../../types/UserType.d'
 import UserProfileContext from '../../../../context/UserProfileContext'
 
 const AboutTab: FunctionComponent<{}> = () => {

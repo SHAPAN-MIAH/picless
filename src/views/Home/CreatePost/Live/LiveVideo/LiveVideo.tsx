@@ -1,5 +1,5 @@
 import React from 'react'
-import { isMobile } from 'react-device-detect'
+// import { isMobile } from 'react-device-detect'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 

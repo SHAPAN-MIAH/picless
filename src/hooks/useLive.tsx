@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import { SoundMeter } from '../assets/js/soundmeter'
 import useLiveChat, { LiveChatMessageType } from './useLiveChat'
-import { userSelector } from '../redux/User/UserSelectors'
-import { useSelector } from 'react-redux'
-import { UserType } from '../types/UserType'
+
+import { UserType } from '../types/UserType.d'
+import useUser from './useUser'
 
 type AvailableDeviceType = { deviceId: string; selected: boolean }
 type LiveStatusType = 'WAITING' | 'ON_AIR'
@@ -34,22 +34,14 @@ const useLive = () => {
 
   const { addMessage, chatRef } = useLiveChat()
 
-  const userData: UserType = useSelector(userSelector)
+  const { getUser } = useUser()
+  const [userName, setUserName] = useState('')
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
   const [liveStatus, setLiveStatus] = useState<LiveStatusType>('WAITING')
   const [micToggle, setMicToggle] = useState<boolean>(true)
 
-  useEffect(() => {
-    initWebRTCAdaptor()
-
-    if (videoRef.current) {
-      const video: any = videoRef.current
-      video.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [])
-
-  const initWebRTCAdaptor = () => {
+  const initWebRTCAdaptor = useCallback(() => {
     webRTCAdaptor = new WebRTCAdaptor({
       websocket_url: websocketURL,
       mediaConstraints,
@@ -97,7 +89,21 @@ const useLive = () => {
         console.log(message)
       },
     })
-  }
+  }, [])
+
+  useEffect(() => {
+    getUser().then((user: UserType) => {
+      console.log(user)
+      setUserName(user.userName)
+    })
+
+    initWebRTCAdaptor()
+
+    if (videoRef.current) {
+      const video: any = videoRef.current
+      video.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
 
   const checkAndRepublishIfRequired = () => {
     const iceState = webRTCAdaptor.iceConnectionState(streamingName)
@@ -178,7 +184,7 @@ const useLive = () => {
 
       if (iceState !== null && iceState !== 'failed' && iceState !== 'disconnected') {
         const dataMessage = {
-          userName: userData.userName,
+          userName,
           text: message,
           type: 'TEXT',
           isStreamer: true,

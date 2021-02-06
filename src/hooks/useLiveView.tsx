@@ -1,14 +1,12 @@
-import { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import videojs from 'video.js'
+
+import useUser from './useUser'
 
 import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import useLiveChat, { LiveChatMessageType } from './useLiveChat'
-import { userSelector } from '../redux/User/UserSelectors'
-import { UserType } from '../types/UserType.d'
 
-type AvailableDeviceType = { deviceId: string; selected: boolean }
-type LiveStatusType = 'WAITING' | 'ON_AIR'
+import { UserType } from '../types/UserType.d'
 
 const streamingName = 'lupanarStream'
 const token = ''
@@ -38,34 +36,12 @@ const useLiveView = (props: UseLiveViewProps) => {
 
   const { addMessage, chatRef } = useLiveChat()
 
-  const userData: UserType = useSelector(userSelector)
+  const { getUser } = useUser()
+  const [userName, setUserName] = useState('')
 
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  useEffect(() => {
-    initWebRTCAdaptor()
-
-    if (videoRef.current) {
-      const video: any = videoRef.current
-      video.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [])
-
-  const playWebRTCVideo = () => {
-    if (videoRef.current) {
-      const { current } = videoRef
-      current
-        .play()
-        .then((a: any) => {
-          console.log(a)
-        })
-        .catch((error: any) => {
-          console.log(error)
-        })
-    }
-  }
-
-  const initWebRTCAdaptor = () => {
+  const initWebRTCAdaptor = useCallback(() => {
     webRTCAdaptor = new WebRTCAdaptor({
       websocket_url: websocketURL,
       mediaConstraints,
@@ -131,6 +107,34 @@ const useLiveView = (props: UseLiveViewProps) => {
         }
       },
     })
+  }, [])
+
+  useEffect(() => {
+    getUser().then((user: UserType) => {
+      console.log(user)
+      setUserName(user.userName)
+    })
+
+    initWebRTCAdaptor()
+
+    if (videoRef.current) {
+      const video: any = videoRef.current
+      video.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [setUserName])
+
+  const playWebRTCVideo = () => {
+    if (videoRef.current) {
+      const { current } = videoRef
+      current
+        .play()
+        .then((a: any) => {
+          console.log(a)
+        })
+        .catch((error: any) => {
+          console.log(error)
+        })
+    }
   }
 
   const initializePlayer = (streamId: string, type: string, tokenId: string) => {
@@ -166,8 +170,6 @@ const useLiveView = (props: UseLiveViewProps) => {
       console.log('Unknown extension: ' + extension)
       return
     }
-
-    const preview = streamId
 
     // if (streamId.endsWith('_adaptive')) {
     //   preview = streamId.substring(0, streamId.indexOf('_adaptive'))
@@ -240,7 +242,7 @@ const useLiveView = (props: UseLiveViewProps) => {
 
       if (iceState !== null && iceState !== 'failed' && iceState !== 'disconnected') {
         const dataMessage = {
-          userName: userData.userName,
+          userName,
           text: message,
           type: 'TEXT',
         }

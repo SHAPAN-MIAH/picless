@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 
 import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
-import AccountInfo from '../views/Account/AccountInfo'
+import Account from '../views/Account/Account'
 import ProfileInfo from '../views/Account/ProfileInfo'
-import AccountDevices from '../views/Account/AccountDevices'
-import ChangePassword from '../views/Account/ChangePassword'
+import AccountDevices from '../views/Account/AccountDevices/AccountDevices'
+import ChangePassword from '../views/Account/ChangePassword/ChangePassword'
 import UserProfile from '../views/UserProfile/UserProfile'
 import Messages from '../views/Messages/Messages'
 import UserSettings from '../views/Account/UserSettings'
@@ -29,7 +29,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
     <>
       <Router>
         <Switch>
-          <ProtectedRoute {...routerProps} exact path="/account/account-info" component={AccountInfo} />
+          <ProtectedRoute {...routerProps} exact path="/account/account-info" component={Account} />
           <ProtectedRoute {...routerProps} exact path="/account/profile-info" component={ProfileInfo} />
           <ProtectedRoute {...routerProps} exact path="/account/my-subscriptions" component={Subscriptions} />
           <ProtectedRoute {...routerProps} exact path="/account/account-devices" component={AccountDevices} />

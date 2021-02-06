@@ -1,8 +1,5 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-
-import { userTimelineSelector } from '../../../redux/User/UserSelectors'
 
 import FormRow from '../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
@@ -10,19 +7,27 @@ import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import TimeLineEvent from './TimeLineEvent'
 import AddTimeLineEvent from './AddTimeLineEvent'
 
-import { UserTimeLineType } from '../../../types/UserType.d'
+import { UserTimeLineType, UserType } from '../../../types/UserType.d'
 import { simpleKeyGenerator } from '../../../utils/Functions'
+import useUser from '../../../hooks/useUser'
 
 const TimeLineList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const [addTimeLine, setAddTimeLine] = useState(false)
+  const { getUser } = useUser()
 
-  const userTimeLineList: UserTimeLineType[] = useSelector(userTimelineSelector)
+  const [addTimeLine, setAddTimeLine] = useState(false)
+  const [timeLineList, setTimeLineList] = useState<UserTimeLineType[]>([])
+
+  useEffect(() => {
+    getUser().then((user: UserType) => {
+      setTimeLineList(user.userTimeLine || [])
+    })
+  }, [getUser, setTimeLineList])
 
   const renderContent = () => {
-    if (userTimeLineList && userTimeLineList.length > 0) {
-      return userTimeLineList.map((row) => {
+    if (timeLineList && timeLineList.length > 0) {
+      return timeLineList.map((row) => {
         const temporaryKey = simpleKeyGenerator(5)
 
         return (

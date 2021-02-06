@@ -1,7 +1,9 @@
 import _ from 'lodash'
 import { useCallback, useContext } from 'react'
 import toast from 'react-hot-toast'
+
 import UserContext from '../context/UserContext'
+
 import UserService from '../services/UserService'
 
 import { UserType } from '../types/UserType.d'
@@ -22,7 +24,7 @@ const useUser = (): UseUserReturn => {
   const { user, setUser } = useContext(UserContext.context)
 
   const getCurrentUser = useCallback((): Promise<UserType> => {
-    const promise = new Promise<UserType>((resolve, reject) => {
+    return new Promise<UserType>((resolve, reject) => {
       if (_.isEmpty(user)) {
         UserService.getUserProfile()
           .then((userData) => {
@@ -37,8 +39,6 @@ const useUser = (): UseUserReturn => {
         resolve(user)
       }
     })
-
-    return promise
   }, [setUser, user])
 
   const updateUser = useCallback(

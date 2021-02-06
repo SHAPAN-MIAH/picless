@@ -7,6 +7,7 @@ import * as UserActions from '../User/UserSlice'
 
 import * as Utils from '../../utils/Functions'
 
+// DEPRECATED
 export const checkUserAuthenticated = (): AppThunk => async (dispatch) => {
   try {
     await Auth.currentSession()

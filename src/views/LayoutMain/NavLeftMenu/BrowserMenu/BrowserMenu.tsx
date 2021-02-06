@@ -6,24 +6,29 @@ import { useSelector } from 'react-redux'
 
 import useMenu from '../../../../hooks/useMenu'
 
-import { userSelector } from '../../../../redux/User/UserSelectors'
 import UserAvatar from '../../../../components/UserAvatar'
 import { UserType } from '../../../../types/UserType.d'
+import useUser from '../../../../hooks/useUser'
 
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const userData: UserType = useSelector(userSelector)
+  const { getUser } = useUser()
 
   const { showMenu } = useMenu()
 
-  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-  const [imageProfile, setImageProfile] = useState(userData.profilePicture)
+  const [imageCover, setImageCover] = useState()
+  const [imageProfile, setImageProfile] = useState()
+  const [user, setUser] = useState<UserType>()
 
   useEffect(() => {
-    setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-    setImageProfile(userData.profilePicture)
-  }, [userData])
+    getUser().then((userData) => {
+      setUser(userData)
+
+      setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
+      setImageProfile(userData.profilePicture)
+    })
+  }, [getUser])
 
   return (
     <>
@@ -35,8 +40,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           showMenu ? 'hidden' : 'delayed'
         )}
       >
-        <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-          <UserAvatar size="SMALL" imageName={imageProfile} />
+        <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+          <UserAvatar size="SMALL" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
           <li className="menu-item">
@@ -131,6 +136,19 @@ const BrowserMenu: FunctionComponent<{}> = () => {
               </svg>
             </Link>
           </li>
+
+          <li className="menu-item">
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              style={{ color: '#adafca' }}
+              to="/user/messages"
+              data-title={t('navLeftMenu.messages')}
+            >
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
+              </svg>
+            </Link>
+          </li>
         </ul>
       </nav>
 
@@ -146,17 +164,17 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
         <div className="user-short-description">
-          <UserAvatar size="MEDIUM" imageName={imageProfile} />
+          <UserAvatar size="MEDIUM" imageName={imageProfile || ''} />
 
           <p className="user-short-description-title">
-            <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-              {userData.fullName}
+            <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+              {user?.fullName}
             </Link>
           </p>
 
           <p className="user-short-description-text">
-            <Link to={`/user/${userData.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-              www.lupanar.com/{userData.userName}
+            <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+              www.lupanar.com/{user?.userName}
             </Link>
           </p>
         </div>
@@ -221,6 +239,15 @@ const BrowserMenu: FunctionComponent<{}> = () => {
                 <use xlinkHref="#svg-wallet" />
               </svg>
               {t('navLeftMenu.walletOverview')}
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/user/messages">
+              <svg className="menu-item-link-icon icon-forums">
+                <use xlinkHref="#svg-forums" />
+              </svg>
+              {t('navLeftMenu.messages')}
             </Link>
           </li>
 

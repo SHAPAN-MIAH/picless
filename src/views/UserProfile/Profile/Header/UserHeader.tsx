@@ -11,7 +11,7 @@ import UserAvatar from '../../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
 
-import { UserProfileType, UserType } from '../../../../types/UserType'
+import { UserType } from '../../../../types/UserType.d'
 import SubscribePopup from './SubscribePopup/SubscribePopup'
 import { WalletContextProvider } from '../../../../context/WalletContext'
 

@@ -76,7 +76,7 @@ const AccountSidebar: FunctionComponent<{}> = () => {
                   {t('accountSidebar.settings')}
                 </Link>
 
-                <a className="sidebar-menu-link" href="#/" onClick={logout}>
+                <a className="sidebar-menu-link" href="/" onClick={logout}>
                   {t('accountSidebar.logout')}
                 </a>
               </div>

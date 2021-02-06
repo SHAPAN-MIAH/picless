@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { FunctionComponent, useEffect } from 'react'
+import * as Yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { userSelector } from '../../../redux/User/UserSelectors'
-import { addTimelineEvent } from '../../../redux/User/UserThunks'
+import useUser from '../../../hooks/useUser'
 
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
@@ -14,115 +15,130 @@ import SelectForm, { SelectOptionsType } from '../../../components/Common/Select
 
 import { UserType, UserTimeLineType } from '../../../types/UserType.d'
 
+type FormValues = {
+  title: string
+  yearSarted: string
+  yearEnded: string
+  description: string
+}
+
 const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOptionsType[] }> = (props) => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
-
-  const userData: UserType = useSelector(userSelector)
 
   const { onAdd, years } = props
 
-  const [timelineEventTitle, setTimelineEventTitle] = useState('')
-  const [timelineEventStarted, setTimelineEventStarted] = useState('1981')
-  const [timelineEventEnded, setTimelineEventEnded] = useState('1981')
-  const [timelineEventDescription, setTimelineEventDescription] = useState('')
+  const { getUser, updateUser } = useUser()
 
-  const [errorMessage, setErrorMessage] = useState('')
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('Title field is required'),
+    yearSarted: Yup.string(),
+    yearEnded: Yup.string(),
+    description: Yup.string().required('Description field is required').max(500).min(1),
+  })
 
-  const onAddTimelineEvent = () => {
-    if (timelineEventTitle && timelineEventDescription) {
-      const timelineEvent: UserTimeLineType = {
-        userId: userData.id,
-        title: timelineEventTitle,
-        yearSarted: timelineEventStarted,
-        yearEnded: timelineEventEnded,
-        description: timelineEventDescription,
+  const { control, handleSubmit, errors, getValues, setValue } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const onSubmit = () => {
+    getUser().then((user) => {
+      const timeLineEvent: UserTimeLineType = {
+        userId: user.id,
+        title: getValues().title,
+        yearSarted: getValues().yearSarted,
+        yearEnded: getValues().yearEnded,
+        description: getValues().description,
       }
 
-      dispatch(addTimelineEvent(timelineEvent))
-      onAdd()
-    } else {
-      setErrorMessage(t('profileInfo.timeline.error.nameOrDescriptionEmpty'))
-    }
+      const dataToSubmit: Partial<UserType> = { userTimeLine: user.userTimeLine?.concat(timeLineEvent) }
+
+      const toastOptions = {
+        loading: 'Saving account information ...',
+        success: 'The account information has been successfully saved',
+        error: 'Error Saving the account information',
+      }
+
+      return updateUser(dataToSubmit, toastOptions).then(() => {
+        onAdd()
+      })
+    })
   }
 
-  const eventDescriptionHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTimelineEventDescription(e.target.value)
-  }
+  useEffect(() => {
+    setValue('yearSarted', '1981')
+    setValue('yearEnded', '1981')
+  }, [setValue])
 
   return (
     <>
-      <FormRow>
-        <p>{t('profileInfo.timeline.newTimeLineEvent')}</p>
-      </FormRow>
-      <FormRow classNameRow="split">
-        <FormItem>
-          <TextInput
-            type="text"
-            id="tag-line"
-            classNameFormInput="small"
-            name="tag_line"
-            placeholder={t('profileInfo.timeline.addNewTitleTimelineEventField')}
-            value={timelineEventTitle}
-            onChange={(e) => setTimelineEventTitle(e.target.value)}
-          />
-        </FormItem>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <FormRow>
+          <p>{t('profileInfo.timeline.newTimeLineEvent')}</p>
+        </FormRow>
         <FormRow classNameRow="split">
           <FormItem>
-            <SelectForm
-              id="timeline-new-year-started"
-              name="timeline_new_year_started"
-              placeholder={t('profileInfo.timeline.newYearStarted')}
-              options={years}
-              value={timelineEventStarted}
-              onChange={(e) => setTimelineEventStarted(e.target.value)}
+            <Controller
+              control={control}
+              as={TextInput}
+              type="text"
+              name="title"
+              defaultValue=""
+              required
+              placeholder={t('profileInfo.timeline.addNewTitleTimelineEventField')}
+              classNameFormInput="small active"
+              errorMessage={errors.title?.message}
             />
+          </FormItem>
+          <FormRow classNameRow="split">
+            <FormItem>
+              <Controller
+                control={control}
+                as={SelectForm}
+                name="yearSarted"
+                placeholder={t('accountInfo.timeline.newYearStarted')}
+                options={years}
+              />
+            </FormItem>
+            <FormItem>
+              <Controller
+                control={control}
+                as={SelectForm}
+                name="yearEnded"
+                placeholder={t('accountInfo.timeline.newYearEnded')}
+                options={years}
+              />
+            </FormItem>
+          </FormRow>
+        </FormRow>
+        <FormRow>
+          <FormItem>
+            <Controller
+              control={control}
+              as={TextArea}
+              name="description"
+              defaultValue=""
+              classNameFormInput="small full"
+              placeholder={t('profileInfo.timeline.addNewDescriptionEventField')}
+              errorMessage={errors.description?.message}
+              maxLength={500}
+            />
+          </FormItem>
+        </FormRow>
+
+        <FormRow classNameRow="split">
+          <FormItem>
+            <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
+              {`${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
+            </ButtonWithLoader>
           </FormItem>
           <FormItem>
-            <SelectForm
-              id="timeline_new_year_started"
-              name="timeline_new_year_started"
-              placeholder={t('profileInfo.timeline.newYearEnded')}
-              options={years}
-              value={timelineEventEnded}
-              onChange={(e) => setTimelineEventEnded(e.target.value)}
-            />
+            <ButtonWithLoader type="submit" className="small secondary" showLoader={false}>
+              {`+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
+            </ButtonWithLoader>
           </FormItem>
         </FormRow>
-      </FormRow>
-      <FormRow>
-        <FormItem>
-          <TextArea
-            type="text"
-            id="timeline-1"
-            classNameFormInput="small full"
-            name="account_url_username"
-            placeholder={t('profileInfo.timeline.addNewDescriptionEventField')}
-            value={timelineEventDescription}
-            onChange={eventDescriptionHandler}
-            maxLength={500}
-          />
-        </FormItem>
-      </FormRow>
-
-      {errorMessage !== '' && (
-        <FormRow>
-          <p style={{ color: 'red' }}>{errorMessage}</p>
-        </FormRow>
-      )}
-
-      <FormRow classNameRow="split">
-        <FormItem>
-          <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-            {`${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
-          </ButtonWithLoader>
-        </FormItem>
-        <FormItem>
-          <ButtonWithLoader type="button" className="small secondary" onClick={onAddTimelineEvent} showLoader={false}>
-            {`+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
-          </ButtonWithLoader>
-        </FormItem>
-      </FormRow>
+      </form>
     </>
   )
 }

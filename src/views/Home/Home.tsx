@@ -6,15 +6,15 @@ import PostService from '../../services/PostService'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import CreatePost, { TabNamesType } from './CreatePost/CreatePost'
+import Post from './Post/Post'
+
+import { simpleKeyGenerator } from '../../utils/Functions'
 
 import { PostType } from '../../types/PostType.d'
-import { simpleKeyGenerator } from '../../utils/Functions'
-import Post from './Post/Post'
 
 const Home: FunctionComponent<{}> = () => {
   const [posts, setPosts] = useState<PostType[]>()
   const [showPost, setShowPosts] = useState<boolean>(true)
-  const [showLiveChat, setShowLiveChat] = useState<boolean>(true)
 
   useEffect(() => {
     PostService.getPosts().then((data: PostType[]) => {

@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 // import i18n from 'i18next'
 
 import useRouter from '../../../../hooks/useRouter'
+import useUser from '../../../../hooks/useUser'
 
 import AuthService from '../../../../services/AuthService'
 
@@ -42,8 +43,7 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
       .required(t(`authentication.errors.passwordRequired`)),
   })
 
-  const router = useRouter()
-  const { setIsAuthenticated } = useAuth()
+  const { login } = useAuth()
   const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
@@ -53,42 +53,12 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
 
   const onSubmit = (data: FormValues) => {
     const { username, password, rememberMe } = data
-    return AuthService.login(username, password)
-      .then(async (user) => {
-        if (user.attributes.email_verified) {
-          user.getCachedDeviceKeyAndPassword()
 
-          setIsAuthenticated(true)
-
-          const remembeDevicerOrNot = {
-            onSuccess: (): void => {
-              setMessages(`authentication.messages.successfullyLoggedIn`)
-              router.push('/user/home')
-            },
-            onFailure: (err: any) => {
-              setIsAuthenticated(false)
-              setGeneralError(`authentication.errors.${err.code}`)
-            },
-          }
-
-          // Remember device
-          if (rememberMe) {
-            user.setDeviceStatusRemembered(remembeDevicerOrNot)
-          } else {
-            user.setDeviceStatusNotRemembered(remembeDevicerOrNot)
-          }
-        } else {
-          setGeneralError(`authentication.errors.confirmYourEmailAccount`)
-        }
-      })
+    return login(username, password, rememberMe)
+      .then((message) => setMessages(message))
       .catch((err) => {
-        setIsAuthenticated(false)
-
-        if (err.code) {
-          setGeneralError(`authentication.errors.${err.code}`)
-        } else {
-          setGeneralError(`authentication.errors.UnknownError`)
-        }
+        console.log(err)
+        setGeneralError(err.message)
       })
   }
 
