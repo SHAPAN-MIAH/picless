@@ -8,7 +8,7 @@
 }
 
 @media only screen and (max-width: 1366px) {
-  /* For mobile phones: */
+  /* For mobile: */
   [class*='mainPopup'] {
     padding: 15px;
   }

@@ -7,14 +7,14 @@ import Loader from 'react-loader-spinner'
 // import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 
 import classNames from 'classnames'
-import PostService from '../../../../services/PostService'
+import PostService from '../../../../../services/PostService'
 
-import FormRow from '../../../../components/Common/Form/FormRow'
-import FormItem from '../../../../components/Common/Form/FormItem'
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+import FormRow from '../../../../../components/Common/Form/FormRow'
+import FormItem from '../../../../../components/Common/Form/FormItem'
+import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
-import { SourceType, ResourceType } from '../../../../types/PostType.d'
+import { SourceType, ResourceType } from '../../../../../types/PostType.d'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   onClose: any

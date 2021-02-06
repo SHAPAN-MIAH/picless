@@ -5,3 +5,7 @@
 .hide {
   display: none;
 }
+
+.quickPostText {
+  font-weight: 500 !important;
+}

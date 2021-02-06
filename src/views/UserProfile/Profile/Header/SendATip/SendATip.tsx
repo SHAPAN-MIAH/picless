@@ -2,20 +2,20 @@ import React, { FormEvent, FunctionComponent, useState } from 'react'
 import { useSelector } from 'react-redux'
 // import { useTranslation } from 'react-i18next'
 import CurrencyInput from 'react-currency-input-field'
-import { userIdSelector } from '../../../../redux/User/UserSelectors'
-import UserService from '../../../../services/UserService'
+import { userIdSelector } from '../../../../../redux/User/UserSelectors'
+import UserService from '../../../../../services/UserService'
 
-import FormRowItem from '../../../../components/Common/Form/FormRowItem'
-import TextInput from '../../../../components/Common/TextInput'
-import FormRow from '../../../../components/Common/Form/FormRow'
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
+import TextInput from '../../../../../components/Common/TextInput'
+import FormRow from '../../../../../components/Common/Form/FormRow'
+import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 
-import { UserType, TipType } from '../../../../types/UserType.d'
+import { UserType, TipType } from '../../../../../types/UserType.d'
 
 import styles from './SendATip.module.css'
 
-const SendATip: FunctionComponent<{ user: UserType }> = (props) => {
-  const { user } = props
+const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) => void }> = (props) => {
+  const { user, callback } = props
   const userId: number = useSelector(userIdSelector)
 
   const [message, setMessage] = useState<string>('')
@@ -33,9 +33,16 @@ const SendATip: FunctionComponent<{ user: UserType }> = (props) => {
     UserService.sendATip(tip).then((data: { code: number; message: string }) => {
       switch (data.code) {
         case 0:
+          if (callback) {
+            callback('SUCCESS')
+          }
+
           alert('Tip Sended')
           break
         case 2:
+          if (callback) {
+            callback('ERROR')
+          }
           alert(`Error: ${data.message}`)
           break
         default:

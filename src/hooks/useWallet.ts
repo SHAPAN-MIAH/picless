@@ -31,8 +31,8 @@ const useWallet = () => {
     }
   }, [])
 
-  const addFoundsToWallet = useCallback((amount: number, description: string) => {
-    PaymentService.addCreditToWallet(amount, 'EUR', description)
+  const addFoundsToWallet = useCallback((amount: number, description: string, token: string) => {
+    PaymentService.addCreditToWallet(amount, 'USD', description, token)
   }, [])
 
   const getMovements = useCallback(() => {

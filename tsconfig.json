@@ -16,6 +16,13 @@
     "jsx": "react",
     "baseUrl": "./src"
   },
-  "include": ["src", "src/*", "src/**/*.tsx", "public/assets/js"],
-  "exclude": ["node_modules", "public", "src/**/*.js"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "public",
+    "src/**/*.js",
+    "src/assets/js, src/assets/js/*",
+    "src/**/*.js",
+    "./src/assets/js/webrtc_adaptor.js"
+  ]
 }

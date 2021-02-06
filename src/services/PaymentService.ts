@@ -1,5 +1,5 @@
 import * as ApiHelper from './ApiHelpers'
-import { AddCardType, CardType, DefaultCardType, ServiceMovementType } from '../types/PaymentTypes.d'
+import { AddCardType, CardType, DefaultCardType, ServiceMovementType, SubscritionPlanOption } from '../types/PaymentTypes.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
 
@@ -87,12 +87,14 @@ const getSuscriptionPlans = async (): Promise<CardType[]> => {
   return body
 }
 
-const suscribeToUser = async (planId: any, userIdToSuscribe: number): Promise<any> => {
+const suscribeToUser = async (planId: any, userIdToSuscribe: number, token: string, amount: number): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('planId', planId)
   bodyData.append('userIdToSuscribe', userIdToSuscribe.toString())
+  bodyData.append('token', token)
+  bodyData.append('amount', amount.toString())
 
   const requestOptions: RequestInit = {
     method: 'POST',
@@ -152,13 +154,14 @@ const getMovements = async (): Promise<ServiceMovementType> => {
   return body
 }
 
-const addCreditToWallet = async (amount: number, currency: string, description: string): Promise<any> => {
+const addCreditToWallet = async (amount: number, currency: string, description: string, token: string): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('amount', amount.toString())
   bodyData.append('currency', currency)
   bodyData.append('description', description)
+  bodyData.append('tokenId', token)
 
   const requestOptions: RequestInit = {
     method: 'POST',
@@ -173,6 +176,21 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
   return body
 }
 
+const getPlanOptions = async (planId: string): Promise<SubscritionPlanOption[]> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getplanoptions?planId=${planId}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body.list
+}
+
 export default {
   getCards,
   addCard,
@@ -184,4 +202,5 @@ export default {
   getDefaultCard,
   addCreditToWallet,
   getMovements,
+  getPlanOptions,
 }

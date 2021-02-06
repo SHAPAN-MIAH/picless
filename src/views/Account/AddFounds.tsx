@@ -1,31 +1,63 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import useWallet from '../../hooks/useWallet'
-
 import FormItem from '../../components/Common/Form/FormItem'
 
 import FormRow from '../../components/Common/Form/FormRow'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import AccountSidebar from './AccountSidebar/AccountSidebar'
-import TextInput from 'components/Common/TextInput'
+import TextInput from '../../components/Common/TextInput'
+import PaymentService from '../../services/PaymentService'
 
 const AddFounds: FunctionComponent<{}> = () => {
   const [currentAmount, setCurrentAmount] = useState<number>(0)
+  const SecurionPay = window.Securionpay
 
   const { addFounds, updateBalance } = useWallet()
   const history = useHistory()
 
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.setAttribute('id', 'mainScriptSecurionPay')
+    script.src = 'https://securionpay.com/js/securionpay.js'
+    script.async = true
+    document.body.appendChild(script)
+  }, [])
+
   const onAddAmount = (amount: number) => {
-    if (amount > 0) setCurrentAmount(currentAmount + amount)
-    else if (amount < 0) alert('sdfds')
+    if (amount > 0) {
+      const newValue = currentAmount + amount
+
+      setCurrentAmount(newValue)
+    } else if (amount < 0) alert('Error')
     else setCurrentAmount(amount)
   }
 
   const addCredits = () => {
-    addFounds(currentAmount, 'Add founds to wallet')
-    updateBalance()
-    history.push('/wallet/overview')
+    PaymentService.getDefaultCard().then((data: any) => {
+      if (data.code === '0') {
+        const newAmount = currentAmount * 100
+
+        SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
+
+        SecurionPay.verifyThreeDSecure(
+          {
+            amount: newAmount,
+            currency: 'USD',
+            card: data.defaultCardId,
+          },
+          (token: any) => {
+            if (token.error) {
+              alert(JSON.stringify(token))
+            } else {
+              addFounds(newAmount, 'Add founds to wallet', token.id)
+              updateBalance()
+            }
+          }
+        )
+      }
+    })
   }
 
   return (

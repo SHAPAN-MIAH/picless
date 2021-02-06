@@ -110,6 +110,9 @@
         "scheduleStart": "Sechedule Start",
         "scheduleEnd": "Schedule End"
       }
+    },
+    "createLive": {
+      "liveName": "Live Name"
     }
   },
   "profileInfo": {

@@ -83,3 +83,15 @@ export interface ServiceMovementType {
   hasMore: boolean
   list: MovementType[]
 }
+
+export interface SubscritionPlanOption {
+  id: string
+  created: number
+  objectType: string
+  amount: number
+  currency: string
+  interval: string
+  intervalCount: number
+  name: string
+  trialPeriodDays: number
+}

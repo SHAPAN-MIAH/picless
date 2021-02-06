@@ -20,14 +20,23 @@ const CheckboxForm: FunctionComponent<CheckboxFormProps> = (props) => {
     setCheckState(checked)
   }, [checked])
 
+  let controlStyle = {}
+
+  if (!description) {
+    controlStyle = {
+      top: '-7px',
+    }
+  }
+
   return (
     <div className="switch-option" id={id}>
       <p className="switch-option-title">{title}</p>
 
-      <p className="switch-option-text">{description}</p>
+      {description && <p className="switch-option-text">{description}</p>}
 
       <div
         className={classNames('form-switch', checkState ? 'active' : '')}
+        style={controlStyle}
         onClick={() => {
           onChange(!checkState)
           setCheckState(!checkState)

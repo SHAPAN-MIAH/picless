@@ -11,8 +11,11 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = (props) => {
       {sources &&
         sources.map((video: any) => {
           return (
-            <div key={`video-${video.id}`} className="iframe-wrap">
-              <iframe title={video.name} src={videoUrl(video.pathName)} allowFullScreen />
+            <div key={`video-${video.id}`} style={{ marginTop: '20px' }}>
+              <video title={video.name} controls width="100%">
+                <track default kind="captions" />
+                <source src={videoUrl(video.pathName)} type="video/webm" />
+              </video>
             </div>
           )
         })}

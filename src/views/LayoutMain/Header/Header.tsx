@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import AccountSettings from './AccountSettings/AccountSettings'
-import NavigationHeader from './NavigationHeader/NavigationHeader'
 import SearchBar from './SearchBar/SearchBar'
 import useMenu from '../../../hooks/useMenu'
-import LiquidImage from '../../../components/Common/LiquidImage'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
@@ -24,28 +22,24 @@ const Header: FunctionComponent<{}> = () => {
               </svg>
             </div>
 
-            <h1 className="header-brand-text">Lupanar</h1>
-          </div>
-        </div>
+            <h1 className="header-brand-text">{process.env.REACT_APP_WEBSITE_NAME}</h1>
 
-        <div className="header-actions">
-          <div className="sidemenu-trigger" onClick={handleMenu}>
-            <svg className="icon-grid">
-              <use xlinkHref="#svg-grid" />
-            </svg>
-          </div>
+            <div className="sidemenu-trigger" onClick={handleMenu}>
+              <svg className="icon-grid">
+                <use xlinkHref="#svg-grid" />
+              </svg>
+            </div>
 
-          <div className="mobilemenu-trigger" onClick={handleMenu}>
-            <div className="burger-icon inverted">
-              <div className="burger-icon-bar" />
+            <div className="mobilemenu-trigger" onClick={handleMenu}>
+              <div className="burger-icon inverted">
+                <div className="burger-icon-bar" />
 
-              <div className="burger-icon-bar" />
+                <div className="burger-icon-bar" />
 
-              <div className="burger-icon-bar" />
+                <div className="burger-icon-bar" />
+              </div>
             </div>
           </div>
-
-          <NavigationHeader />
         </div>
 
         <SearchBar />
@@ -53,608 +47,24 @@ const Header: FunctionComponent<{}> = () => {
         <div className="header-actions">
           <div className="action-list dark">
             <div className="action-list-item-wrap">
-              <div className="action-list-item header-dropdown-trigger">
-                <svg className="action-list-item-icon icon-shopping-bag">
-                  <use xlinkHref="#svg-shopping-bag" />
+              <div className="action-list-item">
+                <svg className="action-list-item-icon icon-streams">
+                  <use xlinkHref="#svg-streams" />
                 </svg>
-              </div>
-
-              <div className="dropdown-box no-padding-bottom header-dropdown">
-                <div className="dropdown-box-header">
-                  <p className="dropdown-box-header-title">
-                    Shopping Cart <span className="highlighted">3</span>
-                  </p>
-                </div>
-
-                <div className="dropdown-box-list scroll-small no-hover" data-simplebar>
-                  <div className="dropdown-box-list-item">
-                    <div className="cart-item-preview">
-                      <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <LiquidImage
-                          className="picture medium round"
-                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/01.jpg`}
-                          alt="item-01"
-                        />
-                      </a>
-
-                      <p className="cart-item-preview-title">
-                        <a href="marketplace-product.html">Twitch Stream UI Pack</a>
-                      </p>
-
-                      <p className="cart-item-preview-text">Regular License</p>
-
-                      <p className="cart-item-preview-price">
-                        <span className="highlighted">$</span> 12.00 x 1
-                      </p>
-
-                      <div className="cart-item-preview-action">
-                        <svg className="icon-delete">
-                          <use xlinkHref="#svg-delete" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-box-list-item">
-                    <div className="cart-item-preview">
-                      <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <LiquidImage
-                          className="picture medium round"
-                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/11.jpg`}
-                          alt="item-11"
-                        />
-                      </a>
-
-                      <p className="cart-item-preview-title">
-                        <a href="marketplace-product.html">Gaming Coin Badges Pack</a>
-                      </p>
-
-                      <p className="cart-item-preview-text">Regular License</p>
-
-                      <p className="cart-item-preview-price">
-                        <span className="highlighted">$</span> 6.00 x 1
-                      </p>
-
-                      <div className="cart-item-preview-action">
-                        <svg className="icon-delete">
-                          <use xlinkHref="#svg-delete" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-box-list-item">
-                    <div className="cart-item-preview">
-                      <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <LiquidImage
-                          className="picture medium round"
-                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/10.jpg`}
-                          alt="item-10"
-                        />
-                      </a>
-
-                      <p className="cart-item-preview-title">
-                        <a href="marketplace-product.html">Twitch Stream UI Pack</a>
-                      </p>
-
-                      <p className="cart-item-preview-text">Regular License</p>
-
-                      <p className="cart-item-preview-price">
-                        <span className="highlighted">$</span> 26.00 x 1
-                      </p>
-
-                      <div className="cart-item-preview-action">
-                        <svg className="icon-delete">
-                          <use xlinkHref="#svg-delete" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-box-list-item">
-                    <div className="cart-item-preview">
-                      <a className="cart-item-preview-image" href="marketplace-product.html">
-                        <LiquidImage
-                          className="picture medium round"
-                          src={`${process.env.PUBLIC_URL}/assets/img/marketplace/items/04.jpg`}
-                          alt="item-04"
-                        />
-                      </a>
-
-                      <p className="cart-item-preview-title">
-                        <a href="marketplace-product.html">Generic Joystick Pack</a>
-                      </p>
-
-                      <p className="cart-item-preview-text">Regular License</p>
-
-                      <p className="cart-item-preview-price">
-                        <span className="highlighted">$</span> 16.00 x 1
-                      </p>
-
-                      <div className="cart-item-preview-action">
-                        <svg className="icon-delete">
-                          <use xlinkHref="#svg-delete" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cart-preview-total">
-                  <p className="cart-preview-total-title">Total:</p>
-
-                  <p className="cart-preview-total-text">
-                    <span className="highlighted">$</span> 60.00
-                  </p>
-                </div>
-
-                <div className="dropdown-box-actions">
-                  <div className="dropdown-box-action">
-                    <a className="button secondary" href="marketplace-cart.html">
-                      Shopping Cart
-                    </a>
-                  </div>
-
-                  <div className="dropdown-box-action">
-                    <a className="button primary" href="marketplace-checkout.html">
-                      Go to Checkout
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
 
             <div className="action-list-item-wrap">
-              <div className="action-list-item header-dropdown-trigger">
-                <svg className="action-list-item-icon icon-friend">
-                  <use xlinkHref="#svg-friend" />
-                </svg>
-              </div>
-
-              <div className="dropdown-box header-dropdown">
-                <div className="dropdown-box-header">
-                  <p className="dropdown-box-header-title">Friend Requests</p>
-
-                  <div className="dropdown-box-header-actions">
-                    <p className="dropdown-box-header-action">Find Friends</p>
-
-                    <p className="dropdown-box-header-action">Settings</p>
-                  </div>
-                </div>
-
-                <div className="dropdown-box-list no-hover" data-simplebar>
-                  <div className="dropdown-box-list-item">
-                    <div className="user-status request">
-                      <a className="user-status-avatar" href="profile-timeline.html">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/16.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">14</p>
-                          </div>
-                        </div>
-                      </a>
-
-                      <p className="user-status-title">
-                        <a className="bold" href="profile-timeline.html">
-                          Ginny Danvers
-                        </a>
-                      </p>
-
-                      <p className="user-status-text">6 friends in common</p>
-
-                      <div className="action-request-list">
-                        <div className="action-request accept">
-                          <svg className="action-request-icon icon-add-friend">
-                            <use xlinkHref="#svg-add-friend" />
-                          </svg>
-                        </div>
-
-                        <div className="action-request decline">
-                          <svg className="action-request-icon icon-remove-friend">
-                            <use xlinkHref="#svg-remove-friend" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-box-list-item">
-                    <div className="user-status request">
-                      <a className="user-status-avatar" href="profile-timeline.html">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/14.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">3</p>
-                          </div>
-                        </div>
-                      </a>
-
-                      <p className="user-status-title">
-                        <a className="bold" href="profile-timeline.html">
-                          Paul Lang
-                        </a>
-                      </p>
-
-                      <p className="user-status-text">2 friends in common</p>
-
-                      <div className="action-request-list">
-                        <div className="action-request accept">
-                          <svg className="action-request-icon icon-add-friend">
-                            <use xlinkHref="#svg-add-friend" />
-                          </svg>
-                        </div>
-
-                        <div className="action-request decline">
-                          <svg className="action-request-icon icon-remove-friend">
-                            <use xlinkHref="#svg-remove-friend" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-box-list-item">
-                    <div className="user-status request">
-                      <a className="user-status-avatar" href="profile-timeline.html">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/11.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">9</p>
-                          </div>
-                        </div>
-                      </a>
-
-                      <p className="user-status-title">
-                        <a className="bold" href="profile-timeline.html">
-                          Cassie May
-                        </a>
-                      </p>
-
-                      <p className="user-status-text">4 friends in common</p>
-
-                      <div className="action-request-list">
-                        <div className="action-request accept">
-                          <svg className="action-request-icon icon-add-friend">
-                            <use xlinkHref="#svg-add-friend" />
-                          </svg>
-                        </div>
-
-                        <div className="action-request decline">
-                          <svg className="action-request-icon icon-remove-friend">
-                            <use xlinkHref="#svg-remove-friend" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <a className="dropdown-box-button secondary" href="hub-profile-requests.html">
-                  View all Requests
-                </a>
+              <div className="action-list-item">
+                <FontAwesomeIcon icon="bars" size="lg" color="#8b88ff " />
               </div>
             </div>
 
             <div className="action-list-item-wrap">
-              <div className="action-list-item header-dropdown-trigger">
+              <div className="action-list-item">
                 <svg className="action-list-item-icon icon-messages">
                   <use xlinkHref="#svg-messages" />
                 </svg>
-              </div>
-
-              <div className="dropdown-box header-dropdown">
-                <div className="dropdown-box-header">
-                  <p className="dropdown-box-header-title">Messages</p>
-
-                  <div className="dropdown-box-header-actions">
-                    <p className="dropdown-box-header-action">Mark all as Read</p>
-
-                    <p className="dropdown-box-header-action">Settings</p>
-                  </div>
-                </div>
-
-                <div className="dropdown-box-list medium" data-simplebar>
-                  <a className="dropdown-box-list-item" href="hub-profile-messages.html">
-                    <div className="user-status">
-                      <div className="user-status-avatar">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/04.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">6</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="user-status-title">
-                        <span className="bold">Bearded Wonder</span>
-                      </p>
-
-                      <p className="user-status-text">Great! Then will meet with them at the party...</p>
-
-                      <p className="user-status-timestamp floaty">29 mins ago</p>
-                    </div>
-                  </a>
-
-                  <a className="dropdown-box-list-item" href="hub-profile-messages.html">
-                    <div className="user-status">
-                      <div className="user-status-avatar">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/05.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">12</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="user-status-title">
-                        <span className="bold">Neko Bebop</span>
-                      </p>
-
-                      <p className="user-status-text">Awesome! I&apos;ll see you there!</p>
-
-                      <p className="user-status-timestamp floaty">54 mins ago</p>
-                    </div>
-                  </a>
-
-                  <a className="dropdown-box-list-item" href="hub-profile-messages.html">
-                    <div className="user-status">
-                      <div className="user-status-avatar">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/03.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">16</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="user-status-title">
-                        <span className="bold">Nick Grissom</span>
-                      </p>
-
-                      <p className="user-status-text">Can you stream that new game?</p>
-
-                      <p className="user-status-timestamp floaty">2 hours ago</p>
-                    </div>
-                  </a>
-
-                  <a className="dropdown-box-list-item" href="hub-profile-messages.html">
-                    <div className="user-status">
-                      <div className="user-status-avatar">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/07.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">26</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="user-status-title">
-                        <span className="bold">Sarah Diamond</span>
-                      </p>
-
-                      <p className="user-status-text">I&apos;m sending you the latest news of the release...</p>
-
-                      <p className="user-status-timestamp floaty">16 hours ago</p>
-                    </div>
-                  </a>
-
-                  <a className="dropdown-box-list-item" href="hub-profile-messages.html">
-                    <div className="user-status">
-                      <div className="user-status-avatar">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/12.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">10</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="user-status-title">
-                        <span className="bold">James Murdock</span>
-                      </p>
-
-                      <p className="user-status-text">Great! Then will meet with them at the party...</p>
-
-                      <p className="user-status-timestamp floaty">7 days ago</p>
-                    </div>
-                  </a>
-
-                  <a className="dropdown-box-list-item" href="hub-profile-messages.html">
-                    <div className="user-status">
-                      <div className="user-status-avatar">
-                        <div className="user-avatar small no-outline">
-                          <div className="user-avatar-content">
-                            <div className="hexagon-image-30-32" data-src="img/avatar/10.jpg" />
-                          </div>
-
-                          <div className="user-avatar-progress">
-                            <div className="hexagon-progress-40-44" />
-                          </div>
-
-                          <div className="user-avatar-progress-border">
-                            <div className="hexagon-border-40-44" />
-                          </div>
-
-                          <div className="user-avatar-badge">
-                            <div className="user-avatar-badge-border">
-                              <div className="hexagon-22-24" />
-                            </div>
-
-                            <div className="user-avatar-badge-content">
-                              <div className="hexagon-dark-16-18" />
-                            </div>
-
-                            <p className="user-avatar-badge-text">5</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="user-status-title">
-                        <span className="bold">The Green Goo</span>
-                      </p>
-
-                      <p className="user-status-text">Can you stream that new game?</p>
-
-                      <p className="user-status-timestamp floaty">10 days ago</p>
-                    </div>
-                  </a>
-                </div>
-
-                <a className="dropdown-box-button primary" href="hub-profile-messages.html">
-                  View all Messages
-                </a>
               </div>
             </div>
 
@@ -947,7 +357,15 @@ const Header: FunctionComponent<{}> = () => {
             </div>
           </div>
 
-          <AccountSettings />
+          <div className="action-item-wrap">
+            <div className="action-item dark">
+              <svg className="action-item-icon icon-messages">
+                <use xlinkHref="#svg-messages" />
+              </svg>
+            </div>
+          </div>
+
+          {/* <AccountSettings /> */}
         </div>
       </header>
     </>

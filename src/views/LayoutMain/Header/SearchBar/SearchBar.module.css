@@ -1,3 +1,10 @@
 .headerActionImportant {
   display: flex !important;
+  width: 49.3243243243% !important;
+}
+
+@media only screen and (max-width: 1366px) {
+  /* For mobile phones: */
+  [class*='headerActionImportant'] {
+  }
 }

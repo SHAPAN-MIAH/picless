@@ -1,6 +1,8 @@
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 
+import UserAvatar from '../../../../components/UserAvatar'
+
 import { UserType } from '../../../../types/UserType.d'
 
 type HeaderPostProps = {
@@ -15,16 +17,12 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
 
   return (
     <div className="user-status">
-      {/* <UserAvatar image={imageUrl(user?.profilePicture)} size="SMALL" /> */}
-      <div className="user-status-avatar">
+      <UserAvatar imageName={user.profilePicture} size="SMALL" />
+      {/* <div className="user-status-avatar">
         <div className="user-avatar small no-outline">
           <div className="user-avatar-content">
             <div className="hex">
-              <img
-                alt="asd"
-                style={{ width: '40px', height: '42px' }}
-                src={process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture}
-              />
+              <img alt="asd" src={process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture} />
             </div>
           </div>
 
@@ -36,7 +34,7 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
             <div className="hexagon-border-40-44" />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <p className="user-status-title medium">
         <a className="bold" href="profile-timeline.html">

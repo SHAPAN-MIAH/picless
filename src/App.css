@@ -106,3 +106,22 @@
   color: #dc3545;
   font-size: 14px;
 }
+
+.image-gallery {
+  width: 100%;
+  height: auto;
+}
+
+.image-gallery-slide img {
+  width: 100%;
+  height: 400px;
+  max-height: 80vh;
+  object-fit: cover;
+  overflow: hidden;
+  object-position: center center;
+  background-color: rgba(21, 21, 31, 1);
+}
+
+.fullscreen .image-gallery-slide img {
+  max-height: 100vh;
+}
