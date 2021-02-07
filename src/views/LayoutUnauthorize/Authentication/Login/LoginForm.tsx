@@ -5,11 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 // import i18n from 'i18next'
 
-import useRouter from '../../../../hooks/useRouter'
-import useUser from '../../../../hooks/useUser'
-
-import AuthService from '../../../../services/AuthService'
-
 import TextInput from '../../../../components/Common/TextInput'
 import SimpleCheckboxForm from '../../../../components/Common/SimpleCheckboxForm'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'

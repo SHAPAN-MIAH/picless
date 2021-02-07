@@ -94,12 +94,31 @@ const useAuth = () => {
     })
   }, [])
 
+  const changePassword = useCallback((oldPassword: string, newPassword: string): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      Auth.currentAuthenticatedUser().then((user) => {
+        Auth.changePassword(user, oldPassword, newPassword)
+          .then(() => {
+            resolve('changePassword.messageSuccessfully')
+          })
+          .catch((err) => {
+            if (err.code) {
+              reject(new Error(`changePassword.errors.${err.code}`))
+            } else {
+              reject(new Error(`changePassword.errors.UnknownError`))
+            }
+          })
+      })
+    })
+  }, [])
+
   return {
     isAuthenticated,
     checkAuthenticated,
     login,
     signOut,
     getDeviceList,
+    changePassword,
   }
 }
 

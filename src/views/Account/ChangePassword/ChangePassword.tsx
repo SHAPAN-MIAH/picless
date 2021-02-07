@@ -1,42 +1,64 @@
-import React, { FunctionComponent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FunctionComponent, useCallback } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
+import toast from 'react-hot-toast'
 
 import PasswordStrengthBar from 'react-password-strength-bar'
-
-import { errorSelector, messageSelector, getAction } from '../../../redux/Auth/AuthSelectors'
-import { changePassword } from '../../../redux/Auth/AuthThunks'
 
 import FormItem from '../../../components/Common/Form/FormItem'
 import TextInput from '../../../components/Common/TextInput'
 import FormRow from '../../../components/Common/Form/FormRow'
-import Alert from '../../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
+import useAuth from '../../../hooks/useAuth'
+
+type FormValues = {
+  oldPassword: string
+  newPassword: string
+  confirmationPassword: string
+}
 
 const ChangePassword: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const error: string = useSelector(errorSelector)
-  const message: string = useSelector(messageSelector)
-  const dispatch = useDispatch()
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    oldPassword: Yup.string()
+      .transform((x) => (x === '' ? undefined : x))
+      .required(t(`authentication.errors.passwordRequired`)),
+    newPassword: Yup.string()
+      .transform((x) => (x === '' ? undefined : x))
+      .required(t(`authentication.errors.passwordRequired`)),
+    confirmationPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+  })
 
-  const [oldPassword, setOldPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [passwordRepeat, setPasswordRepeat] = useState('')
+  const { changePassword } = useAuth()
+  const { control, handleSubmit, errors, formState, reset } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
 
-  const onChangePassword = () => {
-    dispatch(changePassword(oldPassword, newPassword, passwordRepeat))
-  }
+  const onSubmit = useCallback((data: FormValues) => {
+    return changePassword(data.oldPassword, data.newPassword)
+      .then((message: string) => {
+        const msg = t(message)
+        toast.success(msg)
+
+        reset()
+      })
+      .catch((err) => {
+        const errMsg = t(err.message)
+
+        toast.error(errMsg)
+      })
+  }, [])
+
   const scoreWords = [
     t('passwordStrengthBar.scoreWords.weak'),
     t('passwordStrengthBar.scoreWords.okay'),
     t('passwordStrengthBar.scoreWords.good'),
     t('passwordStrengthBar.scoreWords.strong'),
   ]
-
-  const currentAction = useSelector(getAction)
-
-  const showLoader = currentAction.action === 'CHANGE_PASSWORD' && currentAction.status === 'WAITING'
 
   return (
     <>
@@ -52,68 +74,71 @@ const ChangePassword: FunctionComponent<{}> = () => {
             <p className="widget-box-title">{t('changePassword.changeYourPasswordHere')} </p>
 
             <div className="widget-box-content">
-              <form className="form">
+              <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <FormRow>
                   <FormItem>
-                    <TextInput
+                    <Controller
+                      control={control}
+                      as={TextInput}
                       type="password"
-                      id="old-password"
+                      name="oldPassword"
+                      defaultValue=""
                       classNameFormInput="small active"
-                      name="old_password"
                       placeholder={t('changePassword.oldPasswordField')}
-                      value={oldPassword}
-                      onChange={(e) => setOldPassword(e.target.value)}
+                      errorMessage={errors.oldPassword?.message}
                     />
                   </FormItem>
                 </FormRow>
 
                 <FormRow>
                   <FormItem>
-                    <TextInput
-                      type="password"
-                      id="new-Password"
-                      classNameFormInput="small active"
-                      name="new_Password"
-                      placeholder={t('changePassword.newPasswordField')}
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <PasswordStrengthBar
-                      password={newPassword}
-                      shortScoreWord={t('passwordStrengthBar.shortScoreWord')}
-                      scoreWords={scoreWords}
-                      minLength={6}
+                    <Controller
+                      control={control}
+                      name="newPassword"
+                      defaultValue=""
+                      render={(propsController) => (
+                        <>
+                          <TextInput
+                            type="password"
+                            name={propsController.name}
+                            ref={propsController.ref}
+                            value={propsController.value}
+                            classNameFormInput="small active"
+                            placeholder={t('changePassword.newPasswordField')}
+                            errorMessage={errors.newPassword?.message}
+                            onChange={(e) => propsController.onChange(e.target.value)}
+                          />
+
+                          <PasswordStrengthBar
+                            password={propsController.value}
+                            shortScoreWord={t('passwordStrengthBar.shortScoreWord')}
+                            scoreWords={scoreWords}
+                            minLength={6}
+                          />
+                        </>
+                      )}
                     />
                   </FormItem>
                 </FormRow>
 
                 <FormRow>
                   <FormItem>
-                    <TextInput
+                    <Controller
+                      control={control}
+                      as={TextInput}
                       type="password"
-                      id="password-repeat"
+                      name="confirmationPassword"
+                      defaultValue=""
                       classNameFormInput="small active"
-                      name="password_repeat"
                       placeholder={t('changePassword.passwordRepeatField')}
-                      value={passwordRepeat}
-                      onChange={(e) => setPasswordRepeat(e.target.value)}
+                      errorMessage={errors.confirmationPassword?.message}
                     />
                   </FormItem>
-                </FormRow>
-
-                <FormRow>
-                  {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-                  {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
                 </FormRow>
 
                 <FormRow classNameRow="split">
                   <FormItem>
-                    <ButtonWithLoader
-                      type="button"
-                      className="small secondary"
-                      onClick={onChangePassword}
-                      showLoader={showLoader}
-                    >
+                    <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
                       {t('changePassword.buttonChangePassowrd')}
                     </ButtonWithLoader>
                   </FormItem>
