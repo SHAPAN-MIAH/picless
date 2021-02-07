@@ -20,7 +20,7 @@ import UserStatus from './UserStatus/UserStatus'
 import Conversation from './Conversation/Conversation'
 
 import { MessageType, UserStatusMessagesType, OnReceiveMessageType } from '../../types/MessagesType.d'
-import { userIdSelector } from '../../redux/User/UserSelectors'
+import useUser from '../../hooks/useUser'
 
 const Messages: FunctionComponent<{}> = () => {
   const dispatch = useDispatch()
@@ -29,7 +29,8 @@ const Messages: FunctionComponent<{}> = () => {
 
   const [connection, setConnection] = useState<HubConnection | null>(null)
 
-  const currentUserId: number = useSelector(userIdSelector)
+  const { userId } = useUser()
+
   const listOfUser: UserStatusMessagesType[] = useSelector(getUserListSelector)
   const userSelected = useSelector(getUserSelector)
 
@@ -37,8 +38,8 @@ const Messages: FunctionComponent<{}> = () => {
   const lastMessage = useRef<string>('')
 
   const showUserChat = useCallback(
-    (userId: number) => {
-      dispatch(setUserSelected(userId))
+    (uId: number) => {
+      dispatch(setUserSelected(uId))
     },
     [dispatch]
   )
@@ -86,10 +87,10 @@ const Messages: FunctionComponent<{}> = () => {
             type: 'TEXT',
             message: message.message,
             registerDate,
-            fromUserId: userSelected.userId,
-            senderUserId: userSelected.userId,
-            toUserId: currentUserId,
-            receivedUserId: currentUserId,
+            fromUserId: userSelected.userId.toString(),
+            senderUserId: userSelected.userId.toString(),
+            toUserId: userId,
+            receivedUserId: userId,
           }
 
           dispatch(addMessageChat(chatMessage))
@@ -100,13 +101,12 @@ const Messages: FunctionComponent<{}> = () => {
     }
 
     const notifyOnline = () => {
-      ChatService.notifyConnected(currentUserId)
+      ChatService.notifyConnected(userId)
     }
 
     return () => {
       connection?.stop()
     }
-    // eslint-disable-next-line
   }, [])
 
   const sendMessage = async (message: string) => {
@@ -117,10 +117,10 @@ const Messages: FunctionComponent<{}> = () => {
         type: 'TEXT',
         message,
         registerDate: new Date().toISOString(),
-        fromUserId: currentUserId,
-        senderUserId: currentUserId,
-        toUserId: userSelected.userId,
-        receivedUserId: userSelected.userId,
+        fromUserId: userId,
+        senderUserId: userId,
+        toUserId: userSelected.userId.toString(),
+        receivedUserId: userSelected.userId.toString(),
       }
 
       try {

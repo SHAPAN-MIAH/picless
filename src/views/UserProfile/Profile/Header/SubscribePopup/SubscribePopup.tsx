@@ -14,8 +14,6 @@ import useWallet from '../../../../../hooks/useWallet'
 import UserProfileContext from '../../../../../context/UserProfileContext'
 
 const SubscribePopup: FunctionComponent<{}> = () => {
-  // const userData: UserType = useSelector(userSelector)
-
   const { user } = useContext(UserProfileContext.context)
 
   const SecurionPay = window.Securionpay

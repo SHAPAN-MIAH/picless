@@ -9,6 +9,7 @@ import UserService from '../services/UserService'
 import { UserType } from '../types/UserType.d'
 
 type UseUserReturn = {
+  userId: string
   getUser: () => Promise<UserType>
   updateUser: (userData: Partial<UserType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
 }
@@ -21,7 +22,7 @@ const defaultToastOptions = {
 }
 
 const useUser = (): UseUserReturn => {
-  const { user, setUser } = useContext(UserContext.context)
+  const { user, setUser, userId } = useContext(UserContext.context)
 
   const getCurrentUser = useCallback((): Promise<UserType> => {
     return new Promise<UserType>((resolve, reject) => {
@@ -59,6 +60,7 @@ const useUser = (): UseUserReturn => {
   )
 
   return {
+    userId,
     getUser: getCurrentUser,
     updateUser,
   }

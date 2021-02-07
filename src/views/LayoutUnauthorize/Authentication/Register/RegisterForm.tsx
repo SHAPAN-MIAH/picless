@@ -1,10 +1,9 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
 import PasswordStrengthBar from 'react-password-strength-bar'
-
-import { errorSelector, messageSelector, getAction } from '../../../../redux/Auth/AuthSelectors'
-import { register } from '../../../../redux/Auth/AuthThunks'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 import TextInput from '../../../../components/Common/TextInput'
 
@@ -12,26 +11,54 @@ import FormRowItem from '../../../../components/Common/Form/FormRowItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+import useAuth from '../../../../hooks/useAuth'
 
-const RegisterForm = () => {
+import { RegisterViewType } from './Register'
+
+type FormValues = {
+  username: string
+  password: string
+  confirmationPassword: string
+}
+
+const RegisterForm: FunctionComponent<{
+  changeView: (view: RegisterViewType) => void
+  setEmail: (value: string) => void
+}> = (props) => {
+  const { changeView, setEmail } = props
   const { t } = useTranslation()
 
-  const error = useSelector(errorSelector)
-  const message = useSelector(messageSelector)
-  const currentAction = useSelector(getAction)
-  const dispatch = useDispatch()
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required(t(`authentication.errors.emailRequired`))
+      .email(t(`authentication.errors.enterValidEmailAddress`)),
+    password: Yup.string()
+      .transform((x) => (x === '' ? undefined : x))
+      .required(t(`authentication.errors.passwordRequired`)),
+    confirmationPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+  })
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordRepeat, setPasswordRepeat] = useState('')
+  const { register } = useAuth()
+  const { control, handleSubmit, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
 
-  const signUp = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const [messages, setMessages] = useState<string>('')
+  const [generalError, setGeneralError] = useState<string>('')
 
-    dispatch(register(email, password, passwordRepeat))
+  const onSubmit = (data: FormValues) => {
+    return register(data.username, data.password)
+      .then((message) => {
+        setMessages(message)
+
+        setEmail(data.username)
+        changeView('CONFIRM_EMAIL')
+      })
+      .catch((err) => {
+        setGeneralError(err.message)
+      })
   }
-
-  const showLoader = currentAction.action === 'REGISTER' && currentAction.status === 'WAITING'
 
   const scoreWords = [
     t('passwordStrengthBar.scoreWords.weak'),
@@ -43,61 +70,76 @@ const RegisterForm = () => {
     <div>
       <h2 className="form-box-title">{t('authentication.registerTitle')}</h2>
 
-      <form className="form" onSubmit={signUp}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <FormRowItem>
-          <TextInput
+          <Controller
+            control={control}
+            as={TextInput}
             type="text"
-            id="register-email"
-            name="register_email"
+            name="username"
+            defaultValue=""
             placeholder={t('authentication.yourEmail')}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            errorMessage={errors.username?.message}
           />
         </FormRowItem>
 
         <FormRowItem>
-          <TextInput
-            type="password"
-            id="register-password"
-            name="register_password"
-            placeholder={t('authentication.password')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <PasswordStrengthBar
-            password={password}
-            shortScoreWord={t('passwordStrengthBar.shortScoreWord')}
-            scoreWords={scoreWords}
-            minLength={6}
+          <Controller
+            control={control}
+            name="password"
+            defaultValue=""
+            render={(propsController) => (
+              <>
+                <TextInput
+                  type="password"
+                  name={propsController.name}
+                  ref={propsController.ref}
+                  value={propsController.value}
+                  classNameFormInput="small active"
+                  placeholder={t('changePassword.newPasswordField')}
+                  errorMessage={errors.password?.message}
+                  onChange={(e) => propsController.onChange(e.target.value)}
+                />
+
+                <PasswordStrengthBar
+                  password={propsController.value}
+                  shortScoreWord={t('passwordStrengthBar.shortScoreWord')}
+                  scoreWords={scoreWords}
+                  minLength={6}
+                />
+              </>
+            )}
           />
         </FormRowItem>
 
         <FormRowItem>
-          <TextInput
+          <Controller
+            control={control}
+            as={TextInput}
             type="password"
-            id="register-password-repeat"
-            name="register_password_repeat"
-            placeholder={t('authentication.repeatPassword')}
-            value={passwordRepeat}
-            onChange={(e) => setPasswordRepeat(e.target.value)}
+            name="confirmationPassword"
+            defaultValue=""
+            classNameFormInput="small active"
+            placeholder={t('changePassword.passwordRepeatField')}
+            errorMessage={errors.confirmationPassword?.message}
           />
         </FormRowItem>
 
         <FormRow>
-          <ButtonWithLoader type="submit" className="button medium primary" showLoader={showLoader}>
+          <ButtonWithLoader type="submit" className="button medium primary" showLoader={formState.isSubmitting}>
             {t('authentication.registerButton')}
           </ButtonWithLoader>
         </FormRow>
 
         <FormRow>
-          {error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}
-          {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />}
+          {generalError && <Alert alertType="DANGER" message={t(generalError)} style={{ width: '100%' }} />}
+          {messages && <Alert alertType="PRIMARY" message={t(messages)} style={{ width: '100%' }} />}
         </FormRow>
       </form>
 
       <p className="form-text">
         {t('authentication.registerConfimationEmailMessage')}
-        <a href="#/">{t('authentication.contactUs')}</a>!
+        <a href="">{t('authentication.contactUs')}</a>!
       </p>
     </div>
   )

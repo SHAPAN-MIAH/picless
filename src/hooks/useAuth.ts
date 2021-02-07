@@ -112,6 +112,60 @@ const useAuth = () => {
     })
   }, [])
 
+  const register = useCallback((username: string, password: string): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email: username,
+        },
+      })
+        .then(() => {
+          resolve('changePassword.messageSuccessfully')
+        })
+        .catch((err) => {
+          if (err.code) {
+            reject(new Error(`authentication.errors.${err.code}`))
+          } else {
+            reject(new Error(`authentication.errors.UnknownError`))
+          }
+        })
+    })
+  }, [])
+
+  const confirmRegister = useCallback((email: string, code: string): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      Auth.confirmSignUp(email, code)
+        .then(() => {
+          resolve('authentication.messages.registerSuccessfully')
+        })
+        .catch((err) => {
+          if (err.code) {
+            reject(new Error(`authentication.errors.${err.code}`))
+          } else {
+            reject(new Error(`authentication.errors.UnknownError`))
+          }
+        })
+    })
+  }, [])
+
+  const resendVerificationCode = useCallback((email: string): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      Auth.resendSignUp(email)
+        .then(() => {
+          resolve('authentication.resendVerificationCodeSuccess')
+        })
+        .catch((err) => {
+          if (err.code) {
+            reject(new Error(`authentication.errors.${err.code}`))
+          } else {
+            reject(new Error(`authentication.errors.UnknownError`))
+          }
+        })
+    })
+  }, [])
+
   return {
     isAuthenticated,
     checkAuthenticated,
@@ -119,6 +173,9 @@ const useAuth = () => {
     signOut,
     getDeviceList,
     changePassword,
+    register,
+    confirmRegister,
+    resendVerificationCode,
   }
 }
 

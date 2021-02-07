@@ -1,26 +1,14 @@
-import React, { FunctionComponent, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { getAction } from '../../../redux/Auth/AuthSelectors'
-import { signOut } from '../../../redux/Auth/AuthThunks'
+import useAuth from '../../../hooks/useAuth'
 
 const AccountSidebar: FunctionComponent<{}> = () => {
-  const history = useHistory()
-  const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  const currentAction = useSelector(getAction)
-
-  useEffect(() => {
-    if (currentAction.action === 'SIGNOUT' && currentAction.status === 'FINISHED') {
-      history.push('/')
-    }
-  })
-
+  const { signOut } = useAuth()
   const logout = () => {
-    dispatch(signOut())
+    signOut()
   }
 
   return (

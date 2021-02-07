@@ -16,10 +16,10 @@ export interface MessageType {
   content?: string // TODO: UNIFY THE TYPES IN BACKEND
   registerDate: string // TODO: Should change to registerDate?
   type: TypeMessageType
-  senderUserId?: number
-  receivedUserId?: number
-  fromUserId?: number
-  toUserId?: number
+  senderUserId?: string
+  receivedUserId?: string
+  fromUserId?: string
+  toUserId?: string
   connectionId?: string
 }
 

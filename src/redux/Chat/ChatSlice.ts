@@ -56,7 +56,7 @@ export const chatSlice = createSlice({
     currentChatAddMessage: (state, action: PayloadAction<MessageType>) => {
       const message = action.payload
 
-      if (message.fromUserId === state.userSelected) {
+      if (message && parseInt(message?.fromUserId || '0', 10) === state.userSelected) {
         const messages = state.currentChat.concat(message)
 
         return { ...state, loading: false, currentChat: messages }

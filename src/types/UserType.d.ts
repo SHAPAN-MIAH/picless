@@ -87,8 +87,8 @@ export interface UserProfileType extends UserType {
 }
 
 export interface TipType {
-  fromId: number
-  toId: number
+  fromId: string
+  toId: string
   message: string
   cash: number
 }

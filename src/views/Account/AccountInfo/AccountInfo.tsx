@@ -63,6 +63,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
       .then((user) => {
         formFields.forEach((field: string) => {
           const value = _.get(user, field)
+
+          console.log(field + ' >>>>>>>>>>' + value)
           setValue(field as formFieldsNames, value || '')
         })
       })

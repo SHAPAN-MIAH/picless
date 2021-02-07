@@ -1,19 +1,17 @@
 import React, { forwardRef } from 'react'
-import { useSelector } from 'react-redux'
 
 import * as Utils from '../../../../utils/Functions'
-
-import { userIdSelector } from '../../../../redux/User/UserSelectors'
 
 import MessageLeft from './MessageLeft'
 import MessageRight from './MessageRight'
 
 import { MessageType, SingleMessageTypeRef } from '../../../../types/MessagesType.d'
+import useUser from '../../../../hooks/useUser'
 
 const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((props, ref) => {
   const { messages } = props
 
-  const userId: number = useSelector(userIdSelector)
+  const { userId } = useUser()
 
   let prevMessageUser: MessageType
   const chat = messages.map((m, index, array) => {

@@ -1,8 +1,6 @@
 import React, { FormEvent, FunctionComponent, useState } from 'react'
-import { useSelector } from 'react-redux'
-// import { useTranslation } from 'react-i18next'
 import CurrencyInput from 'react-currency-input-field'
-import { userIdSelector } from '../../../../../redux/User/UserSelectors'
+
 import UserService from '../../../../../services/UserService'
 
 import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
@@ -13,10 +11,12 @@ import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 import { UserType, TipType } from '../../../../../types/UserType.d'
 
 import styles from './SendATip.module.css'
+import useUser from '../../../../../hooks/useUser'
 
 const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) => void }> = (props) => {
   const { user, callback } = props
-  const userId: number = useSelector(userIdSelector)
+
+  const { userId } = useUser()
 
   const [message, setMessage] = useState<string>('')
   const [cash, setCash] = useState<number>(5.0)
@@ -25,7 +25,7 @@ const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) 
     e.preventDefault()
     const tip: TipType = {
       fromId: userId,
-      toId: user.id as number,
+      toId: user.id?.toString() || '',
       message,
       cash,
     }

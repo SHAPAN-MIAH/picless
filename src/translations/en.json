@@ -252,7 +252,7 @@
     "messages": {
       "successfullyLoggedIn": "You are successfully logged in",
       "successfullyPasswordReset": "Your password has been updated successfully",
-      "RegisterSuccessfully": "You have been registered successfully"
+      "registerSuccessfully": "You have been registered successfully"
     },
     "errors": {
       "UsernameExistsException": "An account with the given email already exists.",
