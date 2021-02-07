@@ -35,22 +35,26 @@ const CardList: FunctionComponent<{}> = () => {
           )}
 
           {cards.length > 0 && (
-            <div className="table-wrap" data-simplebar>
+            <div
+              className="table-wrap"
+              data-simplebar
+              style={{ overflowX: 'hidden', overflowY: 'auto', maxHeight: '415px', marginTop: '10px' }}
+            >
               <div className="table table-downloads split-rows">
                 <div className="table-header">
                   <div className="table-header-column padded">
                     <p className="table-header-title">Provider</p>
                   </div>
 
-                  <div className="table-header-column padded">
+                  {/* <div className="table-header-column padded">
                     <p className="table-header-title">Name on card</p>
-                  </div>
+                  </div> */}
 
                   <div className="table-header-column padded">
                     <p className="table-header-title">Expires</p>
                   </div>
 
-                  <div className="table-header-column padded"> </div>
+                  {/* <div className="table-header-column padded"> </div> */}
 
                   <div className="table-header-column padded"> </div>
                 </div>

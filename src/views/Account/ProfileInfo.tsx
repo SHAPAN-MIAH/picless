@@ -221,7 +221,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
                     <FormRow>
                       <FormItem>
-                        <ButtonWithLoader type="submit" className="medium primary" showLoader={formState.isSubmitting}>
+                        <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
                           {t('accountSidebar.saveButtonText')}
                         </ButtonWithLoader>
                       </FormItem>

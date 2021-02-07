@@ -32,9 +32,9 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
           </div>
         </div>
 
-        <div className="table-column padded-right">
+        {/* <div className="table-column padded-right">
           <p className="table-title">{card.cardholderName}</p>
-        </div>
+        </div> */}
 
         <div className="table-column padded-right">
           <p className="table-title">
@@ -42,7 +42,7 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
           </p>
         </div>
 
-        <div className="table-column padded-right">
+        {/* <div className="table-column padded-right">
           <p className="table-title">
             <Popup
               trigger={<span className="highlighted">Billing address</span>}
@@ -53,13 +53,13 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
                 <h5 style={{ marginBottom: '10px' }}>Billing Address</h5>
                 <h6 style={{ margin: '5px' }}>{card.cardholderName}</h6>
                 <p style={{ margin: '5px' }}>{card.addressLine1}</p>
-                {/* <h6>{card.addressLine2 || ''}</h6> */}
+              
                 <p style={{ margin: '5px' }}>{`${card.addressCity}, ${card.addressState}, MISSING ZIP CODE`}</p>
                 <p style={{ margin: '5px' }}>{card.country}</p>
               </div>
             </Popup>
           </p>
-        </div>
+        </div> */}
 
         <div className="table-column padded-right">
           <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
