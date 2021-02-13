@@ -7,10 +7,10 @@ import useLiveView from '../../../../hooks/useLiveView'
 import LiveChat from '../../../../components/LiveChat/LiveChat'
 import LiveView from '../../../../components/LiveView/LiveView'
 import SendATip from '../Header/SendATip/SendATip'
-import UserProfileContext from '../../../../context/UserProfileContext'
+import ProviderProfileContext from '../../../../context/ProviderProfileContext'
 
 const LiveTab: FunctionComponent<{}> = () => {
-  const { user } = useContext(UserProfileContext.context)
+  const { provider } = useContext(ProviderProfileContext.context)
 
   const { videoRef, chatRef, playVideo, sendMessageChat } = useLiveView({ videojsId: 'video-player' })
 
@@ -36,7 +36,7 @@ const LiveTab: FunctionComponent<{}> = () => {
                 </div>
               }
             >
-              <SendATip user={user} callback={sendATipCallback} />
+              <SendATip user={provider} callback={sendATipCallback} />
             </Popup>
           </div>
         </div>

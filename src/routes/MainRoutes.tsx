@@ -17,8 +17,9 @@ import Movements from '../views/Account/Movements'
 import PaymentMethods from '../views/Account/PaymentMethods'
 import AddCard from '../views/Account/Card/AddCard'
 import Subscriptions from '../views/Account/Subscriptions/Subscriptions'
-import AddFounds from '../views/Account/AddFounds'
 import TestView from '../views/TestView/TestView'
+import Verification from '../views/Account/Verification/Verification'
+import HelpSupport from '../views/HelpSupport/HelpSupport'
 
 const MainRoutes: FunctionComponent<{}> = () => {
   const routerProps: ProtectedRouteProps = {
@@ -29,17 +30,17 @@ const MainRoutes: FunctionComponent<{}> = () => {
     <>
       <Router>
         <Switch>
-          <ProtectedRoute {...routerProps} exact path="/account/account-info" component={Account} />
           <ProtectedRoute {...routerProps} exact path="/account/profile-info" component={ProfileInfo} />
+          <ProtectedRoute {...routerProps} exact path="/account/account-info" component={Account} />
           <ProtectedRoute {...routerProps} exact path="/account/my-subscriptions" component={Subscriptions} />
           <ProtectedRoute {...routerProps} exact path="/account/account-devices" component={AccountDevices} />
           <ProtectedRoute {...routerProps} exact path="/account/change-password" component={ChangePassword} />
           <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
+          <ProtectedRoute {...routerProps} exact path="/account/verification" component={Verification} />
           <ProtectedRoute {...routerProps} exact path="/account/wallet" component={Wallet} />
 
           <ProtectedRoute {...routerProps} exact path="/wallet/payments" component={PaymentMethods} />
           <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
-          <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-founds" component={AddFounds} />
           <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
 
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
@@ -48,6 +49,8 @@ const MainRoutes: FunctionComponent<{}> = () => {
           <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
 
           <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
+
+          <ProtectedRoute {...routerProps} exact path="/help" component={HelpSupport} />
 
           <Route exact path="/">
             <LayoutUnauthorize />

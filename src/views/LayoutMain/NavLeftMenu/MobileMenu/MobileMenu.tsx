@@ -67,51 +67,37 @@ const MobileMenu: FunctionComponent<{}> = () => {
         <p className="navigation-widget-section-title">Sections</p>
 
         <ul className="menu">
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/user/home">
-              <svg className="menu-item-link-icon icon-newsfeed">
-                <use xlinkHref="#svg-newsfeed" />
-              </svg>
-              {t('navLeftMenu.home')}
-            </Link>
-          </li>
-
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/account-info">
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
-              </svg>
-              {t('navLeftMenu.accountInfo')}
-            </Link>
-          </li>
-
+          {/* PROFILE-INFO */}
           <li className="menu-item">
             <Link className="menu-item-link" to="/account/profile-info">
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
+              <svg className="menu-item-link-icon icon-members">
+                <use xlinkHref="#svg-members" />
               </svg>
               {t('navLeftMenu.profileInfo')}
             </Link>
           </li>
 
+          {/* ACCOUNT-INFO */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/wallet/payments/add-founds">
-              <svg className="menu-item-link-icon icon-revenue">
-                <use xlinkHref="#svg-revenue" />
+            <Link className="menu-item-link" to="/account/account-info">
+              <svg className="menu-item-link-icon icon-private">
+                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
               </svg>
-              {t('navLeftMenu.addFounds')}
+              {t('navLeftMenu.accountInfo')}
             </Link>
           </li>
 
+          {/* SETTINGS */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/wallet/payments/add-card">
-              <svg className="menu-item-link-icon icon-wallet">
-                <use xlinkHref="#svg-wallet" />
+            <Link className="menu-item-link" to="/account/settings">
+              <svg className="menu-item-link-icon icon-settings">
+                <use xlinkHref="#svg-settings" />
               </svg>
-              {t('navLeftMenu.addCard')}
+              {t('navLeftMenu.settings')}
             </Link>
           </li>
 
+          {/* MY-SUBSCRIPTIONS */}
           <li className="menu-item">
             <Link className="menu-item-link" to="/account/my-subscriptions">
               <svg className="menu-item-link-icon icon-group">
@@ -121,50 +107,36 @@ const MobileMenu: FunctionComponent<{}> = () => {
             </Link>
           </li>
 
+          {/* CARDS/WALLET */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/wallet/overview">
+            <Link className="menu-item-link" to="/account/wallet">
               <svg className="menu-item-link-icon icon-wallet">
                 <use xlinkHref="#svg-wallet" />
               </svg>
-              {t('navLeftMenu.walletOverview')}
+              {t('navLeftMenu.cardWallet')}
             </Link>
           </li>
 
+          {/* ADD-BANK */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/user/messages">
-              <svg className="menu-item-link-icon icon-forums">
-                <use xlinkHref="#svg-forums" />
+            <Link className="menu-item-link" to="/account/verification">
+              <svg className="menu-item-link-icon icon-earnings">
+                <use xlinkHref="#svg-earnings" />
               </svg>
-              {t('navLeftMenu.messages')}
+              {t('navLeftMenu.addBank')}
+            </Link>
+          </li>
+
+          {/* HELP/SUPPORT */}
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/help">
+              <svg className="menu-item-link-icon icon-info">
+                <use xlinkHref="#svg-info" />
+              </svg>
+              {t('navLeftMenu.helpSupport')}
             </Link>
           </li>
         </ul>
-
-        <p className="navigation-widget-section-title">My Profile</p>
-
-        <Link className="navigation-widget-section-link" to="/account/account-info">
-          {t('navLeftMenu.accountInfo')}
-        </Link>
-
-        <Link className="navigation-widget-section-link" to="/account/profile-info">
-          {t('navLeftMenu.profileInfo')}
-        </Link>
-
-        <Link className="navigation-widget-section-link" to="/wallet/payments/add-founds">
-          {t('navLeftMenu.addFounds')}
-        </Link>
-
-        <Link className="navigation-widget-section-link" to="/wallet/payments/add-card">
-          {t('navLeftMenu.addCard')}
-        </Link>
-
-        <Link className="navigation-widget-section-link" to="/account/my-subscriptions">
-          {t('navLeftMenu.mySubscriptions')}
-        </Link>
-
-        <Link className="navigation-widget-section-link" to="/wallet/overview">
-          {t('navLeftMenu.walletOverview')}
-        </Link>
       </nav>
 
       {showMenu && (

@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom'
 import PaymentService from '../../../services/PaymentService'
 
 import LayoutMain from '../../LayoutMain/LayoutMain'
-import AccountSidebar from '../AccountSidebar/AccountSidebar'
 import FormRow from '../../../components/Common/Form/FormRow'
 import FormItem from '../../../components/Common/Form/FormItem'
 import TextInput from '../../../components/Common/TextInput'
@@ -84,15 +83,20 @@ const AddCard: FunctionComponent<{}> = () => {
     <>
       <LayoutMain>
         <div className="content-grid">
-          <div className="grid grid-3-9">
-            <AccountSidebar />
-
+          <div className="grid grid-2-8">
+            <div className="grid-column"> </div>
             <div className="account-hub-content">
               <div className="section-header">
                 <div className="section-header-info">
                   <p className="section-pretitle">{t('wallet.title')}</p>
 
                   <h2 className="section-title">{t('wallet.addCardTitle')}</h2>
+                </div>
+
+                <div className="section-header-actions">
+                  <a className="section-header-action" href="/account/wallet">
+                    {'< Back'}
+                  </a>
                 </div>
               </div>
               <div className="grid-column">

@@ -13,6 +13,13 @@
   }
 }
 
+@media screen and (max-width: 680px) {
+  .content-grid {
+    width: 96%;
+    padding: 20px 0 200px;
+  }
+}
+
 .App-header {
   min-height: 100vh;
   display: flex;

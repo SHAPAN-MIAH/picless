@@ -8,13 +8,13 @@ import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
 import { ServiceUserProfileType } from '../../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
 import LiveTab from './SectionTab/LiveTab'
-import UserProfileContext from '../../../context/UserProfileContext'
+import ProviderProfileContext from '../../../context/ProviderProfileContext'
 
 const Profile: FunctionComponent<{}> = () => {
   const history = useHistory()
   const { username } = useParams<{ username: string }>()
 
-  const { setUserProfile } = useContext(UserProfileContext.context)
+  const { setProvider } = useContext(ProviderProfileContext.context)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
@@ -29,7 +29,7 @@ const Profile: FunctionComponent<{}> = () => {
       } else {
         setLoading(false)
 
-        setUserProfile(data.user)
+        setProvider(data.user)
 
         setIsSuscribed(data.isSuscribe)
 

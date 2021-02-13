@@ -11,16 +11,16 @@ import { PlansType, SubscritionPlanOption } from '../../../../../types/PaymentTy
 import styles from './SubscribePopup.module.css'
 import PaymentService from '../../../../../services/PaymentService'
 import useWallet from '../../../../../hooks/useWallet'
-import UserProfileContext from '../../../../../context/UserProfileContext'
+import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
 
 const SubscribePopup: FunctionComponent<{}> = () => {
-  const { user } = useContext(UserProfileContext.context)
+  const { provider } = useContext(ProviderProfileContext.context)
 
   const SecurionPay = window.Securionpay
 
   const { defaultCard } = useWallet()
 
-  const [imageProfile, setImageProfile] = useState(user.profilePicture)
+  const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [selectedPlan, setSelectedPlan] = useState<SubscritionPlanOption>()
   const [planListOriginal, setPlanListOriginal] = useState<SubscritionPlanOption[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -28,11 +28,11 @@ const SubscribePopup: FunctionComponent<{}> = () => {
   const [planList, setPlanList] = useState<SelectOptionsType[]>([{ value: '0', name: 'Loading ...' }])
 
   useEffect(() => {
-    if (user) {
+    if (provider) {
       setLoading(true)
-      setImageProfile(user.profilePicture)
+      setImageProfile(provider.profilePicture)
 
-      const { planId } = user
+      const { planId } = provider
 
       PaymentService.getPlanOptions(planId || '')
         .then((plans: SubscritionPlanOption[]) => {
@@ -51,7 +51,7 @@ const SubscribePopup: FunctionComponent<{}> = () => {
     script.src = 'https://securionpay.com/js/securionpay.js'
     script.async = true
     document.body.appendChild(script)
-  }, [user])
+  }, [provider])
 
   const plansOptionsList = (plans: SubscritionPlanOption[]): void => {
     setPlanList(
@@ -104,16 +104,16 @@ const SubscribePopup: FunctionComponent<{}> = () => {
   }
 
   const subscribeToUser = (token: any) => {
-    if (user.id && user.planId && selectedPlan) {
-      PaymentService.suscribeToUser(selectedPlan?.id, user.id, token.id, selectedPlan?.amount)
+    if (provider.id && provider.planId && selectedPlan) {
+      PaymentService.suscribeToUser(selectedPlan?.id, provider.id, token.id, selectedPlan?.amount)
         .then((data: any) => {
           if (data.code === 0) {
-            alert('You are subscribed')
             setLoading(false)
-            // window.location.reload()
+
+            window.location.reload()
           } else {
             setLoading(false)
-            alert(`Error ${data.code} => ${data.message}`)
+            console.error(`Error ${data.code} => ${data.message}`)
           }
         })
         .catch(() => {
@@ -137,10 +137,10 @@ const SubscribePopup: FunctionComponent<{}> = () => {
               </div>
               <div className={styles.userInfoName}>
                 <p className="user-status-title">
-                  <span className="bold">{user.fullName}</span>
+                  <span className="bold">{provider.fullName}</span>
                 </p>
                 <p className="user-status-text small">
-                  <a href="profile-timeline.html">@{user.userName}</a>
+                  <a href="profile-timeline.html">@{provider.userName}</a>
                 </p>
               </div>
             </div>

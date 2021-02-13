@@ -45,62 +45,42 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <UserAvatar size="SMALL" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
-          <li className="menu-item">
-            <Link className="menu-item-link text-tooltip-tfr" to="/user/home" data-title={t('navLeftMenu.home')}>
-              <svg className="menu-item-link-icon icon-newsfeed">
-                <use xlinkHref="#svg-newsfeed" />
-              </svg>
-            </Link>
-          </li>
-
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/account/account-info"
-              data-title={t('navLeftMenu.accountInfo')}
-            >
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
-              </svg>
-            </Link>
-          </li>
-
+          {/* PROFILE-INFO */}
           <li className="menu-item">
             <Link
               className="menu-item-link text-tooltip-tfr"
               to="/account/profile-info"
               data-title={t('navLeftMenu.profileInfo')}
             >
+              <svg className="menu-item-link-icon icon-members">
+                <use xlinkHref="#svg-members" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* ACCOUNT-INFO */}
+          <li className="menu-item">
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              to="/account/account-info"
+              data-title={t('navLeftMenu.accountInfo')}
+            >
+              <svg className="menu-item-link-icon icon-private">
+                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
+              </svg>
+            </Link>
+          </li>
+
+          {/* SETTINGS */}
+          <li className="menu-item">
+            <Link className="menu-item-link text-tooltip-tfr" to="/account/settings" data-title={t('navLeftMenu.settings')}>
               <svg className="menu-item-link-icon icon-settings">
                 <use xlinkHref="#svg-settings" />
               </svg>
             </Link>
           </li>
 
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/wallet/payments/add-founds"
-              data-title={t('navLeftMenu.addFounds')}
-            >
-              <svg className="menu-item-link-icon icon-revenue">
-                <use xlinkHref="#svg-revenue" />
-              </svg>
-            </Link>
-          </li>
-
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/wallet/payments/add-card"
-              data-title={t('navLeftMenu.addCard')}
-            >
-              <svg className="menu-item-link-icon icon-wallet">
-                <use xlinkHref="#svg-wallet" />
-              </svg>
-            </Link>
-          </li>
-
+          {/* MY-SUBSCRIBERS */}
           <li className="menu-item">
             <Link
               className="menu-item-link text-tooltip-tfr"
@@ -113,31 +93,43 @@ const BrowserMenu: FunctionComponent<{}> = () => {
             </Link>
           </li>
 
+          {/* CARDS/WALLET */}
           <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/wallet/overview"
-              data-title={t('navLeftMenu.walletOverview')}
-            >
+            <Link className="menu-item-link text-tooltip-tfr" to="/account/wallet" data-title={t('navLeftMenu.cardWallet')}>
               <svg className="menu-item-link-icon icon-wallet">
                 <use xlinkHref="#svg-wallet" />
               </svg>
             </Link>
           </li>
 
+          {/* ADD-BANK */}
           <li className="menu-item">
             <Link
               className="menu-item-link text-tooltip-tfr"
-              style={{ color: '#adafca' }}
-              to="/user/messages"
-              data-title={t('navLeftMenu.messages')}
+              to="/account/verification"
+              data-title={t('navLeftMenu.addBank')}
             >
-              <svg className="menu-item-link-icon icon-forums">
-                <use xlinkHref="#svg-forums" />
+              <svg className="menu-item-link-icon icon-earnings">
+                <use xlinkHref="#svg-earnings" />
               </svg>
             </Link>
           </li>
 
+          {/* HELP - SUPPORT */}
+          <li className="menu-item">
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              style={{ color: '#adafca' }}
+              to="/help"
+              data-title={t('navLeftMenu.helpSupport')}
+            >
+              <svg className="menu-item-link-icon icon-info">
+                <use xlinkHref="#svg-info" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* LOGOUT */}
           <li className="menu-item">
             <a
               href=""
@@ -148,8 +140,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
                 signOut()
               }}
             >
-              <svg className="menu-item-link-icon icon-private">
-                <use xlinkHref="#svg-private" />
+              <svg className="menu-item-link-icon icon-login">
+                <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
               </svg>
             </a>
           </li>
@@ -184,50 +176,35 @@ const BrowserMenu: FunctionComponent<{}> = () => {
         </div>
         <ul className="menu">
           <li className="menu-item">
-            <Link className="menu-item-link" to="/user/home">
-              <svg className="menu-item-link-icon icon-newsfeed">
-                <use xlinkHref="#svg-newsfeed" />
-              </svg>
-              {t('navLeftMenu.home')}
-            </Link>
-          </li>
-
-          <li className="menu-item">
             <Link className="menu-item-link" to="/account/account-info">
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
+              <svg className="menu-item-link-icon icon-members">
+                <use xlinkHref="#svg-members" />
               </svg>
               {t('navLeftMenu.accountInfo')}
             </Link>
           </li>
 
+          {/* PROFILE-INFO */}
           <li className="menu-item">
             <Link className="menu-item-link" to="/account/profile-info">
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
+              <svg className="menu-item-link-icon icon-private">
+                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
               </svg>
               {t('navLeftMenu.profileInfo')}
             </Link>
           </li>
 
+          {/* SETTINGS */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/wallet/payments/add-founds">
-              <svg className="menu-item-link-icon icon-revenue">
-                <use xlinkHref="#svg-revenue" />
+            <Link className="menu-item-link" to="/account/settings">
+              <svg className="menu-item-link-icon icon-settings">
+                <use xlinkHref="#svg-settings" />
               </svg>
-              {t('navLeftMenu.addFounds')}
+              {t('navLeftMenu.settings')}
             </Link>
           </li>
 
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/wallet/payments/add-card">
-              <svg className="menu-item-link-icon icon-wallet">
-                <use xlinkHref="#svg-wallet" />
-              </svg>
-              {t('navLeftMenu.addCard')}
-            </Link>
-          </li>
-
+          {/* MY-SUBSCRIPTIONS */}
           <li className="menu-item">
             <Link className="menu-item-link" to="/account/my-subscriptions">
               <svg className="menu-item-link-icon icon-group">
@@ -237,21 +214,33 @@ const BrowserMenu: FunctionComponent<{}> = () => {
             </Link>
           </li>
 
+          {/* CARDS/WALLET */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/wallet/overview">
+            <Link className="menu-item-link" to="/account/wallet">
               <svg className="menu-item-link-icon icon-wallet">
                 <use xlinkHref="#svg-wallet" />
               </svg>
-              {t('navLeftMenu.walletOverview')}
+              {t('navLeftMenu.cardWallet')}
             </Link>
           </li>
 
+          {/* ADD-BANK */}
           <li className="menu-item">
-            <Link className="menu-item-link" to="/user/messages">
-              <svg className="menu-item-link-icon icon-forums">
-                <use xlinkHref="#svg-forums" />
+            <Link className="menu-item-link" to="/account/verification">
+              <svg className="menu-item-link-icon icon-earnings">
+                <use xlinkHref="#svg-earnings" />
               </svg>
-              {t('navLeftMenu.messages')}
+              {t('navLeftMenu.addBank')}
+            </Link>
+          </li>
+
+          {/* HELP/SUPPORT */}
+          <li className="menu-item">
+            <Link className="menu-item-link" to="/help">
+              <svg className="menu-item-link-icon icon-info">
+                <use xlinkHref="#svg-info" />
+              </svg>
+              {t('navLeftMenu.helpSupport')}
             </Link>
           </li>
 
@@ -263,8 +252,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
                 signOut()
               }}
             >
-              <svg className="menu-item-link-icon icon-private">
-                <use xlinkHref="#svg-private" />
+              <svg className="menu-item-link-icon icon-login">
+                <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
               </svg>
               {t('navLeftMenu.logout')}
             </a>

@@ -1,12 +1,11 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Popup from 'reactjs-popup'
 
-import { userSelector } from '../../../../redux/User/UserSelectors'
+import useUser from '../../../../hooks/useUser'
 
-import UserProfileContext from '../../../../context/UserProfileContext'
+import ProviderProfileContext from '../../../../context/ProviderProfileContext'
 import UserAvatar from '../../../../components/UserAvatar'
 
 import styles from './UserHeader.module.css'
@@ -17,25 +16,28 @@ import { WalletContextProvider } from '../../../../context/WalletContext'
 
 type UserHeaderProps = {
   isSuscribe: boolean | null
-  // user: UserProfileType
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const { isSuscribe } = props
 
-  const { user } = useContext(UserProfileContext.context)
+  const { provider } = useContext(ProviderProfileContext.context)
+  const { getUser } = useUser()
 
-  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
-  const [imageProfile, setImageProfile] = useState(user.profilePicture)
+  const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
+  const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [subscribed, setSubscribed] = useState(isSuscribe)
-
-  const userData: UserType = useSelector(userSelector)
+  const [userData, setUserData] = useState<UserType>({})
 
   useEffect(() => {
-    setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
-    setImageProfile(user.profilePicture)
+    getUser().then((u: UserType) => {
+      setUserData(u)
+    })
+
+    setImageCover(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
+    setImageProfile(provider.profilePicture)
     setSubscribed(isSuscribe)
-  }, [user, isSuscribe])
+  }, [provider, isSuscribe])
 
   return (
     <>
@@ -53,15 +55,15 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               <UserAvatar size="MEDIUM" imageName={imageProfile} />
 
               <p className="user-short-description-title">
-                <a href="profile-timeline.html">{user.userName}</a>
+                <a href="profile-timeline.html">{provider.userName}</a>
               </p>
 
               <p className="user-short-description-text">
-                <a href="#/">www.lupanar.com/{user.userName}</a>
+                <a href="#/">www.lupanar.com/{provider.userName}</a>
               </p>
             </div>
 
-            {user.userName !== userData.userName && (
+            {provider.userName !== userData.userName && (
               <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
                 {!subscribed && (
                   <Popup
@@ -85,7 +87,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                   <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
                     <a
                       title="Send a message"
-                      href={`/user/messages/${user.id}`}
+                      href={`/user/messages/${provider.id}`}
                       className="profile-header-info-action button secondary"
                     >
                       <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span>{' '}
@@ -98,19 +100,19 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
             <div className="user-stats">
               <div className="user-stat big">
-                <p className="user-stat-title">{user.numberOfFollowers}</p>
+                <p className="user-stat-title">{provider.numberOfFollowers}</p>
 
                 <p className="user-stat-text">followers</p>
               </div>
 
               <div className="user-stat big">
-                <p className="user-stat-title">{user.numberImages}</p>
+                <p className="user-stat-title">{provider.numberImages}</p>
 
                 <p className="user-stat-text">Photos</p>
               </div>
 
               <div className="user-stat big">
-                <p className="user-stat-title">{user.numberVideos}</p>
+                <p className="user-stat-title">{provider.numberVideos}</p>
 
                 <p className="user-stat-text">Videos</p>
               </div>

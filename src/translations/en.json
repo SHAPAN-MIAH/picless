@@ -7,15 +7,15 @@
     }
   },
   "navLeftMenu": {
-    "logout": "Log Out",
-    "home": "Home",
-    "accountInfo": "Account Info",
     "profileInfo": "Profile Info",
-    "addFounds": "Add Founds",
-    "addCard": "Add Card",
+    "accountInfo": "Account",
+    "settings": "Settings",
     "mySubscriptions": "My Subscriptions",
-    "walletOverview": "Wallet Overview",
-    "messages": "Messages"
+    "cardWallet": "Cards / Wallet",
+    "addBank": "Add Bank",
+    "withdraw": "Withdraw",
+    "helpSupport": "Help / Support",
+    "logout": "Log Out"
   },
 
   "passwordStrengthBar": {

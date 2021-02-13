@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import { WalletContextProvider } from '../../context/WalletContext'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import WalletOverview from './Wallet/WalletOverview'
-import { useTranslation } from 'react-i18next'
 
 const Wallet: FunctionComponent<{}> = () => {
   const { t } = useTranslation()

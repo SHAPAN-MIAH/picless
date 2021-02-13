@@ -3,10 +3,10 @@ import React, { FunctionComponent, useContext } from 'react'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 
 import { UserInterestType, UserTimeLineType } from '../../../../types/UserType.d'
-import UserProfileContext from '../../../../context/UserProfileContext'
+import ProviderProfileContext from '../../../../context/ProviderProfileContext'
 
 const AboutTab: FunctionComponent<{}> = () => {
-  const { user } = useContext(UserProfileContext.context)
+  const { provider } = useContext(ProviderProfileContext.context)
 
   const noInterests = 'The user has not yet added interests.'
   const noTimeLineEvents = 'The user has not yet added events to the timeline.'
@@ -19,44 +19,44 @@ const AboutTab: FunctionComponent<{}> = () => {
             <p className="widget-box-title">About Me</p>
 
             <div className="widget-box-content">
-              <p className="paragraph">{user.profileDescription}</p>
+              <p className="paragraph">{provider.profileDescription}</p>
 
               <div className="information-line-list">
                 <div className="information-line">
                   <p className="information-line-title">Name</p>
 
-                  <p className="information-line-text">{user.fullName}</p>
+                  <p className="information-line-text">{provider.fullName}</p>
                 </div>
 
                 <div className="information-line">
                   <p className="information-line-title">Joined</p>
 
-                  <p className="information-line-text">{user.registrationDate}</p>
+                  <p className="information-line-text">{provider.registrationDate}</p>
                 </div>
 
                 <div className="information-line">
                   <p className="information-line-title">City</p>
 
-                  <p className="information-line-text">{user.cityName}</p>
+                  <p className="information-line-text">{provider.cityName}</p>
                 </div>
 
                 <div className="information-line">
                   <p className="information-line-title">Country</p>
 
-                  <p className="information-line-text">{user.countryName}</p>
+                  <p className="information-line-text">{provider.countryName}</p>
                 </div>
 
                 <div className="information-line">
                   <p className="information-line-title">Age</p>
 
-                  <p className="information-line-text">[ADDD] {user.birthDate}</p>
+                  <p className="information-line-text">[ADDD] {provider.birthDate}</p>
                 </div>
 
-                {user.occupation && (
+                {provider.occupation && (
                   <div className="information-line">
                     <p className="information-line-title">Occupation</p>
 
-                    <p className="information-line-text">{user.occupation?.name}</p>
+                    <p className="information-line-text">{provider.occupation?.name}</p>
                   </div>
                 )}
               </div>
@@ -72,9 +72,9 @@ const AboutTab: FunctionComponent<{}> = () => {
 
             <div className="widget-box-content">
               <div className="information-block-list">
-                {user.userInterest &&
-                  user.userInterest?.length > 0 &&
-                  user.userInterest?.map((interest: UserInterestType) => {
+                {provider.userInterest &&
+                  provider.userInterest?.length > 0 &&
+                  provider.userInterest?.map((interest: UserInterestType) => {
                     return (
                       <div key={interest.id} className="information-block">
                         <p className="information-block-title">{interest.name}</p>
@@ -84,7 +84,7 @@ const AboutTab: FunctionComponent<{}> = () => {
                     )
                   })}
 
-                {user.userInterest && user.userInterest?.length === 0 && (
+                {provider.userInterest && provider.userInterest?.length === 0 && (
                   <Alert alertType="PRIMARY" message={noInterests} style={{ width: '100%' }} />
                 )}
               </div>
@@ -96,9 +96,9 @@ const AboutTab: FunctionComponent<{}> = () => {
 
             <div className="widget-box-content">
               <div className="timeline-information-list">
-                {user.userTimeLine &&
-                  user.userTimeLine?.length > 0 &&
-                  user.userTimeLine?.map((event: UserTimeLineType) => {
+                {provider.userTimeLine &&
+                  provider.userTimeLine?.length > 0 &&
+                  provider.userTimeLine?.map((event: UserTimeLineType) => {
                     return (
                       <div key={event.id} className="timeline-information">
                         <p className="timeline-information-title">{event.title}</p>
@@ -114,7 +114,7 @@ const AboutTab: FunctionComponent<{}> = () => {
                     )
                   })}
 
-                {user.userTimeLine && user.userTimeLine?.length === 0 && (
+                {provider.userTimeLine && provider.userTimeLine?.length === 0 && (
                   <Alert alertType="PRIMARY" message={noTimeLineEvents} style={{ width: '100%' }} />
                 )}
               </div>

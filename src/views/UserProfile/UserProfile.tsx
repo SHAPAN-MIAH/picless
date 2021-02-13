@@ -3,15 +3,15 @@ import React, { FunctionComponent } from 'react'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import Profile from './Profile/Profile'
 
-import { UserProfileContextProvider } from '../../context/UserProfileContext'
+import { ProviderProfileContextProvider } from '../../context/ProviderProfileContext'
 
 const UserProfile: FunctionComponent<{}> = () => {
   return (
     <>
       <LayoutMain>
-        <UserProfileContextProvider>
+        <ProviderProfileContextProvider>
           <Profile />
-        </UserProfileContextProvider>
+        </ProviderProfileContextProvider>
       </LayoutMain>
       )
     </>

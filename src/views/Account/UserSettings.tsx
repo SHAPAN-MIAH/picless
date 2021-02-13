@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
-import AccountSidebar from './AccountSidebar/AccountSidebar'
 import FormRow from '../../components/Common/Form/FormRow'
 import CheckboxForm from '../../components/Common/CheckboxForm'
 import Alert from '../../components/Common/Alerts/Alerts'
@@ -73,8 +72,8 @@ const UserSettings: FunctionComponent<{}> = () => {
   return (
     <LayoutMain>
       <div className="content-grid">
-        <div className="grid grid-3-9">
-          <AccountSidebar />
+        <div className="grid grid-2-8-2">
+          <div className="grid-column"> </div>
 
           <div className="account-hub-content">
             <div className="section-header">
