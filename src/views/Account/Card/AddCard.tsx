@@ -1,4 +1,8 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { CountryDropdown } from 'react-country-region-selector'
 import { useHistory } from 'react-router-dom'
@@ -14,69 +18,92 @@ import Alert from '../../../components/Common/Alerts/Alerts'
 import InputIconCardProvider from '../../../components/Common/InputIconCardProvider'
 
 import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
+import useUser from '../../../hooks/useUser'
+import { UserType } from '../../../types/UserType'
+
+type FormValues = {
+  street: string
+  city: string
+  state: string
+  zipCode: string
+  country: string
+  email: string
+  holderName: string
+  cardNumber: string
+  expMonth: number
+  expYear: number
+  ccv: number
+  ageOfMajor: boolean
+}
 
 const AddCard: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
   const history = useHistory()
+  const { getUser } = useUser()
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const [street, setStreet] = useState('')
-  const [email, setEmail] = useState('')
-  const [state, setState] = useState('')
-  const [nameCard, setNameCard] = useState('')
-  const [city, setCity] = useState('')
-  const [cardNumber, setCardNumber] = useState('')
-  const [postalCode, setPostalCode] = useState('')
-  const [expYear, setExpYear] = useState<string>('')
-  const [expMonth, setExpMonth] = useState<string>('')
-  const [ccv, setCCV] = useState<string>('')
-  const [country, setCountry] = useState('')
-  const [ageOfMajor, setAgeOfMajor] = useState(false)
+  const validationSchema = Yup.object().shape({
+    street: Yup.string().required('Street field is required'),
+    city: Yup.string().required('City field is required'),
+    state: Yup.string().required('State field is required'),
+    zipCode: Yup.string().required('Zip code / Postal code email field is required'),
+    country: Yup.string().required('Country field is required'),
+    email: Yup.string().email('Please enter an valid email').required('Email field is required'),
+    holderName: Yup.string().required('Holder Name field is required'),
+    expMonth: Yup.number().required('Expiration Month field is required').min(1).max(12),
+    expYear: Yup.number().required('Expiration Year field is required').min(new Date().getFullYear()),
+    ccv: Yup.number().required('CCV field is required'),
+    cardNumber: Yup.string(),
+    ageOfMajor: Yup.boolean(),
+  })
 
-  const handleAddCard = () => {
-    if (street && email && state && nameCard && city && cardNumber && postalCode && expYear && expMonth && ccv && country) {
-      if (ageOfMajor) {
-        const cardData: AddCardType = {
-          number: cardNumber,
-          holderName: nameCard,
-          expireMonth: parseInt(expMonth, 10) as MonthNumbers,
-          expireYear: parseInt(expYear, 10),
-          ccv: parseInt(ccv, 10),
-          billingAddress: {
-            street,
-            city,
-            state,
-            postalCode,
-            country,
-          },
-        }
-        setIsLoading(true)
+  const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
 
-        PaymentService.addCard(cardData)
-          .then((data: any) => {
-            setIsLoading(false)
+  useEffect(() => {
+    getUser().then((user: UserType) => {
+      setValue('email', user.email)
+      setValue('country', user.countryName)
+    })
+  }, [getUser, setValue])
 
-            if (data.code === 0) {
-              history.push('/wallet/payments')
-            } else if (data.message && data.code !== 0) {
-              setErrorMessage(data.message)
-            }
-          })
-          .catch((err) => {
-            setIsLoading(false)
-            console.error(err)
-            setErrorMessage(JSON.stringify(err))
-          })
-      } else {
-        setErrorMessage(
-          'You need to confirm that you are at least 18 years old and the age of majority in your place of residence'
-        )
-      }
-    } else {
-      setErrorMessage('Please fill all required fields')
+  const onSubmit = (values: FormValues) => {
+    const cardData: AddCardType = {
+      number: values.cardNumber,
+      holderName: values.holderName,
+      expireMonth: values.expMonth as MonthNumbers,
+      expireYear: values.expYear,
+      ccv: values.ccv,
+      billingAddress: {
+        street: values.street,
+        city: values.city,
+        state: values.state,
+        postalCode: values.zipCode,
+        country: values.country,
+      },
     }
+
+    const addCardPromise = PaymentService.addCard(cardData)
+
+    return toast
+      .promise(addCardPromise, {
+        loading: 'Loading',
+        success: 'Card Added Successfully',
+        error: 'Error adding the card',
+      })
+      .then((data: any) => {
+        if (data.code === 0) {
+          history.push('/wallet/payments')
+        } else if (data.message && data.code !== 0) {
+          setErrorMessage(data.message)
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+        setErrorMessage(JSON.stringify(err))
+      })
   }
 
   return (
@@ -102,7 +129,7 @@ const AddCard: FunctionComponent<{}> = () => {
               <div className="grid-column">
                 <div className="widget-box">
                   <div className="widget-box-content">
-                    <form className="form">
+                    <form className="form" onSubmit={handleSubmit(onSubmit)}>
                       <FormRow classNameRow="split">
                         <FormItem>
                           <p className="widget-box-title">{t('wallet.addCard.billingInfoTitle')}</p>
@@ -113,159 +140,159 @@ const AddCard: FunctionComponent<{}> = () => {
                       </FormRow>
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <TextInput
+                          <Controller
+                            control={control}
+                            as={TextInput}
                             type="text"
-                            id="street"
-                            classNameFormInput="small"
                             name="street"
+                            defaultValue=""
                             placeholder={t('wallet.addCard.streetField')}
-                            value={street}
-                            onChange={(e) => setStreet(e.target.value)}
+                            classNameFormInput="small active"
                             required
+                            errorMessage={errors.street?.message}
                           />
                         </FormItem>
                         <FormItem>
-                          <TextInput
+                          <Controller
+                            control={control}
+                            as={TextInput}
                             type="text"
-                            id="account-email"
-                            classNameFormInput="small "
-                            name="account_email"
+                            name="email"
+                            defaultValue=""
                             placeholder={t('wallet.addCard.emailField')}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            classNameFormInput="small active"
                             required
+                            errorMessage={errors.email?.message}
                           />
                         </FormItem>
                       </FormRow>
 
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <TextInput
+                          <Controller
+                            control={control}
+                            as={TextInput}
                             type="text"
-                            id="city"
-                            classNameFormInput="small"
                             name="city"
+                            defaultValue=""
                             placeholder={t('wallet.addCard.cityField')}
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
+                            classNameFormInput="small active"
                             required
+                            errorMessage={errors.city?.message}
                           />
                         </FormItem>
                         <FormItem>
-                          <TextInput
+                          <Controller
+                            control={control}
+                            as={TextInput}
                             type="text"
-                            id="name-card"
-                            classNameFormInput="small "
-                            name="name_card"
+                            name="holderName"
+                            defaultValue=""
                             placeholder={t('wallet.addCard.nameCardField')}
-                            value={nameCard}
-                            onChange={(e) => setNameCard(e.target.value)}
+                            classNameFormInput="small active"
                             required
+                            errorMessage={errors.holderName?.message}
                           />
                         </FormItem>
                       </FormRow>
 
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <TextInput
+                          <Controller
+                            control={control}
+                            as={TextInput}
                             type="text"
-                            id="state-province"
-                            classNameFormInput="small"
-                            name="state_province"
+                            name="state"
+                            defaultValue=""
                             placeholder={t('wallet.addCard.stateProvinceField')}
-                            value={state}
-                            onChange={(e) => setState(e.target.value)}
+                            classNameFormInput="small active"
                             required
+                            errorMessage={errors.state?.message}
                           />
                         </FormItem>
                         <FormItem>
-                          <InputIconCardProvider
-                            type="text"
-                            id="card-number"
-                            classNameFormInput="small"
-                            name="card_number"
-                            placeholder={t('wallet.addCard.cardNumberField')}
-                            value={cardNumber}
-                            required
-                            onChange={(e) => {
-                              setCardNumber(e.target.value)
-                            }}
+                          <Controller
+                            control={control}
+                            name="cardNumber"
+                            defaultValue=""
+                            render={(propsController) => (
+                              <InputIconCardProvider
+                                type="text"
+                                ref={propsController.ref}
+                                classNameFormInput="small"
+                                name={propsController.name}
+                                placeholder={t('wallet.addCard.cardNumberField')}
+                                value={propsController.value}
+                                required
+                                id="card-number"
+                                onChange={(e) => {
+                                  propsController.onChange(e.target.value)
+                                }}
+                              />
+                            )}
                           />
                         </FormItem>
                       </FormRow>
 
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <TextInput
+                          <Controller
+                            control={control}
+                            as={TextInput}
                             type="text"
-                            id="zip-postal-code"
-                            classNameFormInput="small"
-                            name="zip_postal_code"
+                            name="zipCode"
+                            defaultValue=""
                             placeholder={t('wallet.addCard.zipPostalCodeField')}
-                            value={postalCode}
-                            onChange={(e) => setPostalCode(e.target.value)}
+                            classNameFormInput="small active"
                             required
+                            errorMessage={errors.zipCode?.message}
                           />
                         </FormItem>
                         <FormItem>
                           <FormRow classNameRow="split">
                             <FormItem>
-                              <TextInput
+                              <Controller
+                                control={control}
+                                as={TextInput}
                                 type="text"
-                                id="expiration-month"
-                                classNameFormInput="small"
-                                size={2}
+                                name="expMonth"
+                                defaultValue=""
                                 minLength={2}
                                 maxLength={2}
-                                name="expiration_month"
                                 placeholder={t('wallet.addCard.expirationMonthField')}
-                                value={expMonth}
-                                onChange={(e) => {
-                                  setExpMonth(e.target.value)
-                                }}
+                                classNameFormInput="small active"
                                 required
+                                errorMessage={errors.expMonth?.message}
                               />
                             </FormItem>
                             <FormItem>
-                              <TextInput
+                              <Controller
+                                control={control}
+                                as={TextInput}
                                 type="text"
-                                id="expiration-year"
-                                classNameFormInput="small"
-                                size={4}
+                                name="expYear"
+                                defaultValue=""
                                 minLength={4}
                                 maxLength={4}
-                                name="expiration_year"
                                 placeholder={t('wallet.addCard.expirationYearField')}
-                                value={expYear || ''}
-                                onChange={(e) => {
-                                  setExpYear(e.target.value)
-                                }}
-                                onFocus={() => {
-                                  if (expYear === '') setExpYear(new Date().getFullYear().toString().substring(0, 2))
-                                }}
-                                onBlur={() => {
-                                  const splittedYear = new Date().getFullYear().toString().substring(0, 2)
-
-                                  if (expYear === splittedYear) setExpYear('')
-                                }}
+                                classNameFormInput="small active"
                                 required
+                                errorMessage={errors.expYear?.message}
                               />
                             </FormItem>
                             <FormItem>
-                              <TextInput
+                              <Controller
+                                control={control}
+                                as={TextInput}
                                 type="password"
-                                id="ccv"
-                                classNameFormInput="small"
-                                size={4}
+                                name="ccv"
+                                defaultValue=""
                                 minLength={3}
                                 maxLength={4}
-                                name="ccv"
                                 placeholder={t('wallet.addCard.ccvField')}
-                                value={ccv || ''}
-                                onChange={(e) => {
-                                  setCCV(e.target.value)
-                                }}
+                                classNameFormInput="small active"
                                 required
+                                errorMessage={errors.ccv?.message}
                               />
                             </FormItem>
                           </FormRow>
@@ -276,27 +303,26 @@ const AddCard: FunctionComponent<{}> = () => {
                         <FormItem>
                           <div className="form-select">
                             <label htmlFor="account-country">{t('profileInfo.countryField')}</label>
-                            <CountryDropdown
-                              id="account-country"
-                              name="account_country"
-                              value={country}
-                              onChange={(val) => {
-                                setCountry(val)
-                              }}
+                            <Controller
+                              control={control}
+                              name="country"
+                              defaultValue=""
+                              render={(propsController) => (
+                                <CountryDropdown
+                                  name={propsController.name}
+                                  value={propsController.value || ''}
+                                  id="account-country"
+                                  onChange={(val) => {
+                                    propsController.onChange(val)
+                                  }}
+                                />
+                              )}
                             />
                           </div>
                         </FormItem>
                         <FormItem>
                           <div className="checkbox-wrap selected">
-                            <input
-                              type="checkbox"
-                              id="payment-method-payoneer"
-                              name="payment_method"
-                              checked={ageOfMajor}
-                              onChange={() => {
-                                setAgeOfMajor(!ageOfMajor)
-                              }}
-                            />
+                            <input type="checkbox" id="payment-method-payoneer" name="payment_method" />
 
                             <div className="checkbox-box round" />
 
@@ -314,17 +340,11 @@ const AddCard: FunctionComponent<{}> = () => {
 
                       <FormRow>
                         {errorMessage && <Alert alertType="DANGER" message={t(errorMessage)} style={{ width: '100%' }} />}
-                        {/* {message && <Alert alertType="PRIMARY" message={t(message)} style={{ width: '100%' }} />} */}
                       </FormRow>
 
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <ButtonWithLoader
-                            type="button"
-                            className="small primary"
-                            onClick={handleAddCard}
-                            showLoader={isLoading}
-                          >
+                          <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
                             {t('wallet.addCard.addCardButton')}
                           </ButtonWithLoader>
                         </FormItem>

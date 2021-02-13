@@ -8,7 +8,7 @@ interface InputIconCardProviderProps extends React.InputHTMLAttributes<HTMLInput
   classNameFormInput?: string
 }
 
-const InputIconCardProvider = (props: InputIconCardProviderProps) => {
+const InputIconCardProvider = React.forwardRef<HTMLInputElement, InputIconCardProviderProps>((props, ref) => {
   const { className, placeholder, id, defaultValue, value, required, classNameFormInput, ...rest } = props
 
   const [isFocused, setIsFocused] = useState(false)
@@ -35,6 +35,7 @@ const InputIconCardProvider = (props: InputIconCardProviderProps) => {
       </label>
       <input
         value={value}
+        ref={ref}
         id={id}
         className={classNames(className, required && showRequired ? 'inputErrorField' : '')}
         onBlur={(e) => {
@@ -70,6 +71,6 @@ const InputIconCardProvider = (props: InputIconCardProviderProps) => {
       )}
     </div>
   )
-}
+})
 
 export default InputIconCardProvider
