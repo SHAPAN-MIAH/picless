@@ -4,7 +4,6 @@ import React, { FunctionComponent, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
 import Loader from 'react-loader-spinner'
-// import { buildStyles, CircularProgressbar } from 'react-circular-progressbar'
 
 import classNames from 'classnames'
 import PostService from '../../../../../services/PostService'

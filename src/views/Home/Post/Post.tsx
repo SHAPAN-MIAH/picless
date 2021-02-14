@@ -7,7 +7,7 @@ import TagList from './Footer/TagList'
 
 import { PostType, SourceType } from '../../../types/PostType.d'
 import VideoCollage from './Content/VideoCollage'
-import PictureGallery from './Content/PictureGallery'
+import PictureCarousel from './Content/PictureCarousel'
 
 const Post: FunctionComponent<{ data: PostType }> = (props) => {
   const { data } = props
@@ -26,7 +26,7 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
             <p className="widget-box-status-text">{data.content}</p>
           </div>
 
-          {listImages && listImages.length > 0 && <PictureGallery sources={listImages} />}
+          {listImages && listImages.length > 0 && <PictureCarousel sources={listImages} />}
           {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
 
           <div className="widget-box-status-content">
