@@ -1,18 +1,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
-type CheckboxFormProps = {
-  id: string
+interface CheckboxFormProps extends React.InputHTMLAttributes<HTMLInputElement> {
   title: string
   description?: string
-  checked: boolean
   onChange: any
 }
 
-const CheckboxForm: FunctionComponent<CheckboxFormProps> = (props) => {
-  const { id, title, description, checked = false, onChange } = props
+const CheckboxForm = React.forwardRef<HTMLInputElement, CheckboxFormProps>((props, ref) => {
+  const { id, name, title, description, checked = false, onChange, ...rest } = props
 
   const [checkState, setCheckState] = useState(checked)
 
@@ -44,8 +42,10 @@ const CheckboxForm: FunctionComponent<CheckboxFormProps> = (props) => {
       >
         <div className="form-switch-button" />
       </div>
+
+      <input {...rest} type="checkbox" name={name} ref={ref} checked={checkState} id={id} style={{ display: 'none' }} />
     </div>
   )
-}
+})
 
 export default CheckboxForm

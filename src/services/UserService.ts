@@ -1,12 +1,12 @@
 import * as ApiHelper from './ApiHelpers'
 import {
-  ProfileUserSettings,
   UploadImageType,
   UserType,
   TipType,
   UserSearchType,
   ServiceUserProfileType,
   SubscriptorListType,
+  UserSettingsType,
 } from '../types/UserType.d'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
@@ -60,7 +60,7 @@ const updateUserProfile = async (userData: UserType): Promise<UserType> => {
   return body
 }
 
-const getUserSettings = async (): Promise<ProfileUserSettings> => {
+const getUserSettings = async (): Promise<UserSettingsType> => {
   try {
     const email = await ApiHelper.getEmail()
 
@@ -81,7 +81,7 @@ const getUserSettings = async (): Promise<ProfileUserSettings> => {
   }
 }
 
-const updateUserSettings = async (settings: ProfileUserSettings): Promise<any> => {
+const updateUserSettings = async (settings: UserSettingsType): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {

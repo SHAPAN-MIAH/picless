@@ -12,7 +12,7 @@ const useAuth = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthorizationContext.context)
 
   const router = useRouter()
-  const { getUser } = useUser()
+  const { getUser, getSettings } = useUser()
 
   const checkAuthenticated = useCallback(async (): Promise<void> => {
     return AuthService.currentSession()
@@ -46,6 +46,7 @@ const useAuth = () => {
                   resolve(`authentication.messages.successfullyLoggedIn`)
 
                   getUser().then(() => {
+                    getSettings()
                     router.push('/user/home')
                   })
                 })

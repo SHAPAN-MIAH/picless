@@ -67,19 +67,6 @@ export type Device = {
   DeviceLastAuthenticatedDate: string
 }
 
-export interface ProfileUserSettings {
-  enabledPushNotificatoins: boolean | null
-  enabledEmailNotificatoins: boolean | null
-  notificationComments: boolean | null
-  notificationNewSuscriber: boolean | null
-  notificationTips: boolean | null
-  notificationsMessage: boolean | null
-  privacityDisplayProfileInSearchBar: boolean | null
-  privacityDisplayChatActivity: boolean | null
-  privacityGoogleAuthenticator: boolean | null
-  privacityWhoCanSendMessage: string
-}
-
 export interface UserProfileType extends UserType {
   numberImages: number
   numberOfFollowers: number
@@ -116,4 +103,17 @@ export type ServiceUserProfileType = {
 export type OccupationType = {
   id: number
   name: string
+}
+
+export type UserSettingsType = {
+  enabledPushNotificatoins?: boolean
+  enabledEmailNotificatoins?: boolean
+  notificationComments?: boolean
+  notificationNewSuscriber?: boolean
+  notificationTips?: boolean
+  notificationsMessage?: boolean
+  privacityDisplayProfileInSearchBar?: boolean
+  privacityDisplayChatActivity?: boolean
+  privacityGoogleAuthenticator?: boolean
+  privacityWhoCanSendMessage?: string
 }

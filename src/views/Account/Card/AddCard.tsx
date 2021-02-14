@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { CountryDropdown } from 'react-country-region-selector'
 import { useHistory } from 'react-router-dom'
 
+import useUser from '../../../hooks/useUser'
+
 import PaymentService from '../../../services/PaymentService'
 
 import LayoutMain from '../../LayoutMain/LayoutMain'
@@ -17,9 +19,8 @@ import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import Alert from '../../../components/Common/Alerts/Alerts'
 import InputIconCardProvider from '../../../components/Common/InputIconCardProvider'
 
+import { UserType } from '../../../types/UserType.d'
 import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
-import useUser from '../../../hooks/useUser'
-import { UserType } from '../../../types/UserType'
 
 type FormValues = {
   street: string

@@ -6,12 +6,14 @@ import UserContext from '../context/UserContext'
 
 import UserService from '../services/UserService'
 
-import { UserType } from '../types/UserType.d'
+import { UserSettingsType, UserType } from '../types/UserType.d'
 
 type UseUserReturn = {
   userId: string
   getUser: () => Promise<UserType>
+  getSettings: (needsUpdate?: boolean) => Promise<UserSettingsType>
   updateUser: (userData: Partial<UserType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
+  updateSettings: (settingsData: Partial<UserSettingsType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
 }
 type ToastPromiseOptions = { loading: string; success: string; error: string }
 
@@ -22,7 +24,7 @@ const defaultToastOptions = {
 }
 
 const useUser = (): UseUserReturn => {
-  const { user, setUser, userId } = useContext(UserContext.context)
+  const { user, setUser, userId, settings, setSettings } = useContext(UserContext.context)
 
   const getCurrentUser = useCallback((): Promise<UserType> => {
     return new Promise<UserType>((resolve, reject) => {
@@ -59,9 +61,49 @@ const useUser = (): UseUserReturn => {
     [setUser, getCurrentUser]
   )
 
+  const updateSettings = useCallback(
+    (settingsData: Partial<UserSettingsType>, toastOptions: ToastPromiseOptions = defaultToastOptions): Promise<boolean> => {
+      return getSettings().then((s: UserSettingsType) => {
+        const updated = { ...s, ...settingsData }
+
+        const toastPromise = UserService.updateUserSettings(updated)
+
+        return toast.promise(toastPromise, toastOptions).then((newUserData: any) => {
+          // setUser(newUserData)
+          console.log(newUserData)
+          return true
+        })
+      })
+    },
+    [setUser, getCurrentUser]
+  )
+
+  const getSettings = useCallback(
+    (needsUpdate?: boolean): Promise<UserSettingsType> => {
+      return new Promise<UserSettingsType>((resolve, reject) => {
+        if (needsUpdate || _.isEmpty(settings)) {
+          UserService.getUserSettings()
+            .then((s: UserSettingsType) => {
+              setSettings(s)
+
+              resolve(s)
+            })
+            .catch((err) => {
+              reject(err)
+            })
+        } else {
+          resolve(settings)
+        }
+      })
+    },
+    [setSettings, settings]
+  )
+
   return {
     userId,
     getUser: getCurrentUser,
+    getSettings,
+    updateSettings,
     updateUser,
   }
 }
