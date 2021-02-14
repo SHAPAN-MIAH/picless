@@ -13,7 +13,7 @@ import styles from './PictureCarousel.module.css'
 const PictureCarousel: FunctionComponent<{ sources: SourceType[] }> = (props) => {
   const { sources } = props
 
-  const contentStyle = { width: '75%' }
+  const contentStyle = { width: '75%', height: '75%' }
 
   return (
     <>
