@@ -16,7 +16,7 @@ const WaitingLiveFooter: FunctionComponent<{ startLive: () => void; disabled: bo
             id="allow-chat"
             title="Allow chat"
             checked
-            onChange={() => {
+            onChange={(value: boolean) => {
               onToggleChat()
             }}
           />

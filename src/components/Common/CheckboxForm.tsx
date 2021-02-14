@@ -43,7 +43,16 @@ const CheckboxForm = React.forwardRef<HTMLInputElement, CheckboxFormProps>((prop
         <div className="form-switch-button" />
       </div>
 
-      <input {...rest} type="checkbox" name={name} ref={ref} checked={checkState} id={id} style={{ display: 'none' }} />
+      <input
+        {...rest}
+        type="checkbox"
+        name={name}
+        ref={ref}
+        checked={checkState}
+        id={id}
+        onChange={() => {}}
+        style={{ display: 'none' }}
+      />
     </div>
   )
 })
