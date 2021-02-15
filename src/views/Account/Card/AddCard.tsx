@@ -96,7 +96,7 @@ const AddCard: FunctionComponent<{}> = () => {
       })
       .then((data: any) => {
         if (data.code === 0) {
-          history.push('/wallet/payments')
+          history.push('/account/wallet')
         } else if (data.message && data.code !== 0) {
           setErrorMessage(data.message)
         }
