@@ -14,16 +14,16 @@ import UserSettings from '../views/Account/UserSettings'
 import Home from '../views/Home/Home'
 import Wallet from '../views/Account/Wallet'
 import Movements from '../views/Account/Movements'
-import PaymentMethods from '../views/Account/PaymentMethods'
 import AddCard from '../views/Account/Card/AddCard'
 import Subscriptions from '../views/Account/Subscriptions/Subscriptions'
 import TestView from '../views/TestView/TestView'
 import Verification from '../views/Account/Verification/Verification'
 import HelpSupport from '../views/HelpSupport/HelpSupport'
+import PaymentCallback from '../views/Payments/PaymentCallback'
 
 const MainRoutes: FunctionComponent<{}> = () => {
   const routerProps: ProtectedRouteProps = {
-    authenticationPath: '/',
+    authenticationPath: '/#login',
   }
 
   return (
@@ -39,9 +39,11 @@ const MainRoutes: FunctionComponent<{}> = () => {
           <ProtectedRoute {...routerProps} exact path="/account/verification" component={Verification} />
           <ProtectedRoute {...routerProps} exact path="/account/wallet" component={Wallet} />
 
-          <ProtectedRoute {...routerProps} exact path="/wallet/payments" component={PaymentMethods} />
           <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
           <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
+
+          <ProtectedRoute {...routerProps} path="/payment/stripe/wallet" component={PaymentCallback} />
+          <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
 
           <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
           <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
