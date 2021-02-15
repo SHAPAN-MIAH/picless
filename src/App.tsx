@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
+
 import MainRoutes from './routes/MainRoutes'
 
 import { UserContextProvider } from './context/UserContext'
@@ -22,7 +24,7 @@ declare global {
   }
 }
 
-function App() {
+const App: FunctionComponent<{}> = () => {
   return (
     <>
       <AuthorizationContextProvider>

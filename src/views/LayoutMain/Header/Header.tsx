@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import SearchBar from './SearchBar/SearchBar'
 import useMenu from '../../../hooks/useMenu'
-import { Link } from 'react-router-dom'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
@@ -56,15 +56,15 @@ const Header: FunctionComponent<{}> = () => {
             </div>
 
             <div className="action-list-item-wrap">
-              <div className="action-list-item">
-                <FontAwesomeIcon icon="bars" size="lg" color="#8b88ff " />
-              </div>
+              <Link to="/user/home" className="action-list-item">
+                <FontAwesomeIcon icon="bars" size="lg" color="#8b88ff" />
+              </Link>
             </div>
 
             <div className="action-list-item-wrap">
-              <div className="action-list-item">
-                <FontAwesomeIcon icon="plus" size="lg" color="#8b88ff " />
-              </div>
+              <Link to="/user/home" className="action-list-item">
+                <FontAwesomeIcon icon="plus" size="lg" color="#8b88ff" />
+              </Link>
             </div>
 
             <div className="action-list-item-wrap">

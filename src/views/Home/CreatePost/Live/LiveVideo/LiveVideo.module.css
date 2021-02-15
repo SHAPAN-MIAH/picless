@@ -13,13 +13,9 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-
   height: 100%;
   top: 0;
   left: 0;
-  /* left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); */
   width: inherit;
   z-index: 1;
   color: whitesmoke;

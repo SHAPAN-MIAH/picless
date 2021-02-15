@@ -14,11 +14,13 @@ import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 import useAuth from '../../../../hooks/useAuth'
 
 import { RegisterViewType } from './Register'
+import SimpleCheckboxForm from '../../../../components/Common/SimpleCheckboxForm'
 
 type FormValues = {
   username: string
   password: string
   confirmationPassword: string
+  overEighteen: boolean
 }
 
 const RegisterForm: FunctionComponent<{
@@ -37,6 +39,7 @@ const RegisterForm: FunctionComponent<{
       .transform((x) => (x === '' ? undefined : x))
       .required(t(`authentication.errors.passwordRequired`)),
     confirmationPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    overEighteen: Yup.boolean().required(),
   })
 
   const { register } = useAuth()
@@ -125,6 +128,23 @@ const RegisterForm: FunctionComponent<{
           />
         </FormRowItem>
 
+        <FormRowItem>
+          <Controller
+            control={control}
+            name="overEighteen"
+            defaultValue={false}
+            render={(propsController) => (
+              <SimpleCheckboxForm
+                name={propsController.name}
+                ref={propsController.ref}
+                defaultValue={propsController.value}
+                placeholder={t('authentication.overEighteen')}
+                onChange={(e) => propsController.onChange(e.target.checked)}
+              />
+            )}
+          />
+        </FormRowItem>
+
         <FormRow>
           <ButtonWithLoader type="submit" className="button medium primary" showLoader={formState.isSubmitting}>
             {t('authentication.registerButton')}
@@ -139,7 +159,7 @@ const RegisterForm: FunctionComponent<{
 
       <p className="form-text">
         {t('authentication.registerConfimationEmailMessage')}
-        <a href="">{t('authentication.contactUs')}</a>!
+        <a href="mailto:GregorioTeAyuda@enjoyr.com">{t('authentication.contactUs')}</a>!
       </p>
     </div>
   )

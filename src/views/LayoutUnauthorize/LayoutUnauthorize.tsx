@@ -4,9 +4,12 @@ import { useTranslation } from 'react-i18next'
 import Login from './Authentication/Login/Login'
 import Register from './Authentication/Register/Register'
 import NavLoginRegister from './NavLoginRegister/NavLoginRegister'
+import useRouter from '../../hooks/useRouter'
 
 const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
+  const route = useRouter()
 
   useEffect(() => {
     if (window.tpl) {
@@ -36,6 +39,8 @@ const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
       </div>
 
       <div className="landing-form">
+        {/* {route.location.hash.includes('login') && <Login />}
+        {route.location.hash.includes('register') && <Register />} */}
         <Login />
         <Register />
       </div>

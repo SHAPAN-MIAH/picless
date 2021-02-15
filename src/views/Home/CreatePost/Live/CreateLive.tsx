@@ -30,13 +30,6 @@ const CreateLive: FunctionComponent<{}> = () => {
   const [toggleChat, setToggleChat] = useState<boolean>(true)
 
   useEffect(() => {
-    if (videoRef.current) {
-      const video: any = videoRef.current
-      video.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [liveStatus])
-
-  useEffect(() => {
     return () => {
       stopLive()
     }

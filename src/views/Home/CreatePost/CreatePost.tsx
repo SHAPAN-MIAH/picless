@@ -43,18 +43,6 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
 
               <p className="option-item-title">Live</p>
             </div>
-            <div
-              className={classNames('option-item', currentTab === 'POLL' ? 'active' : '')}
-              onClick={() => {
-                changeTab('POLL')
-              }}
-            >
-              <svg className="option-item-icon icon-poll">
-                <use xlinkHref="#svg-poll"> </use>
-              </svg>
-
-              <p className="option-item-title">Poll</p>
-            </div>
           </div>
         </div>
 

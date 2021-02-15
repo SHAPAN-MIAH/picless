@@ -99,10 +99,10 @@ const useLive = () => {
 
     initWebRTCAdaptor()
 
-    if (videoRef.current) {
-      const video: any = videoRef.current
-      video.scrollIntoView({ behavior: 'smooth' })
-    }
+    // if (videoRef.current) {
+    //   const video: any = videoRef.current
+    //   video.scrollIntoView({ behavior: 'smooth' })
+    // }
   }, [])
 
   const checkAndRepublishIfRequired = () => {

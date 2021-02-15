@@ -18,13 +18,13 @@ const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
           </div>
         </div>
 
-        <div className="post-option">
+        {/* <div className="post-option">
           <svg className="post-option-icon icon-comment">
             <use xlinkHref="#svg-comment" />
           </svg>
 
           <p className="post-option-text">Comment</p>
-        </div>
+        </div> */}
 
         <Popup
           modal
