@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react'
 import classNames from 'classnames'
 import { useDispatch } from 'react-redux'
 import { uploadUserImages } from '../../redux/User/UserThunks'
 import { ImageType, UploadImageType } from '../../types/UserType.d'
+import { isMobile } from 'react-device-detect'
 
 interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   imageType: ImageType
@@ -35,21 +34,16 @@ const UploadBox = (props: UploadBoxProps) => {
     }
 
     dispatch(uploadUserImages(imageData))
-    // UserService.uploadUserImages(imageData)
-    //   .then((user) => {
-    //     if (imageType === 'COVER') {
-    //       setUrlImage(user.coverPicture)
-    //     } else if (imageType === 'PROFILE') {
-    //       setUrlImage(user.profilePicture)
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(err)
-    //   })
+  }
+
+  const styleMobile: React.CSSProperties = {}
+
+  if (!isMobile) {
+    styleMobile.flex = 1
   }
 
   return (
-    <div className={classNames('upload-box', className)} onClick={openSelectionFile}>
+    <div className={classNames('upload-box', className)} style={styleMobile} onClick={openSelectionFile}>
       {/* <figure>
         <img src={urlImage} alt={imageType} />
       </figure> */}

@@ -43,12 +43,14 @@ const useAuth = () => {
             const remembeDevicerOrNot = {
               onSuccess: (): void => {
                 checkAuthenticated().then(() => {
-                  resolve(`authentication.messages.successfullyLoggedIn`)
+                  getUser()
+                    .then(() => {
+                      resolve(`authentication.messages.successfullyLoggedIn`)
 
-                  getUser().then(() => {
-                    getSettings()
-                    router.push('/user/home')
-                  })
+                      getSettings()
+                      router.push('/user/home')
+                    })
+                    .catch((err: any) => reject(new Error(`authentication.errors.${err.code}`)))
                 })
               },
               onFailure: (err: any) => {
