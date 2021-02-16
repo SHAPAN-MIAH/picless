@@ -5,7 +5,6 @@ import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
 import toast from 'react-hot-toast'
-import { CountryDropdown } from 'react-country-region-selector'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
 import FormItem from '../../components/Common/Form/FormItem'
@@ -22,11 +21,12 @@ import { UserType } from '../../types/UserType.d'
 
 import professions from '../../constants/professions.json'
 import useUser from '../../hooks/useUser'
+import SelectCountry from '../../components/SelectCountry/SelectCountry'
 
 type FormValues = {
   userName: string
   profileDescription: string
-  countryName: string
+  countryCode: string
   cityName: string
   occupationId: string
   birthDate: Date
@@ -36,7 +36,7 @@ type formFieldsNames = keyof FormValues
 const formFields: formFieldsNames[] = [
   'userName',
   'profileDescription',
-  'countryName',
+  'countryCode',
   'cityName',
   'occupationId',
   'birthDate',
@@ -164,24 +164,23 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                       </FormItem>
 
                       <FormItem>
-                        <div className="form-select">
-                          <label htmlFor="account-country">{t('profileInfo.countryField')}</label>
-                          <Controller
-                            control={control}
-                            name="countryName"
-                            defaultValue=""
-                            render={(propsController) => (
-                              <CountryDropdown
-                                name={propsController.name}
-                                value={propsController.value || ''}
-                                id="account-country"
-                                onChange={(val) => {
-                                  propsController.onChange(val)
-                                }}
-                              />
-                            )}
-                          />
-                        </div>
+                        <Controller
+                          control={control}
+                          name="countryCode"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <SelectCountry
+                              id="country-code"
+                              name={propsController.name}
+                              placeholder={t('profileInfo.countryField')}
+                              value={propsController.value || ''}
+                              onChange={(val: any) => {
+                                propsController.onChange(val.target.value)
+                              }}
+                            />
+                          )}
+                        />
+
                         <Controller
                           control={control}
                           type="text"

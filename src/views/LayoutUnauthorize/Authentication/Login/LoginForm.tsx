@@ -49,6 +49,8 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
   const onSubmit = (data: FormValues) => {
     const { username, password, rememberMe } = data
 
+    setGeneralError('')
+
     return login(username, password, rememberMe)
       .then((message) => setMessages(message))
       .catch((err) => {

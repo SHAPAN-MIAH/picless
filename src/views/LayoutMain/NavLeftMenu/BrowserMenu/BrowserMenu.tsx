@@ -10,11 +10,15 @@ import { UserType } from '../../../../types/UserType.d'
 import useUser from '../../../../hooks/useUser'
 import useAuth from '../../../../hooks/useAuth'
 
+import menuItems from '../../../../constants/menu.json'
+import useRouter from '../../../../hooks/useRouter'
+
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const { getUser } = useUser()
   const { signOut } = useAuth()
+  const route = useRouter()
 
   const { showMenu } = useMenu()
 
@@ -45,91 +49,27 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <UserAvatar size="SMALL" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
-          {/* PROFILE-INFO */}
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/account/profile-info"
-              data-title={t('navLeftMenu.profileInfo')}
-            >
-              <svg className="menu-item-link-icon icon-members">
-                <use xlinkHref="#svg-members" />
-              </svg>
-            </Link>
-          </li>
+          {menuItems.map((item) => {
+            if (item.path) {
+              return (
+                <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
+                  <Link className="menu-item-link text-tooltip-tfr" to={item.path} data-title={t(item.title)}>
+                    {item.iconType === 'template' && (
+                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                        <use xlinkHref={`#svg-${item.icon}`} />
+                      </svg>
+                    )}
+                    {item.iconType === 'templateWithoutColor' && (
+                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                        <use xlinkHref={`#svg-${item.icon}`} style={{ fill: '#adafca' }} />
+                      </svg>
+                    )}
+                  </Link>
+                </li>
+              )
+            }
+          })}
 
-          {/* ACCOUNT-INFO */}
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/account/account-info"
-              data-title={t('navLeftMenu.accountInfo')}
-            >
-              <svg className="menu-item-link-icon icon-private">
-                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
-              </svg>
-            </Link>
-          </li>
-
-          {/* SETTINGS */}
-          <li className="menu-item">
-            <Link className="menu-item-link text-tooltip-tfr" to="/account/settings" data-title={t('navLeftMenu.settings')}>
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
-              </svg>
-            </Link>
-          </li>
-
-          {/* MY-SUBSCRIBERS */}
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/account/my-subscriptions"
-              data-title={t('navLeftMenu.mySubscriptions')}
-            >
-              <svg className="menu-item-link-icon icon-group">
-                <use xlinkHref="#svg-group" />
-              </svg>
-            </Link>
-          </li>
-
-          {/* CARDS/WALLET */}
-          <li className="menu-item">
-            <Link className="menu-item-link text-tooltip-tfr" to="/account/wallet" data-title={t('navLeftMenu.cardWallet')}>
-              <svg className="menu-item-link-icon icon-wallet">
-                <use xlinkHref="#svg-wallet" />
-              </svg>
-            </Link>
-          </li>
-
-          {/* ADD-BANK */}
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              to="/account/verification"
-              data-title={t('navLeftMenu.addBank')}
-            >
-              <svg className="menu-item-link-icon icon-earnings">
-                <use xlinkHref="#svg-earnings" />
-              </svg>
-            </Link>
-          </li>
-
-          {/* HELP - SUPPORT */}
-          <li className="menu-item">
-            <Link
-              className="menu-item-link text-tooltip-tfr"
-              style={{ color: '#adafca' }}
-              to="/help"
-              data-title={t('navLeftMenu.helpSupport')}
-            >
-              <svg className="menu-item-link-icon icon-info">
-                <use xlinkHref="#svg-info" />
-              </svg>
-            </Link>
-          </li>
-
-          {/* LOGOUT */}
           <li className="menu-item">
             <a
               href=""
@@ -175,74 +115,27 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           </p>
         </div>
         <ul className="menu">
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/account-info">
-              <svg className="menu-item-link-icon icon-members">
-                <use xlinkHref="#svg-members" />
-              </svg>
-              {t('navLeftMenu.accountInfo')}
-            </Link>
-          </li>
-
-          {/* PROFILE-INFO */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/profile-info">
-              <svg className="menu-item-link-icon icon-private">
-                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
-              </svg>
-              {t('navLeftMenu.profileInfo')}
-            </Link>
-          </li>
-
-          {/* SETTINGS */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/settings">
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
-              </svg>
-              {t('navLeftMenu.settings')}
-            </Link>
-          </li>
-
-          {/* MY-SUBSCRIPTIONS */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/my-subscriptions">
-              <svg className="menu-item-link-icon icon-group">
-                <use xlinkHref="#svg-group" />
-              </svg>
-              {t('navLeftMenu.mySubscriptions')}
-            </Link>
-          </li>
-
-          {/* CARDS/WALLET */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/wallet">
-              <svg className="menu-item-link-icon icon-wallet">
-                <use xlinkHref="#svg-wallet" />
-              </svg>
-              {t('navLeftMenu.cardWallet')}
-            </Link>
-          </li>
-
-          {/* ADD-BANK */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/verification">
-              <svg className="menu-item-link-icon icon-earnings">
-                <use xlinkHref="#svg-earnings" />
-              </svg>
-              {t('navLeftMenu.addBank')}
-            </Link>
-          </li>
-
-          {/* HELP/SUPPORT */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/help">
-              <svg className="menu-item-link-icon icon-info">
-                <use xlinkHref="#svg-info" />
-              </svg>
-              {t('navLeftMenu.helpSupport')}
-            </Link>
-          </li>
+          {menuItems.map((item) => {
+            if (item.path) {
+              return (
+                <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
+                  <Link className="menu-item-link" to={item.path}>
+                    {item.iconType === 'template' && (
+                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                        <use xlinkHref={`#svg-${item.icon}`} />
+                      </svg>
+                    )}
+                    {item.iconType === 'templateWithoutColor' && (
+                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                        <use xlinkHref={`#svg-${item.icon}`} style={{ fill: '#adafca' }} />
+                      </svg>
+                    )}
+                    {t(item.title)}
+                  </Link>
+                </li>
+              )
+            }
+          })}
 
           <li className="menu-item">
             <a

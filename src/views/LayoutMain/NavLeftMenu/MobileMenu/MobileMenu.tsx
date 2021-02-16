@@ -10,10 +10,14 @@ import useMenu from '../../../../hooks/useMenu'
 import useUser from '../../../../hooks/useUser'
 import useAuth from '../../../../hooks/useAuth'
 
+import menuItems from '../../../../constants/menu.json'
+import useRouter from '../../../../hooks/useRouter'
+
 const MobileMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const { showMenu, setShowMenu } = useMenu()
+  const route = useRouter()
   const { signOut } = useAuth()
   const { getUser } = useUser()
 
@@ -67,75 +71,27 @@ const MobileMenu: FunctionComponent<{}> = () => {
         <p className="navigation-widget-section-title">Sections</p>
 
         <ul className="menu">
-          {/* PROFILE-INFO */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/profile-info">
-              <svg className="menu-item-link-icon icon-members">
-                <use xlinkHref="#svg-members" />
-              </svg>
-              {t('navLeftMenu.profileInfo')}
-            </Link>
-          </li>
-
-          {/* ACCOUNT-INFO */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/account-info">
-              <svg className="menu-item-link-icon icon-private">
-                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
-              </svg>
-              {t('navLeftMenu.accountInfo')}
-            </Link>
-          </li>
-
-          {/* SETTINGS */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/settings">
-              <svg className="menu-item-link-icon icon-settings">
-                <use xlinkHref="#svg-settings" />
-              </svg>
-              {t('navLeftMenu.settings')}
-            </Link>
-          </li>
-
-          {/* MY-SUBSCRIPTIONS */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/my-subscriptions">
-              <svg className="menu-item-link-icon icon-group">
-                <use xlinkHref="#svg-group" />
-              </svg>
-              {t('navLeftMenu.mySubscriptions')}
-            </Link>
-          </li>
-
-          {/* CARDS/WALLET */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/wallet">
-              <svg className="menu-item-link-icon icon-wallet">
-                <use xlinkHref="#svg-wallet" />
-              </svg>
-              {t('navLeftMenu.cardWallet')}
-            </Link>
-          </li>
-
-          {/* ADD-BANK */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/account/verification">
-              <svg className="menu-item-link-icon icon-earnings">
-                <use xlinkHref="#svg-earnings" />
-              </svg>
-              {t('navLeftMenu.addBank')}
-            </Link>
-          </li>
-
-          {/* HELP/SUPPORT */}
-          <li className="menu-item">
-            <Link className="menu-item-link" to="/help">
-              <svg className="menu-item-link-icon icon-info">
-                <use xlinkHref="#svg-info" />
-              </svg>
-              {t('navLeftMenu.helpSupport')}
-            </Link>
-          </li>
+          {menuItems.map((item) => {
+            if (item.path) {
+              return (
+                <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
+                  <Link className="menu-item-link" to={item.path}>
+                    {item.iconType === 'template' && (
+                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                        <use xlinkHref={`#svg-${item.icon}`} />
+                      </svg>
+                    )}
+                    {item.iconType === 'templateWithoutColor' && (
+                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                        <use xlinkHref={`#svg-${item.icon}`} style={{ fill: '#adafca' }} />
+                      </svg>
+                    )}
+                    {t(item.title)}
+                  </Link>
+                </li>
+              )
+            }
+          })}
         </ul>
       </nav>
 

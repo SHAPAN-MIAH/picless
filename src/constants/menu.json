@@ -1,0 +1,60 @@
+[
+  {
+    "name": "PROFILE-INFO",
+    "title": "navLeftMenu.profileInfo",
+    "icon": "members",
+    "iconType": "template",
+    "path": "/account/profile-info"
+  },
+  {
+    "name": "ACCOUNT-INFO",
+    "title": "navLeftMenu.accountInfo",
+    "icon": "private",
+    "iconType": "templateWithoutColor",
+    "path": "/account/account-info"
+  },
+
+  {
+    "name": "SETTINGS",
+    "title": "navLeftMenu.settings",
+    "icon": "settings",
+    "iconType": "template",
+    "path": "/account/settings"
+  },
+  {
+    "name": "MY-SUBSCRIBERS",
+    "title": "navLeftMenu.mySubscriptions",
+    "icon": "group",
+    "iconType": "template",
+    "path": "/account/my-subscriptions"
+  },
+  {
+    "name": "CARDS/WALLET",
+    "title": "navLeftMenu.cardWallet",
+    "icon": "wallet",
+    "iconType": "template",
+    "path": "/account/wallet"
+  },
+  {
+    "name": "ADD-BANK",
+    "title": "navLeftMenu.addBank",
+    "icon": "earnings",
+    "iconType": "template",
+    "path": "/account/verification"
+  },
+  {
+    "name": "HELP-SUPPORT",
+    "title": "navLeftMenu.helpSupport",
+    "icon": "info",
+    "iconType": "template",
+    "path": "/support"
+  },
+  {
+    "name": "LOGOUT",
+    "title": "navLeftMenu.logout",
+    "icon": "login",
+    "iconType": "template",
+    "path": "",
+    "action": "logout"
+  }
+]

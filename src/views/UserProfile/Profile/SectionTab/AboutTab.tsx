@@ -43,7 +43,7 @@ const AboutTab: FunctionComponent<{}> = () => {
                 <div className="information-line">
                   <p className="information-line-title">Country</p>
 
-                  <p className="information-line-text">{provider.countryName}</p>
+                  <p className="information-line-text">{provider.countryCode}</p>
                 </div>
 
                 <div className="information-line">

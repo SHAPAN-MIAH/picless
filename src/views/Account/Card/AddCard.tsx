@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { CountryDropdown } from 'react-country-region-selector'
 import { useHistory } from 'react-router-dom'
 
 import useUser from '../../../hooks/useUser'
@@ -21,6 +20,7 @@ import InputIconCardProvider from '../../../components/Common/InputIconCardProvi
 
 import { UserType } from '../../../types/UserType.d'
 import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
+import SelectCountry from '../../../components/SelectCountry/SelectCountry'
 
 type FormValues = {
   street: string
@@ -66,7 +66,7 @@ const AddCard: FunctionComponent<{}> = () => {
   useEffect(() => {
     getUser().then((user: UserType) => {
       setValue('email', user.email)
-      setValue('country', user.countryName)
+      setValue('country', user.countryCode)
     })
   }, [getUser, setValue])
 
@@ -302,24 +302,22 @@ const AddCard: FunctionComponent<{}> = () => {
 
                       <FormRow classNameRow="split">
                         <FormItem>
-                          <div className="form-select">
-                            <label htmlFor="account-country">{t('profileInfo.countryField')}</label>
-                            <Controller
-                              control={control}
-                              name="country"
-                              defaultValue=""
-                              render={(propsController) => (
-                                <CountryDropdown
-                                  name={propsController.name}
-                                  value={propsController.value || ''}
-                                  id="account-country"
-                                  onChange={(val) => {
-                                    propsController.onChange(val)
-                                  }}
-                                />
-                              )}
-                            />
-                          </div>
+                          <Controller
+                            control={control}
+                            name="country"
+                            defaultValue=""
+                            render={(propsController) => (
+                              <SelectCountry
+                                id="country-code"
+                                name={propsController.name}
+                                placeholder={t('profileInfo.countryField')}
+                                value={propsController.value || ''}
+                                onChange={(val: any) => {
+                                  propsController.onChange(val.target.value)
+                                }}
+                              />
+                            )}
+                          />
                         </FormItem>
                         <FormItem>
                           <div className="checkbox-wrap selected">

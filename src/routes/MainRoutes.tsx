@@ -52,7 +52,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
           <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
 
-          <ProtectedRoute {...routerProps} exact path="/help" component={HelpSupport} />
+          <ProtectedRoute {...routerProps} exact path="/support" component={HelpSupport} />
 
           <Route exact path="/">
             <LayoutUnauthorize />

@@ -25,9 +25,7 @@ export interface UserType {
   numberOfFollowers?: number
   languageId?: any
   registrationDate?: string
-  country?: any
-  countryId?: any
-  countryName?: string
+  countryCode?: string
   regionName?: string
   gender?: any
   language?: any

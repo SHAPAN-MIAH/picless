@@ -1,9 +1,17 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
+import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 
 import useUser from '../../../hooks/useUser'
 
 import UploadBox from '../../../components/Common/UploadBox'
+
+const GridDiv = styled.div`
+  justify-content: center;
+  display: ${isMobile ? 'contents' : 'flex'};
+  flex-direction: row;
+`
 
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -20,9 +28,15 @@ const AccountHubMain: FunctionComponent<{}> = () => {
     })
   }, [getUser])
 
+  const styleMobile: React.CSSProperties = {}
+
+  if (!isMobile) {
+    styleMobile.flex = 1
+  }
+
   return (
-    <div className="grid grid-3-3-3">
-      <div className="user-preview small fixed-height">
+    <GridDiv className="grid grid-3-3-3">
+      <div className="user-preview small fixed-height" style={styleMobile}>
         <div className="user-preview-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
@@ -74,7 +88,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
         imageType="COVER"
         uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
       />
-    </div>
+    </GridDiv>
   )
 }
 
