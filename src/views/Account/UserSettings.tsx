@@ -114,7 +114,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                       <FormItem>
                         <Controller
                           control={control}
-                          name="enabledEmailNotifications"
+                          name="enabledPushNotifications"
                           defaultValue=""
                           render={(propsController) => (
                             <CheckboxForm

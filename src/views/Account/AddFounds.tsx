@@ -34,27 +34,15 @@ const AddFounds: FunctionComponent<{}> = () => {
   }
 
   const addCredits = () => {
-    PaymentService.getDefaultCard().then((data: any) => {
-      if (data.code === '0') {
-        const newAmount = currentAmount * 100
+    const newAmount = currentAmount * 100
 
-        SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
-
-        SecurionPay.verifyThreeDSecure(
-          {
-            amount: newAmount,
-            currency: 'USD',
-            card: data.defaultCardId,
-          },
-          (token: any) => {
-            if (token.error) {
-              alert(JSON.stringify(token))
-            } else {
-              addFounds(newAmount, 'Add founds to wallet', token.id)
-              updateBalance()
-            }
-          }
-        )
+    PaymentService.addCreditToWallet(newAmount, 'USD', 'Add founds to wallet', '').then((data: any) => {
+      if (data.code === 0 && data.message === 'succeeded') {
+        updateBalance()
+      } else if (data.code === '0' && data.message !== '') {
+        alert('redirect' + data.path)
+      } else if (data.code === '1' && data.message === '') {
+        alert('error')
       }
     })
   }
