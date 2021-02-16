@@ -61,20 +61,28 @@ const useSearch = ({ initialKeyword = '' } = {}) => {
 
   return {
     changeKeyword: (value: string) => {
-      if (controllerCancelable) {
-        controllerCancelable.abort()
-      }
+      try {
+        if (controllerCancelable) {
+          controllerCancelable.abort()
+        }
 
-      dispatch({ type: ACTIONS.LOADING })
+        dispatch({ type: ACTIONS.LOADING })
 
-      if (value) {
-        controllerCancelable = new AbortController()
-        const { signal } = controllerCancelable
+        if (value) {
+          controllerCancelable = new AbortController()
+          const { signal } = controllerCancelable
 
-        dispatch({ type: ACTIONS.CHANGE_KEYWORD, payload: value })
-        UserService.searchUser(value, signal).then((data: UserSearchType[]) => {
-          dispatch({ type: ACTIONS.CHANGE_ITEMS, payload: data })
-        })
+          dispatch({ type: ACTIONS.CHANGE_KEYWORD, payload: value })
+          UserService.searchUser(value, signal)
+            .then((data: UserSearchType[]) => {
+              dispatch({ type: ACTIONS.CHANGE_ITEMS, payload: data })
+            })
+            .catch((e) => {
+              console.log(e.message)
+            })
+        }
+      } catch (err) {
+        console.log(err.message)
       }
     },
     clear: () => {

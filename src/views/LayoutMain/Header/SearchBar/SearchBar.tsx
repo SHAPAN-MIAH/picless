@@ -1,6 +1,8 @@
-import React, { FunctionComponent, useCallback, Suspense } from 'react'
+import React, { FunctionComponent, useCallback, Suspense, useState } from 'react'
 import Loader from 'react-loader-spinner'
 import classNames from 'classnames'
+import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 
 import useSearch from '../../../../hooks/useSearch'
 
@@ -10,19 +12,31 @@ import { UserSearchType } from '../../../../types/UserType.d'
 
 const SearchBarItem = React.lazy(() => import('./SearchBarItem/SearchBarItem'))
 
+const MobileDropDown = styled.div`
+  top: 65px;
+  left: 0;
+  width: 100%;
+  position: absolute !important;
+`
+
 const SearchBar: FunctionComponent<{}> = () => {
   const { loading, keyword, items, changeKeyword, clear } = useSearch({ initialKeyword: '' })
+
+  const [showDropdown, setShowDropDown] = useState<boolean>(false)
 
   const onChangeSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const query = e.target.value
+
       if (!query) {
         clear()
+        setShowDropDown(false)
       } else {
+        setShowDropDown(true)
         changeKeyword(query)
       }
     },
-    [changeKeyword, clear]
+    [setShowDropDown, changeKeyword, clear]
   )
 
   const renderSearchResults = useCallback(() => {
@@ -43,6 +57,11 @@ const SearchBar: FunctionComponent<{}> = () => {
     )
   }, [items])
 
+  const onCleanSearch = useCallback(() => {
+    clear()
+    setShowDropDown(false)
+  }, [setShowDropDown, clear])
+
   return (
     <>
       <div className={classNames('header-actions search-bar', style.headerActionImportant)}>
@@ -51,7 +70,7 @@ const SearchBar: FunctionComponent<{}> = () => {
             type="text"
             id="search-main"
             name="search_main"
-            placeholder="Search here for people or groups"
+            placeholder="Search here for people"
             autoComplete="false"
             value={keyword}
             onChange={onChangeSearch}
@@ -63,31 +82,59 @@ const SearchBar: FunctionComponent<{}> = () => {
             </svg>
           </div>
 
-          <div className="interactive-input-action">
+          <div
+            className="interactive-input-action"
+            onClick={() => {
+              onCleanSearch()
+            }}
+          >
             <svg className="interactive-input-action-icon icon-cross-thin">
               <use xlinkHref="#svg-cross-thin" />
             </svg>
           </div>
         </div>
 
-        <div className="dropdown-box padding-bottom-small header-search-dropdown">
-          {loading && (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-            </div>
-          )}
-          {!loading && (
-            <>
-              <div className="dropdown-box-category">
-                <p className="dropdown-box-category-title">Providers</p>
+        {!isMobile && (
+          <div className="dropdown-box padding-bottom-small header-search-dropdown">
+            {loading && (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />
               </div>
+            )}
+            {!loading && (
+              <>
+                <div className="dropdown-box-category">
+                  <p className="dropdown-box-category-title">Providers</p>
+                </div>
 
-              <div className="dropdown-box-list small no-scroll">
-                <Suspense fallback="Loading...">{!loading && renderSearchResults()}</Suspense>
+                <div className="dropdown-box-list small no-scroll">
+                  <Suspense fallback="Loading...">{!loading && renderSearchResults()}</Suspense>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {isMobile && showDropdown && (
+          <MobileDropDown className="dropdown-box padding-bottom-small">
+            {loading && (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />
               </div>
-            </>
-          )}
-        </div>
+            )}
+            {!loading && (
+              <>
+                <div className="dropdown-box-category">
+                  <p className="dropdown-box-category-title">Providers</p>
+                </div>
+
+                <div className="dropdown-box-list small no-scroll">
+                  <Suspense fallback="Loading...">{!loading && renderSearchResults()}</Suspense>
+                </div>
+              </>
+            )}
+          </MobileDropDown>
+        )}
       </div>
     </>
   )

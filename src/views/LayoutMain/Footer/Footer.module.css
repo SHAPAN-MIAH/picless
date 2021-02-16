@@ -1,0 +1,16 @@
+.footerMenuSocial {
+  display: flex;
+  justify-items: baseline;
+}
+
+.footerDivider {
+  width: 10px;
+  height: 2px;
+}
+
+.footerMenuItem {
+  color: inherit;
+  padding: 0;
+  margin: 4px 15px;
+  cursor: pointer;
+}

@@ -1,4 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react'
+
 import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
 
 import Header from './Header/Header'
@@ -7,6 +8,7 @@ import MainLoader from '../../components/MainLoading/MainLoading'
 import Notifications from '../../components/Notification/Notification'
 
 import { ApplicationContextProvider } from '../../context/ApplicationContext'
+import Footer from './Footer/Footer'
 
 interface LayoutMainProps {
   children: ReactNode
@@ -27,6 +29,7 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
         <Header />
         <FloatyBar />
         {children}
+        <Footer />
       </ApplicationContextProvider>
     </>
   )
