@@ -13,6 +13,8 @@ import styles from './UserHeader.module.css'
 import { UserType } from '../../../../types/UserType.d'
 import SubscribePopup from './SubscribePopup/SubscribePopup'
 import { WalletContextProvider } from '../../../../context/WalletContext'
+import { GetCountryName } from '../../../../utils/Functions'
+import CountryFlag from '../../../../components/CountryFlag/CountryFlag'
 
 type UserHeaderProps = {
   isSuscribe: boolean | null
@@ -38,6 +40,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setImageProfile(provider.profilePicture)
     setSubscribed(isSuscribe)
   }, [provider, isSuscribe])
+
+  const countryName = GetCountryName(provider.countryCode || '')
 
   return (
     <>
@@ -118,9 +122,9 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               </div>
 
               <div className="user-stat big">
-                <img className="user-stat-image" src={`${process.env.PUBLIC_URL}/assets/img/flag/usa.png`} alt="flag-usa" />
+                <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName} />
 
-                <p className="user-stat-text">usa</p>
+                <p className="user-stat-text">{countryName}</p>
               </div>
             </div>
           </div>
