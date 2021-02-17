@@ -35,6 +35,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
   const handleCloseMenu = () => {
     setShowMenu(false)
+    console.log('sdfdsfdsfds')
   }
 
   return (
@@ -75,7 +76,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
             if (item.path) {
               return (
                 <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
-                  <Link className="menu-item-link" to={item.path}>
+                  <Link className="menu-item-link" to={item.path} onClick={handleCloseMenu}>
                     {item.iconType === 'template' && (
                       <svg className={`menu-item-link-icon icon-${item.icon}`}>
                         <use xlinkHref={`#svg-${item.icon}`} />
