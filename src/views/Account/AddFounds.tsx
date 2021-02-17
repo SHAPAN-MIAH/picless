@@ -41,7 +41,7 @@ const AddFounds: FunctionComponent<{}> = () => {
     PaymentService.addCreditToWallet(newAmount, 'USD', 'Add founds to wallet', '').then((data: any) => {
       if (data.code === 0 && data.message === 'succeeded') {
         updateBalance()
-      } else if (data.code === '0' && data.message !== 'redirect') {
+      } else if (data.code === 0 && data.message === 'redirect') {
         router.push(data.path)
         // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
         // con paymentIntent en el body, luego actualizo balance
