@@ -84,7 +84,8 @@
     "phoneNumberField": "Phone Number",
     "urlUserNameField": "URL Username",
     "occupationField": "Occupation",
-    "subscriptionPriceField": "Subscription price / per Month"
+    "subscriptionPriceField": "Subscription price / per Month",
+    "deleteAccount": "DeleteAccount"
   },
   "accountDevices": {
     "devicesTitle": "Devices",

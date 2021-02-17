@@ -1,8 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 // import adapter from 'webrtc-adapter'
 
-import LayoutMain from '../../LayoutMain/LayoutMain'
-
 const streamingName = 'lupanarStream'
 const bitrate = 2500 // 900 ~ 2500
 const maxVideoBitrateKbps = bitrate
@@ -88,22 +86,20 @@ const PublisherTest: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <LayoutMain>
-        <div className="content-grid">
-          <div className="grid grid-3-9">
-            <h1>Publisher</h1>
-            <video ref={videoRef} autoPlay controls muted playsInline />
+      <div className="content-grid">
+        <div className="grid grid-3-9">
+          <h1>Publisher</h1>
+          <video ref={videoRef} autoPlay controls muted playsInline />
 
-            <button type="button" className="btn btn-primary" onClick={startCamera}>
-              start camera
-            </button>
+          <button type="button" className="btn btn-primary" onClick={startCamera}>
+            start camera
+          </button>
 
-            <button type="button" className="btn btn-danger" onClick={startBroadcasting}>
-              start broadcast
-            </button>
-          </div>
+          <button type="button" className="btn btn-danger" onClick={startBroadcasting}>
+            start broadcast
+          </button>
         </div>
-      </LayoutMain>
+      </div>
     </>
   )
 }

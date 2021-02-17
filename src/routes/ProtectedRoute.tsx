@@ -18,9 +18,16 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
     checkAuthenticated()
 
     if (window.tpl) {
-      window.tpl.load()
-
-      dispatchEvent(new Event('load'))
+      window.tpl.load([
+        'sidebar',
+        'accordions',
+        'form-rating',
+        'form-counter',
+        'form-switch',
+        'form-input',
+        'interactive-input',
+        'user-avatar',
+      ])
     }
   }, [location, isAuthenticated])
 

@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import toast from 'react-hot-toast'
-import UserService from 'services/UserService'
 
-import LayoutMain from '../LayoutMain/LayoutMain'
+import UserService from 'services/UserService'
 
 const TestView: FunctionComponent<{}> = () => {
   const handleSimpleToast = () => {
@@ -35,35 +34,33 @@ const TestView: FunctionComponent<{}> = () => {
   // }
   return (
     <>
-      <LayoutMain>
-        <div className="content-grid">
-          <div className="grid grid-3-6-3 mobile-prefer-content">
-            <div className="grid-column">{'  '}</div>
-            <div className="grid-column">
-              <button type="button" onClick={handleSimpleToast}>
-                Simple Toast
-              </button>
+      <div className="content-grid">
+        <div className="grid grid-3-6-3 mobile-prefer-content">
+          <div className="grid-column">{'  '}</div>
+          <div className="grid-column">
+            <button type="button" onClick={handleSimpleToast}>
+              Simple Toast
+            </button>
 
-              <button type="button" onClick={handleSuccessToast}>
-                Success Toast
-              </button>
+            <button type="button" onClick={handleSuccessToast}>
+              Success Toast
+            </button>
 
-              <button type="button" onClick={handleErrorToast}>
-                Error Toast
-              </button>
+            <button type="button" onClick={handleErrorToast}>
+              Error Toast
+            </button>
 
-              <button type="button" onClick={handleLoadingToast}>
-                Loading Toast
-              </button>
+            <button type="button" onClick={handleLoadingToast}>
+              Loading Toast
+            </button>
 
-              <button type="button" onClick={handlePromiseToast}>
-                Promise Toast
-              </button>
-            </div>
-            <div className="grid-column">{'  '}</div>
+            <button type="button" onClick={handlePromiseToast}>
+              Promise Toast
+            </button>
           </div>
+          <div className="grid-column">{'  '}</div>
         </div>
-      </LayoutMain>
+      </div>
     </>
   )
 }

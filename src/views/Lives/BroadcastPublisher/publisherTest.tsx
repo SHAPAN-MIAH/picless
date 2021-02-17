@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react'
 import WebRTCAdaptor from '../../../assets/js/webrtc_adaptor'
 import { SoundMeter } from '../../../assets/js/soundmeter'
-import LayoutMain from '../../LayoutMain/LayoutMain'
 
 const streamingName = 'lupanarStreamc'
 const bitrate = 900 // 900 ~ 2500
@@ -100,27 +99,25 @@ const PublisherTest: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <LayoutMain>
-        <div className="content-grid">
-          <div className="grid grid-3-9">
-            <div className="account-hub-content">
-              <div className="grid-column"> </div>
-              <div className="grid-column">
-                <div className="widget-box">
-                  <p className="widget-box-title">Publisher</p>
-                  <button type="button" className="btn btn-primary" onClick={startCamera}>
-                    start camera
-                  </button>{' '}
-                  <button type="button" className="btn btn-danger" onClick={stopBroadcasting}>
-                    Stop broadcast
-                  </button>
-                </div>
+      <div className="content-grid">
+        <div className="grid grid-3-9">
+          <div className="account-hub-content">
+            <div className="grid-column"> </div>
+            <div className="grid-column">
+              <div className="widget-box">
+                <p className="widget-box-title">Publisher</p>
+                <button type="button" className="btn btn-primary" onClick={startCamera}>
+                  start camera
+                </button>{' '}
+                <button type="button" className="btn btn-danger" onClick={stopBroadcasting}>
+                  Stop broadcast
+                </button>
               </div>
-              <div className="grid-column"> </div>
             </div>
+            <div className="grid-column"> </div>
           </div>
         </div>
-      </LayoutMain>
+      </div>
     </>
   )
 }

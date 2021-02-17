@@ -122,16 +122,20 @@
   width: inherit;
   height: fit-content;
   position: relative;
-  max-height: 450px !important;
+  max-height: 670px !important;
 }
 
 .rec.rec-slider-container {
   margin: 0;
 }
 
+.rec.rec-pagination {
+  margin-top: -30px;
+}
+
 .rec.rec-dot {
-  background-color: rgba(229, 229, 229, 1);
-  box-shadow: 0 0 1px 1px rgba(245, 245, 245, 1);
+  background-color: rgba(229, 229, 229, 0.7);
+  box-shadow: 0 0 1px 1px rgba(245, 245, 245, 0);
 }
 .rec.rec-dot:hover {
   background-color: rgba(97, 93, 250, 0.5);
