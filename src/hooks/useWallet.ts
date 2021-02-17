@@ -6,6 +6,12 @@ import WalletContext from '../context/WalletContext'
 
 import { CardType, MovementType, ServiceMovementType } from '../types/PaymentTypes.d'
 
+enum FoundReturn {
+  Succeeded = 'SUCCEEDED',
+  Redirect = 'REDIRECT',
+  Error = 'ERROR',
+}
+
 const useWallet = () => {
   const { cards, setCards, defaultCard, setDefaultCard, balance, setBalance } = useContext(WalletContext.context)
 
@@ -32,7 +38,17 @@ const useWallet = () => {
   }, [])
 
   const addFoundsToWallet = useCallback((amount: number, description: string, token: string) => {
-    PaymentService.addCreditToWallet(amount, 'USD', description, token)
+    return PaymentService.addCreditToWallet(amount, 'USD', description, token).then((data: any) => {
+      if (data.code === 0 && data.message === FoundReturn.Succeeded) {
+        updateBalance()
+      } else if (data.code === '0' && data.message !== 'redirect') {
+        console.log('REDIRECT' + data.path)
+        // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
+        // con paymentIntent en el body, luego actualizo balance
+      } else if (data.code === '1' && data.message === 'error') {
+        alert('error')
+      }
+    })
   }, [])
 
   const getMovements = useCallback(() => {
@@ -88,6 +104,20 @@ const useWallet = () => {
     })
   }, [setBalance])
 
+  const confirmPayment = useCallback((paymentIntent: string) => {
+    return new Promise<string>((resolve, reject) => {
+      PaymentService.confirmPayment(paymentIntent).then((data: any) => {
+        if (data.code === 0) {
+          updateBalance()
+
+          resolve('SUCCESS')
+        } else {
+          reject(new Error('Error confirming the paayment'))
+        }
+      })
+    })
+  }, [])
+
   return {
     loading,
     cards,
@@ -96,6 +126,7 @@ const useWallet = () => {
     movements,
     getMovements,
     addFounds: addFoundsToWallet,
+    confirmPayment,
     removeCard,
     changeDefaultCard,
     updateCards,

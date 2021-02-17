@@ -1,15 +1,41 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import useRouter from '../../hooks/useRouter'
 
 import LayoutMain from '../LayoutMain/LayoutMain'
+import useWallet from '../../hooks/useWallet'
 
 type CallbackType = 'WALLET' | 'SUBSCRIPTION'
 
 const PaymentCallback: FunctionComponent<{}> = () => {
   const router = useRouter()
-
+  const { confirmPayment } = useWallet()
   const callbackType = router.pathname.includes('wallet') ? 'WALLET' : 'SUBSCRIPTION'
   const paymentIntent = (router.query as { payment_intent: string }).payment_intent
+
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false)
+  const [paymentError, setPaymentError] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    setLoading(true)
+    if (paymentIntent) {
+      confirmPayment(paymentIntent)
+        .then((data: string) => {
+          if (data === 'SUCCESS') {
+            setPaymentSuccess(true)
+            setPaymentError(false)
+            setLoading(false)
+          }
+        })
+        .catch((err) => {
+          setPaymentSuccess(false)
+          setPaymentError(true)
+          setLoading(false)
+        })
+    } else {
+      router.push('/error')
+    }
+  }, [])
 
   console.log(router)
 
@@ -33,7 +59,12 @@ const PaymentCallback: FunctionComponent<{}> = () => {
                       <h2>Type </h2>
                       <div style={{ marginBottom: '50px' }}>{callbackType}</div>
                       <h2>Payment Intent</h2>
-                      <div style={{ marginBottom: '20px' }}>{paymentIntent}</div>
+                      <div style={{ marginBottom: '50px' }}>{paymentIntent}</div>
+
+                      {loading && <h1>Loading ...</h1>}
+
+                      {paymentSuccess && <h1 style={{ color: 'green' }}> SUCCESS </h1>}
+                      {paymentError && <h1 style={{ color: 'red' }}> ERROR </h1>}
                     </form>
                   </div>
                 </div>

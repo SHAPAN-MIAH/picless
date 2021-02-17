@@ -176,6 +176,25 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
   return body
 }
 
+const confirmPayment = async (paymentIntent: string): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('paymentIntent', paymentIntent)
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/confirmpayment`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 const getPlanOptions = async (planId: string): Promise<SubscritionPlanOption[]> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
@@ -203,4 +222,5 @@ export default {
   addCreditToWallet,
   getMovements,
   getPlanOptions,
+  confirmPayment,
 }

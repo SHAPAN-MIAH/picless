@@ -8,20 +8,22 @@ import FormRow from '../../components/Common/Form/FormRow'
 
 import TextInput from '../../components/Common/TextInput'
 import PaymentService from '../../services/PaymentService'
+import useRouter from '../../hooks/useRouter'
 
 const AddFounds: FunctionComponent<{}> = () => {
   const [currentAmount, setCurrentAmount] = useState<number>(0)
-  const SecurionPay = window.Securionpay
+  // const SecurionPay = window.Securionpay
 
   const { addFounds, updateBalance } = useWallet()
+  const router = useRouter()
   // const history = useHistory()
 
   useEffect(() => {
-    const script = document.createElement('script')
-    script.setAttribute('id', 'mainScriptSecurionPay')
-    script.src = 'https://securionpay.com/js/securionpay.js'
-    script.async = true
-    document.body.appendChild(script)
+    // const script = document.createElement('script')
+    // script.setAttribute('id', 'mainScriptSecurionPay')
+    // script.src = 'https://securionpay.com/js/securionpay.js'
+    // script.async = true
+    // document.body.appendChild(script)
   }, [])
 
   const onAddAmount = (amount: number) => {
@@ -40,9 +42,9 @@ const AddFounds: FunctionComponent<{}> = () => {
       if (data.code === 0 && data.message === 'succeeded') {
         updateBalance()
       } else if (data.code === '0' && data.message !== 'redirect') {
-        alert('redirect' + data.path)
-        //redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
-        //con paymentIntent en el body, luego actualizo balance
+        router.push(data.path)
+        // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
+        // con paymentIntent en el body, luego actualizo balance
       } else if (data.code === '1' && data.message === 'error') {
         alert('error')
       }
