@@ -19,7 +19,7 @@ const PaymentCallback: FunctionComponent<{}> = () => {
     setLoading(true)
     if (paymentIntent) {
       confirmPayment(paymentIntent)
-        .then((data: string) => {
+        .then((data: any) => {
           if (data === 'SUCCESS') {
             setPaymentSuccess(true)
             setPaymentError(false)
