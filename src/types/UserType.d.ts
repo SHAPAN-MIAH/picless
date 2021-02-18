@@ -114,4 +114,5 @@ export type UserSettingsType = {
   privacityDisplayChatActivity?: boolean
   privacityGoogleAuthenticator?: boolean
   privacityWhoCanSendMessage?: string
+  users?: object
 }

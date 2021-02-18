@@ -16,6 +16,7 @@ import FormRow from '../../../../components/Common/Form/FormRow'
 import useAuth from '../../../../hooks/useAuth'
 
 import { CurrentView } from './Login'
+import useRouter from '../../../../hooks/useRouter'
 
 type FormValues = {
   username: string
@@ -38,7 +39,9 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
       .required(t(`authentication.errors.passwordRequired`)),
   })
 
-  const { login } = useAuth()
+  const { login, checkAuthenticated } = useAuth()
+  const router = useRouter()
+
   const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
@@ -52,7 +55,12 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
     setGeneralError('')
 
     return login(username, password, rememberMe)
-      .then((message) => setMessages(message))
+      .then((message) => {
+        setMessages(message)
+        checkAuthenticated().then(() => {
+          router.push('/user/home')
+        })
+      })
       .catch((err) => {
         console.log(err)
         setGeneralError(err.message)

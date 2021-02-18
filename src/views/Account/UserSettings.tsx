@@ -78,14 +78,10 @@ const UserSettings: FunctionComponent<{}> = () => {
   }, [])
 
   const onSubmit = (values: UserSettingsType) => {
-    return updateSettings(values)
-      .then(() => {
-        getSettings(true)
-      })
-      .catch((err) => {
-        console.error(err)
-        setError(err.message)
-      })
+    return updateSettings(values).catch((err) => {
+      console.error(err)
+      setError(err.message)
+    })
   }
 
   return (

@@ -10,6 +10,7 @@ export type CurrentView = 'LOGIN' | 'FORGOT_PASSWORD_EMAIL' | 'FORGOT_PASSWORD_N
 
 const Login: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
   const [currentView, setCurrentView] = useState<CurrentView>('LOGIN')
   const [messages, setMessages] = useState<string>('')
 

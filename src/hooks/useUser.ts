@@ -68,9 +68,11 @@ const useUser = (): UseUserReturn => {
 
         const toastPromise = UserService.updateUserSettings(updated)
 
-        return toast.promise(toastPromise, toastOptions).then((newUserData: any) => {
-          // setUser(newUserData)
-          console.log(newUserData)
+        return toast.promise(toastPromise, toastOptions).then((data: any) => {
+          if (data.code === 0) setSettings(updated)
+          else {
+            throw new Error('Error updating settings')
+          }
           return true
         })
       })
@@ -78,26 +80,24 @@ const useUser = (): UseUserReturn => {
     [setUser, getCurrentUser]
   )
 
-  const getSettings = useCallback(
-    (needsUpdate?: boolean): Promise<UserSettingsType> => {
-      return new Promise<UserSettingsType>((resolve, reject) => {
-        if (needsUpdate || _.isEmpty(settings)) {
-          UserService.getUserSettings()
-            .then((s: UserSettingsType) => {
-              setSettings(s)
+  const getSettings = useCallback((): Promise<UserSettingsType> => {
+    return new Promise<UserSettingsType>((resolve, reject) => {
+      if (_.isEmpty(settings)) {
+        UserService.getUserSettings()
+          .then((s: UserSettingsType) => {
+            delete s.users
+            setSettings(s)
 
-              resolve(s)
-            })
-            .catch((err) => {
-              reject(err)
-            })
-        } else {
-          resolve(settings)
-        }
-      })
-    },
-    [setSettings, settings]
-  )
+            resolve(s)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      } else {
+        resolve(settings)
+      }
+    })
+  }, [setSettings, settings])
 
   return {
     userId,

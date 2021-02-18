@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useContext, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 
@@ -29,14 +29,6 @@ const MainRoutes: FunctionComponent<{}> = () => {
   const routerProps: ProtectedRouteProps = {
     authenticationPath: '/#login',
   }
-
-  useEffect(() => {
-    if (window.tpl) {
-      window.tpl.load()
-
-      dispatchEvent(new Event('load'))
-    }
-  }, [])
 
   return (
     <>
@@ -76,7 +68,8 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <ProtectedRoute {...routerProps} exact path="/support" component={HelpSupport} />
               <Route path="/">
-                <h1>ERROR</h1>
+                <h1>asdasdasd</h1>
+                {/* <Redirect to="/user/home" /> */}
               </Route>
             </Switch>
           </LayoutMain>

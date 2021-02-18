@@ -5,14 +5,12 @@ import AuthService from '../services/AuthService'
 
 import AuthorizationContext from '../context/AuthorizationContext'
 
-import useUser from './useUser'
 import useRouter from './useRouter'
 
 const useAuth = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthorizationContext.context)
 
   const router = useRouter()
-  const { getUser, getSettings } = useUser()
 
   const checkAuthenticated = useCallback(async (): Promise<void> => {
     return AuthService.currentSession()
@@ -42,16 +40,7 @@ const useAuth = () => {
 
             const remembeDevicerOrNot = {
               onSuccess: (): void => {
-                checkAuthenticated().then(() => {
-                  getUser()
-                    .then(() => {
-                      resolve(`authentication.messages.successfullyLoggedIn`)
-
-                      getSettings()
-                      router.push('/user/home')
-                    })
-                    .catch((err: any) => reject(new Error(`authentication.errors.${err.code}`)))
-                })
+                resolve(`authentication.messages.successfullyLoggedIn`)
               },
               onFailure: (err: any) => {
                 reject(new Error(`authentication.errors.${err.code}`))

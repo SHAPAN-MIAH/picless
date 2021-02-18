@@ -1,4 +1,7 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, useEffect, ReactNode, useState } from 'react'
+
+import useUser from '../../hooks/useUser'
+import useRouter from '../../hooks/useRouter'
 
 import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
 
@@ -17,9 +20,27 @@ interface LayoutMainProps {
 const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
   const { children } = props
 
+  const [showLoading, setShowLoading] = useState<boolean>(true)
+
+  const { getUser, getSettings } = useUser()
+
+  useEffect(() => {
+    getUser().then(() => {
+      getSettings().then(() => {
+        setShowLoading(false)
+
+        if (window.tpl) {
+          window.tpl.load()
+
+          dispatchEvent(new Event('load'))
+        }
+      })
+    })
+  }, [])
+
   return (
     <>
-      <MainLoader />
+      <MainLoader show={showLoading} />
       <ApplicationContextProvider>
         <NavigationLeftMenu />
 
