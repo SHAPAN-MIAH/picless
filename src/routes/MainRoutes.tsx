@@ -22,6 +22,7 @@ import PaymentCallback from '../views/Payments/PaymentCallback'
 // import routes from './MenuItems'
 
 import AuthorizationContext from '../context/AuthorizationContext'
+import ProfileNotExist from '../views/UserProfile/Profile/ProfileNotExist'
 
 const MainRoutes: FunctionComponent<{}> = () => {
   const { isAuthenticated } = useContext(AuthorizationContext.context)
@@ -62,15 +63,18 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
               <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
               <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
-              <ProtectedRoute {...routerProps} exact path="/user/:username" component={UserProfile} />
+
+              <ProtectedRoute
+                {...routerProps}
+                exact
+                path={['/user/:username', '/user/:username/', '/user/:username/:tab', '/user/']}
+                component={UserProfile}
+              />
+              <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
 
               <ProtectedRoute {...routerProps} exact path="/support" component={HelpSupport} />
-              <Route path="/">
-                <h1>asdasdasd</h1>
-                {/* <Redirect to="/user/home" /> */}
-              </Route>
             </Switch>
           </LayoutMain>
         )}
@@ -84,6 +88,11 @@ const MainRoutes: FunctionComponent<{}> = () => {
             </Route>
           </Switch>
         )}
+        <Switch>
+          <Route path="/">
+            <h1>ERROR</h1>
+          </Route>
+        </Switch>
       </Router>
     </>
   )

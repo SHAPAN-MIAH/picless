@@ -1,5 +1,7 @@
 import React, { useState, useEffect, FunctionComponent, useContext } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { Route, Switch, useHistory, useParams } from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+import useRouter from '../../../hooks/useRouter'
 
 import UserService from '../../../services/UserService'
 
@@ -7,31 +9,51 @@ import UserHeader from './Header/UserHeader'
 import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
 import { ServiceUserProfileType } from '../../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
-import LiveTab from './SectionTab/LiveTab'
+// import LiveTab from './SectionTab/LiveTab'
 import ProviderProfileContext from '../../../context/ProviderProfileContext'
+
+export enum Tabs {
+  POSTS = 'posts',
+  PHOTOS = 'photos',
+  VIDEOS = 'videos',
+  ABOUT = 'about',
+}
+
+const defaultTab = Tabs.POSTS
 
 const Profile: FunctionComponent<{}> = () => {
   const history = useHistory()
-  const { username } = useParams<{ username: string }>()
+  const { username, tab } = useParams<{ username: string; tab: string }>()
+  const router = useRouter()
 
   const { setProvider } = useContext(ProviderProfileContext.context)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
-  const [selectedTab, setSelectedTab] = useState<TabNamesType>('LIVE')
+  // const [selectedTab, setSelectedTab] = useState<TabNamesType>('POSTS')
 
   useEffect(() => {
     setLoading(true)
-
+    if (!username) {
+      history.push('/user/not-exist')
+    }
     UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
       if (data.code !== '0') {
-        history.push('/error')
+        if (data.code === '1') {
+          history.push('/user/not-exist')
+        } else {
+          history.push('/error')
+        }
       } else {
         setLoading(false)
 
         setProvider(data.user)
 
         setIsSuscribed(data.isSuscribe)
+
+        if (!tab) {
+          router.push(`/user/${username}/${defaultTab}`)
+        }
 
         if (window.tpl) {
           window.tpl.load(['user-avatar'])
@@ -40,21 +62,73 @@ const Profile: FunctionComponent<{}> = () => {
     })
   }, [username])
 
-  const changeTab = (tab: TabNamesType) => {
-    setSelectedTab(tab)
-  }
+  // const changeTab = (tab: TabNamesType) => {
+  //   setSelectedTab(tab)
+  // }
 
+  console.log(router)
   return (
     <>
       <div className="content-grid">
-        {loading && <h1>Loading ...</h1>}
+        {loading && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
+            <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+          </div>
+        )}
         {!loading && (
           <>
             <UserHeader isSuscribe={isSuscribed} />
 
-            <SectionMenu onChangeTab={changeTab} selectedTab={selectedTab} />
+            <SectionMenu />
 
-            {selectedTab === 'ABOUT' && <AboutTab />}
+            <Switch>
+              <Route
+                path={`/user/${username}/${Tabs.POSTS}`}
+                render={() => {
+                  return (
+                    <div className="grid">
+                      <div className="grid-column">
+                        <div className="widget-box">
+                          <h3>POSTS</h3>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }}
+              />
+              <Route
+                path={`/user/${username}/${Tabs.PHOTOS}`}
+                render={() => {
+                  return (
+                    <div className="grid">
+                      <div className="grid-column">
+                        <div className="widget-box">
+                          <h3>PHOTOS</h3>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }}
+              />
+              <Route
+                path={`/user/${username}/${Tabs.VIDEOS}`}
+                render={() => {
+                  return (
+                    <div className="grid">
+                      <div className="grid-column">
+                        <div className="widget-box">
+                          <h3>VIDEOS</h3>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }}
+              />
+
+              <Route path={`/user/${username}/${Tabs.ABOUT}`} component={AboutTab} />
+            </Switch>
+
+            {/* {selectedTab === 'ABOUT' && <AboutTab />}
 
             {selectedTab === 'POSTS' && (
               <div className="grid">
@@ -68,15 +142,7 @@ const Profile: FunctionComponent<{}> = () => {
 
             {selectedTab === 'LIVE' && <LiveTab />}
 
-            {selectedTab === 'PHOTOS' && (
-              <div className="grid">
-                <div className="grid-column">
-                  <div className="widget-box">
-                    <h3>PHOTOS</h3>
-                  </div>
-                </div>
-              </div>
-            )}
+            {selectedTab === 'PHOTOS' && <h1>s</h1>}
 
             {selectedTab === 'VIDEOS' && (
               <div className="grid">
@@ -86,7 +152,7 @@ const Profile: FunctionComponent<{}> = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
           </>
         )}
       </div>
