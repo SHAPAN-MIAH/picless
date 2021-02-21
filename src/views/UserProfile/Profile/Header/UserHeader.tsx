@@ -2,6 +2,7 @@ import React, { FunctionComponent, useContext, useEffect, useState } from 'react
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Popup from 'reactjs-popup'
+import { isMobile } from 'react-device-detect'
 
 import useUser from '../../../../hooks/useUser'
 
@@ -46,7 +47,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   return (
     <>
       <WalletContextProvider>
-        <div className="profile-header">
+        <div className="profile-header" style={{ marginTop: isMobile ? '60px' : '0px' }}>
           <div className="profile-header-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
             <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
           </div>

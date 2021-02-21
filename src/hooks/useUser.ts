@@ -6,7 +6,7 @@ import UserContext from '../context/UserContext'
 
 import UserService from '../services/UserService'
 
-import { UserSettingsType, UserType } from '../types/UserType.d'
+import { UploadImageType, UserSettingsType, UserType } from '../types/UserType.d'
 
 type UseUserReturn = {
   userId: string
@@ -14,6 +14,7 @@ type UseUserReturn = {
   getSettings: (needsUpdate?: boolean) => Promise<UserSettingsType>
   updateUser: (userData: Partial<UserType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
   updateSettings: (settingsData: Partial<UserSettingsType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
+  uploadImage: (data: UploadImageType) => Promise<void>
 }
 type ToastPromiseOptions = { loading: string; success: string; error: string }
 
@@ -99,12 +100,27 @@ const useUser = (): UseUserReturn => {
     })
   }, [setSettings, settings])
 
+  const uploadImage = useCallback((data: UploadImageType) => {
+    const toastPromise = UserService.uploadUserImages(data)
+
+    const toastOptions = {
+      loading: 'Uploading image',
+      success: 'Image uploded',
+      error: 'Error uploading image',
+    }
+
+    return toast.promise(toastPromise, toastOptions).then((newUserData: UserType) => {
+      setUser(newUserData)
+    })
+  }, [])
+
   return {
     userId,
     getUser: getCurrentUser,
     getSettings,
     updateSettings,
     updateUser,
+    uploadImage,
   }
 }
 

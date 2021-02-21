@@ -1,9 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
-import { useDispatch } from 'react-redux'
-import { uploadUserImages } from '../../redux/User/UserThunks'
-import { ImageType, UploadImageType } from '../../types/UserType.d'
 import { isMobile } from 'react-device-detect'
+
+import UserService from '../../services/UserService'
+
+import { ImageType, UploadImageType } from '../../types/UserType.d'
+import useUser from '../../hooks/useUser'
 
 interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   imageType: ImageType
@@ -13,11 +15,9 @@ interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const UploadBox = (props: UploadBoxProps) => {
-  const dispatch = useDispatch()
   const { id, iconName, className, uploadText, uploadTitleName, imageType } = props
   const fileField = React.useRef<HTMLInputElement>(null)
-
-  // const [urlImage, setUrlImage] = useState(imageUrl)
+  const { uploadImage } = useUser()
 
   const openSelectionFile = () => {
     const { current } = fileField
@@ -33,7 +33,7 @@ const UploadBox = (props: UploadBoxProps) => {
       coverImage: image,
     }
 
-    dispatch(uploadUserImages(imageData))
+    uploadImage(imageData)
   }
 
   const styleMobile: React.CSSProperties = {}

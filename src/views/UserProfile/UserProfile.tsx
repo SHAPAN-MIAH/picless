@@ -10,7 +10,6 @@ const UserProfile: FunctionComponent<{}> = () => {
       <ProviderProfileContextProvider>
         <Profile />
       </ProviderProfileContextProvider>
-      )
     </>
   )
 }

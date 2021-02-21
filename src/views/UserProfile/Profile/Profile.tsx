@@ -6,7 +6,7 @@ import useRouter from '../../../hooks/useRouter'
 import UserService from '../../../services/UserService'
 
 import UserHeader from './Header/UserHeader'
-import SectionMenu, { TabNamesType } from './SectionMenu/SectionMenu'
+import SectionMenu from './SectionMenu/SectionMenu'
 import { ServiceUserProfileType } from '../../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
 // import LiveTab from './SectionTab/LiveTab'
@@ -30,7 +30,6 @@ const Profile: FunctionComponent<{}> = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
   const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
-  // const [selectedTab, setSelectedTab] = useState<TabNamesType>('POSTS')
 
   useEffect(() => {
     setLoading(true)
@@ -62,18 +61,15 @@ const Profile: FunctionComponent<{}> = () => {
     })
   }, [username])
 
-  // const changeTab = (tab: TabNamesType) => {
-  //   setSelectedTab(tab)
-  // }
-
-  console.log(router)
   return (
     <>
       <div className="content-grid">
         {loading && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
-            <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-          </div>
+          <>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
+              <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+            </div>
+          </>
         )}
         {!loading && (
           <>
@@ -127,36 +123,9 @@ const Profile: FunctionComponent<{}> = () => {
 
               <Route path={`/user/${username}/${Tabs.ABOUT}`} component={AboutTab} />
             </Switch>
-
-            {/* {selectedTab === 'ABOUT' && <AboutTab />}
-
-            {selectedTab === 'POSTS' && (
-              <div className="grid">
-                <div className="grid-column">
-                  <div className="widget-box">
-                    <h3>POSTS</h3>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {selectedTab === 'LIVE' && <LiveTab />}
-
-            {selectedTab === 'PHOTOS' && <h1>s</h1>}
-
-            {selectedTab === 'VIDEOS' && (
-              <div className="grid">
-                <div className="grid-column">
-                  <div className="widget-box">
-                    <h3>VIDEOS</h3>
-                  </div>
-                </div>
-              </div>
-            )} */}
           </>
         )}
       </div>
-      )
     </>
   )
 }

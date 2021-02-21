@@ -72,9 +72,9 @@ const MainRoutes: FunctionComponent<{}> = () => {
               />
               <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
 
-              <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
-
               <ProtectedRoute {...routerProps} exact path="/support" component={HelpSupport} />
+
+              <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
             </Switch>
           </LayoutMain>
         )}
@@ -88,11 +88,11 @@ const MainRoutes: FunctionComponent<{}> = () => {
             </Route>
           </Switch>
         )}
-        <Switch>
+        {/* <Switch>
           <Route path="/">
             <h1>ERROR</h1>
           </Route>
-        </Switch>
+        </Switch> */}
       </Router>
     </>
   )

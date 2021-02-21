@@ -64,8 +64,6 @@ const AboutTab: FunctionComponent<{}> = () => {
           </div>
         </div>
 
-        {/* sdfsdfds */}
-
         <div className="grid-column">
           <div className="widget-box">
             <p className="widget-box-title">Interests</p>

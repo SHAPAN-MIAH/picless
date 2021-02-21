@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, ReactNode, useState } from 'react'
+import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 
 import useUser from '../../hooks/useUser'
-import useRouter from '../../hooks/useRouter'
 
 import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
 
@@ -16,6 +17,11 @@ import Footer from './Footer/Footer'
 interface LayoutMainProps {
   children: ReactNode
 }
+
+const ChildrenContainer = styled.div`
+  ${isMobile ? '' : 'padding-top: 80px;'}
+  ${isMobile ? '' : 'min-height: 100vh !important'};
+`
 
 const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
   const { children } = props
@@ -46,10 +52,11 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
 
         <Notifications />
 
-        {/* CHAT WIDGET */}
         <Header />
         <FloatyBar />
-        {children}
+
+        <ChildrenContainer>{children}</ChildrenContainer>
+
         <Footer />
       </ApplicationContextProvider>
     </>
