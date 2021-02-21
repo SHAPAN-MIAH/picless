@@ -1,29 +1,27 @@
-import React, { FunctionComponent, useContext, useEffect } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 
 import LayoutMain from '../views/LayoutMain/LayoutMain'
 import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
-import Account from '../views/Account/Account'
-import ProfileInfo from '../views/Account/ProfileInfo'
+
 import UserProfile from '../views/UserProfile/UserProfile'
 import Messages from '../views/Messages/Messages'
-import UserSettings from '../views/Account/UserSettings'
+
 import Home from '../views/Home/Home'
-import Wallet from '../views/Account/Wallet'
+
 import Movements from '../views/Account/Movements'
 import AddCard from '../views/Account/Card/AddCard'
-import Subscriptions from '../views/Account/Subscriptions/Subscriptions'
+
 import TestView from '../views/TestView/TestView'
-import Verification from '../views/Account/Verification/Verification'
-import HelpSupport from '../views/HelpSupport/HelpSupport'
+
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import routes from './MenuRoutes'
 
 import AuthorizationContext from '../context/AuthorizationContext'
 import ProfileNotExist from '../views/UserProfile/Profile/ProfileNotExist'
-import { useTranslation } from 'react-i18next'
 
 const MainRoutes: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
