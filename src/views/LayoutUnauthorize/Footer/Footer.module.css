@@ -2,9 +2,9 @@
   width: 100vw;
   display: block;
   overflow: hidden;
-  padding: 70px 0;
+  padding: 20px 0;
   box-sizing: border-box;
-  background-color: rgba(173, 175, 202, 0.8);
+  background-color: rgba(173, 175, 202, 0.9);
 }
 
 .innerFooter {
@@ -22,7 +22,6 @@
   height: 100%;
   display: flex;
   align-items: center;
-  text-align: center;
 }
 
 .innerFooter .footerThird {
@@ -45,7 +44,8 @@
   display: block;
   font-weight: 200;
   width: 100%;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 450px) {

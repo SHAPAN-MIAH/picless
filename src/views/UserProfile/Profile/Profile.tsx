@@ -4,6 +4,7 @@ import Loader from 'react-loader-spinner'
 import useRouter from '../../../hooks/useRouter'
 
 import UserService from '../../../services/UserService'
+import PostService from '../../../services/PostService'
 
 import UserHeader from './Header/UserHeader'
 import SectionMenu from './SectionMenu/SectionMenu'
@@ -11,6 +12,9 @@ import { ServiceUserProfileType } from '../../../types/UserType.d'
 import AboutTab from './SectionTab/AboutTab'
 // import LiveTab from './SectionTab/LiveTab'
 import ProviderProfileContext from '../../../context/ProviderProfileContext'
+import Newsfeed from './SectionTab/Newsfeed'
+import { PostType } from '../../../types/PostType.d'
+import _ from 'lodash'
 
 export enum Tabs {
   POSTS = 'posts',
@@ -30,13 +34,18 @@ const Profile: FunctionComponent<{}> = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
   const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
+  const [posts, setPosts] = useState<PostType[]>([])
+
+  const controllerCancelable = new AbortController()
+  const { signal } = controllerCancelable
 
   useEffect(() => {
     setLoading(true)
     if (!username) {
       history.push('/user/not-exist')
     }
-    UserService.getUserProfileByUserName(username).then((data: ServiceUserProfileType) => {
+
+    UserService.getUserProfileByUserName(username, signal).then((data: ServiceUserProfileType) => {
       if (data.code !== '0') {
         if (data.code === '1') {
           history.push('/user/not-exist')
@@ -54,11 +63,19 @@ const Profile: FunctionComponent<{}> = () => {
           router.push(`/user/${username}/${defaultTab}`)
         }
 
-        if (window.tpl) {
-          window.tpl.load(['user-avatar'])
-        }
+        PostService.getPosts().then((p: PostType[]) => {
+          setPosts(_.reverse(p))
+
+          if (window.tpl) {
+            window.tpl.load(['user-avatar'])
+          }
+        })
       }
     })
+
+    return () => {
+      controllerCancelable.abort()
+    }
   }, [username])
 
   return (
@@ -78,20 +95,7 @@ const Profile: FunctionComponent<{}> = () => {
             <SectionMenu />
 
             <Switch>
-              <Route
-                path={`/user/${username}/${Tabs.POSTS}`}
-                render={() => {
-                  return (
-                    <div className="grid">
-                      <div className="grid-column">
-                        <div className="widget-box">
-                          <h3>POSTS</h3>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }}
-              />
+              <Route path={`/user/${username}/${Tabs.POSTS}`} render={() => <Newsfeed posts={posts} />} />
               <Route
                 path={`/user/${username}/${Tabs.PHOTOS}`}
                 render={() => {

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 
 import UserAvatar from '../../../../components/UserAvatar'
 
@@ -18,28 +19,11 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
   return (
     <div className="user-status">
       <UserAvatar imageName={user.profilePicture} size="SMALL" />
-      {/* <div className="user-status-avatar">
-        <div className="user-avatar small no-outline">
-          <div className="user-avatar-content">
-            <div className="hex">
-              <img alt="asd" src={process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture} />
-            </div>
-          </div>
-
-          <div className="user-avatar-progress">
-            <div className="hexagon-progress-40-44" />
-          </div>
-
-          <div className="user-avatar-progress-border">
-            <div className="hexagon-border-40-44" />
-          </div>
-        </div>
-      </div> */}
 
       <p className="user-status-title medium">
-        <a className="bold" href="profile-timeline.html">
+        <Link className="bold" to={`/user/${user.userName}`}>
           {`${user.fullName || user.userName} `}
-        </a>
+        </Link>
         create a <span className="bold">post</span>
       </p>
 

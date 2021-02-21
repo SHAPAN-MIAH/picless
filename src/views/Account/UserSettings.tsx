@@ -15,6 +15,8 @@ import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
 import { UserSettingsType } from '../../types/UserType.d'
 import useUser from '../../hooks/useUser'
+import classNames from 'classnames'
+import Loader from 'react-loader-spinner'
 
 type FormValues = {
   enabledPushNotifications: boolean
@@ -65,16 +67,25 @@ const UserSettings: FunctionComponent<{}> = () => {
     resolver: yupResolver(validationSchema),
   })
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
 
   useEffect(() => {
-    getSettings().then((setting: UserSettingsType) => {
-      formFields.forEach((field: string) => {
-        const value = _.get(setting, field)
+    setLoading(true)
+    getSettings()
+      .then((setting: UserSettingsType) => {
+        formFields.forEach((field: string) => {
+          const value = _.get(setting, field)
 
-        setValue(field as formFieldsNames, value || false)
+          setValue(field as formFieldsNames, value || false)
+        })
       })
-    })
+      .catch(() => {
+        setError('Error loading data')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   const onSubmit = (values: UserSettingsType) => {
@@ -99,7 +110,15 @@ const UserSettings: FunctionComponent<{}> = () => {
           </div>
 
           <div className="grid-column">
-            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            {loading && (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+                </div>
+              </>
+            )}
+
+            <form className={classNames('form', loading ? 'hidden' : '')} onSubmit={handleSubmit(onSubmit)}>
               <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
                 <p className="widget-box-title">{t('settings.generalTitle')}</p>
 

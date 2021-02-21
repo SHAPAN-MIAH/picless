@@ -1,15 +1,21 @@
 import React, { FunctionComponent, useContext } from 'react'
+import moment from 'moment'
 
 import Alert from '../../../../components/Common/Alerts/Alerts'
 
 import { UserInterestType, UserTimeLineType } from '../../../../types/UserType.d'
 import ProviderProfileContext from '../../../../context/ProviderProfileContext'
 
+import { GetCountryName } from '../../../../utils/Functions'
+
 const AboutTab: FunctionComponent<{}> = () => {
   const { provider } = useContext(ProviderProfileContext.context)
 
   const noInterests = 'The user has not yet added interests.'
   const noTimeLineEvents = 'The user has not yet added events to the timeline.'
+
+  const age = moment().diff(provider.birthDate, 'years', false)
+  const countryName = GetCountryName(provider.countryCode || '')
 
   return (
     <>
@@ -22,35 +28,43 @@ const AboutTab: FunctionComponent<{}> = () => {
               <p className="paragraph">{provider.profileDescription}</p>
 
               <div className="information-line-list">
-                <div className="information-line">
-                  <p className="information-line-title">Name</p>
+                {provider.fullName && (
+                  <div className="information-line">
+                    <p className="information-line-title">Name</p>
 
-                  <p className="information-line-text">{provider.fullName}</p>
-                </div>
+                    <p className="information-line-text">{provider.fullName}</p>
+                  </div>
+                )}
 
                 <div className="information-line">
                   <p className="information-line-title">Joined</p>
 
-                  <p className="information-line-text">{provider.registrationDate}</p>
+                  <p className="information-line-text">{moment(provider.registrationDate).format('YYYY-MM')}</p>
                 </div>
 
-                <div className="information-line">
-                  <p className="information-line-title">City</p>
+                {provider.cityName && (
+                  <div className="information-line">
+                    <p className="information-line-title">City</p>
 
-                  <p className="information-line-text">{provider.cityName}</p>
-                </div>
+                    <p className="information-line-text">{provider.cityName}</p>
+                  </div>
+                )}
 
-                <div className="information-line">
-                  <p className="information-line-title">Country</p>
+                {provider.countryCode && (
+                  <div className="information-line">
+                    <p className="information-line-title">Country</p>
 
-                  <p className="information-line-text">{provider.countryCode}</p>
-                </div>
+                    <p className="information-line-text">{countryName}</p>
+                  </div>
+                )}
 
-                <div className="information-line">
-                  <p className="information-line-title">Age</p>
+                {age > 1 && (
+                  <div className="information-line">
+                    <p className="information-line-title">Age</p>
 
-                  <p className="information-line-text">[ADDD] {provider.birthDate}</p>
-                </div>
+                    <p className="information-line-text">{age}</p>
+                  </div>
+                )}
 
                 {provider.occupation && (
                   <div className="information-line">

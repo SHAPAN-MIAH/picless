@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react'
+import styled from 'styled-components'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Controller, useForm } from 'react-hook-form'
@@ -22,6 +23,12 @@ type FormValues = {
   description: string
 }
 
+const Form = styled.form`
+  padding: 15px;
+  background-color: rgba(173, 175, 202, 0.15);
+  border-radius: 10px;
+`
+
 const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOptionsType[] }> = (props) => {
   const { t } = useTranslation()
 
@@ -37,7 +44,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
     description: Yup.string().required('Description field is required').max(500).min(1),
   })
 
-  const { control, handleSubmit, errors, getValues, setValue } = useForm<FormValues>({
+  const { control, handleSubmit, errors, getValues, setValue, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
 
@@ -72,7 +79,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
 
   return (
     <>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <Form className="form" onSubmit={handleSubmit(onSubmit)}>
         <FormRow>
           <p>{t('profileInfo.timeline.newTimeLineEvent')}</p>
         </FormRow>
@@ -133,12 +140,12 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
             </ButtonWithLoader>
           </FormItem>
           <FormItem>
-            <ButtonWithLoader type="submit" className="small secondary" showLoader={false}>
+            <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
               {`+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
             </ButtonWithLoader>
           </FormItem>
         </FormRow>
-      </form>
+      </Form>
     </>
   )
 }

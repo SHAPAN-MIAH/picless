@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Controller, useForm } from 'react-hook-form'
@@ -18,6 +19,12 @@ type FormValues = {
   name: string
   description: string
 }
+
+const Form = styled.form`
+  padding: 15px;
+  background-color: rgba(173, 175, 202, 0.15);
+  border-radius: 10px;
+`
 
 const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
   const { t } = useTranslation()
@@ -60,11 +67,11 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
 
   return (
     <>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <FormRow classNameRow="top-border">
-          <FormRow>
-            <p>{t('profileInfo.interests.newInterest')}</p>
-          </FormRow>
+      <Form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <FormRow>
+          <p>{t('profileInfo.interests.newInterest')}</p>
+        </FormRow>
+        <FormRow>
           <FormItem>
             <Controller
               control={control}
@@ -95,22 +102,17 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
 
         <FormRow classNameRow="split">
           <FormItem>
-            <ButtonWithLoader
-              type="submit"
-              className="small white"
-              onClick={() => onAdd()}
-              showLoader={formState.isSubmitting}
-            >
+            <ButtonWithLoader type="submit" className="small white" onClick={() => onAdd()} showLoader={false}>
               {`${t('profileInfo.interests.cancelNewInterestButton')}`}
             </ButtonWithLoader>
           </FormItem>
           <FormItem>
-            <ButtonWithLoader type="submit" className="small secondary" showLoader={false}>
+            <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
               {`+ ${t('profileInfo.interests.addNewInterestButton')}`}
             </ButtonWithLoader>
           </FormItem>
         </FormRow>
-      </form>
+      </Form>
     </>
   )
 }

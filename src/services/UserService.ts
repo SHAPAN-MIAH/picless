@@ -28,12 +28,13 @@ const getUserProfile = async (): Promise<UserType> => {
   return body
 }
 
-const getUserProfileByUserName = async (userName: string): Promise<ServiceUserProfileType> => {
+const getUserProfileByUserName = async (userName: string, signal?: AbortSignal): Promise<ServiceUserProfileType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
   const url = `${baseUrl}/getprofilebyusername?userName=${userName}`
 

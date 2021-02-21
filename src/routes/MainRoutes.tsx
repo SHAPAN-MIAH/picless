@@ -75,6 +75,10 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/support" component={HelpSupport} />
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
+
+              <Route exact path="/">
+                <Redirect to="/user/home" />
+              </Route>
             </Switch>
           </LayoutMain>
         )}

@@ -5,6 +5,9 @@ import { SubscriptorListType } from '../../../../types/UserType.d'
 import UserService from '../../../../services/UserService'
 
 import Subscriptor from './Subscriptor'
+import Alert from '../../../../components/Common/Alerts/Alerts'
+
+const noSubscriptorsMessage = 'Nothing was found'
 
 const SubscriptionList: FunctionComponent<{}> = () => {
   const [loading, setLoading] = useState(false)
@@ -28,6 +31,14 @@ const SubscriptionList: FunctionComponent<{}> = () => {
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           {loading && <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />}
         </div>
+      </>
+    )
+  }
+
+  if (subscriptions.length === 0) {
+    return (
+      <>
+        <Alert alertType="PRIMARY" message={noSubscriptorsMessage} style={{ width: '100%' }} />
       </>
     )
   }

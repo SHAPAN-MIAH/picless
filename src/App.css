@@ -194,3 +194,7 @@
 }
 
 /* REACT-ELASTIC-CAROUSEL */
+
+.hidden {
+  display: none;
+}

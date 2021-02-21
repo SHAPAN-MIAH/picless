@@ -25,25 +25,17 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
         </div>
       )}
       {size === 'SMALL' && (
-        <div className="user-status-avatar">
-          <div className="user-avatar small no-outline">
-            {/* <div className="user-avatar-content">
-              <div className="hexagon-image-30-32" data-src={imageUrl} />
-            </div>
+        <div className="user-avatar small no-outline">
+          <div className="user-avatar-content">
+            <div className="hexagon-image-30-32" data-src={imageUrl} />
+          </div>
 
-            <div className="user-avatar-progress">
-              <div className="hexagon-progress-40-44" />
-            </div>
+          <div className="user-avatar-progress">
+            <div className="hexagon-progress-40-44" />
+          </div>
 
-            <div className="user-avatar-progress-border">
-              <div className="hexagon-border-40-44" />
-            </div> */}
-
-            <div className="hex hex-border-40-44">
-              <div className="hex hex-border-35-38">
-                <div className="hex hex-30-32 " style={{ background: `url(${imageUrl}) center center / cover no-repeat` }} />
-              </div>
-            </div>
+          <div className="user-avatar-progress-border">
+            <div className="hexagon-border-40-44" />
           </div>
         </div>
       )}
@@ -55,16 +47,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
           </div>
 
           <div className="user-avatar-content">
-            <div
-              className="hex"
-              style={{
-                width: '82px',
-                height: '90px',
-                background: `url(${imageUrl}) center center / cover no-repeat`,
-              }}
-            >
-              <img src={imageUrl} alt="cover-01" style={{ display: 'none' }} />
-            </div>
+            <div className="hexagon-image-82-90" data-src={imageUrl} />
           </div>
 
           <div className="user-avatar-progress">
@@ -82,18 +65,8 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
           <div className="user-avatar-border">
             <div className="hexagon-148-164" />
           </div>
-
           <div className="user-avatar-content">
-            <div
-              className="hex"
-              style={{
-                width: '100px',
-                height: '110px',
-                background: `url(${imageUrl}) center center / cover no-repeat`,
-              }}
-            >
-              <img src={imageUrl} alt="cover-01" style={{ display: 'none' }} />
-            </div>
+            <div className="hexagon-image-100-110" data-src={imageUrl} />
           </div>
 
           <div className="user-avatar-progress">
