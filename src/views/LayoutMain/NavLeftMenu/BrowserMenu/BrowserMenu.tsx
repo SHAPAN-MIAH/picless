@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import useMenu from '../../../../hooks/useMenu'
+import useRouter from '../../../../hooks/useRouter'
 
 import UserAvatar from '../../../../components/UserAvatar'
 import { UserType } from '../../../../types/UserType.d'
 import useUser from '../../../../hooks/useUser'
 import useAuth from '../../../../hooks/useAuth'
 
-import menuItems from '../../../../constants/menu.json'
-import useRouter from '../../../../hooks/useRouter'
+import MenuRoutes from '../../../../routes/MenuRoutes'
 
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -49,8 +49,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <UserAvatar size="SMALL" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
-          {menuItems.map((item) => {
-            if (item.path) {
+          {MenuRoutes.map((item) => {
+            if (item.showInMenu && item.path) {
               return (
                 <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
                   <Link className="menu-item-link text-tooltip-tfr" to={item.path} data-title={t(item.title)}>
@@ -68,6 +68,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
                 </li>
               )
             }
+
+            return null
           })}
 
           <li className="menu-item">
@@ -115,8 +117,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           </p>
         </div>
         <ul className="menu">
-          {menuItems.map((item) => {
-            if (item.path) {
+          {MenuRoutes.map((item) => {
+            if (item.showInMenu && item.path) {
               return (
                 <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
                   <Link className="menu-item-link" to={item.path}>
@@ -135,6 +137,8 @@ const BrowserMenu: FunctionComponent<{}> = () => {
                 </li>
               )
             }
+
+            return null
           })}
 
           <li className="menu-item">

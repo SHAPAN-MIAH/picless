@@ -19,12 +19,14 @@ import TestView from '../views/TestView/TestView'
 import Verification from '../views/Account/Verification/Verification'
 import HelpSupport from '../views/HelpSupport/HelpSupport'
 import PaymentCallback from '../views/Payments/PaymentCallback'
-// import routes from './MenuItems'
+import routes from './MenuRoutes'
 
 import AuthorizationContext from '../context/AuthorizationContext'
 import ProfileNotExist from '../views/UserProfile/Profile/ProfileNotExist'
+import { useTranslation } from 'react-i18next'
 
 const MainRoutes: FunctionComponent<{}> = () => {
+  const { t } = useTranslation()
   const { isAuthenticated } = useContext(AuthorizationContext.context)
 
   const routerProps: ProtectedRouteProps = {
@@ -37,22 +39,22 @@ const MainRoutes: FunctionComponent<{}> = () => {
         {isAuthenticated && (
           <LayoutMain>
             <Switch>
-              {/* {routes.map((route) => (
-              <ProtectedRoute
-              {...routerProps}
-              key={`${route.name}`}
-              exact={route.exact}
-              path={route.path}
-              children={<route.main></route.main>}
-              />
-            ))} */}
+              {routes.map((route) => {
+                if (route.component) {
+                  return (
+                    <ProtectedRoute
+                      {...routerProps}
+                      title={t(route.title)}
+                      key={`${route.name}`}
+                      exact={route.exact}
+                      path={route.path}
+                      component={route.component}
+                    />
+                  )
+                }
 
-              <ProtectedRoute {...routerProps} exact path="/account/profile-info" component={ProfileInfo} />
-              <ProtectedRoute {...routerProps} exact path="/account/account-info" component={Account} />
-              <ProtectedRoute {...routerProps} exact path="/account/my-subscriptions" component={Subscriptions} />
-              <ProtectedRoute {...routerProps} exact path="/account/settings" component={UserSettings} />
-              <ProtectedRoute {...routerProps} exact path="/account/verification" component={Verification} />
-              <ProtectedRoute {...routerProps} exact path="/account/wallet" component={Wallet} />
+                return null
+              })}
 
               <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
               <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
@@ -71,8 +73,6 @@ const MainRoutes: FunctionComponent<{}> = () => {
                 component={UserProfile}
               />
               <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
-
-              <ProtectedRoute {...routerProps} exact path="/support" component={HelpSupport} />
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
 

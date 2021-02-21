@@ -1,16 +1,20 @@
 import React, { FunctionComponent, useEffect } from 'react'
-// import { useSelector } from 'react-redux'
 import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
+import useAppContext from '../hooks/useAppContext'
+
 import useAuth from '../hooks/useAuth'
 
 export interface ProtectedRouteProps extends RouteProps {
   authenticationPath: string
+  title?: string
 }
 
 const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
   const { isAuthenticated, checkAuthenticated } = useAuth()
 
-  const { authenticationPath } = props
+  const { authenticationPath, title = '' } = props
+
+  useAppContext({ changeTitle: title })
 
   const location = useLocation()
 

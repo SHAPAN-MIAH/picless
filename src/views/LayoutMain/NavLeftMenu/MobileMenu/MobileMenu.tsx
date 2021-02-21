@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+import useRouter from '../../../../hooks/useRouter'
 import UserAvatar from '../../../../components/UserAvatar'
 
 import { UserType } from '../../../../types/UserType.d'
@@ -10,8 +11,7 @@ import useMenu from '../../../../hooks/useMenu'
 import useUser from '../../../../hooks/useUser'
 import useAuth from '../../../../hooks/useAuth'
 
-import menuItems from '../../../../constants/menu.json'
-import useRouter from '../../../../hooks/useRouter'
+import MenuRoutes from '../../../../routes/MenuRoutes'
 
 const MobileMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -72,8 +72,8 @@ const MobileMenu: FunctionComponent<{}> = () => {
         <p className="navigation-widget-section-title">Sections</p>
 
         <ul className="menu">
-          {menuItems.map((item) => {
-            if (item.path) {
+          {MenuRoutes.map((item) => {
+            if (item.showInMenu && item.path) {
               return (
                 <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
                   <Link className="menu-item-link" to={item.path} onClick={handleCloseMenu}>
@@ -92,6 +92,8 @@ const MobileMenu: FunctionComponent<{}> = () => {
                 </li>
               )
             }
+
+            return null
           })}
         </ul>
       </nav>

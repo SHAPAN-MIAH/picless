@@ -1,15 +1,13 @@
 import React, { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import AddFounds from '../AddFounds'
 
 import MovementList from '../Movements/MovementsList'
 import PaymentMethods from '../PaymentMethods'
 import OverviewHeader from './OverviewHeader'
+import AddFounds from '../AddFounds'
 
 const WalletOverview: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-
-  // run template scroll styles
 
   return (
     <>

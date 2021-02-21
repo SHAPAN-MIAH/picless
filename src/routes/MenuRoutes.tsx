@@ -1,24 +1,13 @@
-import React from 'react'
-
-import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
 import Account from '../views/Account/Account'
 import ProfileInfo from '../views/Account/ProfileInfo'
-import AccountDevices from '../views/Account/AccountDevices/AccountDevices'
-import ChangePassword from '../views/Account/ChangePassword/ChangePassword'
-import UserProfile from '../views/UserProfile/UserProfile'
-import Messages from '../views/Messages/Messages'
 import UserSettings from '../views/Account/UserSettings'
-import Home from '../views/Home/Home'
 import Wallet from '../views/Account/Wallet'
-import Movements from '../views/Account/Movements'
 import AddCard from '../views/Account/Card/AddCard'
 import Subscriptions from '../views/Account/Subscriptions/Subscriptions'
-import TestView from '../views/TestView/TestView'
 import Verification from '../views/Account/Verification/Verification'
 import HelpSupport from '../views/HelpSupport/HelpSupport'
-import PaymentCallback from '../views/Payments/PaymentCallback'
 
-const routes = [
+const MenuRoutes = [
   {
     name: 'PROFILE-INFO',
     title: 'navLeftMenu.profileInfo',
@@ -26,7 +15,8 @@ const routes = [
     iconType: 'template',
     path: '/account/profile-info',
     exact: true,
-    main: <ProfileInfo />,
+    component: ProfileInfo,
+    showInMenu: true,
   },
   {
     name: 'ACCOUNT-INFO',
@@ -35,7 +25,8 @@ const routes = [
     iconType: 'templateWithoutColor',
     path: '/account/account-info',
     exact: true,
-    main: <Account />,
+    component: Account,
+    showInMenu: true,
   },
 
   {
@@ -45,7 +36,8 @@ const routes = [
     iconType: 'template',
     path: '/account/settings',
     exact: true,
-    main: <UserSettings />,
+    component: UserSettings,
+    showInMenu: true,
   },
   {
     name: 'MY-SUBSCRIBERS',
@@ -54,7 +46,8 @@ const routes = [
     iconType: 'template',
     path: '/account/my-subscriptions',
     exact: true,
-    main: <Subscriptions />,
+    component: Subscriptions,
+    showInMenu: true,
   },
   {
     name: 'CARDS/WALLET',
@@ -63,7 +56,8 @@ const routes = [
     iconType: 'template',
     path: '/account/wallet',
     exact: true,
-    main: <Wallet />,
+    component: Wallet,
+    showInMenu: true,
   },
   {
     name: 'ADD-BANK',
@@ -72,7 +66,8 @@ const routes = [
     iconType: 'template',
     path: '/account/verification',
     exact: true,
-    main: <Verification />,
+    component: Verification,
+    showInMenu: true,
   },
   {
     name: 'HELP-SUPPORT',
@@ -81,7 +76,8 @@ const routes = [
     iconType: 'template',
     path: '/support',
     exact: true,
-    main: <HelpSupport />,
+    component: HelpSupport,
+    showInMenu: true,
   },
   {
     name: 'LOGOUT',
@@ -90,9 +86,65 @@ const routes = [
     iconType: 'template',
     path: '',
     exact: true,
-    main: () => <h1>Error</h1>,
+    component: null,
     action: 'logout',
+    showInMenu: true,
   },
+  {
+    name: 'ADD-CARD',
+    title: 'navLeftMenu.logout',
+    icon: '',
+    iconType: '',
+    path: '/wallet/payments/add-card',
+    exact: true,
+    component: AddCard,
+    action: 'logout',
+    showInMenu: false,
+  },
+  // {
+  //   name: 'LOGOUT',
+  //   title: 'navLeftMenu.logout',
+  //   icon: 'login',
+  //   iconType: 'template',
+  //   path: '',
+  //   exact: true,
+  //   component: {},
+  //   action: 'logout',
+  //   showInMenu: true,
+  // },
+  // {
+  //   name: 'LOGOUT',
+  //   title: 'navLeftMenu.logout',
+  //   icon: 'login',
+  //   iconType: 'template',
+  //   path: '',
+  //   exact: true,
+  //   component: {},
+  //   action: 'logout',
+  //   showInMenu: true,
+  // },
+  // {
+  //   name: 'LOGOUT',
+  //   title: 'navLeftMenu.logout',
+  //   icon: 'login',
+  //   iconType: 'template',
+  //   path: '',
+  //   exact: true,
+  //   component: {},
+  //   action: 'logout',
+  //   showInMenu: true,
+  // },
+  // {
+  //   name: 'LOGOUT',
+  //   title: 'navLeftMenu.logout',
+  //   icon: 'login',
+  //   iconType: 'template',
+  //   path: '',
+  //   exact: true,
+  //   component: {},
+  //   action: 'logout',
+  //   showInMenu: true,
+  // },
 ]
 
-export default routes
+export default MenuRoutes

@@ -1,12 +1,16 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Helmet } from 'react-helmet'
+
+import useMenu from '../../../hooks/useMenu'
+import useAppContext from '../../../hooks/useAppContext'
 
 import SearchBar from './SearchBar/SearchBar'
-import useMenu from '../../../hooks/useMenu'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
+  const { title } = useAppContext()
 
   const handleMenu = () => {
     setShowMenu(!showMenu)
@@ -14,6 +18,9 @@ const Header: FunctionComponent<{}> = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <header className="header">
         <div className="header-actions">
           <div className="header-brand">

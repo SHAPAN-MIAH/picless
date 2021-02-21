@@ -33,7 +33,6 @@ const Footer: FunctionComponent<{}> = () => {
             <h5>Need help?</h5>
             <Link to="/support">Help / Support</Link>
             <Link to="/terms-conditions">Terms &amp; Conditions</Link>
-            <Link to="/privacy">Privacy Policy</Link>
           </div>
         </div>
       </div>

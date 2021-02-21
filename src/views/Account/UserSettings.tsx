@@ -2,10 +2,13 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import classNames from 'classnames'
+import Loader from 'react-loader-spinner'
+import { useTranslation } from 'react-i18next'
 
 import _ from 'lodash'
 
-import { useTranslation } from 'react-i18next'
+import useUser from '../../hooks/useUser'
 
 import FormItem from '../../components/Common/Form/FormItem'
 import FormRow from '../../components/Common/Form/FormRow'
@@ -14,9 +17,6 @@ import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 
 import { UserSettingsType } from '../../types/UserType.d'
-import useUser from '../../hooks/useUser'
-import classNames from 'classnames'
-import Loader from 'react-loader-spinner'
 
 type FormValues = {
   enabledPushNotifications: boolean
