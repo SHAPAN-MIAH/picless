@@ -53,7 +53,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
   })
 
   const plansList = (): SelectOptionsType[] => {
-    return plans.map((data: PlansType) => {
+    return plans.map((data: any) => {
       return { value: data.id, name: `${data.name} | (${data.currency} ${data.amount})` }
     })
   }

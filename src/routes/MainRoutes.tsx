@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useContext } from 'react'
-import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
+import AuthorizationContext from '../context/AuthorizationContext'
 
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 
@@ -9,19 +11,14 @@ import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
 
 import UserProfile from '../views/UserProfile/UserProfile'
 import Messages from '../views/Messages/Messages'
-
 import Home from '../views/Home/Home'
-
 import Movements from '../views/Account/Movements'
 import AddCard from '../views/Account/Card/AddCard'
-
 import TestView from '../views/TestView/TestView'
-
 import PaymentCallback from '../views/Payments/PaymentCallback'
-import routes from './MenuRoutes'
-
-import AuthorizationContext from '../context/AuthorizationContext'
 import ProfileNotExist from '../views/UserProfile/Profile/ProfileNotExist'
+
+import routes from './MenuRoutes'
 
 const MainRoutes: FunctionComponent<{}> = () => {
   const { t } = useTranslation()

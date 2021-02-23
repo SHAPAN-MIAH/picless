@@ -1,4 +1,5 @@
 export type ProviderType = 'VISA' | 'MASTER_CARD' | 'DINNERS' | 'DISCOVER' | 'AMERICAN_EXPRESS' | 'JCB'
+export type PaymentProcessorType = 'STRIPE' | 'SECURIONPAY'
 
 export type MonthNumbers = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 
@@ -40,14 +41,15 @@ export interface CardType {
 
 export interface PlansType {
   id: string
-  created: number
-  objectType: string
-  amount: number
-  currency: string
-  interval: string
-  intervalCount: number
   name: string
-  trialPeriodDays: number
+  planId: string
+  paymentProcessor: PaymentProcessorType
+  amount: number
+  amountTaxIncluded: number
+  currency: string
+  intervalCount: number
+  interval: string
+  countryCode: string
 }
 
 export interface DefaultCardType {

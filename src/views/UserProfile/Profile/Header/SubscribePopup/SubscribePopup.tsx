@@ -32,9 +32,9 @@ const SubscribePopup: FunctionComponent<{}> = () => {
       setLoading(true)
       setImageProfile(provider.profilePicture)
 
-      const { planId } = provider
+      const { userName } = provider
 
-      PaymentService.getPlanOptions(planId || '')
+      PaymentService.getPlanOptions(userName || '')
         .then((plans: SubscritionPlanOption[]) => {
           setPlanListOriginal(plans)
           plansOptionsList(plans)
@@ -55,7 +55,7 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
   const plansOptionsList = (plans: SubscritionPlanOption[]): void => {
     setPlanList(
-      plans.map((data: PlansType) => {
+      plans.map((data: any) => {
         return { value: data.id, name: `${data.intervalCount} ${data.interval}` }
       })
     )

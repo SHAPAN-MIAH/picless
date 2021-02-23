@@ -195,7 +195,7 @@ const confirmPayment = async (paymentIntent: string): Promise<any> => {
   return body
 }
 
-const getPlanOptions = async (planId: string): Promise<SubscritionPlanOption[]> => {
+const getPlanOptions = async (userName: string): Promise<SubscritionPlanOption[]> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
@@ -203,7 +203,7 @@ const getPlanOptions = async (planId: string): Promise<SubscritionPlanOption[]> 
     headers,
   }
 
-  const url = `${baseUrl}/getplanoptions?planId=${planId}`
+  const url = `${baseUrl}/getplanoptions?userName=${userName}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
