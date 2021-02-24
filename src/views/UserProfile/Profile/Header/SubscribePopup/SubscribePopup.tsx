@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
+import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
 
 import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 import FormRow from '../../../../../components/Common/Form/FormRow'
@@ -10,22 +10,23 @@ import { PlansType, SubscritionPlanOption } from '../../../../../types/PaymentTy
 
 import styles from './SubscribePopup.module.css'
 import PaymentService from '../../../../../services/PaymentService'
-import useWallet from '../../../../../hooks/useWallet'
+// import useWallet from '../../../../../hooks/useWallet'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
 
 const SubscribePopup: FunctionComponent<{}> = () => {
   const { provider } = useContext(ProviderProfileContext.context)
 
-  const SecurionPay = window.Securionpay
+  // const SecurionPay = window.Securionpay
 
-  const { defaultCard } = useWallet()
+  // const { defaultCard } = useWallet()
 
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [selectedPlan, setSelectedPlan] = useState<SubscritionPlanOption>()
-  const [planListOriginal, setPlanListOriginal] = useState<SubscritionPlanOption[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
-
   const [planList, setPlanList] = useState<SelectOptionsType[]>([{ value: '0', name: 'Loading ...' }])
+  const [loading, setLoading] = useState<boolean>(false)
+  // const [planListOriginal, setPlanListOriginal] = useState<SubscritionPlanOption[]>([])
+
+  const planListOriginal = useRef<SubscritionPlanOption[]>([])
 
   useEffect(() => {
     if (provider) {
@@ -36,7 +37,8 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
       PaymentService.getPlanOptions(userName || '')
         .then((plans: SubscritionPlanOption[]) => {
-          setPlanListOriginal(plans)
+          planListOriginal.current = plans
+
           plansOptionsList(plans)
 
           setLoading(false)
@@ -46,11 +48,15 @@ const SubscribePopup: FunctionComponent<{}> = () => {
         })
     }
 
-    const script = document.createElement('script')
-    script.setAttribute('id', 'mainScriptSecurionPay')
-    script.src = 'https://securionpay.com/js/securionpay.js'
-    script.async = true
-    document.body.appendChild(script)
+    if (window.tpl) {
+      window.tpl.load(['user-avatar'])
+    }
+
+    // const script = document.createElement('script')
+    // script.setAttribute('id', 'mainScriptSecurionPay')
+    // script.src = 'https://securionpay.com/js/securionpay.js'
+    // script.async = true
+    // document.body.appendChild(script)
   }, [provider])
 
   const plansOptionsList = (plans: SubscritionPlanOption[]): void => {
@@ -62,7 +68,8 @@ const SubscribePopup: FunctionComponent<{}> = () => {
   }
 
   const handlePlanOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const planSelected = planListOriginal.find((plan: any) => plan.id === e.target.value)
+    const plans = planListOriginal.current
+    const planSelected = plans.find((plan: any) => plan.id === parseInt(e.target.value, 10))
 
     if (planSelected) {
       setSelectedPlan(planSelected)
@@ -75,31 +82,33 @@ const SubscribePopup: FunctionComponent<{}> = () => {
     if (selectedPlan) {
       setLoading(true)
 
-      console.log(defaultCard)
-      const securionPayAmount = selectedPlan?.amount * 100
+      subscribeToUser('')
 
-      SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
+      // console.log(defaultCard)
+      // const securionPayAmount = selectedPlan?.amount * 100
 
-      SecurionPay.verifyThreeDSecure(
-        {
-          amount: securionPayAmount,
-          currency: selectedPlan.currency.toUpperCase(),
-          card: defaultCard?.defaultCardId,
-        },
-        (token: any) => {
-          if (token.error) {
-            alert(JSON.stringify(token))
-            setLoading(false)
-          } else {
-            if (token.threeDSecureInfo.liabilityShift === 'successful') {
-              subscribeToUser(token)
-            } else {
-              setLoading(false)
-              alert(JSON.stringify('Cancelled by user'))
-            }
-          }
-        }
-      )
+      // SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
+
+      // SecurionPay.verifyThreeDSecure(
+      //   {
+      //     amount: securionPayAmount,
+      //     currency: selectedPlan.currency.toUpperCase(),
+      //     card: defaultCard?.defaultCardId,
+      //   },
+      //   (token: any) => {
+      //     if (token.error) {
+      //       alert(JSON.stringify(token))
+      //       setLoading(false)
+      //     } else {
+      //       if (token.threeDSecureInfo.liabilityShift === 'successful') {
+      //         subscribeToUser(token)
+      //       } else {
+      //         setLoading(false)
+      //         alert(JSON.stringify('Cancelled by user'))
+      //       }
+      //     }
+      //   }
+      // )
     }
   }
 

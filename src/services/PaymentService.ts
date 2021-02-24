@@ -207,7 +207,7 @@ const getPlanOptions = async (userName: string): Promise<SubscritionPlanOption[]
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
-  return body.list
+  return body
 }
 
 export default {

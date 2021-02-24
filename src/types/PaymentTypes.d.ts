@@ -87,13 +87,14 @@ export interface ServiceMovementType {
 }
 
 export interface SubscritionPlanOption {
-  id: string
-  created: number
-  objectType: string
+  id: number
   amount: number
-  currency: string
-  interval: string
+  amountTaxIncluded: number
+  countryCode: string
+  currency: string // TODO: CREATE TYPE WITH ALL CURRENCIES
+  interval: string // TODO: FIND AND CREATE TYPE WITH ALL THE INTERVALS (Month, Year, etc...)
   intervalCount: number
   name: string
-  trialPeriodDays: number
+  paymentProcessor: PaymentProcessorType
+  planId: string
 }
