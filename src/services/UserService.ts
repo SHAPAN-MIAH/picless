@@ -202,15 +202,19 @@ const register = async (userName: string, password: string): Promise<any> => {
     Accept: '*/*',
     'Accept-Encoding': 'gzip, deflate, br',
     Connection: 'keep-alive',
-    'Content-Type': 'application/json',
   }
+
+  const bodyData = new FormData()
+  bodyData.append('userName', userName)
+  bodyData.append('password', password)
 
   const requestOptions: RequestInit = {
     method: 'POST',
     headers,
+    body: bodyData,
   }
 
-  const url = `${baseUrl}/signup?userName=${userName}&password=${password}`
+  const url = `${baseUrl}/signup`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
