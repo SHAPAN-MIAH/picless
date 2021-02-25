@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, Suspense, useState } from 'react'
+import React, { FunctionComponent, useCallback, Suspense, useState, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
 import classNames from 'classnames'
 import styled from 'styled-components'

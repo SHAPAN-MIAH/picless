@@ -52,11 +52,18 @@ const useUser = (): UseUserReturn => {
 
         const toastPromise = UserService.updateUserProfile(updated)
 
-        return toast.promise(toastPromise, toastOptions).then((newUserData: UserType) => {
-          setUser(newUserData)
+        return toast
+          .promise(toastPromise, toastOptions)
+          .then((newUserData: UserType) => {
+            setUser(newUserData)
 
-          return true
-        })
+            return true
+          })
+          .catch(() => {
+            toast.error('Error saving the data')
+
+            return false
+          })
       })
     },
     [setUser, getCurrentUser]

@@ -31,67 +31,59 @@ const MainRoutes: FunctionComponent<{}> = () => {
   return (
     <>
       <Router>
-        {isAuthenticated && (
-          <LayoutMain>
-            <Switch>
-              {routes.map((route) => {
-                if (route.component) {
-                  return (
-                    <ProtectedRoute
-                      {...routerProps}
-                      title={t(route.title)}
-                      key={`${route.name}`}
-                      exact={route.exact}
-                      path={route.path}
-                      component={route.component}
-                    />
-                  )
-                }
-
-                return null
-              })}
-
-              <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
-              <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
-
-              <ProtectedRoute {...routerProps} path="/payment/stripe/wallet" component={PaymentCallback} />
-              <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
-
-              <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
-              <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
-              <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
-
-              <ProtectedRoute
-                {...routerProps}
-                exact
-                path={['/user/:username', '/user/:username/', '/user/:username/:tab', '/user/']}
-                component={UserProfile}
-              />
-              <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
-
-              <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
-
-              <Route exact path="/">
-                <Redirect to="/user/home" />
-              </Route>
-            </Switch>
-          </LayoutMain>
-        )}
-        {!isAuthenticated && (
+        <LayoutMain>
           <Switch>
+            {routes.map((route) => {
+              if (route.component) {
+                return (
+                  <ProtectedRoute
+                    {...routerProps}
+                    title={t(route.title)}
+                    key={`${route.name}`}
+                    exact={route.exact}
+                    path={route.path}
+                    component={route.component}
+                  />
+                )
+              }
+
+              return null
+            })}
+
+            <ProtectedRoute {...routerProps} exact path="/wallet/payments/add-card" component={AddCard} />
+            <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
+
+            <ProtectedRoute {...routerProps} path="/payment/stripe/wallet" component={PaymentCallback} />
+            <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
+
+            <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
+            <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
+            <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
+
+            <ProtectedRoute
+              {...routerProps}
+              exact
+              path={['/user/:username', '/user/:username/', '/user/:username/:tab', '/user/']}
+              component={UserProfile}
+            />
+            <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
+
+            <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
+
             <Route exact path="/">
-              <LayoutUnauthorize />
-            </Route>
-            <Route path="/">
-              <h1>ERROR</h1>
+              <Redirect to="/user/home" />
             </Route>
           </Switch>
-        )}
-        {/* <Switch>
+        </LayoutMain>
+
+        <Switch>
+          <Route exact path="/">
+            <LayoutUnauthorize />
+          </Route>
           <Route path="/">
             <h1>ERROR</h1>
           </Route>
-        </Switch> */}
+        </Switch>
       </Router>
     </>
   )

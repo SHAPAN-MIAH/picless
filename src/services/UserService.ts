@@ -45,20 +45,24 @@ const getUserProfileByUserName = async (userName: string, signal?: AbortSignal):
 }
 
 const updateUserProfile = async (userData: UserType): Promise<UserType> => {
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+  try {
+    const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
-  const requestOptions: RequestInit = {
-    method: 'PUT',
-    headers,
-    body: JSON.stringify(userData),
+    const requestOptions: RequestInit = {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(userData),
+    }
+
+    const url = `${baseUrl}/updateprofile`
+
+    const response = await fetch(url, requestOptions)
+    const body = await response.json()
+
+    return body
+  } catch (err) {
+    throw new Error(err.message)
   }
-
-  const url = `${baseUrl}/updateprofile`
-
-  const response = await fetch(url, requestOptions)
-  const body = await response.json()
-
-  return body
 }
 
 const getUserSettings = async (): Promise<UserSettingsType> => {
@@ -193,6 +197,27 @@ const getSubscriptions = async (): Promise<SubscriptorListType[]> => {
   return body
 }
 
+const register = async (userName: string, password: string): Promise<any> => {
+  const headers = {
+    Accept: '*/*',
+    'Accept-Encoding': 'gzip, deflate, br',
+    Connection: 'keep-alive',
+    'Content-Type': 'application/json',
+  }
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+  }
+
+  const url = `${baseUrl}/signup?userName=${userName}&password=${password}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   getUserProfile,
   getUserProfileByUserName,
@@ -204,4 +229,5 @@ export default {
   sendATip,
   searchUser,
   getSubscriptions,
+  register,
 }

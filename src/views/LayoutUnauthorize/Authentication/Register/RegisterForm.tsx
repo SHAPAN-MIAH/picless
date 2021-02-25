@@ -39,7 +39,9 @@ const RegisterForm: FunctionComponent<{
       .transform((x) => (x === '' ? undefined : x))
       .required(t(`authentication.errors.passwordRequired`)),
     confirmationPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
-    overEighteen: Yup.boolean().required(),
+    overEighteen: Yup.boolean()
+      .required('You must be at least 18 years old to be a member')
+      .oneOf([true], 'You must be at least 18 years old to be a member'),
   })
 
   const { register } = useAuth()
@@ -51,6 +53,7 @@ const RegisterForm: FunctionComponent<{
   const [generalError, setGeneralError] = useState<string>('')
 
   const onSubmit = (data: FormValues) => {
+    alert('')
     return register(data.username, data.password)
       .then((message) => {
         setMessages(message)
@@ -155,6 +158,8 @@ const RegisterForm: FunctionComponent<{
           {generalError && <Alert alertType="DANGER" message={t(generalError)} style={{ width: '100%' }} />}
           {messages && <Alert alertType="PRIMARY" message={t(messages)} style={{ width: '100%' }} />}
         </FormRow>
+
+        {errors.overEighteen && <Alert alertType="DANGER" message={errors.overEighteen.message} style={{ width: '100%' }} />}
       </form>
 
       <p className="form-text">

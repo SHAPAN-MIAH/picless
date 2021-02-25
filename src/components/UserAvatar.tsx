@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 
 type AvatarSize = 'BIG' | 'MEDIUM' | 'SMALL' | 'TINY'
 
@@ -11,6 +11,12 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
   const { imageName, size = 'SMALL' } = props
 
   const imageUrl = process.env.REACT_APP_BUCKET_IMAGES + imageName
+
+  useEffect(() => {
+    if (window.tpl) {
+      window.tpl.load(['user-avatar'])
+    }
+  }, [])
 
   return (
     <>

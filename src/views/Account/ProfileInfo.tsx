@@ -63,7 +63,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
         formFields.forEach((field: string) => {
           const value = _.get(user, field)
 
-          if (field === 'birthDate') console.log(value)
+          if (field === 'birthDate') setValue(field, new Date(value))
           else setValue(field as formFieldsNames, value || '')
         })
       })

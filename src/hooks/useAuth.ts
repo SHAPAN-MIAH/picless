@@ -2,6 +2,7 @@ import { useContext, useCallback } from 'react'
 import Auth from '@aws-amplify/auth'
 
 import AuthService from '../services/AuthService'
+import UserService from '../services/UserService'
 
 import AuthorizationContext from '../context/AuthorizationContext'
 
@@ -104,22 +105,41 @@ const useAuth = () => {
     })
   }, [])
 
+  // // @deprecate
+  // const register_old = useCallback((username: string, password: string): Promise<string> => {
+  //   return new Promise<string>((resolve, reject) => {
+  //     Auth.signUp({
+  //       username,
+  //       password,
+  //       attributes: {
+  //         email: username,
+  //       },
+  //     })
+  //       .then(() => {
+  //         resolve('changePassword.messageSuccessfully')
+  //       })
+  //       .catch((err) => {
+  //         if (err.code) {
+  //           reject(new Error(`authentication.errors.${err.code}`))
+  //         } else {
+  //           reject(new Error(`authentication.errors.UnknownError`))
+  //         }
+  //       })
+  //   })
+  // }, [])
+
   const register = useCallback((username: string, password: string): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
-      Auth.signUp({
-        username,
-        password,
-        attributes: {
-          email: username,
-        },
-      })
-        .then(() => {
-          resolve('changePassword.messageSuccessfully')
+      console.log(username)
+      UserService.register(username, password)
+        .then((data: any) => {
+          resolve('authentication.registerConfimationEmailMessage')
         })
         .catch((err) => {
           if (err.code) {
             reject(new Error(`authentication.errors.${err.code}`))
           } else {
+            console.error(err)
             reject(new Error(`authentication.errors.UnknownError`))
           }
         })
