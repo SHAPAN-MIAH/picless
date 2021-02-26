@@ -2,8 +2,6 @@ import React from 'react'
 import classNames from 'classnames'
 import { isMobile } from 'react-device-detect'
 
-import UserService from '../../services/UserService'
-
 import { ImageType, UploadImageType } from '../../types/UserType.d'
 import useUser from '../../hooks/useUser'
 

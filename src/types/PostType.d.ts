@@ -1,5 +1,3 @@
-import { UserType } from './UserType.d'
-
 export interface CommonPostType {
   content: string
   featuredPost: boolean

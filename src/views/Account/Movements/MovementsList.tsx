@@ -10,8 +10,14 @@ import { MovementType } from '../../../types/PaymentTypes.d'
 const MovementList: FunctionComponent<{}> = () => {
   const { loading, movements, getMovements } = useWallet()
 
+  const controllerCancelable = new AbortController()
+  const { signal } = controllerCancelable
   useEffect(() => {
-    getMovements()
+    getMovements(signal)
+
+    return () => {
+      controllerCancelable.abort()
+    }
   }, [getMovements])
 
   if (loading) {

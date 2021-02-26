@@ -18,22 +18,29 @@ const useWallet = () => {
   const [loading, setLoading] = useState(false)
   const [movements, setMovements] = useState<MovementType[]>([])
 
+  const controllerCancelable = new AbortController()
+  const { signal } = controllerCancelable
+
   useEffect(() => {
     if (!cards || cards.length === 0) {
       setLoading(true)
 
-      PaymentService.getCards().then((cardList: CardType[]) => {
+      PaymentService.getCards(signal).then((cardList: CardType[]) => {
         setCards(cardList)
         setLoading(false)
       })
 
-      PaymentService.getDefaultCard().then((data: any) => {
+      PaymentService.getDefaultCard(signal).then((data: any) => {
         setDefaultCard(data)
       })
 
-      PaymentService.getBalance().then((data: any) => {
+      PaymentService.getBalance(signal).then((data: any) => {
         if (data.code === 0) setBalance(parseFloat(data.value))
       })
+    }
+
+    return () => {
+      controllerCancelable.abort()
     }
   }, [])
 
@@ -42,7 +49,6 @@ const useWallet = () => {
       if (data.code === 0 && data.message === FoundReturn.Succeeded) {
         updateBalance()
       } else if (data.code === '0' && data.message !== 'redirect') {
-        console.log('REDIRECT' + data.path)
         // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
         // con paymentIntent en el body, luego actualizo balance
       } else if (data.code === '1' && data.message === 'error') {
@@ -51,9 +57,9 @@ const useWallet = () => {
     })
   }, [])
 
-  const getMovements = useCallback(() => {
+  const getMovements = useCallback((s: AbortSignal) => {
     setLoading(true)
-    PaymentService.getMovements().then((data: ServiceMovementType) => {
+    PaymentService.getMovements(s).then((data: ServiceMovementType) => {
       setMovements(data.list)
       setLoading(false)
     })

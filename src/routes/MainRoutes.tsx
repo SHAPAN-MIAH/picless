@@ -17,6 +17,7 @@ import AddCard from '../views/Account/Card/AddCard'
 import TestView from '../views/TestView/TestView'
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import ProfileNotExist from '../views/UserProfile/Profile/ProfileNotExist'
+import Faq from '../views/HelpCenter/Faq/Faq'
 
 import routes from './MenuRoutes'
 
@@ -70,6 +71,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
+              <ProtectedRoute {...routerProps} exact path="/support/faq" component={Faq} />
 
               <Route exact path="/">
                 <Redirect to="/user/home" />
@@ -87,11 +89,6 @@ const MainRoutes: FunctionComponent<{}> = () => {
             </Route>
           </Switch>
         )}
-        {/* <Switch>
-          <Route path="/">
-            <h1>ERROR</h1>
-          </Route>
-        </Switch> */}
       </Router>
     </>
   )

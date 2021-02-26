@@ -5,7 +5,7 @@ import Wallet from '../views/Account/Wallet'
 import AddCard from '../views/Account/Card/AddCard'
 import Subscriptions from '../views/Account/Subscriptions/Subscriptions'
 import Verification from '../views/Account/Verification/Verification'
-import HelpSupport from '../views/HelpSupport/HelpSupport'
+import HelpSupport from '../views/HelpCenter/HelpCenter'
 
 const MenuRoutes = [
   {

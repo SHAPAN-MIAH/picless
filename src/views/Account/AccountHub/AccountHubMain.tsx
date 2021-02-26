@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import useUser from '../../../hooks/useUser'
 
 import UploadBox from '../../../components/Common/UploadBox'
+import UserAvatar from 'components/UserAvatar'
 
 const GridDiv = styled.div`
   justify-content: center;

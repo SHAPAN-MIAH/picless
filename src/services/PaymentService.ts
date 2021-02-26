@@ -3,12 +3,13 @@ import { AddCardType, CardType, DefaultCardType, ServiceMovementType, Subscritio
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
 
-const getCards = async (): Promise<CardType[]> => {
+const getCards = async (signal?: AbortSignal): Promise<CardType[]> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
 
   const url = `${baseUrl}/getcreditcards`
@@ -72,12 +73,13 @@ const changeDefaultCard = async (cardId: string): Promise<any> => {
   return body
 }
 
-const getSuscriptionPlans = async (): Promise<CardType[]> => {
+const getSuscriptionPlans = async (signal?: AbortSignal): Promise<CardType[]> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
 
   const url = `${baseUrl}/getplans`
@@ -109,12 +111,13 @@ const suscribeToUser = async (planId: any, userIdToSuscribe: number, token: stri
   return body
 }
 
-const getBalance = async (): Promise<any> => {
+const getBalance = async (signal?: AbortSignal): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
 
   const url = `${process.env.REACT_APP_BASE_URL_API}/users/getuserbalance`
@@ -124,12 +127,13 @@ const getBalance = async (): Promise<any> => {
   return body
 }
 
-const getDefaultCard = async (): Promise<DefaultCardType> => {
+const getDefaultCard = async (signal?: AbortSignal): Promise<DefaultCardType> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
 
   const url = `${baseUrl}/getdefaultcard`
@@ -139,12 +143,13 @@ const getDefaultCard = async (): Promise<DefaultCardType> => {
   return body
 }
 
-const getMovements = async (): Promise<ServiceMovementType> => {
+const getMovements = async (signal?: AbortSignal): Promise<ServiceMovementType> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
 
   const url = `${baseUrl}/getcharges`

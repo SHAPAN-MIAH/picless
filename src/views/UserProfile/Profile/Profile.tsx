@@ -1,6 +1,8 @@
 import React, { useState, useEffect, FunctionComponent, useContext } from 'react'
 import { Route, Switch, useHistory, useParams } from 'react-router-dom'
 import Loader from 'react-loader-spinner'
+import _ from 'lodash'
+
 import useRouter from '../../../hooks/useRouter'
 
 import UserService from '../../../services/UserService'
@@ -14,7 +16,6 @@ import AboutTab from './SectionTab/AboutTab'
 import ProviderProfileContext from '../../../context/ProviderProfileContext'
 import Newsfeed from './SectionTab/Newsfeed'
 import { PostType } from '../../../types/PostType.d'
-import _ from 'lodash'
 
 export enum Tabs {
   POSTS = 'posts',

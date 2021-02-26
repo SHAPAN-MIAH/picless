@@ -24,7 +24,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'import/no-cycle': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
     'react-hooks/rules-of-hooks': 'error',
