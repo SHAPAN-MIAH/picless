@@ -5,11 +5,11 @@ import UserAvatar from '../../../../../components/UserAvatar'
 
 import { UserSearchType } from '../../../../../types/UserType.d'
 
-const SearchBarItem: FunctionComponent<{ data: UserSearchType }> = (props) => {
-  const { data } = props
+const SearchBarItem: FunctionComponent<{ data: UserSearchType; onClick: () => void }> = (props) => {
+  const { data, onClick } = props
   return (
     <>
-      <Link to={`/user/${data.userName}`} className="dropdown-box-list-item">
+      <Link to={`/user/${data.userName}`} className="dropdown-box-list-item" onClick={onClick}>
         <div className="user-status notification">
           <UserAvatar imageName={data.avatarPicture} size="SMALL" />
 

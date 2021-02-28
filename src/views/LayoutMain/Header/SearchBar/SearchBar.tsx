@@ -24,27 +24,24 @@ const SearchBar: FunctionComponent<{}> = () => {
 
   const [showDropdown, setShowDropDown] = useState<boolean>(false)
 
-  const onChangeSearch = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const query = e.target.value
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value
 
-      if (!query) {
-        clear()
-        setShowDropDown(false)
-      } else {
-        setShowDropDown(true)
-        changeKeyword(query)
-      }
-    },
-    [setShowDropDown, changeKeyword, clear]
-  )
+    if (!query) {
+      clear()
+      setShowDropDown(false)
+    } else {
+      setShowDropDown(true)
+      changeKeyword(query)
+    }
+  }
 
   const renderSearchResults = useCallback(() => {
     if (items && Object.keys(items).length && items.length) {
       return (
         <>
           {items.slice(0, 5).map((item: UserSearchType) => {
-            return <SearchBarItem key={`search-${item.userId}`} data={item} />
+            return <SearchBarItem key={`search-${item.userId}`} data={item} onClick={onClickElement} />
           })}
         </>
       )
@@ -56,6 +53,12 @@ const SearchBar: FunctionComponent<{}> = () => {
       </div>
     )
   }, [items])
+
+  const onClickElement = () => {
+    const closeDropDownButton = document.getElementsByClassName('interactive-input-action')[0] as any
+
+    if (closeDropDownButton) closeDropDownButton.click()
+  }
 
   const onCleanSearch = useCallback(() => {
     clear()
