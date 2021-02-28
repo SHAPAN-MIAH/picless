@@ -200,12 +200,13 @@ const confirmPayment = async (paymentIntent: string): Promise<any> => {
   return body
 }
 
-const getPlanOptions = async (userName: string): Promise<SubscritionPlanOption[]> => {
+const getPlanOptions = async (userName: string, signal?: AbortSignal): Promise<SubscritionPlanOption[]> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
+    signal,
   }
 
   const url = `${baseUrl}/getplanoptions?userName=${userName}`

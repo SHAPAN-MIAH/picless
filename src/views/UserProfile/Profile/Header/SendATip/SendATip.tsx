@@ -1,8 +1,10 @@
-import React, { FormEvent, FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import toast from 'react-hot-toast'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 
 import useUser from '../../../../../hooks/useUser'
 
@@ -16,8 +18,9 @@ import UserAvatar from '../../../../../components/UserAvatar'
 
 import { UserType, TipType } from '../../../../../types/UserType.d'
 
-import styles from './SendATip.module.css'
 import TextArea from '../../../../../components/Common/TextArea'
+import Alert from '../../../../../components/Common/Alerts/Alerts'
+import styles from './SendATip.module.css'
 
 type FormValues = {
   amount: string
@@ -30,6 +33,8 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
   const { user, callback, onClose } = props
 
   const { userId } = useUser()
+
+  const [errorMessage, setErrorMessage] = useState('')
 
   // Validations Fields
   const validationSchema = Yup.object().shape({
@@ -67,10 +72,12 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
             callback('ERROR', data.message)
           }
 
-          if (onClose) onClose()
-
+          if (data.message === 'Insufficient balance') setErrorMessage(data.message)
           break
         default:
+          if (callback) {
+            callback('ERROR', data.message)
+          }
           if (onClose) onClose()
           break
       }
@@ -80,6 +87,15 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
   return (
     <>
       <div className={styles.mainPopup}>
+        <div
+          className={styles.closePopup}
+          onClick={() => {
+            if (onClose) onClose()
+          }}
+        >
+          <FontAwesomeIcon icon="times" color="white" size="1x" />
+        </div>
+
         <div className={styles.headerTip}>
           <h6>Send tip top</h6>
         </div>
@@ -125,6 +141,13 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
               errorMessage={errors.message?.message}
             />
           </FormRowItem>
+
+          {errorMessage && (
+            <Alert alertType="DANGER" style={{ width: '100%' }}>
+              {errorMessage}
+              Please <Link to="/account/wallet/"> Add founds</Link>
+            </Alert>
+          )}
 
           <FormRow>
             <ButtonWithLoader type="submit" className="button small secondary" showLoader={formState.isSubmitting}>

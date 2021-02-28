@@ -84,7 +84,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                       </div>
                     }
                   >
-                    <SubscribePopup />
+                    {(close: any) => <SubscribePopup onClose={close} />}
                   </Popup>
                 )}
 

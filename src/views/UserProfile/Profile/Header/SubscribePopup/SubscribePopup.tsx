@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 import FormRow from '../../../../../components/Common/Form/FormRow'
@@ -13,8 +14,10 @@ import PaymentService from '../../../../../services/PaymentService'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
 
 import styles from './SubscribePopup.module.css'
+import toast from 'react-hot-toast'
 
-const SubscribePopup: FunctionComponent<{}> = () => {
+const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
+  const { onClose } = props
   const { provider } = useContext(ProviderProfileContext.context)
 
   // const SecurionPay = window.Securionpay
@@ -29,6 +32,9 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
   const planListOriginal = useRef<SubscritionPlanOption[]>([])
 
+  const controllerCancelable = new AbortController()
+  const { signal } = controllerCancelable
+
   useEffect(() => {
     if (provider) {
       setLoading(true)
@@ -36,7 +42,7 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
       const { userName } = provider
 
-      PaymentService.getPlanOptions(userName || '')
+      PaymentService.getPlanOptions(userName || '', signal)
         .then((plans: SubscritionPlanOption[]) => {
           planListOriginal.current = plans
 
@@ -51,6 +57,10 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
     if (window.tpl) {
       window.tpl.load(['user-avatar'])
+    }
+
+    return () => {
+      controllerCancelable.abort()
     }
 
     // const script = document.createElement('script')
@@ -115,6 +125,7 @@ const SubscribePopup: FunctionComponent<{}> = () => {
 
   const subscribeToUser = (token: any) => {
     if (provider.id && provider.planId && selectedPlan) {
+      toast.loading('Loading ...')
       PaymentService.suscribeToUser(selectedPlan?.id, provider.id, token.id, selectedPlan?.amount)
         .then((data: any) => {
           if (data.code === 0) {
@@ -123,6 +134,7 @@ const SubscribePopup: FunctionComponent<{}> = () => {
             window.location.reload()
           } else {
             setLoading(false)
+            toast.error(data.message)
             console.error(`Error ${data.code} => ${data.message}`)
           }
         })
@@ -135,6 +147,15 @@ const SubscribePopup: FunctionComponent<{}> = () => {
   return (
     <>
       <div className={styles.mainPopup}>
+        <div
+          className={styles.closePopup}
+          onClick={() => {
+            onClose()
+          }}
+        >
+          <FontAwesomeIcon icon="times" color="white" size="1x" />
+        </div>
+
         <div className={styles.headerTip}>
           <h6>Subscribe</h6>
         </div>
