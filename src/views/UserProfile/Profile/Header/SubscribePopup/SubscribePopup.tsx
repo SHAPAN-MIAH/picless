@@ -8,10 +8,11 @@ import SelectForm, { SelectOptionsType } from '../../../../../components/Common/
 
 import { PlansType, SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 
-import styles from './SubscribePopup.module.css'
 import PaymentService from '../../../../../services/PaymentService'
 // import useWallet from '../../../../../hooks/useWallet'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
+
+import styles from './SubscribePopup.module.css'
 
 const SubscribePopup: FunctionComponent<{}> = () => {
   const { provider } = useContext(ProviderProfileContext.context)

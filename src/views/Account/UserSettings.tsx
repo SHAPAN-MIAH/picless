@@ -96,275 +96,277 @@ const UserSettings: FunctionComponent<{}> = () => {
   }
 
   return (
-    <div className="grid grid-2-8-2">
-      <div className="grid-column"> </div>
+    <div className="content-grid" style={{ maxWidth: '800px' }}>
+      <div className="grid grid-2-8-2">
+        <div className="grid-column"> </div>
 
-      <div className="account-hub-content">
-        <div className="section-header">
-          <div className="section-header-info">
-            <p className="section-pretitle">{t('settings.title')}</p>
+        <div className="account-hub-content">
+          <div className="section-header">
+            <div className="section-header-info">
+              <p className="section-pretitle">{t('settings.title')}</p>
 
-            <h2 className="section-title">{t('settings.subTitle')}</h2>
+              <h2 className="section-title">{t('settings.subTitle')}</h2>
+            </div>
           </div>
-        </div>
 
-        <div className="grid-column">
-          {loading && (
-            <>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-              </div>
-            </>
-          )}
+          <div className="grid-column">
+            {loading && (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+                </div>
+              </>
+            )}
 
-          <form className={classNames('form', loading ? 'hidden' : '')} onSubmit={handleSubmit(onSubmit)}>
-            <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
-              <p className="widget-box-title">{t('settings.generalTitle')}</p>
+            <form className={classNames('form', loading ? 'hidden' : '')} onSubmit={handleSubmit(onSubmit)}>
+              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                <p className="widget-box-title">{t('settings.generalTitle')}</p>
 
-              <div className="widget-box-content">
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="enabledPushNotifications"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-push-notifications"
-                          name={propsController.name}
-                          title={t('settings.fields.enabledPushNotifications')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="enabledEmailNotifications"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-email-notifications"
-                          name={propsController.name}
-                          title={t('settings.fields.enabledEmailNotifications')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-              </div>
-            </div>
-
-            <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
-              <p className="widget-box-title">{t('settings.typeNotification')}</p>
-
-              <div className="widget-box-content">
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="notificationComments"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-comments-notifications"
-                          name={propsController.name}
-                          title={t('settings.fields.comments')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="notificationNewSubscriber"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-new-subscriber-notifications"
-                          name={propsController.name}
-                          title={t('settings.fields.newSubscriber')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="notificationTips"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-tip-notifications"
-                          name={propsController.name}
-                          title={t('settings.fields.tips')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="notificationsMessage"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-message-notifications"
-                          name={propsController.name}
-                          title={t('settings.fields.messages')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-              </div>
-            </div>
-
-            <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
-              <p className="widget-box-title">{t('settings.privacyTitle')}</p>
-
-              <div className="widget-box-content">
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="privacityDisplayProfileInSearchBar"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-display-searchbar"
-                          name={propsController.name}
-                          title={t('settings.fields.displayProfileInSearchBar')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="privacityDisplayChatActivity"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-display-chat-activity"
-                          name={propsController.name}
-                          title={t('settings.fields.displayChatActivity')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="privacityGoogleAuthenticator"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <CheckboxForm
-                          id="enabled-google-authenticator"
-                          name={propsController.name}
-                          title={t('settings.fields.googleAuthenticator')}
-                          checked={propsController.value}
-                          onChange={(value: boolean) => {
-                            propsController.onChange(value)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <div className="form-select">
-                      <label htmlFor="settings-howCanSendMessage">{t('settings.fields.whoCanSendMessage')}</label>
+                <div className="widget-box-content">
+                  <FormRow classNameRow="split">
+                    <FormItem>
                       <Controller
                         control={control}
-                        name="privacityWhoCanSendMessage"
+                        name="enabledPushNotifications"
                         defaultValue=""
                         render={(propsController) => (
-                          <select
+                          <CheckboxForm
+                            id="enabled-push-notifications"
                             name={propsController.name}
-                            id="settings-howCanSendMessage"
-                            value={propsController.value}
-                            onChange={(val) => {
-                              propsController.onChange(val)
+                            title={t('settings.fields.enabledPushNotifications')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
                             }}
-                          >
-                            <option id="everyOne" value="everyOne">
-                              {t('settings.fields.sendEveryone')}
-                            </option>
-                            <option id="onlySuscribers" value="onlySuscribers">
-                              {t('settings.fields.sendOnlySubscribers')}
-                            </option>
-                          </select>
+                          />
                         )}
                       />
-                    </div>
-                  </FormItem>
-                </FormRow>
+                    </FormItem>
+                  </FormRow>
 
-                <FormRow>{error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}</FormRow>
-
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <ButtonWithLoader type="submit" className="medium primary" showLoader={formState.isSubmitting}>
-                      {t('accountSidebar.saveButtonText')}
-                    </ButtonWithLoader>
-                  </FormItem>
-                </FormRow>
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="enabledEmailNotifications"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-email-notifications"
+                            name={propsController.name}
+                            title={t('settings.fields.enabledEmailNotifications')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+                </div>
               </div>
-            </div>
-          </form>
+
+              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                <p className="widget-box-title">{t('settings.typeNotification')}</p>
+
+                <div className="widget-box-content">
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="notificationComments"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-comments-notifications"
+                            name={propsController.name}
+                            title={t('settings.fields.comments')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="notificationNewSubscriber"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-new-subscriber-notifications"
+                            name={propsController.name}
+                            title={t('settings.fields.newSubscriber')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="notificationTips"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-tip-notifications"
+                            name={propsController.name}
+                            title={t('settings.fields.tips')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="notificationsMessage"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-message-notifications"
+                            name={propsController.name}
+                            title={t('settings.fields.messages')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+                </div>
+              </div>
+
+              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                <p className="widget-box-title">{t('settings.privacyTitle')}</p>
+
+                <div className="widget-box-content">
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="privacityDisplayProfileInSearchBar"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-display-searchbar"
+                            name={propsController.name}
+                            title={t('settings.fields.displayProfileInSearchBar')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="privacityDisplayChatActivity"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-display-chat-activity"
+                            name={propsController.name}
+                            title={t('settings.fields.displayChatActivity')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="privacityGoogleAuthenticator"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-google-authenticator"
+                            name={propsController.name}
+                            title={t('settings.fields.googleAuthenticator')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <div className="form-select">
+                        <label htmlFor="settings-howCanSendMessage">{t('settings.fields.whoCanSendMessage')}</label>
+                        <Controller
+                          control={control}
+                          name="privacityWhoCanSendMessage"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <select
+                              name={propsController.name}
+                              id="settings-howCanSendMessage"
+                              value={propsController.value}
+                              onChange={(val) => {
+                                propsController.onChange(val)
+                              }}
+                            >
+                              <option id="everyOne" value="everyOne">
+                                {t('settings.fields.sendEveryone')}
+                              </option>
+                              <option id="onlySuscribers" value="onlySuscribers">
+                                {t('settings.fields.sendOnlySubscribers')}
+                              </option>
+                            </select>
+                          )}
+                        />
+                      </div>
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow>{error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}</FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <ButtonWithLoader type="submit" className="medium primary" showLoader={formState.isSubmitting}>
+                        {t('accountSidebar.saveButtonText')}
+                      </ButtonWithLoader>
+                    </FormItem>
+                  </FormRow>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

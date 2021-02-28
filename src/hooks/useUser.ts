@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 import UserContext from '../context/UserContext'
@@ -10,6 +10,7 @@ import { UploadImageType, UserSettingsType, UserType } from '../types/UserType.d
 
 type UseUserReturn = {
   userId: string
+  user: UserType
   getUser: () => Promise<UserType>
   getSettings: (needsUpdate?: boolean) => Promise<UserSettingsType>
   updateUser: (userData: Partial<UserType>, toastOptions?: ToastPromiseOptions) => Promise<boolean>
@@ -26,6 +27,10 @@ const defaultToastOptions = {
 
 const useUser = (): UseUserReturn => {
   const { user, setUser, userId, settings, setSettings } = useContext(UserContext.context)
+
+  useEffect(() => {
+    getCurrentUser()
+  }, [user])
 
   const getCurrentUser = useCallback((): Promise<UserType> => {
     return new Promise<UserType>((resolve, reject) => {
@@ -123,6 +128,7 @@ const useUser = (): UseUserReturn => {
 
   return {
     userId,
+    user,
     getUser: getCurrentUser,
     getSettings,
     updateSettings,

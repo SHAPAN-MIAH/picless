@@ -19,7 +19,7 @@ const FloatyBar: FunctionComponent<{}> = () => {
               </svg>
             </a>
 
-            <a className="action-list-item" href="hub-profile-requests.html">
+            <a className="action-list-item" href="/user/home">
               <FontAwesomeIcon icon="bars" size="lg" color="#8b88ff " />
             </a>
 

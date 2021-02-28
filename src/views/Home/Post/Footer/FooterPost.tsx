@@ -1,10 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import toast from 'react-hot-toast'
 import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
 import SendATip from '../../../UserProfile/Profile/Header/SendATip/SendATip'
 
 const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
   const { user } = props
+
+  const handleCallback = (status: string, message?: string) => {
+    if (status === 'SUCCESS') {
+      toast.success(`Tip sended, ${user.userName} is grateful`)
+    } else if (status === 'ERROR') {
+      toast.error(message || 'Unknown error')
+    }
+  }
+
   return (
     <>
       <div className="post-options">
@@ -28,6 +38,8 @@ const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
 
         <Popup
           modal
+          contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+          position="center center"
           trigger={
             <div className="post-option">
               <div className="post-option-icon">
@@ -38,7 +50,7 @@ const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
             </div>
           }
         >
-          <SendATip user={user} />
+          {(close: any) => <SendATip user={user} callback={handleCallback} onClose={close} />}
         </Popup>
       </div>
     </>

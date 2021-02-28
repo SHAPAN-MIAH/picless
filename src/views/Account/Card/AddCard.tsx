@@ -108,244 +108,246 @@ const AddCard: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="grid grid-2-8">
-        <div className="grid-column"> </div>
-        <div className="account-hub-content">
-          <div className="section-header">
-            <div className="section-header-info">
-              <p className="section-pretitle">{t('wallet.title')}</p>
+      <div className="content-grid" style={{ maxWidth: '800px' }}>
+        <div className="grid grid-2-8">
+          <div className="grid-column"> </div>
+          <div className="account-hub-content">
+            <div className="section-header">
+              <div className="section-header-info">
+                <p className="section-pretitle">{t('wallet.title')}</p>
 
-              <h2 className="section-title">{t('wallet.addCardTitle')}</h2>
+                <h2 className="section-title">{t('wallet.addCardTitle')}</h2>
+              </div>
+
+              <div className="section-header-actions">
+                <a className="section-header-action" href="/account/wallet">
+                  {'< Back'}
+                </a>
+              </div>
             </div>
+            <div className="grid-column">
+              <div className="widget-box">
+                <div className="widget-box-content">
+                  <form className="form" onSubmit={handleSubmit(onSubmit)}>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <p className="widget-box-title">{t('wallet.addCard.billingInfoTitle')}</p>
+                      </FormItem>
+                      <FormItem>
+                        <p className="widget-box-title">{t('wallet.addCard.cardDetailsTitle')}</p>
+                      </FormItem>
+                    </FormRow>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          as={TextInput}
+                          type="text"
+                          name="street"
+                          defaultValue=""
+                          placeholder={t('wallet.addCard.streetField')}
+                          classNameFormInput="small active"
+                          required
+                          errorMessage={errors.street?.message}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          as={TextInput}
+                          type="text"
+                          name="email"
+                          defaultValue=""
+                          placeholder={t('wallet.addCard.emailField')}
+                          classNameFormInput="small active"
+                          required
+                          errorMessage={errors.email?.message}
+                        />
+                      </FormItem>
+                    </FormRow>
 
-            <div className="section-header-actions">
-              <a className="section-header-action" href="/account/wallet">
-                {'< Back'}
-              </a>
-            </div>
-          </div>
-          <div className="grid-column">
-            <div className="widget-box">
-              <div className="widget-box-content">
-                <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <p className="widget-box-title">{t('wallet.addCard.billingInfoTitle')}</p>
-                    </FormItem>
-                    <FormItem>
-                      <p className="widget-box-title">{t('wallet.addCard.cardDetailsTitle')}</p>
-                    </FormItem>
-                  </FormRow>
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="street"
-                        defaultValue=""
-                        placeholder={t('wallet.addCard.streetField')}
-                        classNameFormInput="small active"
-                        required
-                        errorMessage={errors.street?.message}
-                      />
-                    </FormItem>
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="email"
-                        defaultValue=""
-                        placeholder={t('wallet.addCard.emailField')}
-                        classNameFormInput="small active"
-                        required
-                        errorMessage={errors.email?.message}
-                      />
-                    </FormItem>
-                  </FormRow>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          as={TextInput}
+                          type="text"
+                          name="city"
+                          defaultValue=""
+                          placeholder={t('wallet.addCard.cityField')}
+                          classNameFormInput="small active"
+                          required
+                          errorMessage={errors.city?.message}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          as={TextInput}
+                          type="text"
+                          name="holderName"
+                          defaultValue=""
+                          placeholder={t('wallet.addCard.nameCardField')}
+                          classNameFormInput="small active"
+                          required
+                          errorMessage={errors.holderName?.message}
+                        />
+                      </FormItem>
+                    </FormRow>
 
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="city"
-                        defaultValue=""
-                        placeholder={t('wallet.addCard.cityField')}
-                        classNameFormInput="small active"
-                        required
-                        errorMessage={errors.city?.message}
-                      />
-                    </FormItem>
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="holderName"
-                        defaultValue=""
-                        placeholder={t('wallet.addCard.nameCardField')}
-                        classNameFormInput="small active"
-                        required
-                        errorMessage={errors.holderName?.message}
-                      />
-                    </FormItem>
-                  </FormRow>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          as={TextInput}
+                          type="text"
+                          name="state"
+                          defaultValue=""
+                          placeholder={t('wallet.addCard.stateProvinceField')}
+                          classNameFormInput="small active"
+                          required
+                          errorMessage={errors.state?.message}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          name="cardNumber"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <InputIconCardProvider
+                              type="text"
+                              ref={propsController.ref}
+                              classNameFormInput="small"
+                              name={propsController.name}
+                              placeholder={t('wallet.addCard.cardNumberField')}
+                              value={propsController.value}
+                              required
+                              id="card-number"
+                              onChange={(e) => {
+                                propsController.onChange(e.target.value)
+                              }}
+                            />
+                          )}
+                        />
+                      </FormItem>
+                    </FormRow>
 
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="state"
-                        defaultValue=""
-                        placeholder={t('wallet.addCard.stateProvinceField')}
-                        classNameFormInput="small active"
-                        required
-                        errorMessage={errors.state?.message}
-                      />
-                    </FormItem>
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        name="cardNumber"
-                        defaultValue=""
-                        render={(propsController) => (
-                          <InputIconCardProvider
-                            type="text"
-                            ref={propsController.ref}
-                            classNameFormInput="small"
-                            name={propsController.name}
-                            placeholder={t('wallet.addCard.cardNumberField')}
-                            value={propsController.value}
-                            required
-                            id="card-number"
-                            onChange={(e) => {
-                              propsController.onChange(e.target.value)
-                            }}
-                          />
-                        )}
-                      />
-                    </FormItem>
-                  </FormRow>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          as={TextInput}
+                          type="text"
+                          name="zipCode"
+                          defaultValue=""
+                          placeholder={t('wallet.addCard.zipPostalCodeField')}
+                          classNameFormInput="small active"
+                          required
+                          errorMessage={errors.zipCode?.message}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <FormRow classNameRow="split">
+                          <FormItem>
+                            <Controller
+                              control={control}
+                              as={TextInput}
+                              type="text"
+                              name="expMonth"
+                              defaultValue=""
+                              minLength={2}
+                              maxLength={2}
+                              placeholder={t('wallet.addCard.expirationMonthField')}
+                              classNameFormInput="small active"
+                              required
+                              errorMessage={errors.expMonth?.message}
+                            />
+                          </FormItem>
+                          <FormItem>
+                            <Controller
+                              control={control}
+                              as={TextInput}
+                              type="text"
+                              name="expYear"
+                              defaultValue=""
+                              minLength={4}
+                              maxLength={4}
+                              placeholder={t('wallet.addCard.expirationYearField')}
+                              classNameFormInput="small active"
+                              required
+                              errorMessage={errors.expYear?.message}
+                            />
+                          </FormItem>
+                          <FormItem>
+                            <Controller
+                              control={control}
+                              as={TextInput}
+                              type="password"
+                              name="ccv"
+                              defaultValue=""
+                              minLength={3}
+                              maxLength={4}
+                              placeholder={t('wallet.addCard.ccvField')}
+                              classNameFormInput="small active"
+                              required
+                              errorMessage={errors.ccv?.message}
+                            />
+                          </FormItem>
+                        </FormRow>
+                      </FormItem>
+                    </FormRow>
 
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="zipCode"
-                        defaultValue=""
-                        placeholder={t('wallet.addCard.zipPostalCodeField')}
-                        classNameFormInput="small active"
-                        required
-                        errorMessage={errors.zipCode?.message}
-                      />
-                    </FormItem>
-                    <FormItem>
-                      <FormRow classNameRow="split">
-                        <FormItem>
-                          <Controller
-                            control={control}
-                            as={TextInput}
-                            type="text"
-                            name="expMonth"
-                            defaultValue=""
-                            minLength={2}
-                            maxLength={2}
-                            placeholder={t('wallet.addCard.expirationMonthField')}
-                            classNameFormInput="small active"
-                            required
-                            errorMessage={errors.expMonth?.message}
-                          />
-                        </FormItem>
-                        <FormItem>
-                          <Controller
-                            control={control}
-                            as={TextInput}
-                            type="text"
-                            name="expYear"
-                            defaultValue=""
-                            minLength={4}
-                            maxLength={4}
-                            placeholder={t('wallet.addCard.expirationYearField')}
-                            classNameFormInput="small active"
-                            required
-                            errorMessage={errors.expYear?.message}
-                          />
-                        </FormItem>
-                        <FormItem>
-                          <Controller
-                            control={control}
-                            as={TextInput}
-                            type="password"
-                            name="ccv"
-                            defaultValue=""
-                            minLength={3}
-                            maxLength={4}
-                            placeholder={t('wallet.addCard.ccvField')}
-                            classNameFormInput="small active"
-                            required
-                            errorMessage={errors.ccv?.message}
-                          />
-                        </FormItem>
-                      </FormRow>
-                    </FormItem>
-                  </FormRow>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <Controller
+                          control={control}
+                          name="country"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <SelectCountry
+                              id="country-code"
+                              name={propsController.name}
+                              placeholder={t('profileInfo.countryField')}
+                              value={propsController.value || ''}
+                              onChange={(val: any) => {
+                                propsController.onChange(val.target.value)
+                              }}
+                            />
+                          )}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <div className="checkbox-wrap selected">
+                          <input type="checkbox" id="payment-method-payoneer" name="payment_method" />
 
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <Controller
-                        control={control}
-                        name="country"
-                        defaultValue=""
-                        render={(propsController) => (
-                          <SelectCountry
-                            id="country-code"
-                            name={propsController.name}
-                            placeholder={t('profileInfo.countryField')}
-                            value={propsController.value || ''}
-                            onChange={(val: any) => {
-                              propsController.onChange(val.target.value)
-                            }}
-                          />
-                        )}
-                      />
-                    </FormItem>
-                    <FormItem>
-                      <div className="checkbox-wrap selected">
-                        <input type="checkbox" id="payment-method-payoneer" name="payment_method" />
+                          <div className="checkbox-box round" />
 
-                        <div className="checkbox-box round" />
+                          <label className="" htmlFor="payment-method-payoneer">
+                            <span style={{ color: 'red' }}>*</span> Tick here to confirm that you are at least 18 years old
+                            and the age of majority in your place of residence
+                          </label>
 
-                        <label className="" htmlFor="payment-method-payoneer">
-                          <span style={{ color: 'red' }}>*</span> Tick here to confirm that you are at least 18 years old and
-                          the age of majority in your place of residence
-                        </label>
-
-                        <div className="checkbox-info accordion-content-linked" style={{ display: 'none' }}>
-                          <p className="checkbox-info-text"> </p>
+                          <div className="checkbox-info accordion-content-linked" style={{ display: 'none' }}>
+                            <p className="checkbox-info-text"> </p>
+                          </div>
                         </div>
-                      </div>
-                    </FormItem>
-                  </FormRow>
+                      </FormItem>
+                    </FormRow>
 
-                  <FormRow>
-                    {errorMessage && <Alert alertType="DANGER" message={t(errorMessage)} style={{ width: '100%' }} />}
-                  </FormRow>
+                    <FormRow>
+                      {errorMessage && <Alert alertType="DANGER" message={t(errorMessage)} style={{ width: '100%' }} />}
+                    </FormRow>
 
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
-                        {t('wallet.addCard.addCardButton')}
-                      </ButtonWithLoader>
-                    </FormItem>
-                  </FormRow>
-                </form>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
+                          {t('wallet.addCard.addCardButton')}
+                        </ButtonWithLoader>
+                      </FormItem>
+                    </FormRow>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

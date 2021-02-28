@@ -132,28 +132,29 @@ const Messages: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="grid fixed-grid">
-        <div className="account-hub-content">
-          <div className="section-header">
-            <div className="section-header-info">
-              <p className="section-pretitle">My Profile</p>
+      <div className="content-grid">
+        <div className="grid fixed-grid">
+          <div className="account-hub-content">
+            <div className="section-header">
+              <div className="section-header-info">
+                <p className="section-pretitle">My Profile</p>
 
-              <h2 className="section-title">Messages</h2>
-            </div>
-          </div>
-
-          <div className="chat-widget-wrap">
-            <div className="chat-widget static">
-              <div className="chat-widget-messages">
-                {listOfUser &&
-                  listOfUser.map((data: UserStatusMessagesType) => {
-                    const isActive = userSelected?.userId === data.userId || false
-
-                    return <UserStatus key={data.userId} statusData={data} active={isActive} onSelected={showUserChat} />
-                  })}
+                <h2 className="section-title">Messages</h2>
               </div>
+            </div>
 
-              {/* <form className="chat-widget-form" style={{ marginTop: '31px' }}>
+            <div className="chat-widget-wrap">
+              <div className="chat-widget static">
+                <div className="chat-widget-messages">
+                  {listOfUser &&
+                    listOfUser.map((data: UserStatusMessagesType) => {
+                      const isActive = userSelected?.userId === data.userId || false
+
+                      return <UserStatus key={data.userId} statusData={data} active={isActive} onSelected={showUserChat} />
+                    })}
+                </div>
+
+                {/* <form className="chat-widget-form" style={{ marginTop: '31px' }}>
                     <div className="interactive-input small">
                       <input
                         type="text"
@@ -176,16 +177,17 @@ const Messages: FunctionComponent<{}> = () => {
                       </div>
                     </div>
                   </form> */}
-            </div>
+              </div>
 
-            <div className="chat-widget" ref={fieldRef}>
-              {!!userSelected && <Conversation key={userSelected.userId} sendMessage={sendMessage} />}
+              <div className="chat-widget" ref={fieldRef}>
+                {!!userSelected && <Conversation key={userSelected.userId} sendMessage={sendMessage} />}
 
-              {!userSelected && (
-                <div className="chat-widget-header">
-                  <h2>No user Selected</h2>
-                </div>
-              )}
+                {!userSelected && (
+                  <div className="chat-widget-header">
+                    <h2>No user Selected</h2>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

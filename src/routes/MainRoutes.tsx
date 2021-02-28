@@ -62,13 +62,14 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
               <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
 
+              <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
+
               <ProtectedRoute
                 {...routerProps}
                 exact
                 path={['/user/:username', '/user/:username/', '/user/:username/:tab', '/user/']}
                 component={UserProfile}
               />
-              <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
               <ProtectedRoute {...routerProps} exact path="/support/faq" component={Faq} />

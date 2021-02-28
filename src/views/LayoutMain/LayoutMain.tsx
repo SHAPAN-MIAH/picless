@@ -19,9 +19,8 @@ interface LayoutMainProps {
 }
 
 const ChildrenContainer = styled.div`
-  ${isMobile ? '' : 'padding-top: 80px;'}
+  ${isMobile ? '' : 'padding-top: 100px;'}
   ${isMobile ? '' : 'min-height: 100vh !important'};
-  max-width: 800px;
 `
 
 const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
@@ -56,7 +55,7 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
         <Header />
         <FloatyBar />
 
-        <ChildrenContainer className="content-grid">{children}</ChildrenContainer>
+        <ChildrenContainer>{children}</ChildrenContainer>
       </ApplicationContextProvider>
     </>
   )

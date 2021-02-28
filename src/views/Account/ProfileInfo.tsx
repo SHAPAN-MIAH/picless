@@ -92,154 +92,157 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   }
 
   return (
-    <div className="grid grid-2-7-2">
-      <div className="account-hub-content">
-        <div className="section-header">
-          <div className="section-header-info">
-            <p className="section-pretitle">{t('profileInfo.myProfileTitle')}</p>
+    <div className="content-grid" style={{ maxWidth: '800px' }}>
+      <div className="grid grid-2-7-2">
+        <div className="account-hub-content">
+          <div className="section-header">
+            <div className="section-header-info">
+              <p className="section-pretitle">{t('profileInfo.myProfileTitle')}</p>
 
-            <h2 className="section-title">{t('profileInfo.profileInfo')}</h2>
+              <h2 className="section-title">{t('profileInfo.profileInfo')}</h2>
+            </div>
           </div>
-        </div>
 
-        <div className="grid-column">
-          <AccountHubMain />
+          <div className="grid-column">
+            <AccountHubMain />
 
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="widget-box">
-              <p className="widget-box-title">{t('profileInfo.aboutYourProfile')}</p>
+            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+              <div className="widget-box">
+                <p className="widget-box-title">{t('profileInfo.aboutYourProfile')}</p>
 
-              <div className="widget-box-content">
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      as={TextInput}
-                      type="text"
-                      name="userName"
-                      defaultValue=""
-                      required
-                      classNameFormInput="small"
-                      placeholder={t('profileInfo.profileNameField')}
-                      errorMessage={errors.userName?.message}
-                    />
-                  </FormItem>
-                  <FormItem>
-                    <div className="form-input-decorated">
+                <div className="widget-box-content">
+                  <FormRow classNameRow="split">
+                    <FormItem>
                       <Controller
                         control={control}
-                        name="birthDate"
+                        as={TextInput}
+                        type="text"
+                        name="userName"
+                        defaultValue=""
+                        required
+                        disabled
+                        classNameFormInput="small"
+                        placeholder={t('profileInfo.profileNameField')}
+                        errorMessage={errors.userName?.message}
+                      />
+                    </FormItem>
+                    <FormItem>
+                      <div className="form-input-decorated">
+                        <Controller
+                          control={control}
+                          name="birthDate"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <DatePickerForm
+                              name={propsController.name}
+                              ref={propsController.ref}
+                              customInputRef="birthdayRef"
+                              classNameFormInput="small"
+                              placeholderText={t('profileInfo.birthdayField')}
+                              selected={propsController.value}
+                              onChange={(date: any) => propsController.onChange(date)}
+                              iconName="events"
+                            />
+                          )}
+                        />
+                      </div>
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        as={TextArea}
+                        name="profileDescription"
+                        defaultValue=""
+                        classNameFormInput="small full"
+                        placeholder={t('profileInfo.writeDescriptionField')}
+                        errorMessage={errors.profileDescription?.message}
+                      />
+                    </FormItem>
+
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="countryCode"
                         defaultValue=""
                         render={(propsController) => (
-                          <DatePickerForm
+                          <SelectCountry
+                            id="country-code"
                             name={propsController.name}
-                            ref={propsController.ref}
-                            customInputRef="birthdayRef"
-                            classNameFormInput="small"
-                            placeholderText={t('profileInfo.birthdayField')}
-                            selected={propsController.value}
-                            onChange={(date: any) => propsController.onChange(date)}
-                            iconName="events"
+                            placeholder={t('profileInfo.countryField')}
+                            value={propsController.value || ''}
+                            onChange={(val: any) => {
+                              propsController.onChange(val.target.value)
+                            }}
                           />
                         )}
                       />
-                    </div>
-                  </FormItem>
-                </FormRow>
 
-                <FormRow classNameRow="split">
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      as={TextArea}
-                      name="profileDescription"
-                      defaultValue=""
-                      classNameFormInput="small full"
-                      placeholder={t('profileInfo.writeDescriptionField')}
-                      errorMessage={errors.profileDescription?.message}
-                    />
-                  </FormItem>
+                      <Controller
+                        control={control}
+                        type="text"
+                        as={TextInput}
+                        name="cityName"
+                        defaultValue=""
+                        classNameFormInput="small"
+                        placeholder={t('profileInfo.cityField')}
+                        errorMessage={errors.cityName?.message}
+                      />
+                    </FormItem>
+                  </FormRow>
 
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="countryCode"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <SelectCountry
-                          id="country-code"
-                          name={propsController.name}
-                          placeholder={t('profileInfo.countryField')}
-                          value={propsController.value || ''}
-                          onChange={(val: any) => {
-                            propsController.onChange(val.target.value)
-                          }}
-                        />
-                      )}
-                    />
+                  <FormRow>
+                    <FormItem> </FormItem>
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="occupationId"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <SelectForm
+                            id="occupation"
+                            name={propsController.name}
+                            placeholder={t('accountInfo.occupationField')}
+                            options={professionList}
+                            value={propsController.value || ''}
+                            onChange={(val) => {
+                              propsController.onChange(val)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
 
-                    <Controller
-                      control={control}
-                      type="text"
-                      as={TextInput}
-                      name="cityName"
-                      defaultValue=""
-                      classNameFormInput="small"
-                      placeholder={t('profileInfo.cityField')}
-                      errorMessage={errors.cityName?.message}
-                    />
-                  </FormItem>
-                </FormRow>
+                  <FormRow>
+                    <FormItem>
+                      <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
+                        {t('accountSidebar.saveButtonText')}
+                      </ButtonWithLoader>
+                    </FormItem>
+                  </FormRow>
+                </div>
+              </div>
+            </form>
 
-                <FormRow>
-                  <FormItem> </FormItem>
-                  <FormItem>
-                    <Controller
-                      control={control}
-                      name="occupationId"
-                      defaultValue=""
-                      render={(propsController) => (
-                        <SelectForm
-                          id="occupation"
-                          name={propsController.name}
-                          placeholder={t('accountInfo.occupationField')}
-                          options={professionList}
-                          value={propsController.value || ''}
-                          onChange={(val) => {
-                            propsController.onChange(val)
-                          }}
-                        />
-                      )}
-                    />
-                  </FormItem>
-                </FormRow>
+            <div className="widget-box" style={{ marginTop: '20px' }}>
+              <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
 
-                <FormRow>
-                  <FormItem>
-                    <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
-                      {t('accountSidebar.saveButtonText')}
-                    </ButtonWithLoader>
-                  </FormItem>
-                </FormRow>
+              <div className="widget-box-content">
+                {/* Interests */}
+                <InterestList />
               </div>
             </div>
-          </form>
 
-          <div className="widget-box" style={{ marginTop: '20px' }}>
-            <p className="widget-box-title">{t('profileInfo.interestTitle')}</p>
+            <div className="widget-box" style={{ marginTop: '20px' }}>
+              <p className="widget-box-title">{t('profileInfo.timelineTitle')}</p>
 
-            <div className="widget-box-content">
-              {/* Interests */}
-              <InterestList />
-            </div>
-          </div>
-
-          <div className="widget-box" style={{ marginTop: '20px' }}>
-            <p className="widget-box-title">{t('profileInfo.timelineTitle')}</p>
-
-            <div className="widget-box-content">
-              {/* TimeLine */}
-              <TimeLineList />
+              <div className="widget-box-content">
+                {/* TimeLine */}
+                <TimeLineList />
+              </div>
             </div>
           </div>
         </div>

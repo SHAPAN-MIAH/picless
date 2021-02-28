@@ -4,21 +4,23 @@ import React, { FunctionComponent } from 'react'
 const Verification: FunctionComponent<{}> = () => {
   return (
     <>
-      <div className="grid grid-2-8-2">
-        <div className="account-hub-content">
-          <div className="section-header">
-            <div className="section-header-info">
-              <p className="section-pretitle">Verification</p>
+      <div className="content-grid" style={{ maxWidth: '800px' }}>
+        <div className="grid grid-2-8-2">
+          <div className="account-hub-content">
+            <div className="section-header">
+              <div className="section-header-info">
+                <p className="section-pretitle">Verification</p>
 
-              <h2 className="section-title">Add bank</h2>
+                <h2 className="section-title">Add bank</h2>
+              </div>
             </div>
-          </div>
-          <div className="grid-column">
-            <div className="widget-box">
-              <div className="widget-box-content">
-                <form className="form">
-                  <h1> Under Construction</h1>
-                </form>
+            <div className="grid-column">
+              <div className="widget-box">
+                <div className="widget-box-content">
+                  <form className="form">
+                    <h1> Under Construction</h1>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

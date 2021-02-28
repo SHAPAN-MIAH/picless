@@ -1,5 +1,10 @@
 import React, { FormEvent, FunctionComponent, useState } from 'react'
-import CurrencyInput from 'react-currency-input-field'
+import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import toast from 'react-hot-toast'
+
+import useUser from '../../../../../hooks/useUser'
 
 import UserService from '../../../../../services/UserService'
 
@@ -7,46 +12,66 @@ import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
 import TextInput from '../../../../../components/Common/TextInput'
 import FormRow from '../../../../../components/Common/Form/FormRow'
 import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
+import UserAvatar from '../../../../../components/UserAvatar'
 
 import { UserType, TipType } from '../../../../../types/UserType.d'
 
 import styles from './SendATip.module.css'
-import useUser from '../../../../../hooks/useUser'
+import TextArea from '../../../../../components/Common/TextArea'
 
-const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) => void }> = (props) => {
-  const { user, callback } = props
+type FormValues = {
+  amount: string
+  message: string
+}
+
+type SendATipProps = { user: UserType; callback?: (result: string, messages?: string) => void; onClose?: () => void }
+
+const SendATip: FunctionComponent<SendATipProps> = (props) => {
+  const { user, callback, onClose } = props
 
   const { userId } = useUser()
 
-  const [message, setMessage] = useState<string>('')
-  const [cash, setCash] = useState<number>(5.0)
+  // Validations Fields
+  const validationSchema = Yup.object().shape({
+    amount: Yup.number()
+      .integer('The amount should be whole number')
+      .min(4.9999, 'Minimum 5')
+      .required('Please enter an valid amount'),
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    message: Yup.string(),
+  })
+
+  const { control, handleSubmit, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const onSubmit = (formData: FormValues) => {
     const tip: TipType = {
       fromId: userId,
       toId: user.id?.toString() || '',
-      message,
-      cash,
+      message: formData.message,
+      cash: parseFloat(formData.amount),
     }
+    toast.loading('Waiting...')
 
-    UserService.sendATip(tip).then((data: { code: number; message: string }) => {
+    return UserService.sendATip(tip).then((data: { code: string; message: string }) => {
       switch (data.code) {
-        case 0:
+        case '0':
           if (callback) {
             callback('SUCCESS')
           }
-
-          alert('Tip Sended')
+          if (onClose) onClose()
           break
-        case 2:
+        case '2':
           if (callback) {
-            callback('ERROR')
+            callback('ERROR', data.message)
           }
-          alert(`Error: ${data.message}`)
+
+          if (onClose) onClose()
+
           break
         default:
-          alert(`Default: ${data.message}`)
+          if (onClose) onClose()
           break
       }
     })
@@ -56,13 +81,68 @@ const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) 
     <>
       <div className={styles.mainPopup}>
         <div className={styles.headerTip}>
+          <h6>Send tip top</h6>
+        </div>
+
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <FormRowItem>
+            <div className={styles.userInfoContainer}>
+              <div className={styles.userInfoImage}>
+                <UserAvatar size="SMALL" imageName={user.profilePicture} />
+              </div>
+              <div className={styles.userInfoName}>
+                <p className="user-status-title">
+                  <span className="bold">{user.fullName}</span>
+                </p>
+                <p className="user-status-text small">
+                  <a href={`/user/${user.userName}`}>@{user.userName}</a>
+                </p>
+              </div>
+            </div>
+          </FormRowItem>
+
+          <FormRowItem>
+            <Controller
+              control={control}
+              as={TextInput}
+              type="text"
+              name="amount"
+              defaultValue="5"
+              required
+              placeholder="Enter amount"
+              classNameFormInput="small active"
+              errorMessage={errors.amount?.message}
+            />{' '}
+          </FormRowItem>
+          <FormRowItem>
+            <Controller
+              control={control}
+              as={TextArea}
+              name="message"
+              defaultValue=""
+              classNameFormInput="small full"
+              placeholder="Write me something (Optional)"
+              errorMessage={errors.message?.message}
+            />
+          </FormRowItem>
+
+          <FormRow>
+            <ButtonWithLoader type="submit" className="button small secondary" showLoader={formState.isSubmitting}>
+              Send a tip!
+            </ButtonWithLoader>
+          </FormRow>
+        </form>
+      </div>
+
+      {/* <div className={styles.mainPopup}>
+        <div className={styles.headerTip}>
           <h4>Send a tip</h4>
         </div>
 
         <form className="form" onSubmit={handleSubmit}>
           <FormRowItem>
             <div className="form-input active">
-              <label htmlFor="input-example">Enter amount</label>
+              <label htmlFor="input-example">Enter amount {user.userName}</label>
               <CurrencyInput
                 id="input-tip"
                 name="input_tip"
@@ -72,15 +152,7 @@ const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) 
                 onChange={(value) => setCash(parseInt(value as string, 10))}
               />
             </div>
-            {/*             
-            <TextInput
-            type="text"
-            id="amount"
-            name="amount"
-            placeholder="Enter tip amount"
-              value={cash}
-              onChange={(e) => setCash(parseInt(e.target.value, 10))}
-            /> */}
+
           </FormRowItem>
 
           <FormRowItem>
@@ -100,7 +172,7 @@ const SendATip: FunctionComponent<{ user: UserType; callback?: (result: string) 
             </ButtonWithLoader>
           </FormRow>
         </form>
-      </div>
+      </div> */}
     </>
   )
 }

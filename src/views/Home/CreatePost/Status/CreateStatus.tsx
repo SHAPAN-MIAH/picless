@@ -9,22 +9,21 @@ import FormRow from '../../../../components/Common/Form/FormRow'
 import InputTags from '../../../../components/InputTags/InputTags'
 import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
 
-import { SourceType, CommonPostType, TagType } from '../../../../types/PostType.d'
+import { SourceType, CommonPostType } from '../../../../types/PostType.d'
 
 import styles from './CreateStatus.module.css'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+import useUser from '../../../../hooks/useUser'
 
 const CreateStatus: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  // type UploadSourcePostHandle = React.ElementRef<typeof UploadSourcePost>
-
-  // const fileUploadRef = useRef<UploadSourcePostHandle>(null)
+  const { user } = useUser()
 
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
-  const [showTags, setShowTags] = useState<boolean>(false)
-  const [showSchedule, setShowSchedule] = useState<boolean>(false)
+  // const [showTags, setShowTags] = useState<boolean>(false)
+  // const [showSchedule, setShowSchedule] = useState<boolean>(false)
 
   const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
 
@@ -33,7 +32,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
   const [imageList, setImageList] = useState<SourceType[]>()
   const [videoList, setVideoList] = useState<SourceType[]>()
 
-  const [tagsList, setTagsList] = useState<string[]>([])
+  // const [tagsList, setTagsList] = useState<string[]>([])
 
   let scheduleStartDate: Date | null
   let scheduleEndDate: Date | null
@@ -118,7 +117,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
                 <textarea
                   id="quick-post-text"
                   name="quick_post_text"
-                  placeholder={t('home.createPost.placeholderPostText')}
+                  placeholder={t('home.createPost.placeholderPostText', { fullName: user.userName })}
                   value={content || ''}
                   className={styles.quickPostText}
                   onChange={onChangeCreatePost}
@@ -136,24 +135,24 @@ const CreateStatus: FunctionComponent<{}> = () => {
           </FormRow>
 
           {/* TAGS VIEW */}
-          <div className={classNames(showTags ? styles.show : styles.hide)}>
+          {/* <div className={classNames(showTags ? styles.show : styles.hide)}>
             <InputTags
               maxTags={5}
               onChange={(list: string[]) => {
                 setTagsList(list)
               }}
             />
-          </div>
+          </div> */}
 
           {/* SCHEDULE VIEW */}
-          <div className={classNames(styles.scheduleContainer, showSchedule ? styles.show : styles.hide)}>
+          {/* <div className={classNames(styles.scheduleContainer, showSchedule ? styles.show : styles.hide)}>
             <ScheduleMessage
               onApplySchedule={(start, end) => {
                 scheduleStartDate = start
                 scheduleEndDate = end
               }}
             />
-          </div>
+          </div> */}
         </form>
       </div>
 

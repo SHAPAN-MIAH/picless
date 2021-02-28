@@ -117,11 +117,7 @@ const AboutTab: FunctionComponent<{}> = () => {
 
                         <p className="timeline-information-date">{`${event.yearSarted} - ${event.yearEnded}`}</p>
 
-                        <p className="timeline-information-text">
-                          Lead Costume Designer for the Amazzo Costumes agency. Im in charge of a ten person group,
-                          overseeing all the proyects and talking to potential clients. I also handle some face to face
-                          interviews for new candidates.
-                        </p>
+                        <p className="timeline-information-text">{event.description}</p>
                       </div>
                     )
                   })}

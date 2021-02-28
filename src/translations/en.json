@@ -95,7 +95,7 @@
   "home": {
     "createPost": {
       "title": "Create Post",
-      "placeholderPostText": "Post Text",
+      "placeholderPostText": "Hi {{fullName}}, share your post here...",
       "discardButton": "Discard Post",
       "postButton": "Post Now!",
       "uploadsources": {
