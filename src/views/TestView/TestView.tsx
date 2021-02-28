@@ -34,32 +34,30 @@ const TestView: FunctionComponent<{}> = () => {
   // }
   return (
     <>
-      <div className="content-grid">
-        <div className="grid grid-3-6-3 mobile-prefer-content">
-          <div className="grid-column">{'  '}</div>
-          <div className="grid-column">
-            <button type="button" onClick={handleSimpleToast}>
-              Simple Toast
-            </button>
+      <div className="grid grid-3-6-3 mobile-prefer-content">
+        <div className="grid-column">{'  '}</div>
+        <div className="grid-column">
+          <button type="button" onClick={handleSimpleToast}>
+            Simple Toast
+          </button>
 
-            <button type="button" onClick={handleSuccessToast}>
-              Success Toast
-            </button>
+          <button type="button" onClick={handleSuccessToast}>
+            Success Toast
+          </button>
 
-            <button type="button" onClick={handleErrorToast}>
-              Error Toast
-            </button>
+          <button type="button" onClick={handleErrorToast}>
+            Error Toast
+          </button>
 
-            <button type="button" onClick={handleLoadingToast}>
-              Loading Toast
-            </button>
+          <button type="button" onClick={handleLoadingToast}>
+            Loading Toast
+          </button>
 
-            <button type="button" onClick={handlePromiseToast}>
-              Promise Toast
-            </button>
-          </div>
-          <div className="grid-column">{'  '}</div>
+          <button type="button" onClick={handlePromiseToast}>
+            Promise Toast
+          </button>
         </div>
+        <div className="grid-column">{'  '}</div>
       </div>
     </>
   )

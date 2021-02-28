@@ -13,9 +13,15 @@ import { SourceType, CommonPostType, TagType } from '../../../../types/PostType.
 
 import styles from './CreateStatus.module.css'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
+import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 
 const CreateStatus: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
+  // type UploadSourcePostHandle = React.ElementRef<typeof UploadSourcePost>
+
+  // const fileUploadRef = useRef<UploadSourcePostHandle>(null)
+
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
   const [showTags, setShowTags] = useState<boolean>(false)
   const [showSchedule, setShowSchedule] = useState<boolean>(false)
@@ -23,6 +29,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
   const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
 
   const [content, setContent] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const [imageList, setImageList] = useState<SourceType[]>()
   const [videoList, setVideoList] = useState<SourceType[]>()
 
@@ -39,16 +46,21 @@ const CreateStatus: FunctionComponent<{}> = () => {
   }
 
   const onUploadedFile = (source: { images: SourceType[]; videos: SourceType[] }) => {
-    setImageList(source.images)
-    setVideoList(source.videos)
+    const imgs = imageList?.concat(source.images) || source.images
+    const vids = videoList?.concat(source.videos) || source.videos
+
+    setImageList(imgs)
+    setVideoList(vids)
   }
 
   const createPost = () => {
-    const tags = convertToTagType()
+    setLoading(true)
+    //    const tags = convertToTagType()
+
     const post: CommonPostType = {
       content,
       featuredPost: false,
-      tags,
+      tags: [],
       startDate: scheduleStartDate || '',
       endDate: scheduleEndDate || '',
       images: imageList,
@@ -56,29 +68,51 @@ const CreateStatus: FunctionComponent<{}> = () => {
     }
 
     PostService.createPost(post).then(() => {
+      setLoading(false)
+
       cleanCreatePost()
     })
   }
 
-  const convertToTagType = (): TagType[] => {
-    const tags: TagType[] = []
+  // const convertToTagType = (): TagType[] => {
+  //   const tags: TagType[] = []
 
-    tagsList.forEach((tag) => {
-      tags.push({ tagName: tag })
-    })
-    console.log(tags)
-    return tags
-  }
+  //   tagsList.forEach((tag) => {
+  //     tags.push({ tagName: tag })
+  //   })
+  //   return tags
+  // }
 
   const cleanCreatePost = () => {
     window.location.reload()
+  }
+
+  const onLoading = (status: boolean) => {
+    console.log(status)
+    setLoading(status)
+  }
+
+  const onRemoveImage = (name: string) => {
+    const updatedImgList = imageList?.filter((image) => image.name !== name)
+    const updatedVidList = videoList?.filter((video) => video.name !== name)
+
+    setImageList(updatedImgList)
+    setVideoList(updatedVidList)
   }
 
   return (
     <>
       <div className="quick-post-body">
         <form className="form" onSubmit={(e) => e.preventDefault()}>
-          <FormRow className={classNames(!showUploadPhotos ? styles.show : styles.hide)}>
+          {/* UPLOADPHOTO VIEW */}
+          <UploadSourcePost
+            className={classNames(styles.uploadPhotosContainer, showUploadPhotos ? styles.active : '')}
+            onUploadedFile={onUploadedFile}
+            onLoading={onLoading}
+            onRemove={onRemoveImage}
+          />
+
+          <FormRow>
             <FormItem>
               <div className="form-textarea">
                 <textarea
@@ -100,16 +134,6 @@ const CreateStatus: FunctionComponent<{}> = () => {
               </div>
             </FormItem>
           </FormRow>
-
-          {/* UPLOADPHOTO VIEW */}
-
-          <UploadSourcePost
-            className={classNames(showUploadPhotos ? styles.show : styles.hide)}
-            onUploadedFile={onUploadedFile}
-            onClose={() => {
-              setShowUploadPhotos(false)
-            }}
-          />
 
           {/* TAGS VIEW */}
           <div className={classNames(showTags ? styles.show : styles.hide)}>
@@ -146,7 +170,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
             </svg>
           </div>
 
-          <div
+          {/* <div
             className="quick-post-footer-action"
             onClick={() => {
               setShowTags(!showTags)
@@ -156,9 +180,9 @@ const CreateStatus: FunctionComponent<{}> = () => {
             <svg className="quick-post-footer-action-icon icon-tags">
               <use xlinkHref="#svg-tags" />
             </svg>
-          </div>
+          </div> */}
 
-          <div
+          {/* <div
             className="quick-post-footer-action"
             onClick={() => {
               setShowSchedule(!showSchedule)
@@ -168,7 +192,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
             <svg className="menu-item-link-icon icon-events">
               <use xlinkHref="#svg-events" />
             </svg>
-          </div>
+          </div> */}
         </div>
 
         <div className="quick-post-footer-actions">
@@ -176,9 +200,9 @@ const CreateStatus: FunctionComponent<{}> = () => {
             {t('home.createPost.discardButton')}
           </button>
 
-          <button type="button" className="button small secondary" onClick={createPost}>
+          <ButtonWithLoader type="button" className="button small secondary" onClick={createPost} showLoader={loading}>
             {t('home.createPost.postButton')}
-          </button>
+          </ButtonWithLoader>
         </div>
       </div>
     </>

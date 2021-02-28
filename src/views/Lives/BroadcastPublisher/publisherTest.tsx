@@ -99,23 +99,21 @@ const PublisherTest: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid">
-        <div className="grid grid-3-9">
-          <div className="account-hub-content">
-            <div className="grid-column"> </div>
-            <div className="grid-column">
-              <div className="widget-box">
-                <p className="widget-box-title">Publisher</p>
-                <button type="button" className="btn btn-primary" onClick={startCamera}>
-                  start camera
-                </button>{' '}
-                <button type="button" className="btn btn-danger" onClick={stopBroadcasting}>
-                  Stop broadcast
-                </button>
-              </div>
+      <div className="grid grid-3-9">
+        <div className="account-hub-content">
+          <div className="grid-column"> </div>
+          <div className="grid-column">
+            <div className="widget-box">
+              <p className="widget-box-title">Publisher</p>
+              <button type="button" className="btn btn-primary" onClick={startCamera}>
+                start camera
+              </button>{' '}
+              <button type="button" className="btn btn-danger" onClick={stopBroadcasting}>
+                Stop broadcast
+              </button>
             </div>
-            <div className="grid-column"> </div>
           </div>
+          <div className="grid-column"> </div>
         </div>
       </div>
     </>

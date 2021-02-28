@@ -40,31 +40,29 @@ const PaymentCallback: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid">
-        <div className="grid grid-2-8-2">
-          <div className="account-hub-content">
-            <div className="section-header">
-              <div className="section-header-info">
-                <h2 className="section-title">Payment Callback</h2>
-              </div>
+      <div className="grid grid-2-8-2">
+        <div className="account-hub-content">
+          <div className="section-header">
+            <div className="section-header-info">
+              <h2 className="section-title">Payment Callback</h2>
             </div>
-            <div className="grid-column">
-              <div className="widget-box">
-                <div className="widget-box-content">
-                  <form className="form">
-                    <h1 style={{ marginBottom: '50px' }}> Under Construction</h1>
+          </div>
+          <div className="grid-column">
+            <div className="widget-box">
+              <div className="widget-box-content">
+                <form className="form">
+                  <h1 style={{ marginBottom: '50px' }}> Under Construction</h1>
 
-                    <h2>Type </h2>
-                    <div style={{ marginBottom: '50px' }}>{callbackType}</div>
-                    <h2>Payment Intent</h2>
-                    <div style={{ marginBottom: '50px' }}>{paymentIntent}</div>
+                  <h2>Type </h2>
+                  <div style={{ marginBottom: '50px' }}>{callbackType}</div>
+                  <h2>Payment Intent</h2>
+                  <div style={{ marginBottom: '50px' }}>{paymentIntent}</div>
 
-                    {loading && <h1>Loading ...</h1>}
+                  {loading && <h1>Loading ...</h1>}
 
-                    {paymentSuccess && <h1 style={{ color: 'green' }}> SUCCESS </h1>}
-                    {paymentError && <h1 style={{ color: 'red' }}> ERROR </h1>}
-                  </form>
-                </div>
+                  {paymentSuccess && <h1 style={{ color: 'green' }}> SUCCESS </h1>}
+                  {paymentError && <h1 style={{ color: 'red' }}> ERROR </h1>}
+                </form>
               </div>
             </div>
           </div>

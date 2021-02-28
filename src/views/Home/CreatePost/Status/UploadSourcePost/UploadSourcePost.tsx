@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useImperativeHandle, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
 import Loader from 'react-loader-spinner'
+import styled from 'styled-components'
 
 import classNames from 'classnames'
 import PostService from '../../../../../services/PostService'
@@ -14,32 +15,35 @@ import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 
 import styles from './UploadSourcePost.module.css'
 import { SourceType, ResourceType } from '../../../../../types/PostType.d'
+import PhotoPreview from './PhotoPreview/PhotoPreview'
+
+import * as Utils from '../../../../../utils/Functions'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
-  onClose: any
   onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void
+  onLoading: (status: boolean) => void
+  onRemove: (name: string) => void
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
 
 interface FilePreviewType extends File {
   url?: string
+  internalName?: string
   status?: fileUploadStatus
 }
 
 const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
-  const { t } = useTranslation()
-  const { onClose, onUploadedFile, className } = props
+  const { onUploadedFile, onRemove, onLoading, className } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
-  // const [selectedFilePreview, setSelectedFilePreview] = useState<filePreview[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  // const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
-
+    onLoading(true)
     if (target.files && target.files.length <= qtyResources) {
       const files: FilePreviewType[] = selectedFile.concat([])
       let containsInvalidFormat = false
@@ -48,6 +52,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
         const file: FilePreviewType = (target.files as FileList)[i]
 
         if (/^image/.test(file.type) || /^video/.test(file.type)) {
+          file.internalName = `${Utils.simpleKeyGenerator(5)}_${file.name}`
           file.url = URL.createObjectURL((target.files as FileList)[i])
           file.status = 'PENDING'
 
@@ -60,27 +65,31 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
       if (containsInvalidFormat) {
         alert('There are invalid format, please select images or videos')
+        onLoading(false)
       } else {
         setSelectedFile(files)
+        fileUploadHandler(files)
       }
-    } else if (target.files && target.files.length > qtyResources) alert('Max 8 photos or videos')
-    else {
+    } else if (target.files && target.files.length > qtyResources) {
+      onLoading(false)
+
+      alert('Max 8 photos or videos')
+    } else {
       console.error('UNEXPECTED ERROR')
+      onLoading(false)
     }
   }
 
-  const fileUploadHandler = () => {
-    setIsLoading(true)
-
+  const fileUploadHandler = (files: FilePreviewType[]) => {
     const formDataList: FormData[] = []
     const imageList: SourceType[] = []
     const videoList: SourceType[] = []
 
-    const largeFiles = selectedFile.length
-    let previewList: FilePreviewType[] = selectedFile
+    const largeFiles = files.length
+    let previewList: FilePreviewType[] = files
 
-    if (selectedFile) {
-      selectedFile.forEach((file, index) => {
+    if (files) {
+      files.forEach((file, index) => {
         if (file.status === 'PENDING') {
           let fileType: ResourceType
           const formData = new FormData()
@@ -103,14 +112,17 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               previewList = updateResourcePreviewStatus(previewList, file, 'FINISHED')
               setSelectedFile(previewList)
 
+              const sourceName = file.internalName || file.name
+              const source = { name: sourceName, pathName: data.path }
+
               if (imageList && fileType === 'IMAGE') {
-                imageList.push({ name: file.name, pathName: data.path })
+                imageList.push(source)
               } else if (videoList) {
-                videoList.push({ name: file.name, pathName: data.path })
+                videoList.push(source)
               }
 
               if (largeFiles === index + 1) {
-                setIsLoading(false)
+                onLoading(false)
                 onUploadedFile({ images: imageList, videos: videoList })
               }
             })
@@ -120,11 +132,11 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               setSelectedFile(previewList)
 
               if (largeFiles === index + 1) {
-                setIsLoading(false)
+                onLoading(false)
               }
             })
         } else {
-          setIsLoading(false)
+          onLoading(false)
         }
       })
 
@@ -133,14 +145,15 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
   }
 
   const removeImage = (imageName: string) => {
-    const selectedFilesTemp = selectedFile.filter((file) => file.name !== imageName)
+    const selectedFilesTemp = selectedFile.filter((file) => file.internalName !== imageName)
 
     setSelectedFile(selectedFilesTemp)
+    onRemove(imageName)
   }
 
   const updateResourcePreviewStatus = (list: FilePreviewType[], file: FilePreviewType, status: fileUploadStatus) => {
     return list.map((item) => {
-      if (item.name === file.name) {
+      if (item.name === file.name && item.status !== 'FINISHED') {
         item.status = status
       }
 
@@ -152,128 +165,48 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
   return (
     <>
-      <FormRow className={classNames(styles.container, className)}>
+      <FormRow className={classNames(className)}>
         <FormItem>
-          <div className={styles.subContainer} style={{ margin: '28px' }}>
-            <div className={styles.header}>
-              <h6>{t('home.createPost.uploadsources.title')}</h6>
-              <a href="#/" style={{ color: '#adafca' }} onClick={() => onClose(false)}>
-                <FontAwesomeIcon icon="times" />
-              </a>
-            </div>
-            <div className={styles.previewContainer}>
-              {/* SELECT FILES */}
+          <div className={styles.main}>
+            <div className={styles.container}>
               <div
-                className={styles.addSource}
+                className={classNames(styles.itemBase, styles.addSource)}
                 onClick={() => {
                   if (fileInput) fileInput.click()
                 }}
               >
-                <FontAwesomeIcon icon="plus" />
+                <div style={{ textAlign: 'center', color: 'white' }}>
+                  <FontAwesomeIcon icon="plus" color="white" />
+                </div>
               </div>
 
               {/* IMAGES SELECTED AND UPLOADED */}
-              {selectedFile.map((item) => {
+              {selectedFile.map((item, index) => {
                 // PREVIEW
                 if (/^image/.test(item.type) || /^video/.test(item.type)) {
-                  let imgUrl = item.url
+                  let imgSrc = item.url || ''
                   if (/^video/.test(item.type)) {
-                    imgUrl = `${process.env.PUBLIC_URL}/assets/img/defaults/video_preview.jpg`
+                    imgSrc = `${process.env.PUBLIC_URL}/assets/img/defaults/video_preview.jpg`
                   }
 
-                  return (
-                    <div
-                      title={item.name}
-                      className={classNames(styles.previewSource, 'fixed-height')}
-                      key={`${item.lastModified}${item.name}`}
-                      style={{
-                        background: `url(${imgUrl}) center center / cover no-repeat`,
-                      }}
-                    >
-                      {item.status === 'PENDING' && (
-                        <div
-                          style={{
-                            textAlign: 'right',
-                            color: 'white',
-                            width: '20px',
-                            height: '20px',
-                            backgroundColor: '#23d2e2',
-                          }}
-                          onClick={() => {
-                            removeImage(item.name)
-                          }}
-                        >
-                          <FontAwesomeIcon icon="times" />
-                        </div>
-                      )}
+                  const key = `${item.lastModified}${item.name}${index}`
 
-                      {item.status === 'UPLOADING' && (
-                        <div className={classNames(styles.previewStatusBase, styles.previewStatusUploading)}>
-                          <div style={{ position: 'absolute' }}>
-                            <Loader type="TailSpin" color="#615dfa" height={20} width={20} visible />
-                          </div>
-                        </div>
-                      )}
-
-                      {item.status === 'FINISHED' && (
-                        <>
-                          <div className={classNames(styles.previewStatusBase, styles.previewStatusSuccess)}>
-                            <div style={{ textAlign: 'center', fontSize: '30px', paddingTop: '15px', color: 'white' }}>
-                              <FontAwesomeIcon icon="check" />
-                            </div>
-                          </div>
-                        </>
-                      )}
-
-                      {item.status === 'ERROR' && (
-                        <div className={classNames(styles.previewStatusBase, styles.previewStatusError)} />
-                      )}
-                    </div>
-                  )
+                  return <PhotoPreview key={key} item={item} imgSrc={imgSrc} onRemoveImage={removeImage} />
                 }
 
                 return ''
               })}
+
+              <input
+                style={{ display: 'none' }}
+                type="file"
+                multiple
+                onChange={fileSelectedHandler}
+                ref={(input) => {
+                  fileInput = input
+                }}
+              />
             </div>
-            <ButtonWithLoader
-              type="button"
-              className="button small primary"
-              showLoader={isLoading}
-              onClick={fileUploadHandler}
-              disabled={selectedFile.length < 1}
-            >
-              {t('Upload')}
-            </ButtonWithLoader>
-
-            {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <div style={{ marginLeft: '28px', marginBottom: '10px' }}>
-                    <div
-                      style={{
-                        width: '23px',
-                        height: '23px',
-                      }}
-                    >
-                      <CircularProgressbar
-                        value={percentage}
-                        strokeWidth={50}
-                        styles={buildStyles({
-                          strokeLinecap: 'butt',
-                          pathColor: '#615dfa',
-                        })}
-                      />
-                    </div>
-                  </div>
-                </div> */}
-
-            <input
-              style={{ display: 'none' }}
-              type="file"
-              multiple
-              onChange={fileSelectedHandler}
-              ref={(input) => {
-                fileInput = input
-              }}
-            />
           </div>
         </FormItem>
       </FormRow>

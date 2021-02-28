@@ -10,19 +10,17 @@ const Iframe = (props: any) => {
 const Viewer: FunctionComponent<{}> = () => {
   return (
     <>
-      <div className="content-grid">
-        <div className="grid grid-3-9">
-          <div className="account-hub-content">
-            <div className="grid-column"> </div>
-            <div className="grid-column">
-              <div className="widget-box">
-                <p className="widget-box-title">Viewer</p>
-                <Iframe iframe={iframe} />
-              </div>
+      <div className="grid grid-3-9">
+        <div className="account-hub-content">
+          <div className="grid-column"> </div>
+          <div className="grid-column">
+            <div className="widget-box">
+              <p className="widget-box-title">Viewer</p>
+              <Iframe iframe={iframe} />
             </div>
-
-            <div className="grid-column"> </div>
           </div>
+
+          <div className="grid-column"> </div>
         </div>
       </div>
     </>

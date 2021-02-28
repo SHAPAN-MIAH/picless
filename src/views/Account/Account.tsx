@@ -7,16 +7,14 @@ import DeleteAccount from './DeleteAccount/DeleteAccount'
 
 const Account: FunctionComponent<{}> = () => {
   return (
-    <div className="content-grid">
-      <div className="grid grid-2-8-2">
-        <AccountInfo />
+    <div className="grid grid-2-8-2">
+      <AccountInfo />
 
-        <ChangePassword />
+      <ChangePassword />
 
-        <AccountDevices />
+      <AccountDevices />
 
-        <DeleteAccount />
-      </div>
+      <DeleteAccount />
     </div>
   )
 }

@@ -18,7 +18,7 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
     <>
       <div className="quick-post">
         <div className="quick-post-header">
-          <div className="option-items">
+          <div className="option-items" style={{ justifyContent: 'center' }}>
             <div
               className={classNames('option-item', currentTab === 'STATUS' ? 'active' : '')}
               onClick={() => {
@@ -45,12 +45,9 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
             </div>
           </div>
         </div>
-
         {currentTab === 'STATUS' && <CreateStatus />}
         {currentTab === 'LIVE' && <CreateLive />}
         {currentTab === 'POLL' && <h1>POLL</h1>}
-
-        {/* adfasdasdas */}
       </div>
     </>
   )

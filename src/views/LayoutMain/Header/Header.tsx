@@ -55,14 +55,6 @@ const Header: FunctionComponent<{}> = () => {
         <div className="header-actions">
           <div className="action-list dark">
             <div className="action-list-item-wrap">
-              <div className="action-list-item">
-                <svg className="action-list-item-icon icon-streams">
-                  <use xlinkHref="#svg-streams" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="action-list-item-wrap">
               <Link to="/user/home" className="action-list-item">
                 <FontAwesomeIcon icon="bars" size="lg" color="#8b88ff" />
               </Link>

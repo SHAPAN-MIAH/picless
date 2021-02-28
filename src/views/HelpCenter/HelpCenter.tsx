@@ -5,44 +5,42 @@ import { Link } from 'react-router-dom'
 const HelpSupport: FunctionComponent<{}> = () => {
   return (
     <>
-      <div className="content-grid">
-        <div className="grid">
-          <div className="grid-column">
-            <div className="grid grid-3-3-3-3 mobile-prefer-content">
-              <div className="grid-column"> </div>
-              <div className="grid-column">
-                <div className="widget-box">
-                  <div className="widget-box-content">
-                    <Link to="/support/faq">
-                      <h1>FAQ</h1>
-                    </Link>
-                    <p>
-                      Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                      Latin literature from 45 BC, making it over 2000 years old.
-                    </p>
-                  </div>
-                </div>
-                <div className="widget-box">
-                  <div className="widget-box-content">
-                    <h1>aasd</h1>
-                  </div>
+      <div className="grid">
+        <div className="grid-column">
+          <div className="grid grid-3-3-3-3 mobile-prefer-content">
+            <div className="grid-column"> </div>
+            <div className="grid-column">
+              <div className="widget-box">
+                <div className="widget-box-content">
+                  <Link to="/support/faq">
+                    <h1>FAQ</h1>
+                  </Link>
+                  <p>
+                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                    Latin literature from 45 BC, making it over 2000 years old.
+                  </p>
                 </div>
               </div>
-              <div className="grid-column">
-                <div className="widget-box">
-                  <div className="widget-box-content">
-                    <h1>aasd</h1>
-                  </div>
-                </div>
-                <div className="widget-box">
-                  <div className="widget-box-content">
-                    <h1>aasd</h1>
-                  </div>
+              <div className="widget-box">
+                <div className="widget-box-content">
+                  <h1>aasd</h1>
                 </div>
               </div>
-
-              <div className="grid-column"> </div>
             </div>
+            <div className="grid-column">
+              <div className="widget-box">
+                <div className="widget-box-content">
+                  <h1>aasd</h1>
+                </div>
+              </div>
+              <div className="widget-box">
+                <div className="widget-box-content">
+                  <h1>aasd</h1>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid-column"> </div>
           </div>
         </div>
       </div>

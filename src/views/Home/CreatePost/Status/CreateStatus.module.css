@@ -6,6 +6,17 @@
   display: none;
 }
 
+.uploadPhotosContainer {
+  height: 0;
+  transition: 0.3s height ease;
+}
+
+.uploadPhotosContainer.active {
+  height: 125px;
+  border-bottom: 1px solid rgba(173, 175, 202, 0.3);
+  max-height: 125px;
+}
+
 .quickPostText {
   font-weight: 500 !important;
 }

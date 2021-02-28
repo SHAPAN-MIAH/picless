@@ -81,56 +81,54 @@ const Profile: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid">
-        {loading && (
-          <>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
-              <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-            </div>
-          </>
-        )}
-        {!loading && (
-          <>
-            <UserHeader isSuscribe={isSuscribed} />
+      {loading && (
+        <>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
+            <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+          </div>
+        </>
+      )}
+      {!loading && (
+        <>
+          <UserHeader isSuscribe={isSuscribed} />
 
-            <SectionMenu />
+          <SectionMenu />
 
-            <Switch>
-              <Route path={`/user/${username}/${Tabs.POSTS}`} render={() => <Newsfeed posts={posts} />} />
-              <Route
-                path={`/user/${username}/${Tabs.PHOTOS}`}
-                render={() => {
-                  return (
-                    <div className="grid">
-                      <div className="grid-column">
-                        <div className="widget-box">
-                          <h3>PHOTOS</h3>
-                        </div>
+          <Switch>
+            <Route path={`/user/${username}/${Tabs.POSTS}`} render={() => <Newsfeed posts={posts} />} />
+            <Route
+              path={`/user/${username}/${Tabs.PHOTOS}`}
+              render={() => {
+                return (
+                  <div className="grid">
+                    <div className="grid-column">
+                      <div className="widget-box">
+                        <h3>PHOTOS</h3>
                       </div>
                     </div>
-                  )
-                }}
-              />
-              <Route
-                path={`/user/${username}/${Tabs.VIDEOS}`}
-                render={() => {
-                  return (
-                    <div className="grid">
-                      <div className="grid-column">
-                        <div className="widget-box">
-                          <h3>VIDEOS</h3>
-                        </div>
+                  </div>
+                )
+              }}
+            />
+            <Route
+              path={`/user/${username}/${Tabs.VIDEOS}`}
+              render={() => {
+                return (
+                  <div className="grid">
+                    <div className="grid-column">
+                      <div className="widget-box">
+                        <h3>VIDEOS</h3>
                       </div>
                     </div>
-                  )
-                }}
-              />
+                  </div>
+                )
+              }}
+            />
 
-              <Route path={`/user/${username}/${Tabs.ABOUT}`} component={AboutTab} />
-            </Switch>
-          </>
-        )}
-      </div>
+            <Route path={`/user/${username}/${Tabs.ABOUT}`} component={AboutTab} />
+          </Switch>
+        </>
+      )}
     </>
   )
 }

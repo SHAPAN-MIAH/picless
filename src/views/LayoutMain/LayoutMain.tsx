@@ -12,7 +12,7 @@ import MainLoader from '../../components/MainLoading/MainLoading'
 import Notifications from '../../components/Notification/Notification'
 
 import { ApplicationContextProvider } from '../../context/ApplicationContext'
-import Footer from './Footer/Footer'
+// import Footer from './Footer/Footer'
 
 interface LayoutMainProps {
   children: ReactNode
@@ -21,6 +21,7 @@ interface LayoutMainProps {
 const ChildrenContainer = styled.div`
   ${isMobile ? '' : 'padding-top: 80px;'}
   ${isMobile ? '' : 'min-height: 100vh !important'};
+  max-width: 800px;
 `
 
 const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
@@ -55,9 +56,7 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
         <Header />
         <FloatyBar />
 
-        <ChildrenContainer>{children}</ChildrenContainer>
-
-        <Footer />
+        <ChildrenContainer className="content-grid">{children}</ChildrenContainer>
       </ApplicationContextProvider>
     </>
   )

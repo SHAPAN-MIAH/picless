@@ -32,31 +32,29 @@ const Home: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid">
-        <div className="grid grid-2-7-2 mobile-prefer-content">
-          <div className="grid-column">{'  '}</div>
-          <div className="grid-column">
-            <CreatePost selectedTab={selectedTab} />
-            {showPost && (
-              <>
-                {!posts ? (
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-                  </div>
-                ) : (
-                  posts.map((item) => {
-                    return (
-                      <div key={simpleKeyGenerator(5)}>
-                        <Post data={item} />
-                      </div>
-                    )
-                  })
-                )}
-              </>
-            )}
-          </div>
-          <div className="grid-column"> </div>
+      <div className="grid grid-2-7-2 mobile-prefer-content">
+        <div className="grid-column">{'  '}</div>
+        <div className="grid-column">
+          <CreatePost selectedTab={selectedTab} />
+          {showPost && (
+            <>
+              {!posts ? (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+                </div>
+              ) : (
+                posts.map((item) => {
+                  return (
+                    <div key={simpleKeyGenerator(5)}>
+                      <Post data={item} />
+                    </div>
+                  )
+                })
+              )}
+            </>
+          )}
         </div>
+        <div className="grid-column"> </div>
       </div>
     </>
   )

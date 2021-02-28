@@ -19,11 +19,7 @@ const SearchBarItem: FunctionComponent<{ data: UserSearchType }> = (props) => {
 
           <p className="user-status-text">{data.userName}</p>
 
-          <div className="user-status-icon">
-            <svg className="icon-friend">
-              <use xlinkHref="#svg-friend" />
-            </svg>
-          </div>
+          <div className="user-status-icon"> </div>
         </div>
       </Link>
     </>
