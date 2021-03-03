@@ -8,15 +8,14 @@ const CookieInformer: FunctionComponent<{}> = () => {
       <div className={styles.footer}>
         <div className={styles.innerFooter}>
           <div className={styles.textContainer}>
-            <p>
-              We use cookies to give you the best experience. If you agree to our use of cookies, please continue to use our
-              site. Click here for our cookie policy. Our Privacy Policy has been updated, if you agree to our policy, please
-              continue to our site.
-            </p>
+            <p>We use cookies to improve your experience using this site. </p>
+            <a href="" style={{ color: 'white' }}>
+              &nbsp;More Information
+            </a>
           </div>
 
-          <a href="" className={styles.closeAcceptButton}>
-            &times;
+          <a href="" className={styles.acceptButton}>
+            Accept
           </a>
         </div>
       </div>
