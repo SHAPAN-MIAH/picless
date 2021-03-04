@@ -16,8 +16,8 @@ const Home: FunctionComponent<{}> = () => {
   const [showPost, setShowPosts] = useState<boolean>(true)
 
   useEffect(() => {
-    PostService.getPosts().then((data: PostType[]) => {
-      setPosts(_.reverse(data))
+    PostService.getPosts().then((data: any) => {
+      setPosts(_.reverse(data.posts))
 
       if (window.tpl) {
         window.tpl.load(['user-avatar'])

@@ -64,8 +64,8 @@ const Profile: FunctionComponent<{}> = () => {
           router.push(`/user/${username}/${defaultTab}`)
         }
 
-        PostService.getPosts().then((p: PostType[]) => {
-          setPosts(_.reverse(p))
+        PostService.getPosts().then((p: any) => {
+          setPosts(_.reverse(p.posts))
 
           if (window.tpl) {
             window.tpl.load(['user-avatar'])

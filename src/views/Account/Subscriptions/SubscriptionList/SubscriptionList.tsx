@@ -15,9 +15,9 @@ const SubscriptionList: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     setLoading(true)
-    UserService.getSubscriptions().then((data: SubscriptorListType[]) => {
+    UserService.getSubscriptions().then((data: any) => {
       setLoading(false)
-      setSubscriptions(data)
+      setSubscriptions(data.suscribers)
 
       if (window.tpl) {
         window.tpl.load(['user-avatar'])

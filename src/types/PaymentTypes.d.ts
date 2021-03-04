@@ -55,6 +55,8 @@ export interface PlansType {
 export interface DefaultCardType {
   code: string
   defaultCardId: string
+  securionPayCardId: string
+  stripeCardId: string
 }
 
 export interface FraudDetails {

@@ -10,7 +10,7 @@ import SelectForm, { SelectOptionsType } from '../../../../../components/Common/
 import { PlansType, SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 
 import PaymentService from '../../../../../services/PaymentService'
-// import useWallet from '../../../../../hooks/useWallet'
+import useWallet from '../../../../../hooks/useWallet'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
 
 import styles from './SubscribePopup.module.css'
@@ -20,9 +20,8 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const { onClose } = props
   const { provider } = useContext(ProviderProfileContext.context)
 
-  // const SecurionPay = window.Securionpay
-
-  // const { defaultCard } = useWallet()
+  const SecurionPay = window.Securionpay
+  const { defaultCard } = useWallet()
 
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [selectedPlan, setSelectedPlan] = useState<SubscritionPlanOption>()
@@ -59,15 +58,15 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
       window.tpl.load(['user-avatar'])
     }
 
+    const script = document.createElement('script')
+    script.setAttribute('id', 'mainScriptSecurionPay')
+    script.src = 'https://securionpay.com/js/securionpay.js'
+    script.async = true
+    document.body.appendChild(script)
+
     return () => {
       controllerCancelable.abort()
     }
-
-    // const script = document.createElement('script')
-    // script.setAttribute('id', 'mainScriptSecurionPay')
-    // script.src = 'https://securionpay.com/js/securionpay.js'
-    // script.async = true
-    // document.body.appendChild(script)
   }, [provider])
 
   const plansOptionsList = (plans: SubscritionPlanOption[]): void => {
@@ -93,33 +92,29 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
     if (selectedPlan) {
       setLoading(true)
 
-      subscribeToUser('')
+      console.log(defaultCard)
+      const securionPayAmount = selectedPlan?.amount * 100
 
-      // console.log(defaultCard)
-      // const securionPayAmount = selectedPlan?.amount * 100
+      SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
 
-      // SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
-
-      // SecurionPay.verifyThreeDSecure(
-      //   {
-      //     amount: securionPayAmount,
-      //     currency: selectedPlan.currency.toUpperCase(),
-      //     card: defaultCard?.defaultCardId,
-      //   },
-      //   (token: any) => {
-      //     if (token.error) {
-      //       alert(JSON.stringify(token))
-      //       setLoading(false)
-      //     } else {
-      //       if (token.threeDSecureInfo.liabilityShift === 'successful') {
-      //         subscribeToUser(token)
-      //       } else {
-      //         setLoading(false)
-      //         alert(JSON.stringify('Cancelled by user'))
-      //       }
-      //     }
-      //   }
-      // )
+      SecurionPay.verifyThreeDSecure(
+        {
+          amount: securionPayAmount,
+          currency: selectedPlan.currency.toUpperCase(),
+          card: defaultCard?.securionPayCardId,
+        },
+        (token: any) => {
+          if (token.error) {
+            alert(JSON.stringify(token))
+            setLoading(false)
+          } else if (token.threeDSecureInfo.liabilityShift === 'successful') {
+            subscribeToUser(token)
+          } else {
+            setLoading(false)
+            alert(JSON.stringify('Cancelled by user'))
+          }
+        }
+      )
     }
   }
 
