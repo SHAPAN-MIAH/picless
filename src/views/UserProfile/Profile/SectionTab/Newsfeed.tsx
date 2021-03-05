@@ -1,19 +1,26 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
 
 import Post from '../../../Home/Post/Post'
 
 import { PostType } from '../../../../types/PostType.d'
 import { simpleKeyGenerator } from '../../../../utils/Functions'
+import useProfile from '../../../../hooks/useProfile'
 
-const Newsfeed: FunctionComponent<{ posts: PostType[] }> = (props) => {
-  const { posts } = props
+const Newsfeed: FunctionComponent<{}> = () => {
+  const { provider, getPosts } = useProfile({ disableMount: true })
+
+  const [posts, setPosts] = useState<PostType[]>()
 
   useEffect(() => {
+    if (provider) {
+      getPosts().then((pa: PostType[]) => setPosts(pa))
+    }
+
     if (window.tpl) {
       window.tpl.load(['dropdown', 'user-avatar'])
     }
-  }, [posts])
+  }, [])
 
   return (
     <>

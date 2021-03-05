@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import classNames from 'classnames'
-
-import { Tabs } from '../Profile'
+import { Tabs } from '../../../../hooks/useProfile'
 
 const SectionMenu: FunctionComponent<{}> = () => {
   const { username, tab } = useParams<{ username: string; tab: string }>()

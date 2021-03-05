@@ -53,7 +53,6 @@ const RegisterForm: FunctionComponent<{
   const [generalError, setGeneralError] = useState<string>('')
 
   const onSubmit = (data: FormValues) => {
-    alert('')
     return register(data.username, data.password)
       .then((message) => {
         setMessages(message)

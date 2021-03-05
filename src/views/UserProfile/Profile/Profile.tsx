@@ -1,81 +1,25 @@
-import React, { useState, useEffect, FunctionComponent, useContext } from 'react'
+import React, { useEffect, FunctionComponent } from 'react'
 import { Route, Switch, useHistory, useParams, Redirect } from 'react-router-dom'
 import Loader from 'react-loader-spinner'
-import _ from 'lodash'
-
-import useRouter from '../../../hooks/useRouter'
-
-import UserService from '../../../services/UserService'
-import PostService from '../../../services/PostService'
 
 import UserHeader from './Header/UserHeader'
 import SectionMenu from './SectionMenu/SectionMenu'
-import { ServiceUserProfileType } from '../../../types/UserType.d'
+
 import AboutTab from './SectionTab/AboutTab'
 // import LiveTab from './SectionTab/LiveTab'
-import ProviderProfileContext from '../../../context/ProviderProfileContext'
+
 import Newsfeed from './SectionTab/Newsfeed'
-import { PostType } from '../../../types/PostType.d'
-
-export enum Tabs {
-  POSTS = 'posts',
-  PHOTOS = 'photos',
-  VIDEOS = 'videos',
-  ABOUT = 'about',
-}
-
-const defaultTab = Tabs.POSTS
+import useProfile, { Tabs } from '../../../hooks/useProfile'
+import PhotoGallery from './SectionTab/PhotoGallery'
 
 const Profile: FunctionComponent<{}> = () => {
   const history = useHistory()
-  const { username, tab } = useParams<{ username: string; tab: string }>()
-  const router = useRouter()
-
-  const { setProvider } = useContext(ProviderProfileContext.context)
-
-  const [loading, setLoading] = useState<boolean>(false)
-  const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
-  const [posts, setPosts] = useState<PostType[]>([])
-
-  const controllerCancelable = new AbortController()
-  const { signal } = controllerCancelable
+  const { username } = useParams<{ username: string; tab: string }>()
+  const { loading, isSubscribed } = useProfile()
 
   useEffect(() => {
-    setLoading(true)
     if (!username) {
       history.push('/user/not-exist')
-    }
-
-    UserService.getUserProfileByUserName(username, signal).then((data: ServiceUserProfileType) => {
-      if (data.code !== '0') {
-        if (data.code === '1') {
-          history.push('/user/not-exist')
-        } else {
-          history.push('/error')
-        }
-      } else {
-        setLoading(false)
-
-        setProvider(data.user)
-
-        setIsSuscribed(data.isSuscribe)
-
-        if (!tab) {
-          router.push(`/user/${username}/${defaultTab}`)
-        }
-
-        PostService.getPosts().then((p: any) => {
-          setPosts(_.reverse(p.posts))
-
-          if (window.tpl) {
-            window.tpl.load(['user-avatar'])
-          }
-        })
-      }
-    })
-
-    return () => {
-      controllerCancelable.abort()
     }
   }, [username])
 
@@ -91,27 +35,13 @@ const Profile: FunctionComponent<{}> = () => {
         )}
         {!loading && (
           <>
-            <UserHeader isSuscribe={isSuscribed} />
+            <UserHeader isSuscribe={isSubscribed} />
 
             <SectionMenu />
 
             <Switch>
-              <Route path={`/user/${username}/${Tabs.POSTS}`} exact render={() => <Newsfeed posts={posts} />} />
-              <Route
-                path={`/user/${username}/${Tabs.PHOTOS}`}
-                exact
-                render={() => {
-                  return (
-                    <div className="grid">
-                      <div className="grid-column">
-                        <div className="widget-box">
-                          <h3>PHOTOS</h3>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }}
-              />
+              <Route path={`/user/${username}/${Tabs.POSTS}`} component={Newsfeed} />
+              <Route path={`/user/${username}/${Tabs.PHOTOS}`} exact component={PhotoGallery} />
               <Route
                 path={`/user/${username}/${Tabs.VIDEOS}`}
                 exact
