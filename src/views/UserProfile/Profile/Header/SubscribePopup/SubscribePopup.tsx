@@ -108,7 +108,9 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
             alert(JSON.stringify(token))
             setLoading(false)
           } else if (token.threeDSecureInfo.liabilityShift === 'successful') {
-            subscribeToUser(token)
+            subscribeToUser(token, securionPayAmount)
+          } else if (token.threeDSecureInfo.liabilityShift === 'not_possible') {
+            subscribeToUser(token, securionPayAmount)
           } else {
             setLoading(false)
             alert(JSON.stringify('Cancelled by user'))
@@ -118,10 +120,10 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
     }
   }
 
-  const subscribeToUser = (token: any) => {
+  const subscribeToUser = (token: any, amount: number) => {
     if (provider.id && provider.planId && selectedPlan) {
       toast.loading('Loading ...')
-      PaymentService.suscribeToUser(selectedPlan?.id, provider.id, token.id, selectedPlan?.amount)
+      PaymentService.suscribeToUser(selectedPlan?.planId, provider.id, 'securionpay', token.id, amount)
         .then((data: any) => {
           if (data.code === 0) {
             setLoading(false)

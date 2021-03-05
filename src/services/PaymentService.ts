@@ -89,12 +89,19 @@ const getSuscriptionPlans = async (signal?: AbortSignal): Promise<CardType[]> =>
   return body
 }
 
-const suscribeToUser = async (planId: any, userIdToSuscribe: number, token: string, amount: number): Promise<any> => {
+const suscribeToUser = async (
+  planId: any,
+  userIdToSuscribe: number,
+  provider: string,
+  token: string,
+  amount: number
+): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('planId', planId)
   bodyData.append('userIdToSuscribe', userIdToSuscribe.toString())
+  bodyData.append('provider', provider)
   bodyData.append('token', token)
   bodyData.append('amount', amount.toString())
 
