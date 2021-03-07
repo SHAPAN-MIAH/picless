@@ -1,10 +1,7 @@
+import { CommonPostType, ServiceMediaTypes, ServicePostType } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
-import { CommonPostType, ServicePostType } from '../types/PostType.d'
-import { ServiceMediaTypes } from '../types/PostType'
-
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
-// const baseUrl = `https://localhost:44326/posts`
 
 const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
@@ -55,7 +52,7 @@ const getPosts = async (): Promise<ServicePostType> => {
   return body
 }
 
-const getMedia = async (type: 'photos' | 'videos', page = 0): Promise<ServiceMediaTypes> => {
+const getMedia = async (type: 'photos' | 'videos', page = 0, userId: number): Promise<ServiceMediaTypes> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -63,7 +60,7 @@ const getMedia = async (type: 'photos' | 'videos', page = 0): Promise<ServiceMed
     headers,
   }
 
-  const url = `${baseUrl}/getmedia?mediatype=${type}&page=${page}`
+  const url = `${baseUrl}/getmedia?mediatype=${type}&userId=${userId}&page=${page}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()

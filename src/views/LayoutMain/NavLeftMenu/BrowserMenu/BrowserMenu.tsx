@@ -1,17 +1,17 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
+import { Link } from 'react-router-dom'
+import UserAvatar from '../../../../components/UserAvatar'
+import useAuth from '../../../../hooks/useAuth'
 import useMenu from '../../../../hooks/useMenu'
 import useRouter from '../../../../hooks/useRouter'
-
-import UserAvatar from '../../../../components/UserAvatar'
-import { UserType } from '../../../../types/UserType.d'
 import useUser from '../../../../hooks/useUser'
-import useAuth from '../../../../hooks/useAuth'
-
 import MenuRoutes from '../../../../routes/MenuRoutes'
+import { UserType } from '../../../../types/UserType.d'
+
+
+
 
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -45,7 +45,7 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           showMenu ? 'hidden' : 'delayed'
         )}
       >
-        <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+        <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
           <UserAvatar size="SMALL" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
@@ -105,13 +105,13 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <UserAvatar size="MEDIUM" imageName={imageProfile || ''} />
 
           <p className="user-short-description-title">
-            <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+            <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
               {user?.fullName}
             </Link>
           </p>
 
           <p className="user-short-description-text">
-            <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+            <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
               www.lupanar.com/{user?.userName}
             </Link>
           </p>

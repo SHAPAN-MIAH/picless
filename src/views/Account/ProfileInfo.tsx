@@ -1,26 +1,26 @@
-import React, { FunctionComponent, useEffect } from 'react'
-import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Controller, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 import _ from 'lodash'
+import React, { FunctionComponent, useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-
-import FormItem from '../../components/Common/Form/FormItem'
-import TextInput from '../../components/Common/TextInput'
-import FormRow from '../../components/Common/Form/FormRow'
-import AccountHubMain from './AccountHub/AccountHubMain'
-import TextArea from '../../components/Common/TextArea'
-import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
+import { useTranslation } from 'react-i18next'
+import * as Yup from 'yup'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
-import InterestList from './Interest/InterestList'
-import TimeLineList from './TimeLine/TimeLineList'
+import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
+import FormItem from '../../components/Common/Form/FormItem'
+import FormRow from '../../components/Common/Form/FormRow'
 import SelectForm, { SelectOptionsType } from '../../components/Common/SelectForm'
-import { UserType } from '../../types/UserType.d'
-
+import TextArea from '../../components/Common/TextArea'
+import TextInput from '../../components/Common/TextInput'
+import SelectCountry from '../../components/SelectCountry/SelectCountry'
 import professions from '../../constants/professions.json'
 import useUser from '../../hooks/useUser'
-import SelectCountry from '../../components/SelectCountry/SelectCountry'
+import { UserType } from '../../types/UserType.d'
+import AccountHubMain from './AccountHub/AccountHubMain'
+import InterestList from './Interest/InterestList'
+import TimeLineList from './TimeLine/TimeLineList'
+
+
 
 type FormValues = {
   userName: string
@@ -65,6 +65,8 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
           if (field === 'birthDate') setValue(field, new Date(value))
           else setValue(field as formFieldsNames, value || '')
+
+          window.tpl.load(['user-avatar'])
         })
       })
       .catch((err) => {

@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
-
 import LiquidImage from '../../../../components/Common/LiquidImage'
-
 import { SubscriptorListType } from '../../../../types/UserType.d'
+
+
 
 interface SubscriptorProps {
   subscriptor: SubscriptorListType
@@ -22,7 +22,7 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
 
         <div className="user-preview-info">
           <div className="user-short-description landscape tiny">
-            <a className="user-short-description-avatar user-avatar small" href={`/user/${suscribeUser.userName}`}>
+            <a className="user-short-description-avatar user-avatar small" href={`/u/${suscribeUser.userName}`}>
               <div className="user-avatar-border">
                 <div className="hexagon-50-56" />
               </div>
@@ -41,11 +41,11 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
             </a>
 
             <p className="user-short-description-title">
-              <a href={`/user/${suscribeUser.userName}`}>{suscribeUser.userName}</a>
+              <a href={`/u/${suscribeUser.userName}`}>{suscribeUser.userName}</a>
             </p>
 
             <p className="user-short-description-text">
-              <a href={`/user/${suscribeUser.userName}`}>www.lupanar.com/{suscribeUser.userName}</a>
+              <a href={`/u/${suscribeUser.userName}`}>www.lupanar.com/{suscribeUser.userName}</a>
             </p>
           </div>
 

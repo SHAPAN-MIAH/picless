@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
 import useAppContext from '../hooks/useAppContext'
-
 import useAuth from '../hooks/useAuth'
 
 export interface ProtectedRouteProps extends RouteProps {
@@ -22,16 +21,7 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
     checkAuthenticated()
 
     if (window.tpl) {
-      window.tpl.load([
-        'sidebar',
-        'accordions',
-        'form-rating',
-        'form-counter',
-        'form-switch',
-        'form-input',
-        'interactive-input',
-        'user-avatar',
-      ])
+      window.tpl.load(['sidebar'])
     }
   }, [location, isAuthenticated])
 

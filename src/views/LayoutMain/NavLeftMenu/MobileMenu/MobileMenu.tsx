@@ -1,17 +1,17 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import useRouter from '../../../../hooks/useRouter'
+import { Link } from 'react-router-dom'
 import UserAvatar from '../../../../components/UserAvatar'
-
-import { UserType } from '../../../../types/UserType.d'
-import useMenu from '../../../../hooks/useMenu'
-import useUser from '../../../../hooks/useUser'
 import useAuth from '../../../../hooks/useAuth'
-
+import useMenu from '../../../../hooks/useMenu'
+import useRouter from '../../../../hooks/useRouter'
+import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
+import { UserType } from '../../../../types/UserType.d'
+
+
+
 
 const MobileMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -53,12 +53,12 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
         <div className="navigation-widget-info-wrap">
           <div className="navigation-widget-info">
-            <Link to={`/user/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+            <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
               <UserAvatar size="SMALL" imageName={user?.profilePicture} />
             </Link>
 
             <p className="navigation-widget-info-title">
-              <a href={`/user/${user?.userName}`}>{user?.fullName}</a>
+              <a href={`/u/${user?.userName}`}>{user?.fullName}</a>
             </p>
 
             <p className="navigation-widget-info-text">Welcome Back!</p>

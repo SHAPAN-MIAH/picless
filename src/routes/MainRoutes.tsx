@@ -1,25 +1,30 @@
 import React, { FunctionComponent, useContext } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import AuthorizationContext from '../context/AuthorizationContext'
-
-import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
-
+import AddCard from '../views/Account/Card/AddCard'
+import Movements from '../views/Account/Movements'
+import Faq from '../views/HelpCenter/Faq/Faq'
+import Home from '../views/Home/Home'
 import LayoutMain from '../views/LayoutMain/LayoutMain'
 import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
-
-import UserProfile from '../views/UserProfile/UserProfile'
 import Messages from '../views/Messages/Messages'
-import Home from '../views/Home/Home'
-import Movements from '../views/Account/Movements'
-import AddCard from '../views/Account/Card/AddCard'
-import TestView from '../views/TestView/TestView'
 import PaymentCallback from '../views/Payments/PaymentCallback'
-import ProfileNotExist from '../views/UserProfile/Profile/ProfileNotExist'
-import Faq from '../views/HelpCenter/Faq/Faq'
-
+import TestView from '../views/TestView/TestView'
+import UserProfile from '../views/UserProfile/UserProfile'
 import routes from './MenuRoutes'
+import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
+
+const NoMatchPage = () => {
+  return (
+    <>
+      <div style={{ paddingLeft: '180px' }}>
+        <h3>404 - Not found</h3>
+        <a href="/user/home">Go to home</a>
+      </div>
+    </>
+  )
+}
 
 const MainRoutes: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -62,21 +67,21 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
               <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
 
-              <ProtectedRoute {...routerProps} exact path={['/user/not-exist']} component={ProfileNotExist} />
-
-              <ProtectedRoute
+              <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
+              {/* <ProtectedRoute
                 {...routerProps}
-                exact
-                path={['/user/:username', '/user/:username/', '/user/:username/:tab', '/user/']}
+                path={['/u/:username', '/u/:username/', '/u/:username/:tab']}
                 component={UserProfile}
               />
+              <ProtectedRoute {...routerProps} exact path={['/u/not-exist']} component={ProfileNotExist} /> */}
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
               <ProtectedRoute {...routerProps} exact path="/support/faq" component={Faq} />
 
-              <Route exact path="/">
+              <Route path="/">
                 <Redirect to="/user/home" />
               </Route>
+              <Route component={NoMatchPage} />
             </Switch>
           </LayoutMain>
         )}

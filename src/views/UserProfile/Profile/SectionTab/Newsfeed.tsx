@@ -1,32 +1,32 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
-
+import useProfile from '../../../../hooks/useProfile'
+import { simpleKeyGenerator } from '../../../../utils/Functions'
 import Post from '../../../Home/Post/Post'
 
-import { PostType } from '../../../../types/PostType.d'
-import { simpleKeyGenerator } from '../../../../utils/Functions'
-import useProfile from '../../../../hooks/useProfile'
-
 const Newsfeed: FunctionComponent<{}> = () => {
-  const { provider, getPosts } = useProfile({ disableMount: true })
+  const { provider, posts, getPosts } = useProfile({ disableMount: true })
 
-  const [posts, setPosts] = useState<PostType[]>()
+  const [loading, setLoading] = useState<boolean>()
 
   useEffect(() => {
-    if (provider) {
-      getPosts().then((pa: PostType[]) => setPosts(pa))
-    }
+    setLoading(true)
+    if (provider && posts && posts.length === 0) {
+      getPosts().then(() => {
+        setLoading(false)
 
-    if (window.tpl) {
-      window.tpl.load(['dropdown', 'user-avatar'])
-    }
+        if (window.tpl) {
+          window.tpl.load(['dropdown', 'user-avatar'])
+        }
+      })
+    } else setLoading(false)
   }, [])
 
   return (
     <>
       <div>
-        {!posts ? (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
             <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
           </div>
         ) : (
