@@ -18,11 +18,11 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
   const location = useLocation()
 
   useEffect(() => {
-    checkAuthenticated()
-
-    if (window.tpl) {
-      window.tpl.load(['sidebar'])
-    }
+    checkAuthenticated().then(() => {
+      if (window.tpl) {
+        window.tpl.load(['sidebar'])
+      }
+    })
   }, [location, isAuthenticated])
 
   if (!isAuthenticated) {

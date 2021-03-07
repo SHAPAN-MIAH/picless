@@ -29,7 +29,13 @@ const HelpSupport: FunctionComponent<{}> = () => {
                 <div className="widget-box">
                   <div className="widget-box-content">
                     <Link to="/support/faq">
-                      <h1>FAQ1</h1>
+                      <svg
+                        className="menu-item-link-icon icon-group"
+                        style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
+                      >
+                        <use xlinkHref="#svg-group" />
+                      </svg>
+                      <h1>FAQ</h1>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
@@ -39,8 +45,14 @@ const HelpSupport: FunctionComponent<{}> = () => {
                 </div>
                 <div className="widget-box">
                   <div className="widget-box-content">
+                    <svg
+                      className="reaction-count-icon icon-private"
+                      style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
+                    >
+                      <use xlinkHref="#svg-private" />
+                    </svg>
                     <Link to="/support/faq">
-                      <h1>FAQ2</h1>
+                      <h1>Privacy Policy</h1>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
@@ -53,7 +65,13 @@ const HelpSupport: FunctionComponent<{}> = () => {
                 <div className="widget-box">
                   <div className="widget-box-content">
                     <Link to="/support/faq">
-                      <h1>FAQ3</h1>
+                      <svg
+                        className="reaction-count-icon icon-comment"
+                        style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
+                      >
+                        <use xlinkHref="#svg-comment" />
+                      </svg>
+                      <h1>Contact</h1>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
@@ -63,8 +81,14 @@ const HelpSupport: FunctionComponent<{}> = () => {
                 </div>
                 <div className="widget-box">
                   <div className="widget-box-content">
+                    <svg
+                      className="reaction-count-icon icon-info"
+                      style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
+                    >
+                      <use xlinkHref="#svg-info" />
+                    </svg>
                     <Link to="/support/faq">
-                      <h1>FAQ4</h1>
+                      <h1>Terms of services</h1>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical

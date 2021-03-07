@@ -1,11 +1,9 @@
-import React, { FunctionComponent } from 'react'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
-
-import useMenu from '../../../hooks/useMenu'
+import { Link } from 'react-router-dom'
 import useAppContext from '../../../hooks/useAppContext'
-
+import useMenu from '../../../hooks/useMenu'
 import SearchBar from './SearchBar/SearchBar'
 
 const Header: FunctionComponent<{}> = () => {

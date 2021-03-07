@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import ApplicationContext from '../context/ApplicationContext'
 
 type UseAppContextProps = { changeTitle?: string }
@@ -11,10 +11,12 @@ const useAppContext = (props?: UseAppContextProps) => {
     setTitle(`${value} - ${appName}`)
   }, [])
 
-  if (props) {
-    const { changeTitle = '' } = props
-    if (changeTitle) changeAppTitle(changeTitle)
-  }
+  useEffect(() => {
+    if (props) {
+      const { changeTitle = '' } = props
+      if (changeTitle) changeAppTitle(changeTitle)
+    }
+  }, [])
 
   return {
     title,
