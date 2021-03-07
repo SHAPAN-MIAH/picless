@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import LiquidImage from '../../../../components/Common/LiquidImage'
 import useProfile from '../../../../hooks/useProfile'
@@ -22,54 +23,62 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     } else setLoading(false)
   }, [])
 
+  if (loading) {
+    return (
+      <>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
+          <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
-      {!loading && (
-        <div className="grid">
-          <div className="grid-column">
-            <div className="widget-box">
-              {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
-              {videos.length > 0 && (
-                <>
-                  <div className="section-header-info">
-                    <p className="section-pretitle">Check {provider.firstName || provider.fullName}</p>
+      <div className="grid">
+        <div className="grid-column">
+          <div className="widget-box">
+            {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
+            {videos.length > 0 && (
+              <>
+                <div className="section-header-info">
+                  <p className="section-pretitle">Check {provider.firstName || provider.fullName}</p>
 
-                    <h2 className="section-title">Videos</h2>
-                  </div>
+                  <h2 className="section-title">Videos</h2>
+                </div>
 
-                  {videos.map((item) => {
-                    return (
-                      <>
-                        <div className="photos-masonry">
-                          <div className="photo-preview popup-picture-trigger">
-                            <LiquidImage
-                              className="user-preview-cover"
-                              src={`${process.env.PUBLIC_URL}/img/cover/06.jpg`}
-                              alt="cover-04"
-                            />
+                {videos.map((item) => {
+                  return (
+                    <>
+                      <div className="photos-masonry">
+                        <div className="photo-preview popup-picture-trigger">
+                          <LiquidImage
+                            className="user-preview-cover"
+                            src={`${process.env.PUBLIC_URL}/img/cover/06.jpg`}
+                            alt="cover-04"
+                          />
 
-                            <div className="photo-preview-info">
-                              <div className="reaction-count-list landscape">
-                                <div className="reaction-count negative">
-                                  <svg className="reaction-count-icon icon-comment">
-                                    <use xlinkHref="#svg-comment" />
-                                  </svg>
+                          <div className="photo-preview-info">
+                            <div className="reaction-count-list landscape">
+                              <div className="reaction-count negative">
+                                <svg className="reaction-count-icon icon-comment">
+                                  <use xlinkHref="#svg-comment" />
+                                </svg>
 
-                                  <p className="reaction-count-text">View post {item.name}</p>
-                                </div>
+                                <p className="reaction-count-text">View post {item.name}</p>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </>
-                    )
-                  })}
-                </>
-              )}
-            </div>
+                      </div>
+                    </>
+                  )
+                })}
+              </>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </>
   )
 }

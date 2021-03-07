@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import Contact from 'views/HelpCenter/Contact/Contact'
+import Faq from 'views/HelpCenter/Faq/Faq'
 import AuthorizationContext from '../context/AuthorizationContext'
 import AddCard from '../views/Account/Card/AddCard'
 import Movements from '../views/Account/Movements'
-import Faq from '../views/HelpCenter/Faq/Faq'
 import Home from '../views/Home/Home'
 import LayoutMain from '../views/LayoutMain/LayoutMain'
 import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
@@ -76,7 +77,17 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path={['/u/not-exist']} component={ProfileNotExist} /> */}
 
               <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
-              <ProtectedRoute {...routerProps} exact path="/support/faq" component={Faq} />
+
+              <Route path="/support/faq" component={Faq} />
+              <Route path="/support/contact" component={Contact} />
+              {/* <Route path="/support/privacy" render={() => <h1>asdf</h1>} /> */}
+              {/* <Route path={[`/support/terms-conditions`]} render={() => <h1>asdf</h1>} />
+              <Route
+                path="/support/"
+                render={() => {
+                  return <Redirect to="/support" />
+                }}
+              /> */}
 
               <Route path="/">
                 <Redirect to="/user/home" />

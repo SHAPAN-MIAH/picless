@@ -10,6 +10,18 @@ const HeaderDiv = styled.div`
 `
 const BlueDash = styled.span`
   color: #23d2e2;
+  margin-left: 20px;
+  margin-right: 20px;
+`
+
+const IconSvg = styled.svg`
+  width: 40px;
+  height: 40px;
+  fill: #3e3f5e;
+  margin-bottom: 10px;
+`
+const WhiteBoxContainer = styled.div`
+  min-height: 240px;
 `
 
 const HelpSupport: FunctionComponent<{}> = () => {
@@ -26,76 +38,64 @@ const HelpSupport: FunctionComponent<{}> = () => {
             </HeaderDiv>
             <div className="grid grid-half">
               <div className="grid-column">
-                <div className="widget-box">
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
                     <Link to="/support/faq">
-                      <svg
-                        className="menu-item-link-icon icon-group"
-                        style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
-                      >
+                      <IconSvg className="menu-item-link-icon icon-group">
                         <use xlinkHref="#svg-group" />
-                      </svg>
-                      <h1>FAQ</h1>
+                      </IconSvg>
+                      <h3>FAQ</h3>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
                       Latin literature from 45 BC, making it over 2000 years old.
                     </p>
                   </div>
-                </div>
-                <div className="widget-box">
+                </WhiteBoxContainer>
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
-                    <svg
-                      className="reaction-count-icon icon-private"
-                      style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
-                    >
+                    <IconSvg className="reaction-count-icon icon-private">
                       <use xlinkHref="#svg-private" />
-                    </svg>
-                    <Link to="/support/faq">
-                      <h1>Privacy Policy</h1>
+                    </IconSvg>
+                    <Link to="/support/privacy">
+                      <h3>Privacy Policy</h3>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
                       Latin literature from 45 BC, making it over 2000 years old.
                     </p>
                   </div>
-                </div>
+                </WhiteBoxContainer>
               </div>
               <div className="grid-column">
-                <div className="widget-box">
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
-                    <Link to="/support/faq">
-                      <svg
-                        className="reaction-count-icon icon-comment"
-                        style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
-                      >
+                    <Link to="/support/contact">
+                      <IconSvg className="reaction-count-icon icon-comment">
                         <use xlinkHref="#svg-comment" />
-                      </svg>
-                      <h1>Contact</h1>
+                      </IconSvg>
+                      <h3>Contact</h3>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
                       Latin literature from 45 BC, making it over 2000 years old.
                     </p>
                   </div>
-                </div>
-                <div className="widget-box">
+                </WhiteBoxContainer>
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
-                    <svg
-                      className="reaction-count-icon icon-info"
-                      style={{ width: '45px', height: '45px', fill: '#3e3f5e' }}
-                    >
+                    <IconSvg className="reaction-count-icon icon-info">
                       <use xlinkHref="#svg-info" />
-                    </svg>
-                    <Link to="/support/faq">
-                      <h1>Terms of services</h1>
+                    </IconSvg>
+                    <Link to="/support/terms-conditions">
+                      <h3>Terms of services</h3>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
                       Latin literature from 45 BC, making it over 2000 years old.
                     </p>
                   </div>
-                </div>
+                </WhiteBoxContainer>
               </div>
             </div>
           </div>
