@@ -1,35 +1,31 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
-import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Popup from 'reactjs-popup'
+import classNames from 'classnames'
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-
-import useUser from '../../../../hooks/useUser'
-
-import ProviderProfileContext from '../../../../context/ProviderProfileContext'
+import Popup from 'reactjs-popup'
+import CountryFlag from '../../../../components/CountryFlag/CountryFlag'
 import UserAvatar from '../../../../components/UserAvatar'
-
+import ProviderProfileContext from '../../../../context/ProviderProfileContext'
+import { WalletContextProvider } from '../../../../context/WalletContext'
+import useUser from '../../../../hooks/useUser'
+import { UserType } from '../../../../types/UserType.d'
+import { GetCountryName } from '../../../../utils/Functions'
+import SubscribePopup from './SubscribePopup/SubscribePopup'
 import styles from './UserHeader.module.css'
 
-import { UserType } from '../../../../types/UserType.d'
-import SubscribePopup from './SubscribePopup/SubscribePopup'
-import { WalletContextProvider } from '../../../../context/WalletContext'
-import { GetCountryName } from '../../../../utils/Functions'
-import CountryFlag from '../../../../components/CountryFlag/CountryFlag'
-
 type UserHeaderProps = {
-  isSuscribe: boolean | null
+  isSubscribed: boolean
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
-  const { isSuscribe } = props
+  const { isSubscribed } = props
 
   const { provider } = useContext(ProviderProfileContext.context)
   const { getUser } = useUser()
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
-  const [subscribed, setSubscribed] = useState(isSuscribe)
+  const [subscribed, setSubscribed] = useState(isSubscribed)
   const [userData, setUserData] = useState<UserType>({})
 
   useEffect(() => {
@@ -39,8 +35,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
     setImageProfile(provider.profilePicture)
-    setSubscribed(isSuscribe)
-  }, [provider, isSuscribe])
+    setSubscribed(isSubscribed)
+  }, [provider, isSubscribed])
 
   const countryName = GetCountryName(provider.countryCode || '')
 
@@ -60,11 +56,11 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               <UserAvatar size="MEDIUM" imageName={imageProfile} />
 
               <p className="user-short-description-title">
-                <a href="profile-timeline.html">{provider.userName}</a>
+                <a href="">{provider.fullName || provider.userName}</a>
               </p>
 
               <p className="user-short-description-text">
-                <a href="#/">www.lupanar.com/{provider.userName}</a>
+                <a href="">{`@${provider.userName}`}</a>
               </p>
             </div>
 

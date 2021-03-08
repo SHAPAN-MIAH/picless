@@ -1,136 +1,30 @@
-import React, { useState, useEffect, FunctionComponent, useContext } from 'react'
-import { Route, Switch, useHistory, useParams, Redirect } from 'react-router-dom'
+import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
-import _ from 'lodash'
-
-import useRouter from '../../../hooks/useRouter'
-
-import UserService from '../../../services/UserService'
-import PostService from '../../../services/PostService'
-
+import useProfile from '../../../hooks/useProfile'
 import UserHeader from './Header/UserHeader'
+import ProfileRoutes from './ProfileRoutes'
 import SectionMenu from './SectionMenu/SectionMenu'
-import { ServiceUserProfileType } from '../../../types/UserType.d'
-import AboutTab from './SectionTab/AboutTab'
-// import LiveTab from './SectionTab/LiveTab'
-import ProviderProfileContext from '../../../context/ProviderProfileContext'
-import Newsfeed from './SectionTab/Newsfeed'
-import { PostType } from '../../../types/PostType.d'
-
-export enum Tabs {
-  POSTS = 'posts',
-  PHOTOS = 'photos',
-  VIDEOS = 'videos',
-  ABOUT = 'about',
-}
-
-const defaultTab = Tabs.POSTS
 
 const Profile: FunctionComponent<{}> = () => {
-  const history = useHistory()
-  const { username, tab } = useParams<{ username: string; tab: string }>()
-  const router = useRouter()
-
-  const { setProvider } = useContext(ProviderProfileContext.context)
-
-  const [loading, setLoading] = useState<boolean>(false)
-  const [isSuscribed, setIsSuscribed] = useState<boolean>(false)
-  const [posts, setPosts] = useState<PostType[]>([])
-
-  const controllerCancelable = new AbortController()
-  const { signal } = controllerCancelable
-
-  useEffect(() => {
-    setLoading(true)
-    if (!username) {
-      history.push('/user/not-exist')
-    }
-
-    UserService.getUserProfileByUserName(username, signal).then((data: ServiceUserProfileType) => {
-      if (data.code !== '0') {
-        if (data.code === '1') {
-          history.push('/user/not-exist')
-        } else {
-          history.push('/error')
-        }
-      } else {
-        setLoading(false)
-
-        setProvider(data.user)
-
-        setIsSuscribed(data.isSuscribe)
-
-        if (!tab) {
-          router.push(`/user/${username}/${defaultTab}`)
-        }
-
-        PostService.getPosts().then((p: any) => {
-          setPosts(_.reverse(p.posts))
-
-          if (window.tpl) {
-            window.tpl.load(['user-avatar'])
-          }
-        })
-      }
-    })
-
-    return () => {
-      controllerCancelable.abort()
-    }
-  }, [username])
+  const { loading, isSubscribed, provider } = useProfile()
 
   return (
     <>
       <div className="content-grid">
-        {loading && (
+        {loading && !provider && (
           <>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
               <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
             </div>
           </>
         )}
-        {!loading && (
+        {!loading && provider && (
           <>
-            <UserHeader isSuscribe={isSuscribed} />
+            <UserHeader isSubscribed={isSubscribed} />
 
             <SectionMenu />
 
-            <Switch>
-              <Route path={`/user/${username}/${Tabs.POSTS}`} exact render={() => <Newsfeed posts={posts} />} />
-              <Route
-                path={`/user/${username}/${Tabs.PHOTOS}`}
-                exact
-                render={() => {
-                  return (
-                    <div className="grid">
-                      <div className="grid-column">
-                        <div className="widget-box">
-                          <h3>PHOTOS</h3>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }}
-              />
-              <Route
-                path={`/user/${username}/${Tabs.VIDEOS}`}
-                exact
-                render={() => {
-                  return (
-                    <div className="grid">
-                      <div className="grid-column">
-                        <div className="widget-box">
-                          <h3>VIDEOS</h3>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }}
-              />
-
-              <Route path={`/user/${username}/${Tabs.ABOUT}`} exact component={AboutTab} />
-              <Route path={`/user/${username}/`} render={() => <Redirect to={`/user/${username}/${Tabs.ABOUT}`} />} />
-            </Switch>
+            <ProfileRoutes isSubscribed={isSubscribed} />
           </>
         )}
       </div>

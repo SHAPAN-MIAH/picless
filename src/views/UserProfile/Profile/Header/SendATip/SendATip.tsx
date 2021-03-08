@@ -1,25 +1,20 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { yupResolver } from '@hookform/resolvers/yup'
+import Alert from 'components/Common/Alerts/Alerts'
+import ButtonWithLoader from 'components/Common/ButtonWithLoader'
+import FormRow from 'components/Common/Form/FormRow'
+import FormRowItem from 'components/Common/Form/FormRowItem'
+import TextArea from 'components/Common/TextArea'
+import TextInput from 'components/Common/TextInput'
+import UserAvatar from 'components/UserAvatar'
 import React, { FunctionComponent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
-import toast from 'react-hot-toast'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toast } from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-
+import * as Yup from 'yup'
 import useUser from '../../../../../hooks/useUser'
-
 import UserService from '../../../../../services/UserService'
-
-import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
-import TextInput from '../../../../../components/Common/TextInput'
-import FormRow from '../../../../../components/Common/Form/FormRow'
-import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
-import UserAvatar from '../../../../../components/UserAvatar'
-
-import { UserType, TipType } from '../../../../../types/UserType.d'
-
-import TextArea from '../../../../../components/Common/TextArea'
-import Alert from '../../../../../components/Common/Alerts/Alerts'
+import { TipType, UserType } from '../../../../../types/UserType.d'
 import styles from './SendATip.module.css'
 
 type FormValues = {
@@ -111,7 +106,7 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
                   <span className="bold">{user.fullName}</span>
                 </p>
                 <p className="user-status-text small">
-                  <a href={`/user/${user.userName}`}>@{user.userName}</a>
+                  <a href={`/u/${user.userName}`}>@{user.userName}</a>
                 </p>
               </div>
             </div>
@@ -156,46 +151,6 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
           </FormRow>
         </form>
       </div>
-
-      {/* <div className={styles.mainPopup}>
-        <div className={styles.headerTip}>
-          <h4>Send a tip</h4>
-        </div>
-
-        <form className="form" onSubmit={handleSubmit}>
-          <FormRowItem>
-            <div className="form-input active">
-              <label htmlFor="input-example">Enter amount {user.userName}</label>
-              <CurrencyInput
-                id="input-tip"
-                name="input_tip"
-                value={cash}
-                allowDecimals
-                decimalsLimit={2}
-                onChange={(value) => setCash(parseInt(value as string, 10))}
-              />
-            </div>
-
-          </FormRowItem>
-
-          <FormRowItem>
-            <TextInput
-              type="text"
-              id="message"
-              name="message"
-              placeholder="Write me something"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </FormRowItem>
-
-          <FormRow>
-            <ButtonWithLoader type="submit" className="button small secondary" showLoader={false}>
-              SendTip
-            </ButtonWithLoader>
-          </FormRow>
-        </form>
-      </div> */}
     </>
   )
 }

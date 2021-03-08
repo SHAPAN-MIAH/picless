@@ -1,18 +1,15 @@
-import React, { FunctionComponent, useContext } from 'react'
 import moment from 'moment'
-
+import React, { FunctionComponent, useContext } from 'react'
 import Alert from '../../../../components/Common/Alerts/Alerts'
-
-import { UserInterestType, UserTimeLineType } from '../../../../types/UserType.d'
 import ProviderProfileContext from '../../../../context/ProviderProfileContext'
-
+import { UserInterestType, UserTimeLineType } from '../../../../types/UserType.d'
 import { GetCountryName } from '../../../../utils/Functions'
+
+const noInterests = 'The user has not yet added interests.'
+const noTimeLineEvents = 'The user has not yet added events to the timeline.'
 
 const AboutTab: FunctionComponent<{}> = () => {
   const { provider } = useContext(ProviderProfileContext.context)
-
-  const noInterests = 'The user has not yet added interests.'
-  const noTimeLineEvents = 'The user has not yet added events to the timeline.'
 
   const age = moment().diff(provider.birthDate, 'years', false)
   const countryName = GetCountryName(provider.countryCode || '')

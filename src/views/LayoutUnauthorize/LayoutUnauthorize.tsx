@@ -9,7 +9,7 @@ import Footer from './Footer/Footer'
 import NavLoginRegister from './NavLoginRegister/NavLoginRegister'
 
 const LandingContainer = styled.div`
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh + 80px);
 `
 
 const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
@@ -52,8 +52,8 @@ const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
             <Register />
           </div>
         </LandingContainer>
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }

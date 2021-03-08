@@ -1,9 +1,7 @@
+import { CommonPostType, ServiceMediaTypes, ServicePostType } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
-import { CommonPostType } from '../types/PostType.d'
-
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
-// const baseUrl = `https://localhost:44326/posts`
 
 const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
@@ -38,7 +36,7 @@ const createPost = async (post: CommonPostType) => {
   return body
 }
 
-const getPosts = async () => {
+const getPosts = async (): Promise<ServicePostType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -54,36 +52,25 @@ const getPosts = async () => {
   return body
 }
 
-// Possible Code for upload images with progress
-/*
-    let data = new FormData();
-    data.append('file', document.querySelector('#file-input').files[0]);
+const getMedia = async (type: 'photos' | 'videos', page = 0, userId: number): Promise<ServiceMediaTypes> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
-    let request = new XMLHttpRequest();
-    request.open('POST', '/upload'); 
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
 
-    // upload progress event
-    request.upload.addEventListener('progress', function(e) {
-      // upload progress as percentage
-      let percent_completed = Math.round((e.loaded / e.total)*100) + %;
-      console.log(percent_completed);
-    });
+  const url = `${baseUrl}/getmedia?mediatype=${type}&userId=${userId}&page=${page}`
 
-    // request finished event
-    request.addEventListener('load', function(e) {
-      // HTTP status message (200, 404 etc)
-      console.log(request.status);
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
 
-      // request.response holds response from the server
-      console.log(request.response);
-    });
-
-    // send POST request to server
-    request.send(data);
-    */
+  return body
+}
 
 export default {
   uploadPostResource,
-  getPosts,
   createPost,
+  getPosts,
+  getMedia,
 }

@@ -1,10 +1,10 @@
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
-
 import UserAvatar from '../../../../components/UserAvatar'
-
 import { UserType } from '../../../../types/UserType.d'
+
+
 
 type HeaderPostProps = {
   user: UserType
@@ -21,7 +21,7 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
       <UserAvatar imageName={user.profilePicture} size="SMALL" />
 
       <p className="user-status-title medium">
-        <Link className="bold" to={`/user/${user.userName}`}>
+        <Link className="bold" to={`/u/${user.userName}`}>
           {`${user.fullName || user.userName} `}
         </Link>
         create a <span className="bold">post</span>

@@ -9,15 +9,15 @@ import Post from './Post/Post'
 
 import { simpleKeyGenerator } from '../../utils/Functions'
 
-import { PostType } from '../../types/PostType.d'
+import { ServicePostType, PostType } from '../../types/PostType.d'
 
 const Home: FunctionComponent<{}> = () => {
   const [posts, setPosts] = useState<PostType[]>()
   const [showPost, setShowPosts] = useState<boolean>(true)
 
   useEffect(() => {
-    PostService.getPosts().then((data: any) => {
-      setPosts(_.reverse(data.posts))
+    PostService.getPosts().then((info: ServicePostType) => {
+      setPosts(_.reverse(info.posts))
 
       if (window.tpl) {
         window.tpl.load(['user-avatar'])

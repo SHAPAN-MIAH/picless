@@ -1,11 +1,16 @@
-import React, { FunctionComponent } from 'react'
-import { Link, useParams } from 'react-router-dom'
 import classNames from 'classnames'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
+import { Tabs } from '../../../../hooks/useProfile'
 
-import { Tabs } from '../Profile'
+const SectionMenu: FunctionComponent<{}> = (props) => {
+  const { url } = useRouteMatch()
 
-const SectionMenu: FunctionComponent<{}> = () => {
-  const { username, tab } = useParams<{ username: string; tab: string }>()
+  const [currentTab, setCurrentTab] = useState<Tabs>()
+
+  useEffect(() => {
+    window.tpl.load(['slider'])
+  }, [])
 
   const sectionMenuClasses = 'section-menu-item tns-item tns-slide-active'
   return (
@@ -13,8 +18,9 @@ const SectionMenu: FunctionComponent<{}> = () => {
       <nav className="section-navigation">
         <div id="section-navigation-slider" className="section-menu">
           <Link
-            className={classNames(sectionMenuClasses, tab === Tabs.POSTS ? 'active' : '')}
-            to={`/user/${username}/posts`}
+            className={classNames(sectionMenuClasses, currentTab === Tabs.POSTS ? 'active' : '')}
+            to={`${url}/posts`}
+            onClick={() => setCurrentTab(Tabs.POSTS)}
           >
             <svg className="section-menu-item-icon icon-timeline">
               <use xlinkHref="#svg-timeline" />
@@ -24,8 +30,9 @@ const SectionMenu: FunctionComponent<{}> = () => {
           </Link>
 
           <Link
-            className={classNames(sectionMenuClasses, tab === Tabs.PHOTOS ? 'active' : '')}
-            to={`/user/${username}/${Tabs.PHOTOS}`}
+            className={classNames(sectionMenuClasses, currentTab === Tabs.PHOTOS ? 'active' : '')}
+            to={`${url}/${Tabs.PHOTOS}`}
+            onClick={() => setCurrentTab(Tabs.PHOTOS)}
           >
             <svg className="section-menu-item-icon icon-photos">
               <use xlinkHref="#svg-photos" />
@@ -35,8 +42,9 @@ const SectionMenu: FunctionComponent<{}> = () => {
           </Link>
 
           <Link
-            className={classNames(sectionMenuClasses, tab === Tabs.VIDEOS ? 'active' : '')}
-            to={`/user/${username}/${Tabs.VIDEOS}`}
+            className={classNames(sectionMenuClasses, currentTab === Tabs.VIDEOS ? 'active' : '')}
+            to={`${url}/${Tabs.VIDEOS}`}
+            onClick={() => setCurrentTab(Tabs.VIDEOS)}
           >
             <svg className="section-menu-item-icon icon-videos">
               <use xlinkHref="#svg-videos" />
@@ -46,14 +54,15 @@ const SectionMenu: FunctionComponent<{}> = () => {
           </Link>
 
           <Link
-            className={classNames(sectionMenuClasses, tab === Tabs.ABOUT ? 'active' : '')}
-            to={`/user/${username}/${Tabs.ABOUT}`}
+            className={classNames(sectionMenuClasses, currentTab === Tabs.ABOUT ? 'active' : '')}
+            to={`${url}/${Tabs.ABOUT}`}
+            onClick={() => setCurrentTab(Tabs.ABOUT)}
           >
             <svg className="section-menu-item-icon icon-profile">
               <use xlinkHref="#svg-profile" />
             </svg>
 
-            <p className="section-menu-item-text">Profile</p>
+            <p className="section-menu-item-text">About</p>
           </Link>
         </div>
 

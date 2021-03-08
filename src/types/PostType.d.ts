@@ -1,3 +1,5 @@
+import { CommonServiceResponse } from './CommonTypes'
+
 export interface CommonPostType {
   content: string
   featuredPost: boolean
@@ -24,3 +26,20 @@ export interface TagType {
 }
 
 export type ResourceType = 'IMAGE' | 'VIDEO'
+
+export interface ServicePostType extends CommonServiceResponse {
+  posts: PostType[]
+}
+
+export interface MediaType {
+  id: number
+  name: string
+  pathName: string
+  mediatype: string
+  postId: number
+  blocked: boolean
+}
+
+export interface ServiceMediaTypes extends CommonServiceResponse {
+  mediaFiles: MediaType[]
+}

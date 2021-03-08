@@ -16,7 +16,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
     if (window.tpl) {
       window.tpl.load(['user-avatar'])
     }
-  }, [])
+  }, [imageUrl])
 
   return (
     <>

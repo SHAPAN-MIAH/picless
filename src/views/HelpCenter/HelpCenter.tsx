@@ -1,80 +1,106 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 // import { useTranslation } from 'react-i18next'
+
+const HeaderDiv = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 100px;
+`
+const BlueDash = styled.span`
+  color: #23d2e2;
+  margin-left: 20px;
+  margin-right: 20px;
+`
+
+const IconSvg = styled.svg`
+  width: 40px;
+  height: 40px;
+  fill: #3e3f5e;
+  margin-bottom: 10px;
+`
+const WhiteBoxContainer = styled.div`
+  min-height: 240px;
+`
 
 const HelpSupport: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="content-grid">
-        <div className="grid">
+        <div className="grid grid-3-6-3">
+          <div className="grid-column" />
           <div className="grid-column">
-            <div className="grid grid-3-3-3-3 mobile-prefer-content">
-              <div className="grid-column"> </div>
+            <HeaderDiv>
+              <h1>
+                <BlueDash>-</BlueDash> Help Center <BlueDash>-</BlueDash>
+              </h1>
+            </HeaderDiv>
+            <div className="grid grid-half">
               <div className="grid-column">
-                <div className="widget-box">
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
                     <Link to="/support/faq">
-                      <h1>FAQ</h1>
+                      <IconSvg className="menu-item-link-icon icon-group">
+                        <use xlinkHref="#svg-group" />
+                      </IconSvg>
+                      <h3>FAQ</h3>
                     </Link>
                     <p>
                       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
                       Latin literature from 45 BC, making it over 2000 years old.
                     </p>
                   </div>
-                </div>
-                <div className="widget-box">
+                </WhiteBoxContainer>
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
-                    <h1>aasd</h1>
+                    <IconSvg className="reaction-count-icon icon-private">
+                      <use xlinkHref="#svg-private" />
+                    </IconSvg>
+                    <Link to="/support/privacy">
+                      <h3>Privacy Policy</h3>
+                    </Link>
+                    <p>
+                      Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                      Latin literature from 45 BC, making it over 2000 years old.
+                    </p>
                   </div>
-                </div>
+                </WhiteBoxContainer>
               </div>
               <div className="grid-column">
-                <div className="widget-box">
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
-                    <h1>aasd</h1>
+                    <Link to="/support/contact">
+                      <IconSvg className="reaction-count-icon icon-comment">
+                        <use xlinkHref="#svg-comment" />
+                      </IconSvg>
+                      <h3>Contact</h3>
+                    </Link>
+                    <p>
+                      Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                      Latin literature from 45 BC, making it over 2000 years old.
+                    </p>
                   </div>
-                </div>
-                <div className="widget-box">
+                </WhiteBoxContainer>
+                <WhiteBoxContainer className="widget-box">
                   <div className="widget-box-content">
-                    <h1>aasd</h1>
+                    <IconSvg className="reaction-count-icon icon-info">
+                      <use xlinkHref="#svg-info" />
+                    </IconSvg>
+                    <Link to="/support/terms-conditions">
+                      <h3>Terms of services</h3>
+                    </Link>
+                    <p>
+                      Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                      Latin literature from 45 BC, making it over 2000 years old.
+                    </p>
                   </div>
-                </div>
+                </WhiteBoxContainer>
               </div>
-
-              <div className="grid-column"> </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <div className="content-grid">
-        <div className="grid grid-4-4">
-          <div className="account-hub-content">
-            <div className="section-header">
-              <div className="section-header-info">
-                <h2 className="section-title">Help Support</h2>
-              </div>
-            </div>
-            <div className="grid-column">
-              <div className="widget-box">
-                <div className="widget-box-content">
-                  <form className="form">
-                    <Link to="/support/faq">FAQ</Link>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="grid-column">
-              <div className="widget-box">
-                <div className="widget-box-content">
-                  <form className="form">
-                    <Link to="/support/faq">Contact</Link>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </>
   )
 }

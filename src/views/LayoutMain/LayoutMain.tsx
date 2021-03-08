@@ -1,18 +1,13 @@
-import React, { FunctionComponent, useEffect, ReactNode, useState } from 'react'
-import styled from 'styled-components'
+import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-
-import useUser from '../../hooks/useUser'
-
-import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
-
-import Header from './Header/Header'
-import FloatyBar from './FloatyBar/FloatyBar'
+import styled from 'styled-components'
 import MainLoader from '../../components/MainLoading/MainLoading'
 import Notifications from '../../components/Notification/Notification'
-
 import { ApplicationContextProvider } from '../../context/ApplicationContext'
-// import Footer from './Footer/Footer'
+import useUser from '../../hooks/useUser'
+import FloatyBar from './FloatyBar/FloatyBar'
+import Header from './Header/Header'
+import NavigationLeftMenu from './NavLeftMenu/NavigationLeftMenu'
 
 interface LayoutMainProps {
   children: ReactNode
@@ -46,16 +41,20 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
 
   return (
     <>
-      <MainLoader show={showLoading} />
       <ApplicationContextProvider>
-        <NavigationLeftMenu />
+        {showLoading && <MainLoader show />}
+        {!showLoading && (
+          <>
+            <NavigationLeftMenu />
 
-        <Notifications />
+            <Notifications />
 
-        <Header />
-        <FloatyBar />
+            <Header />
+            <FloatyBar />
 
-        <ChildrenContainer>{children}</ChildrenContainer>
+            <ChildrenContainer>{children}</ChildrenContainer>
+          </>
+        )}
       </ApplicationContextProvider>
     </>
   )

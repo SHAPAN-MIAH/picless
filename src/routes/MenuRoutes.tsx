@@ -1,10 +1,10 @@
 import Account from '../views/Account/Account'
-import ProfileInfo from '../views/Account/ProfileInfo'
-import UserSettings from '../views/Account/UserSettings'
-import Wallet from '../views/Account/Wallet'
 import AddCard from '../views/Account/Card/AddCard'
+import ProfileInfo from '../views/Account/ProfileInfo'
 import Subscriptions from '../views/Account/Subscriptions/Subscriptions'
+import UserSettings from '../views/Account/UserSettings'
 import Verification from '../views/Account/Verification/Verification'
+import Wallet from '../views/Account/Wallet'
 import HelpSupport from '../views/HelpCenter/HelpCenter'
 
 const MenuRoutes = [
