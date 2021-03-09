@@ -1,19 +1,14 @@
 .footer {
-  width: 100vw;
-  display: block;
-  overflow: hidden;
-  padding: 20px 0;
-  box-sizing: border-box;
+  position:absolute;
+  left:0;
+  bottom:0;
+  right:0;
   background-color: rgba(173, 175, 202, 0.9);
+  padding: 10px
 }
 
 .innerFooter {
-  display: block;
-  margin: 0 auto;
-  width: 1100px;
-  height: 100%;
-  left: 0;
-  bottom: 0;
+  padding-top: 10px;
 }
 
 .innerFooter .logoContainer {

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
+import CookieConsent from 'react-cookie-consent'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-
 import Login from './Authentication/Login/Login'
 import Register from './Authentication/Register/Register'
-import CookieInformer from './CookieInformer/CookieInformer'
 import Footer from './Footer/Footer'
 import NavLoginRegister from './NavLoginRegister/NavLoginRegister'
 
 const LandingContainer = styled.div`
-  min-height: calc(100vh + 80px);
+  height: 100%
+  overflow: hidden;
 `
 
 const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
@@ -25,34 +25,41 @@ const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="landing">
-        <LandingContainer>
-          <CookieInformer />
-          <div className="landing-decoration" />
+      <LandingContainer className="landing">
+        <CookieConsent
+          location="top"
+          buttonText="Sure man!!"
+          cookieName="picless_cookie_consent"
+          style={{ backgroundColor: 'rgba(173, 175, 202, 0.8)' }}
+          expires={150}
+        >
+          We use cookies to improve your experience using this site.
+        </CookieConsent>
 
-          <div className="landing-info">
-            <div className="logo">
-              <svg className="icon-logo-vikinger">
-                <use xlinkHref="#svg-logo-vikinger" />
-              </svg>
-            </div>
+        <div className="landing-decoration" />
 
-            <h2 className="landing-info-pretitle">{t('authentication.welcome')}</h2>
-
-            <h1 className="landing-info-title">{process.env.REACT_APP_WEBSITE_NAME}</h1>
-            <p className="landing-info-text">{t('authentication.welcomeDescription')}</p>
-
-            <NavLoginRegister />
+        <div className="landing-info">
+          <div className="logo">
+            <svg className="icon-logo-vikinger">
+              <use xlinkHref="#svg-logo-vikinger" />
+            </svg>
           </div>
 
-          <div className="landing-form">
-            {/* {route.location.hash.includes('login') && <Login />}
+          <h2 className="landing-info-pretitle">{t('authentication.welcome')}</h2>
+
+          <h1 className="landing-info-title">{process.env.REACT_APP_WEBSITE_NAME}</h1>
+          <p className="landing-info-text">{t('authentication.welcomeDescription')}</p>
+
+          <NavLoginRegister />
+        </div>
+
+        <div className="landing-form">
+          {/* {route.location.hash.includes('login') && <Login />}
         {route.location.hash.includes('register') && <Register />} */}
-            <Login />
-            <Register />
-          </div>
-        </LandingContainer>
-      </div>
+          <Login />
+          <Register />
+        </div>
+      </LandingContainer>
       <Footer />
     </>
   )

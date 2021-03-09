@@ -33,6 +33,7 @@
     "moment": "^2.29.1",
     "query-string": "^6.13.8",
     "react": "^16.13.1",
+    "react-cookie-consent": "^6.2.3",
     "react-currency-input-field": "^2.7.0",
     "react-datepicker": "^3.2.2",
     "react-device-detect": "^1.15.0",

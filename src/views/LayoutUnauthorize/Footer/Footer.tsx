@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Footer.module.css'
 
-
 const Footer: FunctionComponent<{}> = () => {
   return (
     <>
@@ -10,7 +9,7 @@ const Footer: FunctionComponent<{}> = () => {
         <div className={styles.innerFooter}>
           <div className={styles.logoContainer}>
             <div className="header-brand">
-              <h1 className="header-brand-text">{process.env.REACT_APP_WEBSITE_NAME}</h1>
+              <h2 className="header-brand-text">{process.env.REACT_APP_WEBSITE_NAME}</h2>
             </div>
           </div>
           <div className={styles.footerThird}>
