@@ -25,6 +25,30 @@ const bulletsVerifiedImage = [
   'Check out some examples.',
 ]
 
+const PhotosWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+`
+
+const PhotoContainer = styled.div`
+  width: 100%;
+  background-color: #615dfa;
+  height: 150px;
+  border-radius: 12px 12px 0 0;
+`
+
+const PhotoFooter = styled.div`
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+  height: 35px;
+  padding: 10px;
+  border-radius: 0 0 12px 12px;
+`
+
 const Verification: FunctionComponent<{}> = () => {
   return (
     <>
@@ -51,15 +75,13 @@ const Verification: FunctionComponent<{}> = () => {
                     <ul className="bullet-item-list">
                       {bulletsVerifiedUser.map((bullet) => {
                         return (
-                          <>
-                            <li className="bullet-item">
-                              <svg className="bullet-item-icon icon-check">
-                                <use xlinkHref="#svg-check" />
-                              </svg>
+                          <li className="bullet-item" key={bullet}>
+                            <svg className="bullet-item-icon icon-check">
+                              <use xlinkHref="#svg-check" />
+                            </svg>
 
-                              <p className="bullet-item-text">{bullet}</p>
-                            </li>
-                          </>
+                            <p className="bullet-item-text">{bullet}</p>
+                          </li>
                         )
                       })}
                     </ul>
@@ -79,15 +101,13 @@ const Verification: FunctionComponent<{}> = () => {
                     <ul className="bullet-item-list">
                       {bulletsVerifiedImage.map((bullet) => {
                         return (
-                          <>
-                            <li className="bullet-item">
-                              <svg className="bullet-item-icon icon-check">
-                                <use xlinkHref="#svg-check" />
-                              </svg>
+                          <li className="bullet-item" key={bullet}>
+                            <svg className="bullet-item-icon icon-check">
+                              <use xlinkHref="#svg-check" />
+                            </svg>
 
-                              <p className="bullet-item-text">{bullet}</p>
-                            </li>
-                          </>
+                            <p className="bullet-item-text">{bullet}</p>
+                          </li>
                         )
                       })}
                     </ul>
@@ -95,12 +115,83 @@ const Verification: FunctionComponent<{}> = () => {
                 </div>
               </div>
               <div className="grid-column">
-                <div className="widget-box">
-                  <div className="widget-box-content">
-                    <form className="form">
-                      <h1> Under Construction</h1>
-                    </form>
+                <PhotosWrapper>
+                  <div style={{ gridArea: '1 / 1 / 2 / 2' }}>
+                    <PhotoContainer />
+                    <PhotoFooter>
+                      <h6>
+                        <svg className="bullet-item-icon icon-cross">
+                          <use xlinkHref="#svg-cross" style={{ fill: 'red' }} />
+                        </svg>
+                        &nbsp;&nbsp;No person
+                      </h6>
+                    </PhotoFooter>
                   </div>
+
+                  <div style={{ gridArea: '1 / 2 / 2 / 3' }}>
+                    <PhotoContainer />
+                    <PhotoFooter>
+                      <h6>
+                        <svg className="bullet-item-icon icon-cross">
+                          <use xlinkHref="#svg-cross" style={{ fill: 'red' }} />
+                        </svg>
+                        &nbsp;&nbsp;No face in photo
+                      </h6>
+                    </PhotoFooter>
+                  </div>
+
+                  <div style={{ gridArea: '1 / 3 / 2 / 4' }}>
+                    <PhotoContainer />
+                    <PhotoFooter>
+                      <h6>
+                        <svg className="bullet-item-icon icon-cross">
+                          <use xlinkHref="#svg-cross" style={{ fill: 'red' }} />
+                        </svg>
+                        &nbsp;&nbsp;Illegible text
+                      </h6>
+                    </PhotoFooter>
+                  </div>
+
+                  <div style={{ gridArea: '2 / 1 / 3 / 2' }}>
+                    <PhotoContainer />
+                    <PhotoFooter>
+                      <h6>
+                        <svg className="bullet-item-icon icon-cross">
+                          <use xlinkHref="#svg-cross" style={{ fill: 'red' }} />
+                        </svg>
+                        &nbsp;&nbsp;Digital text
+                      </h6>
+                    </PhotoFooter>
+                  </div>
+
+                  <div style={{ gridArea: '2 / 2 / 3 / 3' }}>
+                    <PhotoContainer />
+                    <PhotoFooter>
+                      <h6>
+                        <svg className="bullet-item-icon icon-check">
+                          <use xlinkHref="#svg-check" style={{ fill: '#14d500' }} />
+                        </svg>
+                        &nbsp;&nbsp;Verified Guy
+                      </h6>
+                    </PhotoFooter>
+                  </div>
+
+                  <div style={{ gridArea: '2 / 3 / 3 / 4' }}>
+                    <PhotoContainer />
+                    <PhotoFooter>
+                      <h6>
+                        <svg className="bullet-item-icon icon-check">
+                          <use xlinkHref="#svg-check" style={{ fill: '#14d500' }} />
+                        </svg>
+                        &nbsp;&nbsp;Verified Girl
+                      </h6>
+                    </PhotoFooter>
+                  </div>
+                </PhotosWrapper>
+
+                <div className="widget-box">
+                  <p className="widget-box-title">Upload your photo</p>
+                  <div className="widget-box-content"> sdasd</div>
                 </div>
               </div>
             </div>

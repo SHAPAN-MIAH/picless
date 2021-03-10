@@ -20,8 +20,6 @@ import AccountHubMain from './AccountHub/AccountHubMain'
 import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
 
-
-
 type FormValues = {
   userName: string
   profileDescription: string
