@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import AddBank from 'views/Account/Verification/AddBank/AddBank'
 import Contact from 'views/HelpCenter/Contact/Contact'
 import Faq from 'views/HelpCenter/Faq/Faq'
+import PrivacyPolicy from 'views/HelpCenter/PrivacyPolicy/PrivacyPolicy'
+import TermsAndConditions from 'views/HelpCenter/TermsAndCondition/TermsAndCondition'
 import AuthorizationContext from '../context/AuthorizationContext'
 import AddCard from '../views/Account/Card/AddCard'
 import Movements from '../views/Account/Movements'
@@ -69,7 +71,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
               <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
 
-              <ProtectedRoute {...routerProps} exact path="/verification/add-bank" component={AddBank} />
+              <ProtectedRoute {...routerProps} exact path="/account/add-bank" component={AddBank} />
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
               {/* <ProtectedRoute
@@ -83,14 +85,8 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <Route path="/support/faq" component={Faq} />
               <Route path="/support/contact" component={Contact} />
-              {/* <Route path="/support/privacy" render={() => <h1>asdf</h1>} /> */}
-              {/* <Route path={[`/support/terms-conditions`]} render={() => <h1>asdf</h1>} />
-              <Route
-                path="/support/"
-                render={() => {
-                  return <Redirect to="/support" />
-                }}
-              /> */}
+              <Route path="/support/privacy" component={PrivacyPolicy} />
+              <Route path="/support/terms-conditions" component={TermsAndConditions} />
 
               <Route path="/">
                 <Redirect to="/user/home" />

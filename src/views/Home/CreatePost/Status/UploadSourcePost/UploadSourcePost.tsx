@@ -1,23 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { FunctionComponent, useImperativeHandle, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useTranslation } from 'react-i18next'
-import Loader from 'react-loader-spinner'
-import styled from 'styled-components'
-
 import classNames from 'classnames'
-import PostService from '../../../../../services/PostService'
-
-import FormRow from '../../../../../components/Common/Form/FormRow'
+import React, { FunctionComponent, useState } from 'react'
 import FormItem from '../../../../../components/Common/Form/FormItem'
-import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
-
-import styles from './UploadSourcePost.module.css'
-import { SourceType, ResourceType } from '../../../../../types/PostType.d'
-import PhotoPreview from './PhotoPreview/PhotoPreview'
-
+import FormRow from '../../../../../components/Common/Form/FormRow'
+import PostService from '../../../../../services/PostService'
+import { ResourceType, SourceType } from '../../../../../types/PostType.d'
 import * as Utils from '../../../../../utils/Functions'
+import PhotoPreview from './PhotoPreview/PhotoPreview'
+import styles from './UploadSourcePost.module.css'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void

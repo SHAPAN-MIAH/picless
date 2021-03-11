@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
-import TextInput from './TextInput'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import * as Utils from '../../utils/Functions'
+import TextInput from './TextInput'
 
 export type SelectOptionsType = {
   value: string
@@ -10,24 +11,26 @@ export type SelectOptionsType = {
 interface SelectFormProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: SelectOptionsType[]
   readOnly?: boolean
+  errorMessage?: string
 }
 
 const SelectForm = React.forwardRef<HTMLSelectElement, SelectFormProps>((props, ref) => {
-  const { name, placeholder, id, options, readOnly = false, value, ...rest } = props
+  const { name, defaultValue, placeholder, id, options, readOnly = false, value, errorMessage, required, ...rest } = props
 
-  const readOnlyValue = rest.defaultValue === 0 ? '' : rest.defaultValue
+  const readOnlyValue = defaultValue === 0 ? '' : defaultValue
 
-  useEffect(() => {
-    if (!value || value === '') {
-      options.unshift({ value: '', name: 'Select option' })
-    }
-  }, [options, value])
+  if (!defaultValue || defaultValue === '') {
+    options.unshift({ value: '', name: 'Select option' })
+  }
 
   return (
     <>
       {!readOnly && (
         <div className="form-select">
-          <label htmlFor={id}>{placeholder}</label>
+          <label htmlFor={id}>
+            {placeholder} {required && <span style={{ color: 'red' }}>*</span>}
+          </label>
+          {/* <label htmlFor={id}>{placeholder}</label> */}
           <select id={id} name={name} value={value || ''} ref={ref} {...rest}>
             {options.map((option) => {
               const key = option.value || Utils.simpleKeyGenerator(5)
@@ -55,6 +58,12 @@ const SelectForm = React.forwardRef<HTMLSelectElement, SelectFormProps>((props, 
           value={readOnlyValue}
           readOnly
         />
+      )}
+
+      {errorMessage && (
+        <p className="inputErrorFieldText">
+          <FontAwesomeIcon icon="exclamation-triangle" /> {errorMessage}
+        </p>
       )}
     </>
   )
