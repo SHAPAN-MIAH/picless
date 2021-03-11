@@ -1,13 +1,11 @@
 import React, { FunctionComponent } from 'react'
-
-import FooterPost from './Footer/FooterPost'
-import HeaderPost from './Header/HeaderPost'
-import TagList from './Footer/TagList'
 // import PictureCollage from './Content/PictureCollage'
-
 import { PostType, SourceType } from '../../../types/PostType.d'
-import VideoCollage from './Content/VideoCollage'
 import PictureCarousel from './Content/PictureCarousel'
+import VideoCollage from './Content/VideoCollage'
+import FooterPost from './Footer/FooterPost'
+import TagList from './Footer/TagList'
+import HeaderPost from './Header/HeaderPost'
 
 const Post: FunctionComponent<{ data: PostType }> = (props) => {
   const { data } = props

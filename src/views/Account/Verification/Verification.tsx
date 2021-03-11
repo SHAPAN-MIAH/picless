@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 // import { useTranslation } from 'react-i18next'
 
@@ -191,7 +192,9 @@ const Verification: FunctionComponent<{}> = () => {
 
                 <div className="widget-box">
                   <p className="widget-box-title">Upload your photo</p>
-                  <div className="widget-box-content"> sdasd</div>
+                  <div className="widget-box-content">
+                    <Link to="/account/add-bank">View Add bank</Link>
+                  </div>
                 </div>
               </div>
             </div>

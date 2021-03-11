@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import Alert from '../../../../components/Common/Alerts/Alerts'
 
 const BlockedContent: FunctionComponent<{}> = () => {
   return (
@@ -6,8 +7,11 @@ const BlockedContent: FunctionComponent<{}> = () => {
       <div className="grid">
         <div className="grid-column">
           <div className="widget-box">
-            <h3>Blocked content</h3>
-            <p>To See this content you must be subscribed </p>
+            <Alert
+              alertType="PRIMARY"
+              message="Subscribe to see the user content"
+              style={{ width: '100%', textAlign: 'center' }}
+            />
           </div>
         </div>
       </div>
