@@ -36,7 +36,7 @@ const createPost = async (post: CommonPostType) => {
   return body
 }
 
-const getPosts = async (): Promise<ServicePostType> => {
+const getPosts = async (page = 0): Promise<ServicePostType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -44,7 +44,7 @@ const getPosts = async (): Promise<ServicePostType> => {
     headers,
   }
 
-  const url = `${baseUrl}/getpostsbyuser`
+  const url = `${baseUrl}/getpostsbyuser?page=${page}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
