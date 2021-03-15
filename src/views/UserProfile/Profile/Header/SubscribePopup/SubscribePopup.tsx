@@ -1,20 +1,16 @@
-import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 import FormRow from '../../../../../components/Common/Form/FormRow'
 import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
-import UserAvatar from '../../../../../components/UserAvatar'
 import SelectForm, { SelectOptionsType } from '../../../../../components/Common/SelectForm'
-
-import { PlansType, SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
-
-import PaymentService from '../../../../../services/PaymentService'
-import useWallet from '../../../../../hooks/useWallet'
+import UserAvatar from '../../../../../components/UserAvatar'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
-
+import useWallet from '../../../../../hooks/useWallet'
+import PaymentService from '../../../../../services/PaymentService'
+import { SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 import styles from './SubscribePopup.module.css'
-import toast from 'react-hot-toast'
 
 const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const { onClose } = props
@@ -72,7 +68,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const plansOptionsList = (plans: SubscritionPlanOption[]): void => {
     setPlanList(
       plans.map((data: any) => {
-        return { value: data.id, name: `${data.intervalCount} ${data.interval}` }
+        return { value: data.id, name: `${data.intervalCount} ${data.interval} - (${data.currency} ${data.amount})` }
       })
     )
   }
@@ -195,10 +191,13 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           <FormRowItem>
             <div className={styles.resumeContainer}>
               <p>
-                <strong>Tax: </strong> $1.05 USD
+                <strong>Price: </strong> $ {selectedPlan?.amount} {selectedPlan?.currency}
               </p>
               <p>
-                <strong>Total: </strong> ${selectedPlan?.amount} {selectedPlan?.currency}
+                <strong>Tax: </strong> $ X.XX
+              </p>
+              <p>
+                <strong>Total: </strong> $ {selectedPlan?.amountTaxIncluded} {selectedPlan?.currency}
               </p>
             </div>
           </FormRowItem>
