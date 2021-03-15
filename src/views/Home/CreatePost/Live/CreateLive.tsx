@@ -1,14 +1,15 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Prompt } from 'react-router-dom'
-
-import TextInput from '../../../../components/Common/TextInput'
+import PostService from 'services/PostService'
+import { CommonPostType } from 'types/PostType'
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
-import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
+import TextInput from '../../../../components/Common/TextInput'
+import LiveChat from '../../../../components/LiveChat/LiveChat'
+import useLive from '../../../../hooks/useLive'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
-import useLive from '../../../../hooks/useLive'
-import LiveChat from '../../../../components/LiveChat/LiveChat'
+import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -37,6 +38,19 @@ const CreateLive: FunctionComponent<{}> = () => {
 
   const startLive = () => {
     publish()
+
+    const post: CommonPostType = {
+      content: `Live - ${liveName}`,
+      featuredPost: false,
+      tags: [],
+      startDate: '',
+      endDate: '',
+      images: [],
+      videos: [],
+      postType: 'live',
+    }
+
+    PostService.createPost(post)
   }
 
   const stopLive = () => {

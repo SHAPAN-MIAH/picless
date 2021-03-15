@@ -1,12 +1,12 @@
-import _ from 'lodash'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, Suspense, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import PostService from '../../services/PostService'
 import { PostType, ServicePostType } from '../../types/PostType.d'
 import { simpleKeyGenerator } from '../../utils/Functions'
 import CreatePost, { TabNamesType } from './CreatePost/CreatePost'
-import Post from './Post/Post'
+
+const Post = React.lazy(() => import('./Post/Post'))
 
 const LoaderDiv = () => (
   <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -22,7 +22,7 @@ const Home: FunctionComponent<{}> = () => {
 
   const getPosts = () => {
     PostService.getPosts(page).then((info: ServicePostType) => {
-      setPosts([...posts, ..._.reverse(info.posts)])
+      setPosts([...posts, ...info.posts])
 
       setPage(page + 1)
       if (window.tpl) {
@@ -54,7 +54,9 @@ const Home: FunctionComponent<{}> = () => {
                   {posts.map((item) => {
                     return (
                       <div key={simpleKeyGenerator(5)}>
-                        <Post data={item} />
+                        <Suspense fallback="">
+                          <Post data={item} />
+                        </Suspense>
                       </div>
                     )
                   })}

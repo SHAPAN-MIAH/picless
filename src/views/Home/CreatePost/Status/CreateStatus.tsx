@@ -1,20 +1,14 @@
+import classNames from 'classnames'
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import classNames from 'classnames'
-
-import PostService from '../../../../services/PostService'
-
+import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../../components/Common/Form/FormItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
-import InputTags from '../../../../components/InputTags/InputTags'
-import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
-
-import { SourceType, CommonPostType } from '../../../../types/PostType.d'
-
+import useUser from '../../../../hooks/useUser'
+import PostService from '../../../../services/PostService'
+import { CommonPostType, SourceType } from '../../../../types/PostType.d'
 import styles from './CreateStatus.module.css'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
-import useUser from '../../../../hooks/useUser'
 
 const CreateStatus: FunctionComponent<{}> = () => {
   const { t } = useTranslation()

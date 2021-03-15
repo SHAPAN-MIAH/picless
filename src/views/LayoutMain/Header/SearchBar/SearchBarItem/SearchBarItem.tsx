@@ -15,7 +15,7 @@ const SearchBarItem: FunctionComponent<{ data: UserSearchType; onClick: () => vo
             <span className="bold">{data.fullName}</span>
           </p>
 
-          <p className="user-status-text">{data.userName}</p>
+          <p className="user-status-text">@{data.userName}</p>
 
           <div className="user-status-icon"> </div>
         </div>

@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-
-import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import { SoundMeter } from '../assets/js/soundmeter'
-import useLiveChat, { LiveChatMessageType } from './useLiveChat'
-
+import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
+import StreamService from '../services/StreamService'
+import { ServiceStreamingType, StreamingType, StreamType } from '../types/StreamingType.d'
 import { UserType } from '../types/UserType.d'
+import useLiveChat, { LiveChatMessageType } from './useLiveChat'
 import useUser from './useUser'
 
 type AvailableDeviceType = { deviceId: string; selected: boolean }
 type LiveStatusType = 'WAITING' | 'ON_AIR'
 
-const streamingName = 'lupanarStream' // ADDED INTO PROPSs
+// const streamingName = '201e3b7b-5348-47f7-909d-fa16e8ecacae' // ADDED INTO PROPSs
 const bitrate = 900 // 900 ~ 2500
 const maxVideoBitrateKbps = bitrate
 let webRTCAdaptor: any = {}
+let streamingName = ''
+let tokenId = ''
 let autoRepublishIntervalJob: any
 
 const appName = process.env.REACT_APP_ANTMEDIA_APPNAME
@@ -39,6 +41,7 @@ const useLive = () => {
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
   const [liveStatus, setLiveStatus] = useState<LiveStatusType>('WAITING')
+  const [streamData, setStreamData] = useState<StreamingType>()
   const [micToggle, setMicToggle] = useState<boolean>(true)
 
   const initWebRTCAdaptor = useCallback(() => {
@@ -92,12 +95,16 @@ const useLive = () => {
   }, [])
 
   useEffect(() => {
-    getUser().then((user: UserType) => {
-      console.log(user)
-      setUserName(user.userName)
-    })
+    StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
+      setStreamData(data.data)
+      streamingName = data.data.streamId
+      tokenId = data.data.tokenId
+      getUser().then((user: UserType) => {
+        setUserName(user.userName)
+      })
 
-    initWebRTCAdaptor()
+      initWebRTCAdaptor()
+    })
 
     // if (videoRef.current) {
     //   const video: any = videoRef.current
@@ -157,7 +164,7 @@ const useLive = () => {
   }
 
   const publish = () => {
-    webRTCAdaptor.publish(streamingName, '')
+    webRTCAdaptor.publish(streamingName, tokenId)
     enableAudioLevel()
   }
 

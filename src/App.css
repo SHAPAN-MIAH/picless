@@ -123,7 +123,7 @@
 
 /* REACT-ELASTIC-CAROUSEL CUSTOM STYLES*/
 .rec.rec-carousel {
-  background-color: #212529;
+  background-color:  #fff/*#212529*/;
   top: 0px;
   left: 0px;
   width: inherit;

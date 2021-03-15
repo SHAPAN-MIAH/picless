@@ -1,10 +1,11 @@
 .imageContainer {
   top: 0px;
   left: 0px;
-
+  margin-top: 25px;
   width: inherit;
   height: fit-content;
   position: relative;
+  height: 302px;
   max-height: 670px;
 }
 

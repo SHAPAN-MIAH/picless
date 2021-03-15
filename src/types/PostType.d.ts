@@ -1,4 +1,10 @@
-import { CommonServiceResponse } from './CommonTypes'
+import { CommonServiceResponse } from './CommonTypes.d'
+
+export enum IMAGE_ORIENTATION {
+  HORIZONTAL = 'horizontal',
+  VERTICAL = 'vertical',
+  square = 'square',
+}
 
 export interface CommonPostType {
   content: string
@@ -9,6 +15,7 @@ export interface CommonPostType {
   videos?: SourceType[]
   startDate?: Date | string
   endDate?: Date | string
+  postType?: string
 }
 export interface PostType extends CommonPostType {
   registerDate: string
@@ -16,8 +23,17 @@ export interface PostType extends CommonPostType {
 }
 
 export interface SourceType {
+  id?: number
   name: string
   pathName: string
+  width?: number
+  height?: number
+  orientation?: IMAGE_ORIENTATION
+  original?: string
+  pathName?: string
+  postId?: number
+  resized?: string
+  thumbnail?: string
 }
 
 export interface TagType {

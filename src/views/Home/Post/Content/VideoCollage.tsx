@@ -1,8 +1,17 @@
 import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
 import { SourceType } from '../../../../types/PostType.d'
 import { videoUrl } from '../../../../utils/ResourceHelpers'
 
-// const VideoCollage: FunctionComponent<{ source: SourceType[]}> = ()
+const VideoComponent = styled.video`
+  max-height: 670px;
+`
+
+const VideoContainer = styled.div`
+  margin-top: 20px;
+  background-color: #212529;
+`
+
 const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = (props) => {
   const { sources } = props
 
@@ -11,12 +20,12 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = (props) => {
       {sources &&
         sources.map((video: any) => {
           return (
-            <div key={`video-${video.id}`} style={{ marginTop: '20px' }}>
-              <video title={video.name} controls width="100%">
+            <VideoContainer key={`video-${video.id}`}>
+              <VideoComponent title={video.name} controls width="100%">
                 <track default kind="captions" />
                 <source src={videoUrl(video.pathName)} type="video/webm" />
-              </video>
-            </div>
+              </VideoComponent>
+            </VideoContainer>
           )
         })}
     </>

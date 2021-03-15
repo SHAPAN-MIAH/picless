@@ -4,7 +4,6 @@ import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
 import FooterPost from './Footer/FooterPost'
-import TagList from './Footer/TagList'
 import HeaderPost from './Header/HeaderPost'
 
 const Post: FunctionComponent<{ data: PostType }> = (props) => {
@@ -42,7 +41,7 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
           {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
 
           <div className="widget-box-status-content" style={{ marginBottom: '25px' }}>
-            {data.tags && <TagList tags={data.tags || []} />}
+            {/* {data.tags && <TagList tags={data.tags || []} />} */}
 
             {/* <div className="content-actions" style={{ flexDirection: 'row-reverse' }}>
               <div className="content-action">
