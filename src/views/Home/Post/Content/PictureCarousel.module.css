@@ -5,7 +5,7 @@
   width: inherit;
   height: fit-content;
   position: relative;
-  height: 302px;
+  min-height: 302px;
   max-height: 670px;
 }
 
