@@ -35,7 +35,7 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
 
   useEffect(() => {
     getUser().then((user) => {
-      setBlocked(user?.verifiedAccount || true)
+      setBlocked(!user?.verifiedAccount)
     })
   }, [])
 
