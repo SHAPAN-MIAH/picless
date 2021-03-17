@@ -1,6 +1,18 @@
 [
   {
     "id": 3,
+    "name": "USD1M0-XX",
+    "planId": "price_0",
+    "paymentProcessor": "Stripe",
+    "amount": 0.0,
+    "amountTaxIncluded": 0.0,
+    "currency": "usd",
+    "intervalCount": 1,
+    "interval": "month",
+    "countryCode": "Generic"
+  },
+  {
+    "id": 3,
     "name": "USD1MA-XX",
     "planId": "price_1ICVogAOWtlkIcF0himwJisN",
     "paymentProcessor": "Stripe",
