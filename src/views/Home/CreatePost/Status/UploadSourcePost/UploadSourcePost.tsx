@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import React, { FunctionComponent, useState } from 'react'
+import { UserType } from 'types/UserType'
 import FormItem from '../../../../../components/Common/Form/FormItem'
 import FormRow from '../../../../../components/Common/Form/FormRow'
 import PostService from '../../../../../services/PostService'
@@ -12,6 +13,7 @@ import PhotoPreview from './PhotoPreview/PhotoPreview'
 import styles from './UploadSourcePost.module.css'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
+  user: UserType
   onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void
   onLoading: (status: boolean) => void
   onRemove: (name: string) => void
@@ -28,47 +30,51 @@ interface FilePreviewType extends File {
 const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
-  const { onUploadedFile, onRemove, onLoading, className } = props
+  const { user, onUploadedFile, onRemove, onLoading, className } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement
-    onLoading(true)
-    if (target.files && target.files.length <= qtyResources) {
-      const files: FilePreviewType[] = selectedFile.concat([])
-      let containsInvalidFormat = false
-
-      for (let i = 0; i < target.files.length; i += 1) {
-        const file: FilePreviewType = (target.files as FileList)[i]
-
-        if (/^image/.test(file.type) || /^video/.test(file.type)) {
-          file.internalName = `${Utils.simpleKeyGenerator(5)}_${file.name}`
-          file.url = URL.createObjectURL((target.files as FileList)[i])
-          file.status = 'PENDING'
-
-          files.push(file)
-        } else {
-          containsInvalidFormat = true
-          break
-        }
-      }
-
-      if (containsInvalidFormat) {
-        alert('There are invalid format, please select images or videos')
-        onLoading(false)
-      } else {
-        setSelectedFile(files)
-        fileUploadHandler(files)
-      }
-    } else if (target.files && target.files.length > qtyResources) {
-      onLoading(false)
-
-      alert('Max 8 photos or videos')
+    if (!user.verifiedAccount) {
+      alert('Need verify account')
     } else {
-      console.error('UNEXPECTED ERROR')
-      onLoading(false)
+      const target = e.target as HTMLInputElement
+      onLoading(true)
+      if (target.files && target.files.length <= qtyResources) {
+        const files: FilePreviewType[] = selectedFile.concat([])
+        let containsInvalidFormat = false
+
+        for (let i = 0; i < target.files.length; i += 1) {
+          const file: FilePreviewType = (target.files as FileList)[i]
+
+          if (/^image/.test(file.type) || /^video/.test(file.type)) {
+            file.internalName = `${Utils.simpleKeyGenerator(5)}_${file.name}`
+            file.url = URL.createObjectURL((target.files as FileList)[i])
+            file.status = 'PENDING'
+
+            files.push(file)
+          } else {
+            containsInvalidFormat = true
+            break
+          }
+        }
+
+        if (containsInvalidFormat) {
+          alert('There are invalid format, please select images or videos')
+          onLoading(false)
+        } else {
+          setSelectedFile(files)
+          fileUploadHandler(files)
+        }
+      } else if (target.files && target.files.length > qtyResources) {
+        onLoading(false)
+
+        alert('Max 8 photos or videos')
+      } else {
+        console.error('UNEXPECTED ERROR')
+        onLoading(false)
+      }
     }
   }
 

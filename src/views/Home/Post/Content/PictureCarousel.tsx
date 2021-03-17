@@ -5,10 +5,8 @@ import { SourceType } from '../../../../types/PostType.d'
 import * as Utils from '../../../../utils/Functions'
 import styles from './PictureCarousel.module.css'
 
-const PictureCarousel: FunctionComponent<{ sources: SourceType[] }> = (props) => {
+const PictureCarousel: FunctionComponent<{ sources: SourceType[] }> = React.memo((props) => {
   const { sources } = props
-
-  // const contentStyle = { width: '75%', height: '75%' }
 
   return (
     <>
@@ -23,6 +21,6 @@ const PictureCarousel: FunctionComponent<{ sources: SourceType[] }> = (props) =>
       </div>
     </>
   )
-}
+})
 
 export default PictureCarousel

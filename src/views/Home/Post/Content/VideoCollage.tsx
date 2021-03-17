@@ -12,7 +12,7 @@ const VideoContainer = styled.div`
   background-color: #212529;
 `
 
-const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = (props) => {
+const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = React.memo((props) => {
   const { sources } = props
 
   return (
@@ -30,6 +30,6 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = (props) => {
         })}
     </>
   )
-}
+})
 
 export default VideoCollage

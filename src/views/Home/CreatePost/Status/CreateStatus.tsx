@@ -39,32 +39,41 @@ const CreateStatus: FunctionComponent<{}> = () => {
   }
 
   const onUploadedFile = (source: { images: SourceType[]; videos: SourceType[] }) => {
-    const imgs = imageList?.concat(source.images) || source.images
-    const vids = videoList?.concat(source.videos) || source.videos
+    if (user.verifiedAccount) {
+      const imgs = imageList?.concat(source.images) || source.images
+      const vids = videoList?.concat(source.videos) || source.videos
 
-    setImageList(imgs)
-    setVideoList(vids)
+      setImageList(imgs)
+      setVideoList(vids)
+    } else {
+      alert('Need verify account')
+    }
   }
 
   const createPost = () => {
     setLoading(true)
     //    const tags = convertToTagType()
+    if (!user.verifiedAccount) {
+      alert('Need verify account')
 
-    const post: CommonPostType = {
-      content,
-      featuredPost: false,
-      tags: [],
-      startDate: scheduleStartDate || '',
-      endDate: scheduleEndDate || '',
-      images: imageList,
-      videos: videoList,
-    }
-
-    PostService.createPost(post).then(() => {
       setLoading(false)
+    } else {
+      const post: CommonPostType = {
+        content,
+        featuredPost: false,
+        tags: [],
+        startDate: scheduleStartDate || '',
+        endDate: scheduleEndDate || '',
+        images: imageList,
+        videos: videoList,
+      }
 
-      cleanCreatePost()
-    })
+      PostService.createPost(post).then(() => {
+        setLoading(false)
+
+        cleanCreatePost()
+      })
+    }
   }
 
   // const convertToTagType = (): TagType[] => {
@@ -100,6 +109,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
           {/* UPLOADPHOTO VIEW */}
           <UploadSourcePost
             className={classNames(styles.uploadPhotosContainer, showUploadPhotos ? styles.active : '')}
+            user={user}
             onUploadedFile={onUploadedFile}
             onLoading={onLoading}
             onRemove={onRemoveImage}

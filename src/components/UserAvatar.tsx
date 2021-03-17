@@ -1,4 +1,6 @@
+import classNames from 'classnames'
 import React, { FunctionComponent, useEffect } from 'react'
+import styles from './UserAvatar.module.css'
 
 type AvatarSize = 'BIG' | 'MEDIUM' | 'SMALL' | 'TINY'
 
@@ -7,13 +9,13 @@ type UserAvatarProps = {
   size?: AvatarSize
 }
 
-const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
+const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
   const { imageName, size = 'SMALL' } = props
 
   const imageUrl = process.env.REACT_APP_BUCKET_IMAGES + imageName
 
   useEffect(() => {
-    if (window.tpl) {
+    if (window.tpl && (size === 'MEDIUM' || size === 'BIG')) {
       window.tpl.load(['user-avatar'])
     }
   }, [imageUrl])
@@ -33,6 +35,19 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
       {size === 'SMALL' && (
         <div className="user-status-avatar">
           <div className="user-avatar small no-outline">
+            <div className={classNames(styles.hex, styles['hex-border-40-44'])}>
+              <div className={classNames(styles.hex, styles['hex-border-35-38'])}>
+                <div
+                  className={classNames(styles.hex, styles['hex-30-32'])}
+                  style={{
+                    background: `url(${imageUrl}) center center / cover no-repeat`,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="user-avatar small no-outline">
             <div className="user-avatar-content">
               <div className="hexagon-image-30-32" data-src={imageUrl} />
             </div>
@@ -44,7 +59,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
             <div className="user-avatar-progress-border">
               <div className="hexagon-border-40-44" />
             </div>
-          </div>
+          </div> */}
         </div>
       )}
 
@@ -88,6 +103,6 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props) => {
       )}
     </>
   )
-}
+})
 
 export default UserAvatar

@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom'
 import UserAvatar from '../../../../components/UserAvatar'
 import { UserType } from '../../../../types/UserType.d'
 
-
-
 type HeaderPostProps = {
   user: UserType
   datePost: Date
 }
 
-const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
+const HeaderPost: FunctionComponent<HeaderPostProps> = React.memo((props) => {
   const { user, datePost } = props
 
   const timeElapsed = moment(datePost).fromNow()
@@ -30,6 +28,6 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = (props) => {
       <p className="user-status-text small">{timeElapsed}</p>
     </div>
   )
-}
+})
 
 export default HeaderPost

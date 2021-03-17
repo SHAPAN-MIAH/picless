@@ -32,6 +32,7 @@ export interface UserType {
   tagLine?: string
   planId?: string
   occupationId?: number
+  verifiedAccount?: boolean
   occupation?: OccupationType
   userInterest?: UserInterestType[]
   userTimeLine?: UserTimeLineType[]

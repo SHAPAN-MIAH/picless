@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import toast from 'react-hot-toast'
 import React, { FunctionComponent } from 'react'
+import toast from 'react-hot-toast'
 import Popup from 'reactjs-popup'
 import SendATip from '../../../UserProfile/Profile/Header/SendATip/SendATip'
 
-const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
+const FooterPost: FunctionComponent<{ user?: any }> = React.memo((props) => {
   const { user } = props
 
   const handleCallback = (status: string, message?: string) => {
@@ -55,6 +55,6 @@ const FooterPost: FunctionComponent<{ user?: any }> = (props) => {
       </div>
     </>
   )
-}
+})
 
 export default FooterPost

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import styled from 'styled-components'
 
 const DivContainer = styled.div`
@@ -7,6 +7,10 @@ const DivContainer = styled.div`
 `
 
 const LivePromotion: FunctionComponent<{}> = () => {
+  useEffect(() => {
+    alert('asdfd')
+  }, [])
+
   return (
     <>
       <DivContainer>

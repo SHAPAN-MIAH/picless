@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Tabs } from '../../../hooks/useProfile'
 import useRouter from '../../../hooks/useRouter'
 
@@ -34,15 +34,6 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
               <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGallery} />
               <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGalleryTab} />
               <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={AboutTab} />
-              <Route
-                path={`${match.path}/`}
-                render={() => {
-                  if (isSubscribed) {
-                    return <Redirect to={`${match.url}/${Tabs.POSTS}`} />
-                  }
-                  return <Redirect to={`${match.url}/${Tabs.ABOUT}`} />
-                }}
-              />
             </Switch>
           </React.Suspense>
         </>
@@ -57,15 +48,6 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
                 component={BlockedContent}
               />
               <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={AboutTab} />
-              <Route
-                path={`${match.path}/`}
-                render={() => {
-                  if (isSubscribed) {
-                    return <Redirect to={`${match.url}/${Tabs.POSTS}`} />
-                  }
-                  return <Redirect to={`${match.url}/${Tabs.ABOUT}`} />
-                }}
-              />
             </Switch>
           </React.Suspense>
         </>

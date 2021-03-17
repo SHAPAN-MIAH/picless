@@ -6,7 +6,7 @@ import VideoCollage from './Content/VideoCollage'
 import FooterPost from './Footer/FooterPost'
 import HeaderPost from './Header/HeaderPost'
 
-const Post: FunctionComponent<{ data: PostType }> = (props) => {
+const Post: FunctionComponent<{ data: PostType }> = React.memo((props) => {
   const { data } = props
 
   const listImages: SourceType[] = data.images || []
@@ -17,20 +17,6 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
-        <div className="widget-box-settings">
-          <div className="post-settings-wrap">
-            <div className="post-settings widget-box-post-settings-dropdown-trigger">
-              <svg className="post-settings-icon icon-more-dots">
-                <use xlinkHref="#svg-more-dots" />
-              </svg>
-            </div>
-
-            <div className="simple-dropdown widget-box-post-settings-dropdown">
-              <p className="simple-dropdown-link">Report Author</p>
-            </div>
-          </div>
-        </div>
-
         <div className="widget-box-status">
           <div className="widget-box-status-content">
             <HeaderPost user={data.users || {}} datePost={datePost} />
@@ -57,6 +43,6 @@ const Post: FunctionComponent<{ data: PostType }> = (props) => {
       </div>
     </>
   )
-}
+})
 
 export default Post

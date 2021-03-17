@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import SinglePost from 'views/Home/SinglePost'
 import AuthorizationContext from '../context/AuthorizationContext'
 import AddCard from '../views/Account/Card/AddCard'
 import Movements from '../views/Account/Movements'
@@ -74,6 +75,8 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/account/add-bank" component={AddBank} />
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
+
+              <ProtectedRoute {...routerProps} path="/u/:username/post/:id" exact component={SinglePost} />
               {/* <ProtectedRoute
                 {...routerProps}
                 path={['/u/:username', '/u/:username/', '/u/:username/:tab']}

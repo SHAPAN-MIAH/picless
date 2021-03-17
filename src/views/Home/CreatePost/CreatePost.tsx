@@ -1,18 +1,43 @@
 import classNames from 'classnames'
-import React, { FunctionComponent, useState } from 'react'
+import useUser from 'hooks/useUser'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import styled from 'styled-components'
 import CreateLive from './Live/CreateLive'
 import CreateStatus from './Status/CreateStatus'
 
 export type TabNamesType = 'STATUS' | 'LIVE' | 'POLL'
 
+const BlockedDiv = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 310px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: #212529;
+  opacity: 0.5;
+  border-radius: 14px;
+  margin-top: -326px;
+`
+
 const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => void }> = (props) => {
   const { selectedTab } = props
   const [currentTab, setCurrentTab] = useState<TabNamesType>('STATUS')
+  const [blocked, setBlocked] = useState<boolean>(true)
+
+  const { getUser } = useUser()
 
   const changeTab = (tabName: TabNamesType) => {
     setCurrentTab(tabName)
     selectedTab(tabName)
   }
+
+  useEffect(() => {
+    getUser().then((user) => {
+      setBlocked(user?.verifiedAccount || true)
+    })
+  }, [])
 
   return (
     <>
@@ -49,6 +74,12 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
         {currentTab === 'LIVE' && <CreateLive />}
         {currentTab === 'POLL' && <h1>POLL</h1>}
       </div>
+
+      {blocked && (
+        <BlockedDiv>
+          <h3 style={{ color: 'whitesmoke', marginTop: '145px' }}>Need verify account</h3>
+        </BlockedDiv>
+      )}
     </>
   )
 }
