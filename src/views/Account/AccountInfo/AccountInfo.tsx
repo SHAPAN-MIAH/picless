@@ -24,12 +24,12 @@ type FormValues = {
   fullName: string
   email: string
   userName: string
-  recoveryEmail: string
+  emailRecovery: string
   phoneNumber: string
   planId: string
 }
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'recoveryEmail', 'phoneNumber', 'planId']
+const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId']
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -155,11 +155,11 @@ const AccountInfo: FunctionComponent<{}> = () => {
                       control={control}
                       as={TextInput}
                       type="text"
-                      name="recoveryEmail"
+                      name="emailRecovery"
                       defaultValue=""
                       placeholder={t('accountInfo.recoveryEmailField')}
                       classNameFormInput="small active"
-                      errorMessage={errors.recoveryEmail?.message}
+                      errorMessage={errors.emailRecovery?.message}
                     />
                   </FormItem>
                 </FormRow>
