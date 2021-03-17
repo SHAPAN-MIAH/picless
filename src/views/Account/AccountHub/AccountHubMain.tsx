@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import useUser from '../../../hooks/useUser'
 
 import UploadBox from '../../../components/Common/UploadBox'
-import UserAvatar from 'components/UserAvatar'
+import UserAvatar from '../../../components/UserAvatar'
 
 const GridDiv = styled.div`
   justify-content: center;
@@ -20,12 +20,12 @@ const AccountHubMain: FunctionComponent<{}> = () => {
   const { getUser } = useUser()
 
   const [imageCover, setImageCover] = useState()
-  const [imageProfile, setImageProfile] = useState()
+  const [imageProfile, setImageProfile] = useState('')
 
   useEffect(() => {
     getUser().then((user) => {
       setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
-      setImageProfile(process.env.REACT_APP_BUCKET_IMAGES + user.profilePicture)
+      setImageProfile(user.profilePicture)
     })
   }, [getUser])
 
@@ -42,35 +42,8 @@ const AccountHubMain: FunctionComponent<{}> = () => {
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
 
-        <div className="user-preview-info">
-          <div className="user-short-description small">
-            <div className="user-short-description-avatar user-avatar">
-              <div className="user-avatar-border">
-                <div className="hexagon-100-110" />
-              </div>
-
-              <div className="user-avatar-content">
-                <div
-                  className="hex"
-                  style={{
-                    width: '68px',
-                    height: '74px',
-                    background: `url(${imageProfile}) center center / cover no-repeat`,
-                  }}
-                >
-                  <img src={imageProfile} alt="cover-01" style={{ display: 'none' }} />
-                </div>
-              </div>
-
-              <div className="user-avatar-progress">
-                <div className="hexagon-progress-84-92" />
-              </div>
-
-              <div className="user-avatar-progress-border">
-                <div className="hexagon-border-84-92" />
-              </div>
-            </div>
-          </div>
+        <div className="user-short-description">
+          <UserAvatar size="MEDIUM" imageName={imageProfile || ''} />
         </div>
       </div>
 

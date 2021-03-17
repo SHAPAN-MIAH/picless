@@ -13,6 +13,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
   const { imageName, size = 'SMALL' } = props
 
   const imageUrl = process.env.REACT_APP_BUCKET_IMAGES + imageName
+  console.log(imageName)
 
   return (
     <>

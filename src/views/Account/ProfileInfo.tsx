@@ -30,14 +30,7 @@ type FormValues = {
 }
 
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = [
-  'userName',
-  'profileDescription',
-  'countryCode',
-  'cityName',
-  'occupationId',
-  'birthDate',
-]
+const formFields: formFieldsNames[] = ['profileDescription', 'countryCode', 'cityName', 'occupationId', 'birthDate']
 
 const ProfileInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -115,44 +108,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                     <FormItem>
                       <Controller
                         control={control}
-                        as={TextInput}
-                        type="text"
-                        name="userName"
-                        defaultValue=""
-                        required
-                        disabled
-                        classNameFormInput="small"
-                        placeholder={t('profileInfo.profileNameField')}
-                        errorMessage={errors.userName?.message}
-                      />
-                    </FormItem>
-                    <FormItem>
-                      <div className="form-input-decorated">
-                        <Controller
-                          control={control}
-                          name="birthDate"
-                          defaultValue=""
-                          render={(propsController) => (
-                            <DatePickerForm
-                              name={propsController.name}
-                              ref={propsController.ref}
-                              customInputRef="birthdayRef"
-                              classNameFormInput="small"
-                              placeholderText={t('profileInfo.birthdayField')}
-                              selected={propsController.value}
-                              onChange={(date: any) => propsController.onChange(date)}
-                              iconName="events"
-                            />
-                          )}
-                        />
-                      </div>
-                    </FormItem>
-                  </FormRow>
-
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <Controller
-                        control={control}
                         as={TextArea}
                         name="profileDescription"
                         defaultValue=""
@@ -193,8 +148,28 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                     </FormItem>
                   </FormRow>
 
-                  <FormRow>
-                    <FormItem> </FormItem>
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <div className="form-input-decorated">
+                        <Controller
+                          control={control}
+                          name="birthDate"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <DatePickerForm
+                              name={propsController.name}
+                              ref={propsController.ref}
+                              customInputRef="birthdayRef"
+                              classNameFormInput="small"
+                              placeholderText={t('profileInfo.birthdayField')}
+                              selected={propsController.value}
+                              onChange={(date: any) => propsController.onChange(date)}
+                              iconName="events"
+                            />
+                          )}
+                        />
+                      </div>
+                    </FormItem>
                     <FormItem>
                       <Controller
                         control={control}
