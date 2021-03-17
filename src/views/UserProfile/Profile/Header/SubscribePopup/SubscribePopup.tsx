@@ -85,7 +85,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (selectedPlan) {
+    if (selectedPlan && selectedPlan.name !== 'USD1M0-XX') {
       setLoading(true)
 
       console.log(defaultCard)
@@ -113,6 +113,8 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           }
         }
       )
+    } else {
+      subscribeToUser('', 0)
     }
   }
 
