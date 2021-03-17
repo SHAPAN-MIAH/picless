@@ -54,7 +54,7 @@ const Header: FunctionComponent<{}> = () => {
           <div className="action-list dark">
             <div className="action-list-item-wrap">
               <Link to="/user/home" className="action-list-item">
-                <FontAwesomeIcon icon="bars" size="lg" color="#8b88ff" />
+                <FontAwesomeIcon icon="home" size="lg" color="#8b88ff" />
               </Link>
             </div>
 
