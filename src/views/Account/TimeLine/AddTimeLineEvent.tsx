@@ -25,7 +25,6 @@ type FormValues = {
 
 const Form = styled.form`
   padding: 15px;
-  background-color: rgba(173, 175, 202, 0.15);
   border-radius: 10px;
 `
 
