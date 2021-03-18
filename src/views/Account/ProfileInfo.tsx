@@ -56,8 +56,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
           if (field === 'birthDate') setValue(field, new Date(value))
           else setValue(field as formFieldsNames, value || '')
-
-          window.tpl.load(['user-avatar'])
         })
       })
       .catch((err) => {

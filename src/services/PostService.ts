@@ -52,7 +52,7 @@ const getPosts = async (page = 0): Promise<ServicePostType> => {
   return body
 }
 
-const getMedia = async (type: 'photos' | 'videos', page = 0, userId: number): Promise<ServiceMediaTypes> => {
+const getMedia = async (type: 'images' | 'videos', page = 0, userId: number): Promise<ServiceMediaTypes> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {

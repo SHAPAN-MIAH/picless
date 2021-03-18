@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
@@ -72,10 +71,10 @@ const useProfile = (props?: { disableMount: boolean }) => {
     }
   }, [username])
 
-  const getPosts = async (): Promise<void> => {
-    return PostService.getPosts().then((p: ServicePostType): void => {
+  const getPosts = async (page?: number): Promise<void> => {
+    return PostService.getPosts(page).then((p: ServicePostType): void => {
       if (p.code === '0') {
-        setPosts(_.reverse(p.posts || []))
+        setPosts([...posts, ...p.posts])
       } else {
         toast.error('Error loading posts')
       }
@@ -83,11 +82,11 @@ const useProfile = (props?: { disableMount: boolean }) => {
   }
 
   const getPhotos = async (page?: number): Promise<void> => {
-    return PostService.getMedia('photos', page, provider.id || 0).then((data: ServiceMediaTypes): void => {
+    return PostService.getMedia('images', page, provider.id || 0).then((data: ServiceMediaTypes): void => {
       if (data.code === '0') {
-        setPhotos(data.mediaFiles || [])
+        setPhotos([...photos, ...data.mediaFiles])
       } else {
-        toast.error('Error loading photos')
+        toast.error('Error loading images')
       }
     })
   }
@@ -96,7 +95,7 @@ const useProfile = (props?: { disableMount: boolean }) => {
     return PostService.getMedia('videos', page, provider.id || 0)
       .then((data: ServiceMediaTypes): void => {
         if (data.code === '0') {
-          setVideos(data.mediaFiles || [])
+          setVideos([...videos, ...data.mediaFiles])
         } else {
           toast.error('Error loading videos')
         }

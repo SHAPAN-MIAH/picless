@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
 import useProfile from '../../../hooks/useProfile'
+import useUser from '../../../hooks/useUser'
 import UserHeader from './Header/UserHeader'
 import ProfileRoutes from './ProfileRoutes'
 import SectionMenu from './SectionMenu/SectionMenu'
 
 const Profile: FunctionComponent<{}> = () => {
   const { loading, isSubscribed, provider } = useProfile()
+  const { user } = useUser()
 
   return (
     <>
@@ -24,7 +26,7 @@ const Profile: FunctionComponent<{}> = () => {
 
             <SectionMenu />
 
-            <ProfileRoutes isSubscribed={isSubscribed} />
+            <ProfileRoutes isSubscribed={isSubscribed} isOwner={user.userName === provider.userName} />
           </>
         )}
       </div>

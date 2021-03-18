@@ -25,9 +25,6 @@ const Home: FunctionComponent<{}> = () => {
       setPosts([...posts, ...info.posts])
 
       setPage(page + 1)
-      if (window.tpl) {
-        window.tpl.load(['user-avatar'])
-      }
     })
   }
 

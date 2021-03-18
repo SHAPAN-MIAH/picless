@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import Carousel from 'react-elastic-carousel'
-import 'reactjs-popup/dist/index.css'
+import ImageWithPopupView from '../../../../components/ImageWithPopupView/ImageWithPopupView'
 import { SourceType } from '../../../../types/PostType.d'
 import * as Utils from '../../../../utils/Functions'
 import styles from './PictureCarousel.module.css'
@@ -14,7 +14,7 @@ const PictureCarousel: FunctionComponent<{ sources: SourceType[] }> = React.memo
         <Carousel isRTL={false}>
           {sources.map((item: SourceType) => (
             <div key={Utils.simpleKeyGenerator(5)}>
-              <img loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
+              <ImageWithPopupView image={item} />
             </div>
           ))}
         </Carousel>

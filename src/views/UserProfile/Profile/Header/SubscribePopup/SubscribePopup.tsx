@@ -50,10 +50,6 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
         })
     }
 
-    if (window.tpl) {
-      window.tpl.load(['user-avatar'])
-    }
-
     const script = document.createElement('script')
     script.setAttribute('id', 'mainScriptSecurionPay')
     script.src = 'https://securionpay.com/js/securionpay.js'
@@ -101,7 +97,6 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
         },
         (token: any) => {
           if (token.error) {
-            alert(JSON.stringify(token))
             setLoading(false)
           } else if (token.threeDSecureInfo.liabilityShift === 'successful') {
             subscribeToUser(token, securionPayAmount)
