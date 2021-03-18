@@ -102,7 +102,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
                 control={control}
                 as={SelectForm}
                 name="yearSarted"
-                placeholder={t('accountInfo.timeline.newYearStarted')}
+                placeholder={t('profileInfo.timeline.newYearStarted')}
                 options={years}
               />
             </FormItem>
@@ -111,7 +111,7 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
                 control={control}
                 as={SelectForm}
                 name="yearEnded"
-                placeholder={t('accountInfo.timeline.newYearEnded')}
+                placeholder={t('profileInfo.timeline.newYearEnded')}
                 options={years}
               />
             </FormItem>
