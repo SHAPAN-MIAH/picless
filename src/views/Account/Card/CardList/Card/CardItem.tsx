@@ -1,9 +1,7 @@
-import React, { FunctionComponent } from 'react'
-import Popup from 'reactjs-popup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-import { CardType } from '../../../../../types/PaymentTypes.d'
+import React, { FunctionComponent } from 'react'
 import ProviderIconCard from '../../../../../components/Common/ProviderIconCard'
+import { CardType } from '../../../../../types/PaymentTypes.d'
 
 type CardItemProps = {
   card: CardType

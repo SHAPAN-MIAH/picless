@@ -1,12 +1,12 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
-
-import useUser from '../../../hooks/useUser'
-
+import styled from 'styled-components'
 import UploadBox from '../../../components/Common/UploadBox'
 import UserAvatar from '../../../components/UserAvatar'
+import useUser from '../../../hooks/useUser'
+
+
 
 const GridDiv = styled.div`
   justify-content: center;
@@ -43,7 +43,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
         </div>
 
         <div className="user-short-description">
-          <UserAvatar size="MEDIUM" imageName={imageProfile || ''} />
+          <UserAvatar size="S" imageName={imageProfile || ''} />
         </div>
       </div>
 

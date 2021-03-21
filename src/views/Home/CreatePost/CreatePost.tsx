@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import useUser from 'hooks/useUser'
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import CreateLive from './Live/CreateLive'
 import CreateStatus from './Status/CreateStatus'
@@ -75,9 +76,10 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
         {currentTab === 'POLL' && <h1>POLL</h1>}
       </div>
 
-      {blocked && (
+      {!blocked && (
         <BlockedDiv>
           <h3 style={{ color: 'whitesmoke', marginTop: '145px' }}>Need verify account</h3>
+          <Link to="/account/verification">You can verify your account here</Link>
         </BlockedDiv>
       )}
     </>

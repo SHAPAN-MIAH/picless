@@ -2,22 +2,22 @@ import classNames from 'classnames'
 import React, { FunctionComponent } from 'react'
 import styles from './UserAvatar.module.css'
 
-type AvatarSize = 'BIG' | 'MEDIUM' | 'SMALL' | 'TINY'
+type AvatarSize = 'XL' | 'L' | 'M' | 'S' | 'XS'
 
 type UserAvatarProps = {
   imageName: string
   size?: AvatarSize
+  removeContainerStyle?: boolean
 }
 
 const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
-  const { imageName, size = 'SMALL' } = props
+  const { imageName, size = 'S', removeContainerStyle = false } = props
 
   const imageUrl = process.env.REACT_APP_BUCKET_IMAGES + imageName
-  console.log(imageName)
 
   return (
     <>
-      {size === 'TINY' && (
+      {size === 'XS' && (
         <div className="user-avatar tiny no-border">
           <div className="user-avatar-content">
             <div
@@ -27,7 +27,8 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
           </div>
         </div>
       )}
-      {size === 'SMALL' && (
+
+      {size === 'S' && !removeContainerStyle && (
         <div className="user-status-avatar">
           <div className="user-avatar small no-outline">
             <div className={classNames(styles.hex, styles['hex-border-44'])}>
@@ -42,7 +43,29 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
         </div>
       )}
 
-      {size === 'MEDIUM' && (
+      {size === 'S' && removeContainerStyle && (
+        <div className={classNames(styles.hex, styles['hex-border-44'])}>
+          <div
+            className={classNames(styles.hex, styles['hex-38'])}
+            style={{
+              background: `url(${imageUrl}) center center / cover no-repeat`,
+            }}
+          />
+        </div>
+      )}
+
+      {size === 'M' && removeContainerStyle && (
+        <div className={classNames(styles.hex, styles['hex-border-64'])}>
+          <div
+            className={classNames(styles.hex, styles['hex-54'])}
+            style={{
+              background: `url(${imageUrl}) center center / cover no-repeat`,
+            }}
+          />
+        </div>
+      )}
+
+      {size === 'L' && (
         <div className="user-short-description-avatar user-short-description-avatar-mobile user-avatar medium">
           <div className={classNames(styles.hex, styles['hex-border-126'])}>
             <div
@@ -55,7 +78,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
         </div>
       )}
 
-      {size === 'BIG' && (
+      {size === 'XL' && (
         <div className="user-short-description-avatar user-avatar big">
           <div className={classNames(styles.hex, styles['hex-border-164'])}>
             <div
@@ -65,20 +88,6 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
               }}
             />
           </div>
-          {/* <div className="user-avatar-border">
-            <div className="hexagon-148-164" />
-          </div>
-          <div className="user-avatar-content">
-            <div className="hexagon-image-100-110" data-src={imageUrl} />
-          </div>
-
-          <div className="user-avatar-progress">
-            <div className="hexagon-progress-124-136" />
-          </div>
-
-          <div className="user-avatar-progress-border">
-            <div className="hexagon-border-124-136" />
-          </div> */}
         </div>
       )}
     </>

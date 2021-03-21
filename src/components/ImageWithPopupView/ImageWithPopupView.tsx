@@ -4,6 +4,14 @@ import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType } from '../../types/PostType.d'
 
+const StyledPopup = styled(Popup)`
+  &-content {
+    width: 78%;
+    padding: 0;
+    border: solid 0px;
+  }
+`
+
 const ImageImg = styled.img`
   width: 100%;
   height: 100%;
@@ -26,10 +34,10 @@ const CloseButtonDiv = styled.div`
 
 const ImageWithPopupView: FunctionComponent<{ image: SourceType }> = (props) => {
   const { image } = props
-  const contentStyle = { width: '75%', height: '75%' }
+
   return (
     <>
-      <Popup modal {...contentStyle} trigger={<img loading="lazy" decoding="async" src={image?.resized} alt={image.name} />}>
+      <StyledPopup modal trigger={<img loading="lazy" decoding="async" src={image?.resized} alt={image.name} />}>
         {(close: any) => {
           return (
             <>
@@ -41,13 +49,10 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType }> = (props) => 
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
               <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name} />
-              <a href={image?.resized} target="_blank" rel="noopener noreferrer">
-                Open Original
-              </a>
             </>
           )
         }}
-      </Popup>
+      </StyledPopup>
     </>
   )
 }

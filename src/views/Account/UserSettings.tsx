@@ -1,22 +1,22 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
 import classNames from 'classnames'
-import Loader from 'react-loader-spinner'
-import { useTranslation } from 'react-i18next'
-
 import _ from 'lodash'
-
-import useUser from '../../hooks/useUser'
-
-import FormItem from '../../components/Common/Form/FormItem'
-import FormRow from '../../components/Common/Form/FormRow'
-import CheckboxForm from '../../components/Common/CheckboxForm'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import Loader from 'react-loader-spinner'
+import * as Yup from 'yup'
 import Alert from '../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
-
+import CheckboxForm from '../../components/Common/CheckboxForm'
+import FormItem from '../../components/Common/Form/FormItem'
+import FormRow from '../../components/Common/Form/FormRow'
+import useUser from '../../hooks/useUser'
 import { UserSettingsType } from '../../types/UserType.d'
+
+
+
+
 
 type FormValues = {
   enabledPushNotifications: boolean
@@ -86,7 +86,7 @@ const UserSettings: FunctionComponent<{}> = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }, [getSettings, setValue])
 
   const onSubmit = (values: UserSettingsType) => {
     return updateSettings(values).catch((err) => {

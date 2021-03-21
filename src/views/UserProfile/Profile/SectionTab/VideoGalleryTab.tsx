@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
@@ -7,8 +7,8 @@ import useProfile from '../../../../hooks/useProfile'
 
 const noVideos = 'Nothing to show'
 
-const LoaderDiv = () => (
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
+const LoaderDiv = (
+  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
   </div>
 )
@@ -18,6 +18,13 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const [loading, setLoading] = useState<boolean>()
   const [page, setPage] = useState<number>(0)
 
+  const getVideoList = useCallback(() => {
+    getVideos(page).then(() => {
+      setLoading(false)
+      setPage(page + 1)
+    })
+  }, [])
+
   useEffect(() => {
     setLoading(true)
     if (provider && videos && videos.length === 0) {
@@ -26,14 +33,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     } else setLoading(false)
-  }, [])
-
-  const getVideoList = () => {
-    getVideos(page).then(() => {
-      setLoading(false)
-      setPage(page + 1)
-    })
-  }
+  }, [getVideoList])
 
   if (loading) {
     return (

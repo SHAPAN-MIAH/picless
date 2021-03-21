@@ -1,8 +1,13 @@
 import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
 import LiquidImage from '../../../../components/Common/LiquidImage'
+import UserAvatar from '../../../../components/UserAvatar'
 import { SubscriptorListType } from '../../../../types/UserType.d'
 
-
+const LinkUserA = styled.a`
+  left: -32px !important;
+  margin-top: -3px;
+`
 
 interface SubscriptorProps {
   subscriptor: SubscriptorListType
@@ -13,7 +18,10 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
   const { suscribeUser } = subscriptor
 
   const imageCover = process.env.REACT_APP_BUCKET_IMAGES + suscribeUser.coverPicture
-  const imageProfile = process.env.REACT_APP_BUCKET_IMAGES + suscribeUser.profilePicture
+
+  const onUnsubscribe = () => {
+    prompt('Are you sure to unsubscribe to the user')
+  }
 
   return (
     <>
@@ -22,23 +30,9 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
 
         <div className="user-preview-info">
           <div className="user-short-description landscape tiny">
-            <a className="user-short-description-avatar user-avatar small" href={`/u/${suscribeUser.userName}`}>
-              <div className="user-avatar-border">
-                <div className="hexagon-50-56" />
-              </div>
-
-              <div className="user-avatar-content">
-                <div className="hexagon-image-30-32" data-src={imageProfile} />
-              </div>
-
-              <div className="user-avatar-progress">
-                <div className="hexagon-progress-40-44" />
-              </div>
-
-              <div className="user-avatar-progress-border">
-                <div className="hexagon-border-40-44" />
-              </div>
-            </a>
+            <LinkUserA className="user-short-description-avatar user-avatar small" href={`/u/${suscribeUser.userName}`}>
+              <UserAvatar size="M" imageName={suscribeUser.profilePicture} removeContainerStyle />
+            </LinkUserA>
 
             <p className="user-short-description-title">
               <a href={`/u/${suscribeUser.userName}`}>{suscribeUser.userName}</a>
@@ -76,9 +70,15 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
               </svg>
             </p> */}
 
-            <a href={`/user/messages/${suscribeUser.id}`} className="button primary">
+            <a href={`/user/messages/${suscribeUser.id}`} className="button primary" title="Send a message">
               <svg className="button-icon icon-comment">
                 <use xlinkHref="#svg-comment" />
+              </svg>
+            </a>
+
+            <a href="" onClick={onUnsubscribe} className="button secundary" title="Unsubscribe">
+              <svg className="button-icon icon-cross">
+                <use xlinkHref="#svg-cross" />
               </svg>
             </a>
           </div>

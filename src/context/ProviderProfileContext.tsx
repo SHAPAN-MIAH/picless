@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { MediaType, PostType } from '../types/PostType.d'
+import { PostType, SourceType } from '../types/PostType.d'
 import { UserProfileType } from '../types/UserType.d'
 
 interface ProviderProfileContextProps {
@@ -9,10 +9,10 @@ interface ProviderProfileContextProps {
   setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>
   posts: PostType[]
   setPosts: React.Dispatch<React.SetStateAction<PostType[]>>
-  photos: MediaType[]
-  setPhotos: React.Dispatch<React.SetStateAction<MediaType[]>>
-  videos: MediaType[]
-  setVideos: React.Dispatch<React.SetStateAction<MediaType[]>>
+  photos: SourceType[]
+  setPhotos: React.Dispatch<React.SetStateAction<SourceType[]>>
+  videos: SourceType[]
+  setVideos: React.Dispatch<React.SetStateAction<SourceType[]>>
   cleanProfile: () => void
 }
 
@@ -50,8 +50,8 @@ export const ProviderProfileContextProvider = (props: { children: ReactNode }) =
   const [provider, setProvider] = useState<UserProfileType>({} as UserProfileType)
   const [posts, setPosts] = useState<PostType[]>([])
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
-  const [photos, setPhotos] = useState<MediaType[]>([])
-  const [videos, setVideos] = useState<MediaType[]>([])
+  const [photos, setPhotos] = useState<SourceType[]>([])
+  const [videos, setVideos] = useState<SourceType[]>([])
 
   const cleanProfile = () => {
     setProvider(defaultContextValues.provider)

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
@@ -6,8 +6,8 @@ import useProfile from '../../../../hooks/useProfile'
 import { simpleKeyGenerator } from '../../../../utils/Functions'
 import Post from '../../../Home/Post/Post'
 
-const LoaderDiv = () => (
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
+const LoaderDiv = (
+  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
   </div>
 )
@@ -17,6 +17,13 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
   const [loading, setLoading] = useState<boolean>()
   const [page, setPage] = useState<number>(0)
 
+  const getPostList = useCallback(() => {
+    getPosts(page).then(() => {
+      setLoading(false)
+      setPage(page + 1)
+    })
+  }, [getPosts, setPage])
+
   useEffect(() => {
     setLoading(true)
     if (provider && posts && posts.length === 0) {
@@ -25,14 +32,7 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     } else setLoading(false)
-  }, [])
-
-  const getPostList = () => {
-    getPosts(page).then(() => {
-      setLoading(false)
-      setPage(page + 1)
-    })
-  }
+  }, [getPostList])
 
   if (loading) {
     return (

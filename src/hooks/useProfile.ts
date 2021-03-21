@@ -15,8 +15,6 @@ export enum Tabs {
   ABOUT = 'about',
 }
 
-const defaultTab = Tabs.ABOUT
-
 const useProfile = (props?: { disableMount: boolean }) => {
   const {
     provider,

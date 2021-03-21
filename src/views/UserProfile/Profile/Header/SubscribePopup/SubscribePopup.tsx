@@ -154,7 +154,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           <FormRowItem>
             <div className={styles.userInfoContainer}>
               <div className={styles.userInfoImage}>
-                <UserAvatar size="SMALL" imageName={imageProfile} />
+                <UserAvatar size="M" imageName={imageProfile} />
               </div>
               <div className={styles.userInfoName}>
                 <p className="user-status-title">

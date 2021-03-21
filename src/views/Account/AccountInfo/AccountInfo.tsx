@@ -1,24 +1,18 @@
-import React, { FunctionComponent, useEffect } from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
+import _ from 'lodash'
+import React, { FunctionComponent, useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import _ from 'lodash'
-
-import useUser from '../../../hooks/useUser'
-
-import plans from '../../../constants/plans.json'
-
+import * as Yup from 'yup'
+import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
-import TextInput from '../../../components/Common/TextInput'
-
 import FormRow from '../../../components/Common/Form/FormRow'
 import SelectForm, { SelectOptionsType } from '../../../components/Common/SelectForm'
-import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-
+import TextInput from '../../../components/Common/TextInput'
+import plans from '../../../constants/plans.json'
+import useUser from '../../../hooks/useUser'
 import { UserType } from '../../../types/UserType.d'
-import { PlansType } from '../../../types/PaymentTypes.d'
 
 type FormValues = {
   fullName: string

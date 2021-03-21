@@ -1,19 +1,14 @@
-import React, { FormEvent, FunctionComponent, useState } from 'react'
-
-import { useTranslation } from 'react-i18next'
-import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import React, { FunctionComponent, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
-
-import FormRowItem from '../../../../components/Common/Form/FormRowItem'
-import FormRow from '../../../../components/Common/Form/FormRow'
-
-import TextInput from '../../../../components/Common/TextInput'
-
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+import FormRow from '../../../../components/Common/Form/FormRow'
+import FormRowItem from '../../../../components/Common/Form/FormRowItem'
+import TextInput from '../../../../components/Common/TextInput'
 import useAuth from '../../../../hooks/useAuth'
-import useRouter from '../../../../hooks/useRouter'
 
 type ConfirmEmailProps = { email: string }
 

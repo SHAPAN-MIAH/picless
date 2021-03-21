@@ -57,5 +57,5 @@ export interface MediaType {
 }
 
 export interface ServiceMediaTypes extends CommonServiceResponse {
-  mediaFiles: MediaType[]
+  mediaFiles: SourceType[]
 }

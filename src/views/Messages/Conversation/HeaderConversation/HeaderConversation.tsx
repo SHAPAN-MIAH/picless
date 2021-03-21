@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { FunctionComponent, useCallback } from 'react'
 import Loader from 'react-loader-spinner'
-
+import { useDispatch, useSelector } from 'react-redux'
+import UserAvatar from '../../../../components/UserAvatar'
 import { loadingSelector } from '../../../../redux/Chat/ChatSelectors'
 import { setUserSelected } from '../../../../redux/Chat/ChatThunks'
-
-import UserAvatar from '../../../../components/UserAvatar'
-
 import { UserStatusMessagesType } from '../../../../types/MessagesType.d'
+
+
+
 
 type HeaderConversationProps = {
   user: UserStatusMessagesType
@@ -29,7 +29,7 @@ const HeaderConversation: FunctionComponent<HeaderConversationProps> = (props) =
   return (
     <>
       <div className="user-status">
-        <UserAvatar key={`avatar-${user.userId}`} imageName={user.avatarPicture} size="SMALL" />
+        <UserAvatar key={`avatar-${user.userId}`} imageName={user.avatarPicture} size="S" />
         <div className="chat-widget-settings">
           {loading && <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />}
           {!loading && (

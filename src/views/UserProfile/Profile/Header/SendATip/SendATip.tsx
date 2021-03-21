@@ -1,17 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
-import Alert from 'components/Common/Alerts/Alerts'
-import ButtonWithLoader from 'components/Common/ButtonWithLoader'
-import FormRow from 'components/Common/Form/FormRow'
-import FormRowItem from 'components/Common/Form/FormRowItem'
-import TextArea from 'components/Common/TextArea'
-import TextInput from 'components/Common/TextInput'
-import UserAvatar from 'components/UserAvatar'
 import React, { FunctionComponent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
+import Alert from '../../../../../components/Common/Alerts/Alerts'
+import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
+import FormRow from '../../../../../components/Common/Form/FormRow'
+import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
+import TextArea from '../../../../../components/Common/TextArea'
+import TextInput from '../../../../../components/Common/TextInput'
+import UserAvatar from '../../../../../components/UserAvatar'
 import useUser from '../../../../../hooks/useUser'
 import UserService from '../../../../../services/UserService'
 import { TipType, UserType } from '../../../../../types/UserType.d'
@@ -99,7 +99,7 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
           <FormRowItem>
             <div className={styles.userInfoContainer}>
               <div className={styles.userInfoImage}>
-                <UserAvatar size="SMALL" imageName={user.profilePicture} />
+                <UserAvatar size="S" imageName={user.profilePicture} />
               </div>
               <div className={styles.userInfoName}>
                 <p className="user-status-title">

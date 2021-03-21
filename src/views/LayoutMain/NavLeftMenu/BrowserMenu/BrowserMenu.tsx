@@ -10,9 +10,6 @@ import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
 import { UserType } from '../../../../types/UserType.d'
 
-
-
-
 const BrowserMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
@@ -46,7 +43,7 @@ const BrowserMenu: FunctionComponent<{}> = () => {
         )}
       >
         <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-          <UserAvatar size="SMALL" imageName={imageProfile || ''} />
+          <UserAvatar size="S" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
           {MenuRoutes.map((item) => {
@@ -102,7 +99,7 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
         <div className="user-short-description">
-          <UserAvatar size="MEDIUM" imageName={imageProfile || ''} />
+          <UserAvatar size="L" imageName={imageProfile || ''} />
 
           <p className="user-short-description-title">
             <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>

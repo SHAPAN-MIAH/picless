@@ -1,11 +1,8 @@
-import React, { FunctionComponent } from 'react'
-// import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 
 const FloatyBar: FunctionComponent<{}> = () => {
-  // const { t } = useTranslation()
-
   return (
     <>
       <aside className="floaty-bar">

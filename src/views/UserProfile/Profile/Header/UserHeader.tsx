@@ -36,7 +36,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
     setImageProfile(provider.profilePicture)
     setSubscribed(isSubscribed)
-  }, [provider, isSubscribed])
+  }, [provider, isSubscribed, getUser])
 
   const countryName = GetCountryName(provider.countryCode || '')
 
@@ -50,10 +50,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
           <div className="profile-header-info">
             <div className="user-short-description big">
-              <UserAvatar size="BIG" imageName={imageProfile} />
+              <UserAvatar size="XL" imageName={imageProfile} />
 
               {/* USED FOR MOBILE PROPOUSES */}
-              <UserAvatar size="MEDIUM" imageName={imageProfile} />
+              <UserAvatar size="L" imageName={imageProfile} />
 
               <p className="user-short-description-title">
                 <a href="">{provider.fullName || provider.userName}</a>

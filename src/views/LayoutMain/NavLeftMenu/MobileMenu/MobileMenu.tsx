@@ -10,9 +10,6 @@ import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
 import { UserType } from '../../../../types/UserType.d'
 
-
-
-
 const MobileMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
@@ -54,7 +51,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
         <div className="navigation-widget-info-wrap">
           <div className="navigation-widget-info">
             <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-              <UserAvatar size="SMALL" imageName={user?.profilePicture} />
+              <UserAvatar size="S" imageName={user?.profilePicture} />
             </Link>
 
             <p className="navigation-widget-info-title">

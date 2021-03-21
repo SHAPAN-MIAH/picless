@@ -16,7 +16,7 @@ const HeaderPost: FunctionComponent<HeaderPostProps> = React.memo((props) => {
 
   return (
     <div className="user-status">
-      <UserAvatar imageName={user.profilePicture} size="SMALL" />
+      <UserAvatar imageName={user.profilePicture} size="S" />
 
       <p className="user-status-title medium">
         <Link className="bold" to={`/u/${user.userName}`}>

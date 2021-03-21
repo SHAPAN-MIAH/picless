@@ -23,7 +23,7 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = (props) => {
         window.tpl.load(['sidebar'])
       }
     })
-  }, [location, isAuthenticated])
+  }, [location, isAuthenticated, checkAuthenticated])
 
   if (!isAuthenticated) {
     const renderComponent = () => <Redirect to={{ pathname: authenticationPath }} />

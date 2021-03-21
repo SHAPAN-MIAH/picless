@@ -9,7 +9,7 @@ const SearchBarItem: FunctionComponent<{ data: UserSearchType; onClick: () => vo
     <>
       <Link to={`/u/${data.userName}`} className="dropdown-box-list-item" onClick={onClick}>
         <div className="user-status notification">
-          <UserAvatar imageName={data.avatarPicture} size="SMALL" />
+          <UserAvatar imageName={data.avatarPicture} size="S" />
 
           <p className="user-status-title">
             <span className="bold">{data.fullName}</span>

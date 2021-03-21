@@ -8,8 +8,8 @@ import CreatePost, { TabNamesType } from './CreatePost/CreatePost'
 
 const Post = React.lazy(() => import('./Post/Post'))
 
-const LoaderDiv = () => (
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
+const LoaderDiv = (
+  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
   </div>
 )

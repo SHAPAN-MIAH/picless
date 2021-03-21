@@ -1,24 +1,22 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
-
 import useWallet from '../../../hooks/useWallet'
-
-import Movement from './Movement'
-
 import { MovementType } from '../../../types/PaymentTypes.d'
+import Movement from './Movement'
 
 const MovementList: FunctionComponent<{}> = () => {
   const { loading, movements, getMovements } = useWallet()
 
   const controllerCancelable = new AbortController()
   const { signal } = controllerCancelable
+
   useEffect(() => {
     getMovements(signal)
 
     return () => {
       controllerCancelable.abort()
     }
-  }, [getMovements])
+  }, [getMovements, controllerCancelable, signal])
 
   if (loading) {
     return (

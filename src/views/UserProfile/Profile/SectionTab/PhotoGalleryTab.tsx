@@ -1,14 +1,25 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
+import styled from 'styled-components'
 import Alert from '../../../../components/Common/Alerts/Alerts'
-import LiquidImage from '../../../../components/Common/LiquidImage'
 import useProfile from '../../../../hooks/useProfile'
 
 const noPhotos = 'Nothing to show'
 
-const LoaderDiv = () => (
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
+const ImageContainerDiv = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const ImageImg = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+`
+
+const LoaderDiv = (
+  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
   </div>
 )
@@ -18,6 +29,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const [loading, setLoading] = useState<boolean>()
   const [page, setPage] = useState<number>(0)
 
+  const getPhotosList = useCallback(() => {
+    getPhotos(page).then(() => {
+      setLoading(false)
+      setPage(page + 1)
+    })
+  }, [])
+
   useEffect(() => {
     setLoading(true)
     if (provider && photos && photos.length === 0) {
@@ -26,14 +44,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     } else setLoading(false)
-  }, [])
-
-  const getPhotosList = () => {
-    getPhotos(page).then(() => {
-      setLoading(false)
-      setPage(page + 1)
-    })
-  }
+  }, [getPhotosList])
 
   if (loading) {
     return (
@@ -66,21 +77,18 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                     {photos.map((item) => {
                       return (
                         <>
-                          <div className="photo-preview popup-picture-trigger">
-                            <LiquidImage
-                              className="user-preview-cover"
-                              src={`${process.env.PUBLIC_URL}/img/cover/06.jpg`}
-                              alt="cover-04"
-                            />
-
-                            <div className="photo-preview-info">
+                          <div className="photo-preview ">
+                            <ImageContainerDiv>
+                              <ImageImg src={item.thumbnail} alt={item.name} />
+                            </ImageContainerDiv>
+                            <div className="photo-preview-info" style={{ marginTop: '-184px' }}>
                               <div className="reaction-count-list landscape">
                                 <div className="reaction-count negative">
                                   <svg className="reaction-count-icon icon-comment">
                                     <use xlinkHref="#svg-comment" />
                                   </svg>
 
-                                  <p className="reaction-count-text">View post {item.name}</p>
+                                  <p className="reaction-count-text">View post</p>
                                 </div>
                               </div>
                             </div>
