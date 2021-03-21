@@ -76,7 +76,7 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
         {currentTab === 'POLL' && <h1>POLL</h1>}
       </div>
 
-      {!blocked && (
+      {blocked && (
         <BlockedDiv>
           <h3 style={{ color: 'whitesmoke', marginTop: '145px' }}>Need verify account</h3>
           <Link to="/account/verification">You can verify your account here</Link>
