@@ -59,3 +59,7 @@ export interface MediaType {
 export interface ServiceMediaTypes extends CommonServiceResponse {
   mediaFiles: SourceType[]
 }
+
+export interface ServiceSinglePostType extends CommonServiceResponse {
+  post: PostType
+}

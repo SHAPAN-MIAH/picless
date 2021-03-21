@@ -1,11 +1,16 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import useProfile from '../../../../hooks/useProfile'
 
 const noPhotos = 'Nothing to show'
+
+const ContainerLink = styled(Link)`
+  height: 284px !important;
+`
 
 const ImageContainerDiv = styled.div`
   width: 100%;
@@ -73,26 +78,24 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                 </div>
 
                 <InfiniteScroll dataLength={photos.length} next={getPhotosList} hasMore loader={LoaderDiv}>
-                  <div className="photos-masonry">
+                  <div className="grid grid-3-3-3-3 centered">
                     {photos.map((item) => {
                       return (
                         <>
-                          <div className="photo-preview ">
+                          <ContainerLink
+                            key={item.id}
+                            to={`/u/${provider.userName}/post/${item.postId}`}
+                            className="album-preview"
+                          >
                             <ImageContainerDiv>
                               <ImageImg src={item.thumbnail} alt={item.name} />
                             </ImageContainerDiv>
-                            <div className="photo-preview-info" style={{ marginTop: '-184px' }}>
-                              <div className="reaction-count-list landscape">
-                                <div className="reaction-count negative">
-                                  <svg className="reaction-count-icon icon-comment">
-                                    <use xlinkHref="#svg-comment" />
-                                  </svg>
+                            <div className="album-preview-info" style={{ top: '-284px' }}>
+                              <p className="album-preview-title">View post</p>
 
-                                  <p className="reaction-count-text">View post</p>
-                                </div>
-                              </div>
+                              <p className="album-preview-text">[Needs backend data]</p>
                             </div>
-                          </div>
+                          </ContainerLink>
                         </>
                       )
                     })}

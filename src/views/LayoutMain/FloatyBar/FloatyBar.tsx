@@ -11,9 +11,7 @@ const FloatyBar: FunctionComponent<{}> = () => {
         <div className="bar-actions">
           <div className="action-list dark">
             <a className="action-list-item" href="">
-              <svg className="action-list-item-icon icon-streams">
-                <use xlinkHref="#svg-streams" />
-              </svg>
+              <FontAwesomeIcon icon="home" size="lg" color="#8b88ff " />
             </a>
 
             <a className="action-list-item" href="/user/home">

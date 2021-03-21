@@ -1,4 +1,4 @@
-import { CommonPostType, ServiceMediaTypes, ServicePostType } from '../types/PostType.d'
+import { CommonPostType, ServiceMediaTypes, ServicePostType, ServiceSinglePostType } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
@@ -52,6 +52,22 @@ const getPosts = async (page = 0): Promise<ServicePostType> => {
   return body
 }
 
+const getPostById = async (id = 0): Promise<ServiceSinglePostType> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getpostbyid?id=${id}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 const getMedia = async (type: 'images' | 'videos', page = 0, userId: number): Promise<ServiceMediaTypes> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
@@ -72,5 +88,6 @@ export default {
   uploadPostResource,
   createPost,
   getPosts,
+  getPostById,
   getMedia,
 }

@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react'
-// import PictureCollage from './Content/PictureCollage'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
 import FooterPost from './Footer/FooterPost'
 import HeaderPost from './Header/HeaderPost'
 
-const Post: FunctionComponent<{ data: PostType }> = React.memo((props) => {
-  const { data } = props
+type PostProps = { data: PostType; isSinglePost?: boolean }
+
+const Post: FunctionComponent<PostProps> = React.memo((props) => {
+  const { data, isSinglePost = false } = props
 
   const listImages: SourceType[] = data.images || []
   const listVideos: SourceType[] = data.videos || []
