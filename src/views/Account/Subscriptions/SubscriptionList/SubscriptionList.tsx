@@ -1,23 +1,14 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
-import UserService from '../../../../services/UserService'
 import { SubscriptorListType } from '../../../../types/UserType.d'
 import Subscriptor from './Subscriptor'
 
 const noSubscriptorsMessage = 'Nothing was found'
 
-const SubscriptionList: FunctionComponent<{}> = () => {
-  const [loading, setLoading] = useState(false)
-  const [subscriptions, setSubscriptions] = useState<SubscriptorListType[]>([])
-
-  useEffect(() => {
-    setLoading(true)
-    UserService.getSubscriptions().then((data: any) => {
-      setLoading(false)
-      setSubscriptions(data.suscribers)
-    })
-  }, [])
+type SubscriptionListProps = { loading: boolean; subscriptions: SubscriptorListType[] }
+const SubscriptionList: FunctionComponent<SubscriptionListProps> = (props) => {
+  const { loading, subscriptions } = props
 
   if (loading) {
     return (

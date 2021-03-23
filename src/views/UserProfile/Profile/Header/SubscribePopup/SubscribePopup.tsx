@@ -81,36 +81,10 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (selectedPlan && selectedPlan.name !== 'USD1M0-XX') {
-      setLoading(true)
+    setLoading(true)
 
-      console.log(defaultCard)
-      const securionPayAmount = selectedPlan?.amount * 100
-
-      SecurionPay.setPublicKey(process.env.REACT_APP_SECURIONPAY_PUBLIC_KEY)
-
-      SecurionPay.verifyThreeDSecure(
-        {
-          amount: securionPayAmount,
-          currency: selectedPlan.currency.toUpperCase(),
-          card: defaultCard?.securionPayCardId,
-        },
-        (token: any) => {
-          if (token.error) {
-            setLoading(false)
-          } else if (token.threeDSecureInfo.liabilityShift === 'successful') {
-            subscribeToUser(token, securionPayAmount)
-          } else if (token.threeDSecureInfo.liabilityShift === 'not_possible') {
-            subscribeToUser(token, securionPayAmount)
-          } else {
-            setLoading(false)
-            alert(JSON.stringify('Cancelled by user'))
-          }
-        }
-      )
-    } else {
-      subscribeToUser('', 0)
-    }
+    subscribeToUser('', 0)
+    setLoading(false)
   }
 
   const subscribeToUser = (token: any, amount: number) => {
@@ -154,7 +128,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           <FormRowItem>
             <div className={styles.userInfoContainer}>
               <div className={styles.userInfoImage}>
-                <UserAvatar size="M" imageName={imageProfile} />
+                <UserAvatar size="M" imageName={imageProfile} removeContainerStyle />
               </div>
               <div className={styles.userInfoName}>
                 <p className="user-status-title">

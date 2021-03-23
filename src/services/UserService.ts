@@ -1,13 +1,13 @@
-import * as ApiHelper from './ApiHelpers'
 import {
-  UploadImageType,
-  UserType,
-  TipType,
-  UserSearchType,
+  ServiceSubscriptorListType,
   ServiceUserProfileType,
-  SubscriptorListType,
+  TipType,
+  UploadImageType,
+  UserSearchType,
   UserSettingsType,
+  UserType
 } from '../types/UserType.d'
+import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`
 
@@ -182,14 +182,14 @@ const searchUser = async (keyword: string, signal: AbortSignal): Promise<UserSea
   return body
 }
 
-const getSubscriptions = async (): Promise<SubscriptorListType[]> => {
+const getSubscriptions = async (page = 0): Promise<ServiceSubscriptorListType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
     method: 'GET',
     headers,
   }
-  const url = `${baseUrl}/getsuscribers`
+  const url = `${baseUrl}/getsuscribers?page=${page}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()

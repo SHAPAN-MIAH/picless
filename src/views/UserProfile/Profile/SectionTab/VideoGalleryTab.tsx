@@ -19,10 +19,13 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
 
   const getVideoList = useCallback(() => {
-    getVideos(page).then(() => {
-      setLoading(false)
-      setPage(page + 1)
-    })
+    getVideos(page)
+      .then(() => {
+        setPage(page + 1)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   useEffect(() => {

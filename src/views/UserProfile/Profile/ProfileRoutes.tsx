@@ -27,8 +27,9 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
   const { match } = useRouter()
 
   console.log('-------------------------')
-
+  console.log(isSubscribed)
   console.log(isOwner)
+
   return (
     <>
       {isSubscribed ||
@@ -55,30 +56,26 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
           </>
         ))}
 
-      {!isSubscribed ||
-        (!isOwner && (
-          <>
-            <React.Suspense fallback={Loading}>
-              <Switch>
-                <Route
-                  path={[`${match.path}/${Tabs.POSTS}`, `${match.path}/${Tabs.PHOTOS}`, `${match.path}/${Tabs.VIDEOS}`]}
-                  component={BlockedContent}
-                />
-                <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={AboutTab} />
+      {!isSubscribed && (
+        <>
+          <React.Suspense fallback={Loading}>
+            <Switch>
+              <Route
+                path={[`${match.path}/${Tabs.POSTS}`, `${match.path}/${Tabs.PHOTOS}`, `${match.path}/${Tabs.VIDEOS}`]}
+                component={BlockedContent}
+              />
+              <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={AboutTab} />
 
-                <Route
-                  path={`${match.path}/`}
-                  render={() => {
-                    if (isSubscribed || isOwner) {
-                      return <Redirect to={`${match.url}/${Tabs.POSTS}`} />
-                    }
-                    return <Redirect to={`${match.url}/${Tabs.ABOUT}`} />
-                  }}
-                />
-              </Switch>
-            </React.Suspense>
-          </>
-        ))}
+              <Route
+                path={`${match.path}/`}
+                render={() => {
+                  return <Redirect to={`${match.url}/${Tabs.ABOUT}`} />
+                }}
+              />
+            </Switch>
+          </React.Suspense>
+        </>
+      )}
     </>
   )
 }

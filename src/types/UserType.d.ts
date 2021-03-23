@@ -1,3 +1,5 @@
+import { CommonServiceResponse } from './CommonTypes.d'
+
 export interface UserStateType {
   loading: boolean
   error: string
@@ -116,4 +118,8 @@ export type UserSettingsType = {
   privacityGoogleAuthenticator?: boolean
   privacityWhoCanSendMessage?: string
   users?: object
+}
+
+export interface ServiceSubscriptorListType extends CommonServiceResponse {
+  suscribers: SubscriptorListType[]
 }

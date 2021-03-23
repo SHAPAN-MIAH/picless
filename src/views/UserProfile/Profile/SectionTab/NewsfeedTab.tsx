@@ -18,10 +18,13 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
 
   const getPostList = useCallback(() => {
-    getPosts(page).then(() => {
-      setLoading(false)
-      setPage(page + 1)
-    })
+    getPosts(page)
+      .then(() => {
+        setPage(page + 1)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [getPosts, setPage])
 
   useEffect(() => {

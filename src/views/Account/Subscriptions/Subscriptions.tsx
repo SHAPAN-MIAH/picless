@@ -1,9 +1,44 @@
-import React, { FunctionComponent } from 'react'
-
-import HeaderFilter from './HeaderFilter/HeaderFilter'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import Loader from 'react-loader-spinner'
+import UserService from '../../../services/UserService'
+import { ServiceSubscriptorListType, SubscriptorListType } from '../../../types/UserType.d'
 import SubscriptionList from './SubscriptionList/SubscriptionList'
 
+const LoaderDiv = (
+  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
+    <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+  </div>
+)
+
+const noSubscriptions = 'Nothing to show'
+
 const Subscriptions: FunctionComponent<{}> = () => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [subscriptions, setSubscriptions] = useState<SubscriptorListType[]>([])
+  const [page, setPage] = useState<number>(0)
+
+  const getSubscriptions = useCallback(() => {
+    setLoading(true)
+
+    UserService.getSubscriptions(page)
+      .then((data: ServiceSubscriptorListType) => {
+        setPage(page + 1)
+        setSubscriptions(data.suscribers)
+      })
+      .catch(() => {
+        toast.error('Error loading data')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
+  useEffect(() => {
+    getSubscriptions()
+  }, [])
+
   return (
     <>
       <div className="content-grid">
@@ -16,52 +51,16 @@ const Subscriptions: FunctionComponent<{}> = () => {
             </div>
           </div>
 
-          <HeaderFilter />
+          {/* <HeaderFilter /> */}
 
           <div className="grid">
-            <SubscriptionList />
-          </div>
-
-          <div className="section-pager-bar">
-            <div className="section-pager">
-              {/* <div className="section-pager-item active">
-                <p className="section-pager-item-text">01</p>
-              </div>
-
-              <div className="section-pager-item">
-                <p className="section-pager-item-text">02</p>
-              </div>
-
-              <div className="section-pager-item">
-                <p className="section-pager-item-text">03</p>
-              </div>
-
-              <div className="section-pager-item">
-                <p className="section-pager-item-text">04</p>
-              </div>
-
-              <div className="section-pager-item">
-                <p className="section-pager-item-text">05</p>
-              </div>
-
-              <div className="section-pager-item">
-                <p className="section-pager-item-text">06</p>
-              </div> */}
-            </div>
-
-            <div className="section-pager-controls">
-              <div className="slider-control left disabled">
-                <svg className="slider-control-icon icon-small-arrow">
-                  <use xlinkHref="#svg-small-arrow"> </use>
-                </svg>
-              </div>
-
-              <div className="slider-control right">
-                <svg className="slider-control-icon icon-small-arrow">
-                  <use xlinkHref="#svg-small-arrow"> </use>
-                </svg>
-              </div>
-            </div>
+            {subscriptions.length > 9 ? (
+              <InfiniteScroll dataLength={subscriptions.length} next={getSubscriptions} hasMore loader={LoaderDiv}>
+                <SubscriptionList loading={loading} subscriptions={subscriptions} />
+              </InfiniteScroll>
+            ) : (
+              <SubscriptionList loading={loading} subscriptions={subscriptions} />
+            )}
           </div>
         </section>
       </div>

@@ -35,10 +35,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
 
   const getPhotosList = useCallback(() => {
-    getPhotos(page).then(() => {
-      setLoading(false)
-      setPage(page + 1)
-    })
+    getPhotos(page)
+      .then(() => {
+        setPage(page + 1)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   useEffect(() => {
