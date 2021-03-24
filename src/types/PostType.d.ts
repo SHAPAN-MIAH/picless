@@ -33,6 +33,7 @@ export interface SourceType {
   pathName?: string
   postId?: number
   resized?: string
+  registerDate?: string
   thumbnail?: string
 }
 

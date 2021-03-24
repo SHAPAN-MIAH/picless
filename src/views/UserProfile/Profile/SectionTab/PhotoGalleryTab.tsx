@@ -96,7 +96,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             <div className="album-preview-info" style={{ top: '-284px' }}>
                               <p className="album-preview-title">View post</p>
 
-                              <p className="album-preview-text">[Needs backend data]</p>
+                              <p className="album-preview-text">{item.registerDate}</p>
                             </div>
                           </ContainerLink>
                         </>

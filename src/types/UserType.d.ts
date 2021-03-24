@@ -91,6 +91,7 @@ export interface UserSearchType {
 export interface SubscriptorListType {
   id: number
   registerDate: Date
+  subscriptionId: number
   suscribeUser: UserProfileType
 }
 

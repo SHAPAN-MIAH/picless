@@ -1,5 +1,5 @@
-import * as ApiHelper from './ApiHelpers'
 import { AddCardType, CardType, DefaultCardType, ServiceMovementType, SubscritionPlanOption } from '../types/PaymentTypes.d'
+import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
 
@@ -223,6 +223,25 @@ const getPlanOptions = async (userName: string, signal?: AbortSignal): Promise<S
   return body
 }
 
+const cancelSubscription = async (subscriptionId: number) => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('subscriptionId', subscriptionId.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'DELETE',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/cancelsubscription`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 export default {
   getCards,
   addCard,
@@ -230,6 +249,7 @@ export default {
   changeDefaultCard,
   getSuscriptionPlans,
   suscribeToUser,
+  cancelSubscription,
   getBalance,
   getDefaultCard,
   addCreditToWallet,

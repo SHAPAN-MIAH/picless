@@ -6,16 +6,16 @@ import { SourceType } from '../../types/PostType.d'
 
 const StyledPopup = styled(Popup)`
   &-content {
-    width: 78%;
-    padding: 0;
-    border: solid 0px;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0px;
+    border: 0px;
   }
 `
 
 const ImageImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  max-width: 78vh;
+  max-height: 78vh;
 `
 
 const CloseButtonDiv = styled.div`

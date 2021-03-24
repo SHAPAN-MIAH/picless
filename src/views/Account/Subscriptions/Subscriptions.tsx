@@ -1,9 +1,7 @@
-import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import useSubscription from 'hooks/useSubscription'
+import React, { FunctionComponent, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
-import UserService from '../../../services/UserService'
-import { ServiceSubscriptorListType, SubscriptorListType } from '../../../types/UserType.d'
 import SubscriptionList from './SubscriptionList/SubscriptionList'
 
 const LoaderDiv = (
@@ -15,25 +13,7 @@ const LoaderDiv = (
 const noSubscriptions = 'Nothing to show'
 
 const Subscriptions: FunctionComponent<{}> = () => {
-  const [loading, setLoading] = useState<boolean>(false)
-  const [subscriptions, setSubscriptions] = useState<SubscriptorListType[]>([])
-  const [page, setPage] = useState<number>(0)
-
-  const getSubscriptions = useCallback(() => {
-    setLoading(true)
-
-    UserService.getSubscriptions(page)
-      .then((data: ServiceSubscriptorListType) => {
-        setPage(page + 1)
-        setSubscriptions(data.suscribers)
-      })
-      .catch(() => {
-        toast.error('Error loading data')
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
+  const { subscriptions, getSubscriptions, loading } = useSubscription()
 
   useEffect(() => {
     getSubscriptions()

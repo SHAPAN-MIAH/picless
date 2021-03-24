@@ -1,3 +1,4 @@
+import useSubscription from 'hooks/useSubscription'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import LiquidImage from '../../../../components/Common/LiquidImage'
@@ -15,12 +16,19 @@ interface SubscriptorProps {
 
 const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
   const { subscriptor } = props
-  const { suscribeUser } = subscriptor
+  const { suscribeUser: subscribeUser } = subscriptor
 
-  const imageCover = process.env.REACT_APP_BUCKET_IMAGES + suscribeUser.coverPicture
+  const { cancelSubscription } = useSubscription()
 
-  const onUnsubscribe = () => {
-    prompt('Are you sure to unsubscribe to the user')
+  const imageCover = process.env.REACT_APP_BUCKET_IMAGES + subscribeUser.coverPicture
+
+  const onUnsubscribe = (event: any) => {
+    const decision = window.confirm(`Are you sure to cancel the subscription to ${subscribeUser.userName}`)
+    event.preventDefault()
+
+    if (decision) {
+      cancelSubscription(subscriptor.subscriptionId, subscribeUser.userName)
+    }
   }
 
   return (
@@ -30,34 +38,34 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
 
         <div className="user-preview-info">
           <div className="user-short-description landscape tiny">
-            <LinkUserA className="user-short-description-avatar user-avatar small" href={`/u/${suscribeUser.userName}`}>
-              <UserAvatar size="M" imageName={suscribeUser.profilePicture} removeContainerStyle />
+            <LinkUserA className="user-short-description-avatar user-avatar small" href={`/u/${subscribeUser.userName}`}>
+              <UserAvatar size="M" imageName={subscribeUser.profilePicture} removeContainerStyle />
             </LinkUserA>
 
             <p className="user-short-description-title">
-              <a href={`/u/${suscribeUser.userName}`}>{suscribeUser.userName}</a>
+              <a href={`/u/${subscribeUser.userName}`}>{subscribeUser.userName}</a>
             </p>
 
             <p className="user-short-description-text">
-              <a href={`/u/${suscribeUser.userName}`}>www.lupanar.com/{suscribeUser.userName}</a>
+              <a href={`/u/${subscribeUser.userName}`}>www.lupanar.com/{subscribeUser.userName}</a>
             </p>
           </div>
 
           <div className="user-stats">
             <div className="user-stat">
-              <p className="user-stat-title">{suscribeUser.numberOfFollowers}</p>
+              <p className="user-stat-title">{subscribeUser.numberOfFollowers}</p>
 
               <p className="user-stat-text">Followers</p>
             </div>
 
             <div className="user-stat">
-              <p className="user-stat-title">{suscribeUser.numberImages}</p>
+              <p className="user-stat-title">{subscribeUser.numberImages}</p>
 
               <p className="user-stat-text">Photos</p>
             </div>
 
             <div className="user-stat">
-              <p className="user-stat-title">{suscribeUser.numberVideos}</p>
+              <p className="user-stat-title">{subscribeUser.numberVideos}</p>
 
               <p className="user-stat-text">Videos</p>
             </div>
@@ -70,7 +78,7 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
               </svg>
             </p> */}
 
-            <a href={`/user/messages/${suscribeUser.id}`} className="button primary" title="Send a message">
+            <a href={`/user/messages/${subscribeUser.id}`} className="button primary" title="Send a message">
               <svg className="button-icon icon-comment">
                 <use xlinkHref="#svg-comment" />
               </svg>
