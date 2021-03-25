@@ -25,6 +25,8 @@ export interface UserType {
   genderId?: any
   cityName?: any
   numberOfFollowers?: number
+  numberImages?: number
+  numberVideos?: number
   languageId?: any
   registrationDate?: string
   countryCode?: string

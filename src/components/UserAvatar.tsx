@@ -65,6 +65,19 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
         </div>
       )}
 
+      {size === 'L' && !removeContainerStyle && (
+        <div className="user-short-description-avatar user-short-description-avatar-mobile user-avatar medium">
+          <div className={classNames(styles.hex, styles['hex-border-98'])}>
+            <div
+              className={classNames(styles.hex, styles['hex-82'])}
+              style={{
+                background: `url(${imageUrl}) center center / cover no-repeat`,
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       {size === 'L' && removeContainerStyle && (
         <div className={classNames(styles.hex, styles['hex-border-98'])}>
           <div

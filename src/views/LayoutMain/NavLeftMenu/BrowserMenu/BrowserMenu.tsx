@@ -92,12 +92,7 @@ const BrowserMenu: FunctionComponent<{}> = () => {
         className={classNames('navigation-widget navigation-widget-desktop sidebar left', showMenu ? 'delayed' : 'hidden')}
         data-simplebar
       >
-        <div
-          className="navigation-widget-cover"
-          style={{ background: `url(${imageCover}) center center / cover no-repeat` }}
-        >
-          <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
-        </div>
+        <div className="navigation-widget-cover" />
         <div className="user-short-description">
           <UserAvatar size="XL" imageName={imageProfile || ''} />
 
@@ -113,6 +108,27 @@ const BrowserMenu: FunctionComponent<{}> = () => {
             </Link>
           </p>
         </div>
+
+        <div className="user-stats">
+          <div className="user-stat">
+            <p className="user-stat-title">{user?.numberOfFollowers}</p>
+
+            <p className="user-stat-text">Followers</p>
+          </div>
+
+          <div className="user-stat">
+            <p className="user-stat-title">{user?.numberImages}</p>
+
+            <p className="user-stat-text">Photos</p>
+          </div>
+
+          <div className="user-stat">
+            <p className="user-stat-title">{user?.numberVideos}</p>
+
+            <p className="user-stat-text">Videos</p>
+          </div>
+        </div>
+
         <ul className="menu">
           {MenuRoutes.map((item) => {
             if (item.showInMenu && item.path) {

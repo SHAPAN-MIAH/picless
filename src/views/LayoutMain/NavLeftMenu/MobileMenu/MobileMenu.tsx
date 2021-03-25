@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import UserAvatar from '../../../../components/UserAvatar'
 import useAuth from '../../../../hooks/useAuth'
 import useMenu from '../../../../hooks/useMenu'
@@ -9,6 +10,12 @@ import useRouter from '../../../../hooks/useRouter'
 import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
 import { UserType } from '../../../../types/UserType.d'
+
+const AvatarContainerDiv = styled.div`
+  position: relative;
+  left: 50%;
+  margin-left: -49px;
+`
 
 const MobileMenu: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -26,10 +33,6 @@ const MobileMenu: FunctionComponent<{}> = () => {
     })
   }, [user, showMenu])
 
-  const logout = () => {
-    signOut()
-  }
-
   const handleCloseMenu = () => {
     setShowMenu(false)
     console.log('sdfdsfdsfds')
@@ -42,31 +45,51 @@ const MobileMenu: FunctionComponent<{}> = () => {
         className={classNames('navigation-widget navigation-widget-mobile sidebar left', showMenu ? 'visible' : 'hidden')}
         data-simplebar
       >
-        <div className="navigation-widget-close-button" onClick={handleCloseMenu}>
+        <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 999 }}>
           <svg className="navigation-widget-close-button-icon icon-back-arrow">
             <use xlinkHref="#svg-back-arrow" />
           </svg>
         </div>
 
-        <div className="navigation-widget-info-wrap">
-          <div className="navigation-widget-info">
-            <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-              <UserAvatar size="S" imageName={user?.profilePicture} />
-            </Link>
+        <div className="">
+          <div className="user-short-description" style={{ paddingTop: '24px' }}>
+            <AvatarContainerDiv>
+              <UserAvatar size="L" imageName={user?.profilePicture || ''} removeContainerStyle />
+            </AvatarContainerDiv>
 
-            <p className="navigation-widget-info-title">
-              <a href={`/u/${user?.userName}`}>{user?.fullName}</a>
+            <p className="user-short-description-title">
+              <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+                {user?.fullName}
+              </Link>
             </p>
 
-            <p className="navigation-widget-info-text">Welcome Back!</p>
+            <p className="user-short-description-text">
+              <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+                www.lupanar.com/{user?.userName}
+              </Link>
+            </p>
           </div>
 
-          <a className="navigation-widget-info-button button small secondary" href="" onClick={logout}>
-            {t('navLeftMenu.logout')}
-          </a>
-        </div>
+          <div className="user-stats">
+            <div className="user-stat">
+              <p className="user-stat-title">{user?.numberOfFollowers}</p>
 
-        <p className="navigation-widget-section-title">Sections</p>
+              <p className="user-stat-text">Followers</p>
+            </div>
+
+            <div className="user-stat">
+              <p className="user-stat-title">{user?.numberImages}</p>
+
+              <p className="user-stat-text">Photos</p>
+            </div>
+
+            <div className="user-stat">
+              <p className="user-stat-title">{user?.numberVideos}</p>
+
+              <p className="user-stat-text">Videos</p>
+            </div>
+          </div>
+        </div>
 
         <ul className="menu">
           {MenuRoutes.map((item) => {
