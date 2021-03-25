@@ -6,8 +6,6 @@ import UploadBox from '../../../components/Common/UploadBox'
 import UserAvatar from '../../../components/UserAvatar'
 import useUser from '../../../hooks/useUser'
 
-
-
 const GridDiv = styled.div`
   justify-content: center;
   display: ${isMobile ? 'contents' : 'flex'};
@@ -43,7 +41,9 @@ const AccountHubMain: FunctionComponent<{}> = () => {
         </div>
 
         <div className="user-short-description">
-          <UserAvatar size="S" imageName={imageProfile || ''} />
+          <div className="user-short-description-avatar user-avatar medium" style={{ marginLeft: '-49px' }}>
+            <UserAvatar size="L" imageName={imageProfile || ''} removeContainerStyle />
+          </div>
         </div>
       </div>
 

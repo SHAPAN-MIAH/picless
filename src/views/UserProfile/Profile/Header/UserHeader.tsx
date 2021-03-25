@@ -50,10 +50,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
           <div className="profile-header-info">
             <div className="user-short-description big">
-              <UserAvatar size="XL" imageName={imageProfile} />
+              <UserAvatar size="XXL" imageName={imageProfile} />
 
               {/* USED FOR MOBILE PROPOUSES */}
-              <UserAvatar size="L" imageName={imageProfile} />
+              <UserAvatar size="XL" imageName={imageProfile} />
 
               <p className="user-short-description-title">
                 <a href="">{provider.fullName || provider.userName}</a>

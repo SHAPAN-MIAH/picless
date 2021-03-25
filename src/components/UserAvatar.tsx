@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React, { FunctionComponent } from 'react'
 import styles from './UserAvatar.module.css'
 
-type AvatarSize = 'XL' | 'L' | 'M' | 'S' | 'XS'
+type AvatarSize = 'XXL' | 'XL' | 'L' | 'M' | 'S' | 'XS'
 
 type UserAvatarProps = {
   imageName: string
@@ -65,7 +65,18 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
         </div>
       )}
 
-      {size === 'L' && (
+      {size === 'L' && removeContainerStyle && (
+        <div className={classNames(styles.hex, styles['hex-border-98'])}>
+          <div
+            className={classNames(styles.hex, styles['hex-82'])}
+            style={{
+              background: `url(${imageUrl}) center center / cover no-repeat`,
+            }}
+          />
+        </div>
+      )}
+
+      {size === 'XL' && (
         <div className="user-short-description-avatar user-short-description-avatar-mobile user-avatar medium">
           <div className={classNames(styles.hex, styles['hex-border-126'])}>
             <div
@@ -78,7 +89,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = React.memo((props) => {
         </div>
       )}
 
-      {size === 'XL' && (
+      {size === 'XXL' && (
         <div className="user-short-description-avatar user-avatar big">
           <div className={classNames(styles.hex, styles['hex-border-164'])}>
             <div

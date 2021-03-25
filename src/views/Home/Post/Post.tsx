@@ -1,3 +1,4 @@
+import ThreeDotsMenu from 'components/ThreeDotsMenu/ThreeDotsMenu'
 import React, { FunctionComponent } from 'react'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
@@ -6,6 +7,14 @@ import FooterPost from './Footer/FooterPost'
 import HeaderPost from './Header/HeaderPost'
 
 type PostProps = { data: PostType; isSinglePost?: boolean }
+
+const HeaderOptions = () => (
+  <div className="post-settings widget-box-post-settings-dropdown-trigger">
+    <svg className="post-settings-icon icon-more-dots">
+      <use xlinkHref="#svg-more-dots" />
+    </svg>
+  </div>
+)
 
 const Post: FunctionComponent<PostProps> = React.memo((props) => {
   const { data, isSinglePost = false } = props
@@ -18,6 +27,12 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
+        <ThreeDotsMenu>
+          <div className="simple-dropdown widget-box-post-settings-dropdown">
+            <p className="simple-dropdown-link">Delete</p>
+          </div>
+        </ThreeDotsMenu>
+
         <div className="widget-box-status">
           <div className="widget-box-status-content">
             <HeaderPost user={data.users || {}} datePost={datePost} />

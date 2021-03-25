@@ -124,8 +124,24 @@
   background: white;
 }
 
-
 /* L */
+.hex-82 {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  top: 8px;
+  left: 8px;
+}
+
+.hex-border-98 {
+  position: relative;
+  width: 98px;
+  height: 98px;
+  background: white;
+}
+
+
+/* XL */
 .hex-110 {
   width: 110px;
   height: 110px;
@@ -142,7 +158,7 @@
   background: white;
 }
 
-/* XL */
+/* XXL */
 .hex-148 {
   position: relative;
   width: 140px;

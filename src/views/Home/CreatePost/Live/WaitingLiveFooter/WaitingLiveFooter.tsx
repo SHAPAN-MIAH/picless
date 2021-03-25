@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import React, { FunctionComponent } from 'react'
 import CheckboxForm from '../../../../../components/Common/CheckboxForm'
@@ -29,8 +28,7 @@ const WaitingLiveFooter: FunctionComponent<{ startLive: () => void; disabled: bo
             onClick={startLive}
             disabled={disabled}
           >
-            <FontAwesomeIcon icon="satellite-dish" />
-            Go Live
+            GO LIVE
           </button>
         </div>
       </div>

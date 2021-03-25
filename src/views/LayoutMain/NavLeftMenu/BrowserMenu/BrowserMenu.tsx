@@ -99,7 +99,7 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
         </div>
         <div className="user-short-description">
-          <UserAvatar size="L" imageName={imageProfile || ''} />
+          <UserAvatar size="XL" imageName={imageProfile || ''} />
 
           <p className="user-short-description-title">
             <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
