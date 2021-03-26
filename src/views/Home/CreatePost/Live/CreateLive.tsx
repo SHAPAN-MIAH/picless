@@ -39,7 +39,7 @@ const CreateLive: FunctionComponent<{}> = () => {
   const startLive = () => {
     publish()
 
-    const post: CommonPostType = {
+    const post: Partial<CommonPostType> = {
       content: `Live - ${liveName}`,
       featuredPost: false,
       tags: [],

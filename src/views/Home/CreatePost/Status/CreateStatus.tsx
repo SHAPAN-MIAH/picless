@@ -58,7 +58,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
 
       setLoading(false)
     } else {
-      const post: CommonPostType = {
+      const post: Partial<CommonPostType> = {
         content,
         featuredPost: false,
         tags: [],

@@ -1,5 +1,7 @@
 import ThreeDotsMenu from 'components/ThreeDotsMenu/ThreeDotsMenu'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback } from 'react'
+import toast from 'react-hot-toast'
+import PostService from 'services/PostService'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
@@ -7,14 +9,6 @@ import FooterPost from './Footer/FooterPost'
 import HeaderPost from './Header/HeaderPost'
 
 type PostProps = { data: PostType; isSinglePost?: boolean }
-
-const HeaderOptions = () => (
-  <div className="post-settings widget-box-post-settings-dropdown-trigger">
-    <svg className="post-settings-icon icon-more-dots">
-      <use xlinkHref="#svg-more-dots" />
-    </svg>
-  </div>
-)
 
 const Post: FunctionComponent<PostProps> = React.memo((props) => {
   const { data, isSinglePost = false } = props
@@ -24,12 +18,25 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
 
   const datePost = new Date(data.registerDate)
 
+  const onDeletePost = useCallback((postId: number) => {
+    PostService.deletePost(postId).catch((err) => {
+      toast.error('Error deleting post')
+    })
+  }, [])
+
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
         <ThreeDotsMenu>
           <div className="simple-dropdown widget-box-post-settings-dropdown">
-            <p className="simple-dropdown-link">Delete</p>
+            <p
+              className="simple-dropdown-link"
+              onClick={() => {
+                onDeletePost(data.id)
+              }}
+            >
+              Delete
+            </p>
           </div>
         </ThreeDotsMenu>
 
@@ -38,7 +45,6 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             <HeaderPost user={data.users || {}} datePost={datePost} />
             <p className="widget-box-status-text">{data.content}</p>
           </div>
-
           {listImages && listImages.length > 0 && <PictureCarousel sources={listImages} />}
           {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
 

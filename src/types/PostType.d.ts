@@ -7,6 +7,7 @@ export enum IMAGE_ORIENTATION {
 }
 
 export interface CommonPostType {
+  id: number
   content: string
   featuredPost: boolean
   tags?: TagType[]

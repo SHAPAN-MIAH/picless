@@ -19,7 +19,7 @@ const uploadPostResource = async (bodyData: FormData): Promise<any> => {
   return body
 }
 
-const createPost = async (post: CommonPostType) => {
+const createPost = async (post: Partial<CommonPostType>) => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -84,9 +84,28 @@ const getMedia = async (type: 'images' | 'videos', page = 0, userId: number): Pr
   return body
 }
 
+const deletePost = async (postId: number) => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('postId', postId.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'delete',
+    headers,
+    body: bodyData,
+  }
+  const url = `${baseUrl}/deletepost`
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   uploadPostResource,
   createPost,
+  deletePost,
   getPosts,
   getPostById,
   getMedia,
