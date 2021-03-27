@@ -37,7 +37,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
   // Validations Fields
   const validationSchema = Yup.object().shape({
-    userName: Yup.string().required('User name field is required'),
     profileDescription: Yup.string(),
   })
 
@@ -64,6 +63,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   }, [getUser, setValue])
 
   const onSubmit = (data: FormValues) => {
+    console.log('afadsfdsafasdf')
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)

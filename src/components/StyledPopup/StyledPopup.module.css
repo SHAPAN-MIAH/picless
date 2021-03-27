@@ -1,0 +1,30 @@
+
+.closePopup {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: #615dfa;
+    margin-left: 285px;
+    top: 0;
+    margin-top: -10px;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+  }
+
+  .mainPopup {
+    padding: 25px;
+  }
+  
+  .headerTip {
+    text-align: left;
+    margin-bottom: 25px;
+  }
+  
+  @media only screen and (max-width: 1366px) {
+    /* For mobile phones: */
+    [class*='mainPopup'] {
+      padding: 15px;
+    }
+  }

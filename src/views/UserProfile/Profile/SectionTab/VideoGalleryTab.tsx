@@ -15,38 +15,22 @@ const LoaderDiv = (
 
 const VideoGalleryTab: FunctionComponent<{}> = () => {
   const { getVideos, videos, provider } = useProfile({ disableMount: true })
-  const [loading, setLoading] = useState<boolean>()
   const [page, setPage] = useState<number>(0)
 
   const getVideoList = useCallback(() => {
-    getVideos(page)
-      .then(() => {
-        setPage(page + 1)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
+    getVideos(page).then(() => {
+      setPage(page + 1)
+    })
+  }, [getVideos, setPage, page])
 
   useEffect(() => {
-    setLoading(true)
     if (provider && videos && videos.length === 0) {
       getVideoList()
       if (window.tpl) {
         window.tpl.load(['dropdown'])
       }
-    } else setLoading(false)
+    }
   }, [getVideoList])
-
-  if (loading) {
-    return (
-      <>
-        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
-          <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-        </div>
-      </>
-    )
-  }
 
   return (
     <>

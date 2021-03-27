@@ -1,7 +1,7 @@
 import ThreeDotsMenu from 'components/ThreeDotsMenu/ThreeDotsMenu'
+import usePost from 'hooks/usePost'
+import useUser from 'hooks/useUser'
 import React, { FunctionComponent, useCallback } from 'react'
-import toast from 'react-hot-toast'
-import PostService from 'services/PostService'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
@@ -18,27 +18,30 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
 
   const datePost = new Date(data.registerDate)
 
+  const { deletePost } = usePost()
+  const { user } = useUser()
+
   const onDeletePost = useCallback((postId: number) => {
-    PostService.deletePost(postId).catch((err) => {
-      toast.error('Error deleting post')
-    })
+    deletePost(postId)
   }, [])
 
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
-        <ThreeDotsMenu>
-          <div className="simple-dropdown widget-box-post-settings-dropdown">
-            <p
-              className="simple-dropdown-link"
-              onClick={() => {
-                onDeletePost(data.id)
-              }}
-            >
-              Delete
-            </p>
-          </div>
-        </ThreeDotsMenu>
+        {user.id === data.users.id && (
+          <ThreeDotsMenu>
+            <div className="simple-dropdown widget-box-post-settings-dropdown">
+              <p
+                className="simple-dropdown-link"
+                onClick={() => {
+                  onDeletePost(data.id)
+                }}
+              >
+                Delete
+              </p>
+            </div>
+          </ThreeDotsMenu>
+        )}
 
         <div className="widget-box-status">
           <div className="widget-box-status-content">

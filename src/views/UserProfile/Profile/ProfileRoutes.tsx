@@ -56,7 +56,7 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
           </>
         ))}
 
-      {!isSubscribed && (
+      {!isSubscribed && !isOwner && (
         <>
           <React.Suspense fallback={Loading}>
             <Switch>

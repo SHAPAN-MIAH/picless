@@ -31,38 +31,23 @@ const LoaderDiv = (
 
 const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const { getPhotos, photos, provider } = useProfile({ disableMount: true })
-  const [loading, setLoading] = useState<boolean>()
+
   const [page, setPage] = useState<number>(0)
 
   const getPhotosList = useCallback(() => {
-    getPhotos(page)
-      .then(() => {
-        setPage(page + 1)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
+    getPhotos(page).then(() => {
+      setPage(page + 1)
+    })
+  }, [getPhotos, setPage, page])
 
   useEffect(() => {
-    setLoading(true)
     if (provider && photos && photos.length === 0) {
       getPhotosList()
       if (window.tpl) {
         window.tpl.load(['dropdown'])
       }
-    } else setLoading(false)
+    }
   }, [getPhotosList])
-
-  if (loading) {
-    return (
-      <>
-        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
-          <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-        </div>
-      </>
-    )
-  }
 
   return (
     <>

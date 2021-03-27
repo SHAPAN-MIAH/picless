@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
+import ReactHlsPlayer from 'react-hls-player/dist'
 import styled from 'styled-components'
 import { SourceType } from '../../../../types/PostType.d'
-import { videoUrl } from '../../../../utils/ResourceHelpers'
 
-const VideoComponent = styled.video`
+const VideoComponent = styled(ReactHlsPlayer)`
   max-height: 670px;
 `
 
@@ -14,6 +14,7 @@ const VideoContainer = styled.div`
 
 const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = React.memo((props) => {
   const { sources } = props
+  const playerRef = React.useRef(null)
 
   return (
     <>
@@ -21,10 +22,7 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = React.memo((p
         sources.map((video: any) => {
           return (
             <VideoContainer key={`video-${video.id}`}>
-              <VideoComponent title={video.name} controls width="100%">
-                <track default kind="captions" />
-                <source src={videoUrl(video.pathName)} type="video/webm" />
-              </VideoComponent>
+              <VideoComponent playerRef={playerRef} src={video.accessUrl} autoPlay={false} controls />
             </VideoContainer>
           )
         })}

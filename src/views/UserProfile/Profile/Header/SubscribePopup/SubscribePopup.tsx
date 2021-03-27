@@ -7,7 +7,6 @@ import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
 import SelectForm, { SelectOptionsType } from '../../../../../components/Common/SelectForm'
 import UserAvatar from '../../../../../components/UserAvatar'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
-import useWallet from '../../../../../hooks/useWallet'
 import PaymentService from '../../../../../services/PaymentService'
 import { SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 import styles from './SubscribePopup.module.css'
@@ -15,9 +14,6 @@ import styles from './SubscribePopup.module.css'
 const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const { onClose } = props
   const { provider } = useContext(ProviderProfileContext.context)
-
-  const SecurionPay = window.Securionpay
-  const { defaultCard } = useWallet()
 
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [selectedPlan, setSelectedPlan] = useState<SubscritionPlanOption>()
@@ -49,12 +45,6 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           setLoading(false)
         })
     }
-
-    const script = document.createElement('script')
-    script.setAttribute('id', 'mainScriptSecurionPay')
-    script.src = 'https://securionpay.com/js/securionpay.js'
-    script.async = true
-    document.body.appendChild(script)
 
     return () => {
       controllerCancelable.abort()
@@ -95,7 +85,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           if (data.code === 0) {
             setLoading(false)
 
-            window.location.reload()
+            onClose()
           } else {
             setLoading(false)
             toast.error(data.message)

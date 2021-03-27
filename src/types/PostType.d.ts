@@ -36,6 +36,7 @@ export interface SourceType {
   resized?: string
   registerDate?: string
   thumbnail?: string
+  accessUrl?: string
 }
 
 export interface TagType {
