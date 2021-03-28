@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import StyledPopup from 'components/StyledPopup/StyledPopup'
 import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import styled from 'styled-components'
 import ButtonWithLoader from '../../../../../components/Common/ButtonWithLoader'
 import FormRow from '../../../../../components/Common/Form/FormRow'
 import FormRowItem from '../../../../../components/Common/Form/FormRowItem'
@@ -10,6 +12,22 @@ import ProviderProfileContext from '../../../../../context/ProviderProfileContex
 import PaymentService from '../../../../../services/PaymentService'
 import { SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 import styles from './SubscribePopup.module.css'
+
+const LoadingPlanOptionsDiv = styled.div`
+  border: 1px #3e3f5e;
+  height: 40px;
+  text-align: center;
+`
+
+const PopupMessage: FunctionComponent<{}> = () => {
+  return (
+    <>
+      <StyledPopup show trigger={<></>} onClose={() => {}}>
+        <h4>asdfasfasfasdf</h4>
+      </StyledPopup>
+    </>
+  )
+}
 
 const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const { onClose } = props
@@ -38,6 +56,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           planListOriginal.current = plans
 
           plansOptionsList(plans)
+          setSelectedPlan(plans[0])
 
           setLoading(false)
         })
@@ -139,14 +158,21 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           </FormRowItem>
 
           <FormRowItem>
-            <SelectForm
-              id="subscription-price"
-              name="subscription_price"
-              placeholder="Subscrition time"
-              options={planList}
-              value={selectedPlan ? selectedPlan?.id : ''}
-              onChange={handlePlanOptionChange}
-            />
+            {loading && (
+              <LoadingPlanOptionsDiv>
+                <span>Loading...</span>
+              </LoadingPlanOptionsDiv>
+            )}
+            {!loading && (
+              <SelectForm
+                id="subscription-price"
+                name="subscription_price"
+                placeholder="Subscrition time"
+                options={planList}
+                defaultValue={planList[0].value}
+                onChange={handlePlanOptionChange}
+              />
+            )}
           </FormRowItem>
 
           <FormRowItem>

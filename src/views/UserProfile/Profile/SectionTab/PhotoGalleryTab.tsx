@@ -47,7 +47,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     }
-  }, [getPhotosList])
+  }, [])
 
   return (
     <>

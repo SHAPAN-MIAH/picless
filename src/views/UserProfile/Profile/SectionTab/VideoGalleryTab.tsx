@@ -30,7 +30,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     }
-  }, [getVideoList])
+  }, [])
 
   return (
     <>
