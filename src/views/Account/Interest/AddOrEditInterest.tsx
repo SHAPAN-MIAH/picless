@@ -1,19 +1,21 @@
-import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
-import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import React, { FunctionComponent, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-
-import useUser from '../../../hooks/useUser'
-
+import styled from 'styled-components'
+import * as Yup from 'yup'
+import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
-import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-
+import useUser from '../../../hooks/useUser'
 import { UserInterestType, UserType } from '../../../types/UserType.d'
+
+type AddOrEditInterestProps = {
+  onAdd: () => void
+  edit?: number
+}
 
 type FormValues = {
   name: string
@@ -25,10 +27,12 @@ const Form = styled.form`
   border-radius: 10px;
 `
 
-const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
+const AddOrEditInterest: FunctionComponent<AddOrEditInterestProps> = (props) => {
+  const { onAdd, edit } = props
+
   const { t } = useTranslation()
 
-  const { getUser, updateUser } = useUser()
+  const { user, updateUser } = useUser()
 
   // Validations Fields
   const validationSchema = Yup.object().shape({
@@ -36,40 +40,57 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
     description: Yup.string().required('Description field is required').max(500).min(1),
   })
 
-  const { control, handleSubmit, errors, getValues, formState } = useForm<FormValues>({
+  const { control, handleSubmit, errors, getValues, setValue, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
 
-  const { onAdd } = props
-
   const onSubmit = () => {
-    getUser().then((user) => {
-      const interest: UserInterestType = {
-        userId: user.id,
-        name: getValues().name,
-        description: getValues().description,
-      }
+    const interest: UserInterestType = {
+      userId: user.id,
+      name: getValues().name,
+      description: getValues().description,
+    }
+    let dataToSubmit: Partial<UserType>
 
-      const dataToSubmit: Partial<UserType> = { userInterest: user.userInterest?.concat(interest) }
+    if (edit && edit > 0) {
+      interest.id = edit
+      const userInterest: UserInterestType[] =
+        user.userInterest?.map((i) => {
+          if (i.id === edit) {
+            return interest
+          }
 
-      const toastOptions = {
-        loading: 'Saving account information ...',
-        success: 'The account information has been successfully saved',
-        error: 'Error Saving the account information',
-      }
+          return i
+        }) || []
 
-      return updateUser(dataToSubmit, toastOptions).then(() => {
-        onAdd()
-      })
+      dataToSubmit = { userInterest }
+    } else {
+      dataToSubmit = { userInterest: user.userInterest?.concat(interest) }
+    }
+
+    const toastOptions = {
+      loading: 'Saving account information ...',
+      success: 'The account information has been successfully saved',
+      error: 'Error Saving the account information',
+    }
+
+    return updateUser(dataToSubmit, toastOptions).then(() => {
+      onAdd()
     })
   }
+
+  useEffect(() => {
+    if (edit && edit > 0) {
+      const interest = user.userInterest?.find((item) => item.id === edit)
+
+      setValue('name', interest?.name)
+      setValue('description', interest?.description)
+    }
+  }, [])
 
   return (
     <>
       <Form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <FormRow>
-          <p>{t('profileInfo.interests.newInterest')}</p>
-        </FormRow>
         <FormRow>
           <FormItem>
             <Controller
@@ -116,4 +137,4 @@ const AddInterest: FunctionComponent<{ onAdd: () => void }> = (props) => {
   )
 }
 
-export default AddInterest
+export default AddOrEditInterest

@@ -18,6 +18,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, re
     name,
     limitMessage = 'Max Limit',
     errorMessage,
+    style: styleContainer,
     ...rest
   } = props
 
@@ -31,7 +32,10 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, re
   }
 
   return (
-    <div className={classNames('form-input small mid-textarea', classNameFormInput, isFocused || value ? 'active' : '')}>
+    <div
+      style={styleContainer}
+      className={classNames('form-input mid-textarea', classNameFormInput, isFocused || value ? 'active' : '')}
+    >
       <label htmlFor={id}>{placeholder}</label>
       <textarea
         id={id}

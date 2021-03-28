@@ -5,14 +5,14 @@ import styles from './StyledPopup.module.css'
 
 type StyledPopupProps = {
   trigger: JSX.Element
-  content: ReactNode
+  children: ReactNode
   show: boolean
   onClose: () => void
   header?: string
 }
 
 const StyledPopup: FunctionComponent<StyledPopupProps> = (props) => {
-  const { show, onClose, trigger, header, content } = props
+  const { show, onClose, trigger, header, children } = props
 
   return (
     <>
@@ -23,25 +23,19 @@ const StyledPopup: FunctionComponent<StyledPopupProps> = (props) => {
         position="center center"
         trigger={trigger}
       >
-        {(close: any) => {
-          return (
-            <>
-              <div className={styles.mainPopup}>
-                <div
-                  className={styles.closePopup}
-                  onClick={() => {
-                    onClose()
-                  }}
-                >
-                  <FontAwesomeIcon icon="times" color="white" size="1x" />
-                </div>
+        <div className={styles.mainPopup}>
+          <div
+            className={styles.closePopup}
+            onClick={() => {
+              onClose()
+            }}
+          >
+            <FontAwesomeIcon icon="times" color="white" size="1x" />
+          </div>
 
-                <div className={styles.headerTip}>{header && <h6>{header}</h6>}</div>
-              </div>
-              {content}
-            </>
-          )
-        }}
+          <div className={styles.headerTip}>{header && <h6>{header}</h6>}</div>
+        </div>
+        {children}
       </Popup>
     </>
   )

@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useCallback, Suspense, useState } from 'react'
-import Loader from 'react-loader-spinner'
 import classNames from 'classnames'
-import styled from 'styled-components'
+import React, { FunctionComponent, Suspense, useCallback, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-
+import Loader from 'react-loader-spinner'
+import styled from 'styled-components'
 import useSearch from '../../../../hooks/useSearch'
-
+import { UserSearchType } from '../../../../types/UserType.d'
 import style from './SearchBar.module.css'
 
-import { UserSearchType } from '../../../../types/UserType.d'
+
+
 
 const SearchBarItem = React.lazy(() => import('./SearchBarItem/SearchBarItem'))
 
@@ -73,7 +73,7 @@ const SearchBar: FunctionComponent<{}> = () => {
             type="text"
             id="search-main"
             name="search_main"
-            placeholder="Search here for people"
+            placeholder="Search"
             autoComplete="false"
             value={keyword}
             onChange={onChangeSearch}
