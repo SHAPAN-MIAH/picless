@@ -136,12 +136,14 @@
     "interests": {
       "hasNoInterests": "You Has No Interests Yet",
       "addNewInterest": "Add New Interest",
-      "addNewTitleInterestField": "New Interest Title",
-      "addNewDescriptionInterestField": "New Interest Description",
+      "addNewTitleInterestField": "Title",
+      "addNewDescriptionInterestField": "Description",
       "AddedSuccessfully": "Interest Added Successfully",
       "addNewInterestButton": "Add Interest",
+      "editInterestButton": "Edit Interest",
       "cancelNewInterestButton": "Cancel",
       "newInterest": "New Interest",
+      "editInterest": "edit Interest",
       "errors": {
         "updatingData": "Error while updating data"
       }
@@ -155,11 +157,13 @@
     "timeline": {
       "hasNoEvents": "You Has No Events Yet",
       "addNewEvent": "Add New Event",
+      "editEvent": "Edit Event",
       "addNewTitleTimelineEventField": "Title Or Place",
       "newYearStarted": "Year Started",
       "newYearEnded": "Year Ended",
       "addNewDescriptionEventField": "Event Description",
       "cancelNewTimeLineEventButton": "Cancel",
+      "editTimeLineEventButton": "Edit Field",
       "addNewTimeLineEventButton": "Add New Field",
       "AddedSuccessfully": "Event Added Successfully",
       "newTimeLineEvent": "New Timelime Event",

@@ -116,19 +116,22 @@ const AddOrEditInterest: FunctionComponent<AddOrEditInterestProps> = (props) => 
               classNameFormInput="small full"
               placeholder={t('profileInfo.interests.addNewDescriptionInterestField')}
               errorMessage={errors.description?.message}
+              maxLength={500}
             />
           </FormItem>
         </FormRow>
 
         <FormRow classNameRow="split">
           <FormItem>
-            <ButtonWithLoader type="submit" className="small white" onClick={() => onAdd()} showLoader={false}>
-              {`${t('profileInfo.interests.cancelNewInterestButton')}`}
+            <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
+              {edit && edit !== -1
+                ? `${t('profileInfo.interests.editInterestButton')}`
+                : `+ ${t('profileInfo.interests.addNewInterestButton')}`}
             </ButtonWithLoader>
           </FormItem>
           <FormItem>
-            <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
-              {`+ ${t('profileInfo.interests.addNewInterestButton')}`}
+            <ButtonWithLoader type="submit" className="small white" onClick={() => onAdd()} showLoader={false}>
+              {`${t('profileInfo.interests.cancelNewInterestButton')}`}
             </ButtonWithLoader>
           </FormItem>
         </FormRow>

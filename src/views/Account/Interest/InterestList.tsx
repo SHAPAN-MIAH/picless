@@ -1,20 +1,21 @@
-import StyledPopup from 'components/StyledPopup/StyledPopup'
 import _ from 'lodash'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
+import StyledPopup from '../../../components/StyledPopup/StyledPopup'
 import useUser from '../../../hooks/useUser'
-import { UserInterestType, UserType } from '../../../types/UserType.d'
+import { UserInterestType } from '../../../types/UserType.d'
 import * as Utils from '../../../utils/Functions'
 import AddOrEditInterest from './AddOrEditInterest'
 
 interface InterestProps {
   item: UserInterestType
   onEdit: () => void
+  onDelete: (interestId: number) => void
 }
 
 const InterestControlsDiv = styled.div`
@@ -23,10 +24,11 @@ const InterestControlsDiv = styled.div`
 
 const ButtonControlDiv = styled.a`
   padding: 10px;
+  font-size: 14px;
 `
 
 const Interest: FunctionComponent<InterestProps> = (props) => {
-  const { item, onEdit } = props
+  const { item, onEdit, onDelete } = props
 
   return (
     <FormItem>
@@ -56,7 +58,7 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
           onClick={(e) => {
             e.preventDefault()
 
-            onEdit()
+            onDelete(item.id || -1)
           }}
         >
           delete
@@ -69,7 +71,7 @@ const Interest: FunctionComponent<InterestProps> = (props) => {
 const InterestList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { getUser } = useUser()
+  const { user, updateUser } = useUser()
 
   const [interestList, setInterestList] = useState<UserInterestType[]>([])
 
@@ -77,10 +79,20 @@ const InterestList: FunctionComponent<{}> = () => {
   const [interestEdit, setInterestEdit] = useState<number>(-1)
 
   useEffect(() => {
-    getUser().then((user: UserType) => {
-      setInterestList(user.userInterest || [])
-    })
-  }, [getUser, setInterestList])
+    setInterestList(user.userInterest || [])
+  }, [user, setInterestList])
+
+  const onDelete = useCallback((interestId: number) => {
+    const dataToSubmit = { userInterest: user.userInterest?.filter((i) => i.id !== interestId) }
+
+    const toastOptions = {
+      loading: 'Saving account information ...',
+      success: 'The account information has been successfully saved',
+      error: 'Error Saving the account information',
+    }
+
+    return updateUser(dataToSubmit, toastOptions)
+  }, [])
 
   const renderContent = () => {
     if (interestList && interestList.length > 0) {
@@ -101,6 +113,7 @@ const InterestList: FunctionComponent<{}> = () => {
                       setInterestEdit(interest.id || -1)
                       showAddOrEditInterest()
                     }}
+                    onDelete={onDelete}
                   />
                 )
               })}
@@ -123,7 +136,7 @@ const InterestList: FunctionComponent<{}> = () => {
       {renderContent()}
 
       <StyledPopup
-        header="New Interest"
+        header={interestEdit && interestEdit !== -1 ? 'Edit Interest' : 'New Interest'}
         show={addOrEditInterest}
         trigger={
           <FormRow>

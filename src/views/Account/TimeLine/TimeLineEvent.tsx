@@ -1,22 +1,31 @@
 import React, { FunctionComponent } from 'react'
-
 import { useTranslation } from 'react-i18next'
-
+import styled from 'styled-components'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
-
 import { UserTimeLineType } from '../../../types/UserType.d'
 
 type TimeLineEventProps = {
   item: UserTimeLineType
+  onEdit: () => void
+  onDelete: (eventId: number) => void
 }
 
-const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
-  const { t } = useTranslation()
+const TimeLineEventControlsDiv = styled.div`
+  text-align: right;
+`
 
-  const { item } = props
+const ButtonControlDiv = styled.a`
+  padding: 10px;
+  font-size: 14px;
+`
+
+const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
+  const { item, onEdit, onDelete } = props
+
+  const { t } = useTranslation()
 
   return (
     <>
@@ -70,6 +79,28 @@ const TimeLineEvent: FunctionComponent<TimeLineEventProps> = (props) => {
           />
         </FormItem>
       </FormRow>
+      <TimeLineEventControlsDiv>
+        <ButtonControlDiv
+          href=""
+          onClick={(e) => {
+            e.preventDefault()
+
+            onEdit()
+          }}
+        >
+          edit
+        </ButtonControlDiv>
+        <ButtonControlDiv
+          href=""
+          onClick={(e) => {
+            e.preventDefault()
+
+            onDelete(item.id || -1)
+          }}
+        >
+          delete
+        </ButtonControlDiv>
+      </TimeLineEventControlsDiv>
     </>
   )
 }

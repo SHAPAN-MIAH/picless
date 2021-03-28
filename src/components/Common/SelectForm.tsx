@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Utils from '../../utils/Functions'
 import TextInput from './TextInput'
 
@@ -19,9 +19,11 @@ const SelectForm = React.forwardRef<HTMLSelectElement, SelectFormProps>((props, 
 
   const readOnlyValue = defaultValue === 0 ? '' : defaultValue
 
-  if (!defaultValue || defaultValue === '') {
-    options.unshift({ value: '', name: 'Select option' })
-  }
+  useEffect(() => {
+    if (!defaultValue || defaultValue === '') {
+      options.unshift({ value: '', name: 'Select option' })
+    }
+  }, [])
 
   return (
     <>

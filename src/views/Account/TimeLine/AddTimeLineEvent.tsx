@@ -1,20 +1,23 @@
-import React, { FunctionComponent, useEffect } from 'react'
-import styled from 'styled-components'
-import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import React, { FunctionComponent, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-
-import useUser from '../../../hooks/useUser'
-
+import styled from 'styled-components'
+import * as Yup from 'yup'
+import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
+import SelectForm, { SelectOptionsType } from '../../../components/Common/SelectForm'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
-import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
-import SelectForm, { SelectOptionsType } from '../../../components/Common/SelectForm'
+import useUser from '../../../hooks/useUser'
+import { UserTimeLineType, UserType } from '../../../types/UserType.d'
 
-import { UserType, UserTimeLineType } from '../../../types/UserType.d'
+type AddOrEditTimeLineEventProps = {
+  years: SelectOptionsType[]
+  onAdd: () => void
+  edit?: number
+}
 
 type FormValues = {
   title: string
@@ -28,12 +31,12 @@ const Form = styled.form`
   border-radius: 10px;
 `
 
-const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOptionsType[] }> = (props) => {
+const AddOrEditTimeLineEvent: FunctionComponent<AddOrEditTimeLineEventProps> = (props) => {
+  const { onAdd, edit, years } = props
+
   const { t } = useTranslation()
 
-  const { onAdd, years } = props
-
-  const { getUser, updateUser } = useUser()
+  const { user, updateUser } = useUser()
 
   // Validations Fields
   const validationSchema = Yup.object().shape({
@@ -48,40 +51,59 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
   })
 
   const onSubmit = () => {
-    getUser().then((user) => {
-      const timeLineEvent: UserTimeLineType = {
-        userId: user.id,
-        title: getValues().title,
-        yearSarted: getValues().yearSarted,
-        yearEnded: getValues().yearEnded,
-        description: getValues().description,
-      }
+    const timeLineEvent: UserTimeLineType = {
+      userId: user.id,
+      title: getValues().title,
+      yearSarted: getValues().yearSarted,
+      yearEnded: getValues().yearEnded,
+      description: getValues().description,
+    }
+    let dataToSubmit: Partial<UserType>
 
-      const dataToSubmit: Partial<UserType> = { userTimeLine: user.userTimeLine?.concat(timeLineEvent) }
+    if (edit && edit > 0) {
+      timeLineEvent.id = edit
+      const userTimeLine: UserTimeLineType[] =
+        user.userTimeLine?.map((t) => {
+          if (t.id === edit) {
+            return timeLineEvent
+          }
 
-      const toastOptions = {
-        loading: 'Saving account information ...',
-        success: 'The account information has been successfully saved',
-        error: 'Error Saving the account information',
-      }
+          return t
+        }) || []
 
-      return updateUser(dataToSubmit, toastOptions).then(() => {
-        onAdd()
-      })
+      dataToSubmit = { userTimeLine }
+    } else {
+      dataToSubmit = { userTimeLine: user.userTimeLine?.concat(timeLineEvent) }
+    }
+
+    const toastOptions = {
+      loading: 'Saving account information ...',
+      success: 'The account information has been successfully saved',
+      error: 'Error Saving the account information',
+    }
+
+    return updateUser(dataToSubmit, toastOptions).then(() => {
+      onAdd()
     })
   }
 
   useEffect(() => {
-    setValue('yearSarted', '1981')
-    setValue('yearEnded', '1981')
+    if (edit && edit > 0) {
+      const timeLineEvents = user.userTimeLine?.find((item) => item.id === edit)
+
+      setValue('title', timeLineEvents?.title)
+      setValue('description', timeLineEvents?.description)
+      setValue('yearSarted', timeLineEvents?.yearSarted)
+      setValue('yearEnded', timeLineEvents?.yearEnded)
+    } else {
+      setValue('yearSarted', '1981')
+      setValue('yearEnded', '1981')
+    }
   }, [setValue])
 
   return (
     <>
       <Form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <FormRow>
-          <p>{t('profileInfo.timeline.newTimeLineEvent')}</p>
-        </FormRow>
         <FormRow classNameRow="split">
           <FormItem>
             <Controller
@@ -134,13 +156,15 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
 
         <FormRow classNameRow="split">
           <FormItem>
-            <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
-              {`${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
+            <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
+              {edit && edit !== -1
+                ? `${t('profileInfo.timeline.editTimeLineEventButton')}`
+                : `+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
             </ButtonWithLoader>
           </FormItem>
           <FormItem>
-            <ButtonWithLoader type="submit" className="small secondary" showLoader={formState.isSubmitting}>
-              {`+ ${t('profileInfo.timeline.addNewTimeLineEventButton')}`}
+            <ButtonWithLoader type="button" className="small white" onClick={() => onAdd()} showLoader={false}>
+              {`${t('profileInfo.timeline.cancelNewTimeLineEventButton')}`}
             </ButtonWithLoader>
           </FormItem>
         </FormRow>
@@ -149,4 +173,4 @@ const AddTimeLineEvent: FunctionComponent<{ onAdd: () => void; years: SelectOpti
   )
 }
 
-export default AddTimeLineEvent
+export default AddOrEditTimeLineEvent
