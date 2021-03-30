@@ -1,7 +1,15 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { yupResolver } from '@hookform/resolvers/yup'
 import React, { FunctionComponent } from 'react'
-import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import styled from 'styled-components'
-// import { useTranslation } from 'react-i18next'
+import * as Yup from 'yup'
+import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
+import FormItem from '../../../components/Common/Form/FormItem'
+import FormRow from '../../../components/Common/Form/FormRow'
+import useRouter from '../../../hooks/useRouter'
+import UserService from '../../../services/UserService'
 
 const H4Title = styled.h4`
   margin-bottom: 20px;
@@ -50,7 +58,46 @@ const PhotoFooter = styled.div`
   border-radius: 0 0 12px 12px;
 `
 
+type FormValues = {
+  photo: FileList
+}
+
+const fileTypes = ['image/png', 'image/jpeg']
+
 const Verification: FunctionComponent<{}> = () => {
+  let photoFile: HTMLInputElement | null
+
+  const validationSchema = Yup.object().shape({
+    photo: Yup.mixed()
+      .required('A photo ID is required')
+      .test('fileFormat', 'Images only', (value) => {
+        return value[0] && fileTypes.includes(value[0].type)
+      }),
+  })
+
+  const router = useRouter()
+
+  const { handleSubmit, register, errors, formState } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema),
+  })
+
+  const onSubmit = (data: FormValues) => {
+    // const target = e.target as HTMLInputElement
+    const image: File = (data.photo as FileList)[0]
+
+    const uploadPromise = UserService.uploadImageVerifiedAccount(image)
+
+    return toast
+      .promise(uploadPromise, {
+        loading: 'Uploading photo',
+        success: 'Photo uploaded',
+        error: 'Error uploading verified photo',
+      })
+      .then(() => {
+        router.push('/account/add-bank')
+      })
+  }
+
   return (
     <>
       <div className="content-grid">
@@ -191,10 +238,44 @@ const Verification: FunctionComponent<{}> = () => {
                 </PhotosWrapper>
 
                 <div className="widget-box">
-                  <p className="widget-box-title">Upload your photo</p>
-                  <div className="widget-box-content">
-                    <Link to="/account/add-bank">View Add bank</Link>
-                  </div>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <FormRow classNameRow="split">
+                      <FormItem>
+                        <p className="widget-box-title">Upload your photo</p>
+                        <ButtonWithLoader
+                          type="button"
+                          className="small white"
+                          onClick={() => photoFile?.click()}
+                          showLoader={false}
+                        >
+                          Select file
+                        </ButtonWithLoader>
+
+                        {errors.photo?.message && (
+                          <p className="inputErrorFieldText">
+                            <FontAwesomeIcon icon="exclamation-triangle" /> {errors.photo?.message}
+                          </p>
+                        )}
+
+                        <input
+                          style={{ display: 'none' }}
+                          type="file"
+                          name="photo"
+                          accept="image/png, image/jpeg"
+                          ref={(input) => {
+                            photoFile = input
+                            register(input)
+                          }}
+                        />
+                      </FormItem>
+                      <FormItem>
+                        <p className="widget-box-title">&nbsp;</p>
+                        <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
+                          Send to Aproval!
+                        </ButtonWithLoader>
+                      </FormItem>
+                    </FormRow>
+                  </form>
                 </div>
               </div>
             </div>

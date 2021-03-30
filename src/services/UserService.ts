@@ -222,6 +222,24 @@ const register = async (userName: string, password: string): Promise<any> => {
   return body
 }
 
+const uploadImageVerifiedAccount = async (image: File): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('image', image)
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData,
+  }
+  const url = `${baseUrl}/addimagetoverifyaccount`
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   getUserProfile,
   getUserProfileByUserName,
@@ -234,4 +252,5 @@ export default {
   searchUser,
   getSubscriptions,
   register,
+  uploadImageVerifiedAccount,
 }
