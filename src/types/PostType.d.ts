@@ -66,3 +66,5 @@ export interface ServiceMediaTypes extends CommonServiceResponse {
 export interface ServiceSinglePostType extends CommonServiceResponse {
   post: PostType
 }
+
+export type ReactionCodeType = 'LIKE'

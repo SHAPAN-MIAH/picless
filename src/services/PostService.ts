@@ -1,4 +1,11 @@
-import { CommonPostType, ServiceMediaTypes, ServicePostType, ServiceSinglePostType } from '../types/PostType.d'
+import { CommonServiceResponse } from 'types/CommonTypes'
+import {
+  CommonPostType,
+  ReactionCodeType,
+  ServiceMediaTypes,
+  ServicePostType,
+  ServiceSinglePostType
+} from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/posts`
@@ -102,6 +109,45 @@ const deletePost = async (postId: number) => {
   return body
 }
 
+const addReaction = async (postId = 0, reactionCode: ReactionCodeType): Promise<CommonServiceResponse> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const bodyData = new FormData()
+  bodyData.append('postId', postId.toString())
+  bodyData.append('reactionCode', reactionCode)
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/addreaction`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
+const deleteReaction = async (reactionId = 0): Promise<CommonServiceResponse> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('reactionId', reactionId.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'DELETE',
+    headers,
+    body: bodyData,
+  }
+  const url = `${baseUrl}/deletereaction`
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   uploadPostResource,
   createPost,
@@ -109,4 +155,6 @@ export default {
   getPosts,
   getPostById,
   getMedia,
+  addReaction,
+  deleteReaction,
 }
