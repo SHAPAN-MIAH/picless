@@ -163,6 +163,10 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                               selected={propsController.value}
                               onChange={(date: any) => propsController.onChange(date)}
                               iconName="events"
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
                             />
                           )}
                         />
