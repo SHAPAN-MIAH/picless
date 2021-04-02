@@ -138,6 +138,7 @@ const InterestList: FunctionComponent<{}> = () => {
       <StyledPopup
         header={interestEdit && interestEdit !== -1 ? 'Edit Interest' : 'New Interest'}
         show={addOrEditInterest}
+        size="M"
         trigger={
           <FormRow>
             <ButtonWithLoader

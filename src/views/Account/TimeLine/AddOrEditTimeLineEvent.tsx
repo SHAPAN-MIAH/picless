@@ -11,7 +11,7 @@ import SelectForm, { SelectOptionsType } from '../../../components/Common/Select
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
 import useUser from '../../../hooks/useUser'
-import { UserTimeLineType, UserType } from '../../../types/UserType.d'
+import { UserTimeLineType, UserType } from '../../../types/UserType'
 
 type AddOrEditTimeLineEventProps = {
   years: SelectOptionsType[]

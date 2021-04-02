@@ -1,12 +1,12 @@
-import StyledPopup from 'components/StyledPopup/StyledPopup'
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormRow from '../../../components/Common/Form/FormRow'
+import StyledPopup from '../../../components/StyledPopup/StyledPopup'
 import useUser from '../../../hooks/useUser'
 import { UserTimeLineType } from '../../../types/UserType.d'
 import { simpleKeyGenerator } from '../../../utils/Functions'
-import { default as AddOrEditTimeLineEvent } from './AddTimeLineEvent'
+import AddOrEditTimeLineEvent from './AddOrEditTimeLineEvent'
 import TimeLineEvent from './TimeLineEvent'
 
 const TimeLineList: FunctionComponent<{}> = () => {
@@ -84,6 +84,7 @@ const TimeLineList: FunctionComponent<{}> = () => {
 
       <StyledPopup
         header={timeLineEdit && timeLineEdit !== -1 ? 'Edit Event' : 'New Event'}
+        size="M"
         show={addOrEditTimeLine}
         trigger={
           <FormRow>

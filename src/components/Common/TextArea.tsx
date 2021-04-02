@@ -54,7 +54,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, re
         {...rest}
       />
       {rest.maxLength && limitMessage && (
-        <p className="form-textarea-limit-text">
+        <p className="form-textarea-limit-text" style={{ textAlign: 'right' }}>
           {qtyCharacters >= rest.maxLength && <span style={{ color: 'red' }}>{`(${limitMessage}) `}</span>}
           {`${qtyCharacters}/${rest.maxLength}`}
         </p>
