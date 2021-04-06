@@ -5,9 +5,6 @@ import UserContext from '../context/UserContext'
 import UserService from '../services/UserService'
 import { UploadImageType, UserSettingsType, UserType } from '../types/UserType.d'
 
-
-
-
 type UseUserReturn = {
   userId: string
   user: UserType

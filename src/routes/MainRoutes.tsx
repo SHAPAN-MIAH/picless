@@ -68,7 +68,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} path="/payment/stripe/wallet" component={PaymentCallback} />
               <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
 
-              <ProtectedRoute {...routerProps} exact path="/user/home" component={Home} />
+              <ProtectedRoute {...routerProps} path="/user/home" component={Home} />
               <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
               <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
 
@@ -93,7 +93,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <Route path="/support/terms-conditions" component={TermsAndConditions} />
 
               <Route path="/">
-                <Redirect to="/user/home" />
+                <Redirect to="/user/home/timeline" />
               </Route>
               <Route component={NoMatchPage} />
             </Switch>

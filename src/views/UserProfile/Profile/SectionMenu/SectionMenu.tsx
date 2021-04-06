@@ -1,14 +1,20 @@
 import classNames from 'classnames'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
+import useRouter from '../../../../hooks/useRouter'
 import { Tabs } from '../../../../hooks/useProfile'
 
 const SectionMenu: FunctionComponent<{}> = (props) => {
   const { url } = useRouteMatch()
-
+  const router = useRouter()
   const [currentTab, setCurrentTab] = useState<Tabs>()
 
   useEffect(() => {
+    if (router.pathname.includes(Tabs.POSTS)) setCurrentTab(Tabs.POSTS)
+    else if (router.pathname.includes(Tabs.PHOTOS)) setCurrentTab(Tabs.PHOTOS)
+    else if (router.pathname.includes(Tabs.VIDEOS)) setCurrentTab(Tabs.VIDEOS)
+    else setCurrentTab(Tabs.ABOUT)
+
     window.tpl.load(['slider'])
   }, [])
 
@@ -19,7 +25,7 @@ const SectionMenu: FunctionComponent<{}> = (props) => {
         <div id="section-navigation-slider" className="section-menu">
           <Link
             className={classNames(sectionMenuClasses, currentTab === Tabs.POSTS ? 'active' : '')}
-            to={`${url}/posts`}
+            to={`${url}/${Tabs.POSTS}`}
             onClick={() => setCurrentTab(Tabs.POSTS)}
           >
             <svg className="section-menu-item-icon icon-timeline">

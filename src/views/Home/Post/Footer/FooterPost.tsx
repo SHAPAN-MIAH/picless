@@ -1,30 +1,57 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import classNames from 'classnames'
+import React, { FunctionComponent, useCallback, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Popup from 'reactjs-popup'
+import usePost from '../../../../hooks/usePost'
+import { PostType } from '../../../../types/PostType.d'
+import { UserType } from '../../../../types/UserType.d'
 import SendATip from '../../../UserProfile/Profile/Header/SendATip/SendATip'
+import styles from './FooterPost.module.css'
 
-const FooterPost: FunctionComponent<{ user?: any }> = React.memo((props) => {
-  const { user } = props
+type FooterPostProps = { user?: UserType; post: PostType }
+
+const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
+  const { user, post } = props
+
+  const [liked, setLiked] = useState<boolean>(false)
+
+  const likedRef = useRef(-1)
+
+  const { addReaction, removeReaction } = usePost()
 
   const handleCallback = (status: string, message?: string) => {
     if (status === 'SUCCESS') {
-      toast.success(`Tip sended, ${user.userName} is grateful`)
+      toast.success(`Tip sended, ${user?.userName} is grateful`)
     } else if (status === 'ERROR') {
       toast.error(message || 'Unknown error')
     }
   }
 
+  const onLike = useCallback(() => {
+    if (likedRef.current < 0) {
+      addReaction(post.id).then((reactionId: number) => {
+        likedRef.current = reactionId
+        setLiked(true)
+      })
+    } else {
+      removeReaction(likedRef.current).then(() => {
+        likedRef.current = -1
+        setLiked(false)
+      })
+    }
+  }, [])
+
   return (
     <>
       <div className="post-options">
         <div className="post-option-wrap">
-          <div className="post-option reaction-options-dropdown-trigger">
-            <svg className="post-option-icon icon-thumbs-up">
+          <div className="post-option" onClick={onLike}>
+            <svg className={classNames('post-option-icon icon-thumbs-up', liked ? styles.liked : '')}>
               <use xlinkHref="#svg-thumbs-up" />
             </svg>
 
-            <p className="post-option-text">Like</p>
+            <p className="post-option-text">{liked ? 'Liked!' : 'Like'}</p>
           </div>
         </div>
 
@@ -50,7 +77,7 @@ const FooterPost: FunctionComponent<{ user?: any }> = React.memo((props) => {
             </div>
           }
         >
-          {(close: any) => <SendATip user={user} callback={handleCallback} onClose={close} />}
+          {(close: any) => <SendATip user={user || {}} callback={handleCallback} onClose={close} />}
         </Popup>
       </div>
     </>

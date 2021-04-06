@@ -16,7 +16,7 @@ const useSubscription = () => {
     UserService.getSubscriptions(page)
       .then((data: ServiceSubscriptorListType) => {
         setPage(page + 1)
-        setSubscriptions(data.suscribers)
+        setSubscriptions([...data.suscribers])
       })
       .catch(() => {
         toast.error('Error loading data')

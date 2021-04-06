@@ -1,18 +1,34 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
-import useWallet from '../../../../hooks/useWallet'
-
-import CardItem from './Card/CardItem'
 import Alert from '../../../../components/Common/Alerts/Alerts'
-
+import useWallet from '../../../../hooks/useWallet'
 import { CardType } from '../../../../types/PaymentTypes.d'
+import CardItem from './Card/CardItem'
 
 const CardList: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const { cards, loading, defaultCard, changeDefaultCard, removeCard } = useWallet()
+  const { cards, getCards, defaultCard, getDefaultCard, changeDefaultCard, removeCard } = useWallet()
+
+  const controllerCancelable = new AbortController()
+  const { signal } = controllerCancelable
+
+  useEffect(() => {
+    if (!cards || cards.length === 0) {
+      setLoading(true)
+      getCards(signal).then(() => {
+        setLoading(false)
+
+        getDefaultCard()
+      })
+    }
+
+    return () => {
+      controllerCancelable.abort()
+    }
+  }, [])
 
   const onRemoveCard = (cardId: string) => {
     removeCard(cardId)
@@ -38,27 +54,9 @@ const CardList: FunctionComponent<{}> = () => {
             <div
               className="table-wrap"
               data-simplebar
-              style={{ overflowX: 'hidden', overflowY: 'auto', maxHeight: '415px', marginTop: '10px' }}
+              style={{ overflowX: 'hidden', overflowY: 'auto', maxHeight: '415px', marginTop: '-10px' }}
             >
               <div className="table table-downloads split-rows">
-                <div className="table-header">
-                  <div className="table-header-column padded">
-                    <p className="table-header-title">Provider</p>
-                  </div>
-
-                  {/* <div className="table-header-column padded">
-                    <p className="table-header-title">Name on card</p>
-                  </div> */}
-
-                  <div className="table-header-column padded">
-                    <p className="table-header-title">Expires</p>
-                  </div>
-
-                  {/* <div className="table-header-column padded"> </div> */}
-
-                  <div className="table-header-column padded"> </div>
-                </div>
-
                 <div className="table-body same-color-rows">
                   {cards.map((card: CardType) => {
                     const isDefault: boolean = card.id === defaultCard?.defaultCardId

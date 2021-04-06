@@ -1,7 +1,7 @@
-import ThreeDotsMenu from 'components/ThreeDotsMenu/ThreeDotsMenu'
-import usePost from 'hooks/usePost'
-import useUser from 'hooks/useUser'
 import React, { FunctionComponent, useCallback } from 'react'
+import ThreeDotsMenu from '../../../components/ThreeDotsMenu/ThreeDotsMenu'
+import usePost from '../../../hooks/usePost'
+import useUser from '../../../hooks/useUser'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
@@ -64,7 +64,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
           </div>
         </div>
 
-        <FooterPost user={data.users || {}} />
+        <FooterPost user={data.users || {}} post={data} />
       </div>
     </>
   )

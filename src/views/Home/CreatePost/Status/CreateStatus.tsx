@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../../components/Common/Form/FormItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
@@ -9,6 +10,10 @@ import PostService from '../../../../services/PostService'
 import { CommonPostType, SourceType } from '../../../../types/PostType.d'
 import styles from './CreateStatus.module.css'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
+
+const FormTextAreaDiv = styled.div`
+  margin-right: 0px;
+`
 
 const CreateStatus: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -117,7 +122,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
 
           <FormRow>
             <FormItem>
-              <div className="form-textarea">
+              <FormTextAreaDiv className="form-textarea">
                 <textarea
                   id="quick-post-text"
                   name="quick_post_text"
@@ -134,7 +139,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
                   )}
                   {`${qtyCharactersPost}/1000`}
                 </p>
-              </div>
+              </FormTextAreaDiv>
             </FormItem>
           </FormRow>
 

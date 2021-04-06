@@ -26,10 +26,6 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
   const { isSubscribed, isOwner } = props
   const { match } = useRouter()
 
-  console.log('-------------------------')
-  console.log(isSubscribed)
-  console.log(isOwner)
-
   return (
     <>
       {(isSubscribed || isOwner) && (

@@ -1,9 +1,6 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
-
-import PaymentService from '../services/PaymentService'
-
+import { useCallback, useContext, useState } from 'react'
 import WalletContext from '../context/WalletContext'
-
+import PaymentService from '../services/PaymentService'
 import { CardType, MovementType, ServiceMovementType } from '../types/PaymentTypes.d'
 
 enum FoundReturn {
@@ -18,44 +15,18 @@ const useWallet = () => {
   const [loading, setLoading] = useState(false)
   const [movements, setMovements] = useState<MovementType[]>([])
 
-  const controllerCancelable = new AbortController()
-  const { signal } = controllerCancelable
-
-  useEffect(() => {
-    if (!cards || cards.length === 0) {
-      setLoading(true)
-
-      PaymentService.getCards(signal).then((cardList: CardType[]) => {
-        setCards(cardList)
-        setLoading(false)
-      })
-
-      PaymentService.getDefaultCard(signal).then((data: any) => {
-        setDefaultCard(data)
-      })
-
-      PaymentService.getBalance(signal).then((data: any) => {
-        if (data.code === 0) setBalance(parseFloat(data.value))
-      })
-    }
-
-    return () => {
-      controllerCancelable.abort()
-    }
-  }, [])
-
-  const addFoundsToWallet = useCallback((amount: number, description: string, token: string) => {
-    return PaymentService.addCreditToWallet(amount, 'USD', description, token).then((data: any) => {
-      if (data.code === 0 && data.message === FoundReturn.Succeeded) {
-        updateBalance()
-      } else if (data.code === '0' && data.message !== 'redirect') {
-        // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
-        // con paymentIntent en el body, luego actualizo balance
-      } else if (data.code === '1' && data.message === 'error') {
-        alert('error')
-      }
-    })
-  }, [])
+  // const addFoundsToWallet = useCallback((amount: number, description: string, token: string) => {
+  //   return PaymentService.addCreditToWallet(amount, 'USD', description, token).then((data: any) => {
+  //     if (data.code === 0 && data.message === FoundReturn.Succeeded) {
+  //       updateBalance()
+  //     } else if (data.code === '0' && data.message !== 'redirect') {
+  //       // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
+  //       // con paymentIntent en el body, luego actualizo balance
+  //     } else if (data.code === '1' && data.message === 'error') {
+  //       alert('error')
+  //     }
+  //   })
+  // }, [])
 
   const getMovements = useCallback((s: AbortSignal) => {
     setLoading(true)
@@ -92,6 +63,12 @@ const useWallet = () => {
     })
   }, [setDefaultCard])
 
+  const getCards = useCallback(async (signal) => {
+    return PaymentService.getCards(signal).then((cardList: CardType[]) => {
+      setCards(cardList)
+    })
+  }, [])
+
   const changeDefaultCard = useCallback(
     (cardId: string) => {
       PaymentService.changeDefaultCard(cardId).then((data: any) => {
@@ -104,21 +81,21 @@ const useWallet = () => {
     [getDefaultCard]
   )
 
-  const updateBalance = useCallback(() => {
-    PaymentService.getBalance().then((data: any) => {
-      if (data.code === 0) setBalance(parseFloat(data.value))
-    })
-  }, [setBalance])
+  // const updateBalance = useCallback(() => {
+  //   PaymentService.getBalance().then((data: any) => {
+  //     if (data.code === 0) setBalance(parseFloat(data.value))
+  //   })
+  // }, [setBalance])
 
   const confirmPayment = useCallback((paymentIntent: string) => {
     return new Promise<string>((resolve, reject) => {
       PaymentService.confirmPayment(paymentIntent).then((data: any) => {
         if (data.code === 0) {
-          updateBalance()
+          // updateBalance()
 
           resolve('SUCCESS')
         } else {
-          reject(new Error('Error confirming the paayment'))
+          reject(new Error('Error confirming the payment'))
         }
       })
     })
@@ -126,17 +103,16 @@ const useWallet = () => {
 
   return {
     loading,
+    getCards,
     cards,
     defaultCard,
-    currentBalance: balance,
     movements,
     getMovements,
-    addFounds: addFoundsToWallet,
+    changeDefaultCard,
     confirmPayment,
     removeCard,
-    changeDefaultCard,
+    getDefaultCard,
     updateCards,
-    updateBalance,
   }
 }
 

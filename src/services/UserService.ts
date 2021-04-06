@@ -1,3 +1,4 @@
+import { AddBankType } from 'types/PaymentTypes'
 import {
   ServiceSubscriptorListType,
   ServiceUserProfileType,
@@ -240,6 +241,22 @@ const uploadImageVerifiedAccount = async (image: File): Promise<any> => {
   return body
 }
 
+const addBank = async (data: AddBankType) => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(data),
+  }
+
+  const url = `${baseUrl}/adduserbank`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 export default {
   getUserProfile,
   getUserProfileByUserName,
@@ -253,4 +270,5 @@ export default {
   getSubscriptions,
   register,
   uploadImageVerifiedAccount,
+  addBank,
 }

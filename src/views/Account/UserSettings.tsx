@@ -14,10 +14,6 @@ import FormRow from '../../components/Common/Form/FormRow'
 import useUser from '../../hooks/useUser'
 import { UserSettingsType } from '../../types/UserType.d'
 
-
-
-
-
 type FormValues = {
   enabledPushNotifications: boolean
   enabledEmailNotifications: boolean
@@ -28,7 +24,7 @@ type FormValues = {
   privacityDisplayProfileInSearchBar: boolean
   privacityDisplayChatActivity: boolean
   privacityGoogleAuthenticator: boolean
-  privacityWhoCanSendMessage: string
+  // privacityWhoCanSendMessage: string
 }
 type formFieldsNames = keyof FormValues
 const formFields: formFieldsNames[] = [
@@ -41,7 +37,7 @@ const formFields: formFieldsNames[] = [
   'privacityDisplayProfileInSearchBar',
   'privacityDisplayChatActivity',
   'privacityGoogleAuthenticator',
-  'privacityWhoCanSendMessage',
+  // 'privacityWhoCanSendMessage',
 ]
 
 const UserSettings: FunctionComponent<{}> = () => {
@@ -60,7 +56,7 @@ const UserSettings: FunctionComponent<{}> = () => {
     privacityDisplayProfileInSearchBar: Yup.boolean(),
     privacityDisplayChatActivity: Yup.boolean(),
     privacityGoogleAuthenticator: Yup.boolean(),
-    privacityWhoCanSendMessage: Yup.string(),
+    // privacityWhoCanSendMessage: Yup.string(),
   })
 
   const { control, handleSubmit, setValue, formState } = useForm<FormValues>({
@@ -324,7 +320,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                     </FormItem>
                   </FormRow>
 
-                  <FormRow classNameRow="split">
+                  {/* <FormRow classNameRow="split">
                     <FormItem>
                       <div className="form-select">
                         <label htmlFor="settings-howCanSendMessage">{t('settings.fields.whoCanSendMessage')}</label>
@@ -352,7 +348,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                         />
                       </div>
                     </FormItem>
-                  </FormRow>
+                  </FormRow> */}
 
                   <FormRow>{error && <Alert alertType="DANGER" message={t(error)} style={{ width: '100%' }} />}</FormRow>
 

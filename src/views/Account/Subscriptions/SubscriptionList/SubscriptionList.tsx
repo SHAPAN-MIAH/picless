@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from 'react'
+import useSubscription from 'hooks/useSubscription'
+import React, { FunctionComponent, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import { SubscriptorListType } from '../../../../types/UserType.d'
@@ -6,30 +7,27 @@ import Subscriptor from './Subscriptor'
 
 const noSubscriptorsMessage = 'Nothing was found'
 
-type SubscriptionListProps = { loading: boolean; subscriptions: SubscriptorListType[] }
-const SubscriptionList: FunctionComponent<SubscriptionListProps> = (props) => {
-  const { loading, subscriptions } = props
+type SubscriptionListProps = {}
+const SubscriptionList: FunctionComponent<SubscriptionListProps> = () => {
+  const { subscriptions, loading } = useSubscription()
 
-  if (loading) {
-    return (
-      <>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          {loading && <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />}
-        </div>
-      </>
-    )
-  }
-
-  if (subscriptions.length === 0) {
-    return (
-      <>
-        <Alert alertType="PRIMARY" message={noSubscriptorsMessage} style={{ width: '100%', textAlign: 'center' }} />
-      </>
-    )
-  }
+  useEffect(() => {
+    console.log(subscriptions)
+    console.log('asdfasdfasdfasdf')
+  }, [subscriptions])
 
   return (
     <>
+      {loading && (
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          {loading && <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />}
+        </div>
+      )}
+
+      {subscriptions.length === 0 && (
+        <Alert alertType="PRIMARY" message={noSubscriptorsMessage} style={{ width: '100%', textAlign: 'center' }} />
+      )}
+
       {subscriptions.map((subscriptor: SubscriptorListType) => {
         return <Subscriptor key={subscriptor.id} subscriptor={subscriptor} />
       })}

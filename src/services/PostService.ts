@@ -4,7 +4,8 @@ import {
   ReactionCodeType,
   ServiceMediaTypes,
   ServicePostType,
-  ServiceSinglePostType
+  ServiceReactionPostType,
+  ServiceSinglePostType,
 } from '../types/PostType.d'
 import * as ApiHelper from './ApiHelpers'
 
@@ -109,8 +110,8 @@ const deletePost = async (postId: number) => {
   return body
 }
 
-const addReaction = async (postId = 0, reactionCode: ReactionCodeType): Promise<CommonServiceResponse> => {
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+const addReaction = async (postId = 0, reactionCode: ReactionCodeType): Promise<ServiceReactionPostType> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('postId', postId.toString())

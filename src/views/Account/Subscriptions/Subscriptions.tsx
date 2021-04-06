@@ -13,7 +13,7 @@ const LoaderDiv = (
 const noSubscriptions = 'Nothing to show'
 
 const Subscriptions: FunctionComponent<{}> = () => {
-  const { subscriptions, getSubscriptions, loading } = useSubscription()
+  const { subscriptions, getSubscriptions } = useSubscription()
 
   useEffect(() => {
     getSubscriptions()
@@ -34,13 +34,13 @@ const Subscriptions: FunctionComponent<{}> = () => {
           {/* <HeaderFilter /> */}
 
           <div className="grid">
-            {subscriptions.length > 9 ? (
+            {/* {subscriptions.length > 9 ? (
               <InfiniteScroll dataLength={subscriptions.length} next={getSubscriptions} hasMore loader={LoaderDiv}>
-                <SubscriptionList loading={loading} subscriptions={subscriptions} />
+                <SubscriptionList />
               </InfiniteScroll>
-            ) : (
-              <SubscriptionList loading={loading} subscriptions={subscriptions} />
-            )}
+            ) : ( */}
+            <SubscriptionList />
+            {/* )} */}
           </div>
         </section>
       </div>

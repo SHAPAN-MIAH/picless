@@ -16,7 +16,7 @@ const MovementList: FunctionComponent<{}> = () => {
     return () => {
       controllerCancelable.abort()
     }
-  }, [getMovements, controllerCancelable, signal])
+  }, [])
 
   if (loading) {
     return (

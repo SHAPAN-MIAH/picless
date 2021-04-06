@@ -1,22 +1,14 @@
 import React, { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import MovementList from '../Movements/MovementsList'
 import PaymentMethods from '../PaymentMethods'
-import OverviewHeader from './OverviewHeader'
-import AddFounds from '../AddFounds'
 
 const WalletOverview: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   return (
     <>
-      <div className="grid grid-half">
-        <div className="grid-column" style={{ maxHeight: '515px' }}>
-          <OverviewHeader />
-
-          <AddFounds />
-        </div>
+      <div className="grid">
         <div className="grid-column" style={{ maxHeight: '515px' }}>
           <PaymentMethods />
         </div>

@@ -17,10 +17,6 @@ import PaymentService from '../../../services/PaymentService'
 import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
 import { UserType } from '../../../types/UserType.d'
 
-
-
-
-
 type FormValues = {
   street: string
   city: string

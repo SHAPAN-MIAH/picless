@@ -33,6 +33,7 @@ export interface SourceType {
   original?: string
   pathName?: string
   postId?: number
+  iLikeIt?: boolean
   resized?: string
   registerDate?: string
   thumbnail?: string
@@ -68,3 +69,7 @@ export interface ServiceSinglePostType extends CommonServiceResponse {
 }
 
 export type ReactionCodeType = 'LIKE'
+
+export interface ServiceReactionPostType extends CommonServiceResponse {
+  reactionId: number
+}

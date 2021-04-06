@@ -1,15 +1,18 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
 import React, { FunctionComponent } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import * as Yup from 'yup'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
+import DatePickerForm from '../../../../components/Common/DatePickerForm/DatePickerForm'
 import FormItem from '../../../../components/Common/Form/FormItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
 import SelectForm from '../../../../components/Common/SelectForm'
 import TextInput from '../../../../components/Common/TextInput'
 import SelectCountry from '../../../../components/SelectCountry/SelectCountry'
+import UserService from '../../../../services/UserService'
+import { AddBankType, DocumentsType } from '../../../../types/PaymentTypes.d'
 
 type FormValues = {
   adultContent: boolean
@@ -21,11 +24,9 @@ type FormValues = {
   countryCode: string
   state: string
   city: string
-  postalCode: string
+  zipCode: string
   dateofbirth: string
-  documentType: string
-  photoID: string
-  photoHoldingId: string
+  documentType: DocumentsType
 }
 
 const documentType = [
@@ -33,8 +34,6 @@ const documentType = [
   { value: 'DRIVING_LICENCE', name: 'Driving licence' },
   { value: 'OTHER', name: 'Other' },
 ]
-
-const fileTypes = ['image/png', 'image/jpeg']
 
 const AddBank: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -50,32 +49,52 @@ const AddBank: FunctionComponent<{}> = () => {
     countryCode: Yup.string().required('Contry field is required'),
     state: Yup.string().required('State field is required'),
     city: Yup.string().required('City field is required'),
-    postalCode: Yup.string().required('Zip/Postal code field is required'),
+    zipCode: Yup.string().required('Zip/Postal code field is required'),
     dateofbirth: Yup.string().required('DOB field is required'),
     documentType: Yup.string().required('Document type field is required'),
-    photoID: Yup.mixed()
-      .required('A photo ID is required')
-      .test('fileFormat', 'Images only', (value) => {
-        return value[0] && fileTypes.includes(value[0].type)
-      }),
-    photoHoldingId: Yup.mixed()
-      .required('A photo holding your ID is required')
-      .test('fileFormat', 'Images only', (value) => {
-        return value[0] && fileTypes.includes(value[0].type)
-      }),
   })
 
-  const { control, handleSubmit, register, errors, formState } = useForm<FormValues>({
+  const { control, handleSubmit, errors, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const onSubmit = (values: FormValues) => {
+    const bankData: AddBankType = {
+      adultContent: values.adultContent,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
+      fullAddress: values.fullAddress,
+      country: values.countryCode,
+      state: values.state,
+      city: values.city,
+      street: '',
+      postalCode: values.zipCode,
+      dateOfBirth: values.dateofbirth,
+      documentType: values.documentType,
+    }
+
+    const addCardPromise = UserService.addBank(bankData)
+
+    return toast
+      .promise(addCardPromise, {
+        loading: 'Loading',
+        success: 'Bank Added Successfully',
+        error: 'Error adding bank',
+      })
+      .then((data: any) => {
+        if (data.code === 0) {
+          // history.push('/account/wallet')
+        } else if (data.message && data.code !== 0) {
+          // setErrorMessage(data.message)
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+        // setErrorMessage(JSON.stringify(err))
+      })
   }
-
-  let photoIdFile: HTMLInputElement | null
-  let photoHoldingIdFile: HTMLInputElement | null
-
   return (
     <>
       <div className="content-grid">
@@ -231,29 +250,41 @@ const AddBank: FunctionComponent<{}> = () => {
                         control={control}
                         as={TextInput}
                         type="text"
-                        name="postalCode"
+                        name="zipCode"
                         defaultValue=""
                         required
                         classNameFormInput="small full"
                         placeholder={t('addBank.zipPostalCodeField')}
-                        errorMessage={errors.postalCode?.message}
+                        errorMessage={errors.zipCode?.message}
                       />
                     </FormItem>
                   </FormRow>
 
                   <FormRow classNameRow="split">
                     <FormItem>
-                      <Controller
-                        control={control}
-                        as={TextInput}
-                        type="text"
-                        name="dateofbirth"
-                        defaultValue=""
-                        required
-                        classNameFormInput="small full"
-                        placeholder={t('addBank.dateofbirth')}
-                        errorMessage={errors.dateofbirth?.message}
-                      />
+                      <div className="form-input-decorated">
+                        <Controller
+                          control={control}
+                          name="dateofbirth"
+                          defaultValue=""
+                          render={(propsController) => (
+                            <DatePickerForm
+                              name={propsController.name}
+                              ref={propsController.ref}
+                              customInputRef="birthdayRef"
+                              classNameFormInput="small"
+                              placeholderText={t('addBank.dateofbirth')}
+                              selected={propsController.value}
+                              onChange={(date: any) => propsController.onChange(date)}
+                              iconName="events"
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                            />
+                          )}
+                        />
+                      </div>
                     </FormItem>
 
                     <FormItem>
@@ -288,72 +319,6 @@ const AddBank: FunctionComponent<{}> = () => {
                           <p className="checkbox-info-text"> </p>
                         </div>
                       </div>
-                    </FormItem>
-                  </FormRow>
-                </div>
-              </div>
-
-              <div className="widget-box" style={{ marginTop: '15px' }}>
-                <div className="widget-box-content">
-                  <FormRow classNameRow="split">
-                    <FormItem>
-                      <p className="widget-box-title">Photo of your ID</p>
-                      <p>Please upload a photo of your picture ID Document (i,e, Passport or Driving License)</p>
-                      <ButtonWithLoader
-                        type="button"
-                        className="small white"
-                        onClick={() => photoIdFile?.click()}
-                        showLoader={false}
-                      >
-                        {`${t('addBank.selectPhotoID')}`}
-                      </ButtonWithLoader>
-
-                      {errors.photoID?.message && (
-                        <p className="inputErrorFieldText">
-                          <FontAwesomeIcon icon="exclamation-triangle" /> {errors.photoHoldingId?.message}
-                        </p>
-                      )}
-
-                      <input
-                        style={{ display: 'none' }}
-                        type="file"
-                        name="photoID"
-                        accept="image/png, image/jpeg"
-                        ref={(input) => {
-                          photoIdFile = input
-                          register(input)
-                        }}
-                      />
-                    </FormItem>
-
-                    <FormItem>
-                      <p className="widget-box-title">Photo of holding your ID</p>
-                      <p>Please upload a photo holding ID (i,e, a selfie, ensuring your face is clearly visible)</p>
-                      <ButtonWithLoader
-                        type="button"
-                        className="small white"
-                        onClick={() => photoHoldingIdFile?.click()}
-                        showLoader={false}
-                      >
-                        {`${t('addBank.selectPhotoHoldingID')}`}
-                      </ButtonWithLoader>
-
-                      {errors.photoHoldingId?.message && (
-                        <p className="inputErrorFieldText">
-                          <FontAwesomeIcon icon="exclamation-triangle" /> {errors.photoHoldingId?.message}
-                        </p>
-                      )}
-
-                      <input
-                        style={{ display: 'none' }}
-                        type="file"
-                        name="photoHoldingId"
-                        accept="image/png, image/jpeg"
-                        ref={(input) => {
-                          photoHoldingIdFile = input
-                          register(input)
-                        }}
-                      />
                     </FormItem>
                   </FormRow>
                 </div>

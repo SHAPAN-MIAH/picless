@@ -1,5 +1,6 @@
 export type ProviderType = 'VISA' | 'MASTER_CARD' | 'DINNERS' | 'DISCOVER' | 'AMERICAN_EXPRESS' | 'JCB'
-export type PaymentProcessorType = 'STRIPE' | 'SECURIONPAY'
+export type PaymentProcessorType = 'STRIPE'
+export type DocumentsType = 'PASSPORT' | 'DRIVING_LICENCE' | 'OTHER'
 
 export type MonthNumbers = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 
@@ -99,4 +100,15 @@ export interface SubscritionPlanOption {
   name: string
   paymentProcessor: PaymentProcessorType
   planId: string
+}
+
+export interface AddBankType extends BillingAddressType {
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  fullAddress: string
+  dateOfBirth: string
+  documentType: DocumentsType
+  adultContent: boolean
 }

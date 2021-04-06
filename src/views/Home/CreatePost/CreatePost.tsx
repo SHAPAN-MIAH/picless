@@ -1,12 +1,16 @@
 import classNames from 'classnames'
-import useUser from 'hooks/useUser'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import useUser from '../../../hooks/useUser'
 import CreateLive from './Live/CreateLive'
 import CreateStatus from './Status/CreateStatus'
 
 export type TabNamesType = 'STATUS' | 'LIVE' | 'POLL'
+
+const TabDiv = styled.div`
+  width: 50% !important;
+`
 
 const BlockedDiv = styled.div`
   text-align: center;
@@ -45,7 +49,7 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
       <div className="quick-post">
         <div className="quick-post-header">
           <div className="option-items" style={{ justifyContent: 'center' }}>
-            <div
+            <TabDiv
               className={classNames('option-item', currentTab === 'STATUS' ? 'active' : '')}
               onClick={() => {
                 changeTab('STATUS')
@@ -56,8 +60,8 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
               </svg>
 
               <p className="option-item-title">Status</p>
-            </div>
-            <div
+            </TabDiv>
+            <TabDiv
               className={classNames('option-item', currentTab === 'LIVE' ? 'active' : '')}
               onClick={() => {
                 changeTab('LIVE')
@@ -68,7 +72,7 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
               </svg>
 
               <p className="option-item-title">Live</p>
-            </div>
+            </TabDiv>
           </div>
         </div>
         {currentTab === 'STATUS' && <CreateStatus />}
