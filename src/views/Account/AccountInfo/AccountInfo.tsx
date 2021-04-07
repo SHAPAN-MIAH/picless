@@ -48,7 +48,9 @@ const AccountInfo: FunctionComponent<{}> = () => {
 
   const plansList = (): SelectOptionsType[] => {
     return plans.map((data: any) => {
-      return { value: data.name, name: `${data.name} | (${data.currency} ${data.amount})` }
+      if (data.amount === 0) return { value: data.name, name: `FREE` }
+
+      return { value: data.name, name: `${data.amount} $ (${data.currency})`.toUpperCase() }
     })
   }
 
