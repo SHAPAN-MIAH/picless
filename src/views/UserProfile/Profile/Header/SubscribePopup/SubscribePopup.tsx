@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import StyledPopup from 'components/StyledPopup/StyledPopup'
+import useWallet from 'hooks/useWallet'
 import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
@@ -10,7 +11,7 @@ import SelectForm, { SelectOptionsType } from '../../../../../components/Common/
 import UserAvatar from '../../../../../components/UserAvatar'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
 import PaymentService from '../../../../../services/PaymentService'
-import { SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
+import { ServiceSubscritionPlanOption, SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
 import styles from './SubscribePopup.module.css'
 
 const LoadingPlanOptionsDiv = styled.div`
@@ -32,12 +33,13 @@ const PopupMessage: FunctionComponent<{}> = () => {
 const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const { onClose } = props
   const { provider } = useContext(ProviderProfileContext.context)
+  const { getPlanOptions } = useWallet()
 
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [selectedPlan, setSelectedPlan] = useState<SubscritionPlanOption>()
   const [planList, setPlanList] = useState<SelectOptionsType[]>([{ value: '0', name: 'Loading ...' }])
+  const [tax, setTax] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false)
-  // const [planListOriginal, setPlanListOriginal] = useState<SubscritionPlanOption[]>([])
 
   const planListOriginal = useRef<SubscritionPlanOption[]>([])
 
@@ -51,16 +53,18 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
 
       const { userName } = provider
 
-      PaymentService.getPlanOptions(userName || '', signal)
-        .then((plans: SubscritionPlanOption[]) => {
-          planListOriginal.current = plans
+      getPlanOptions(userName || '', signal)
+        .then((data: ServiceSubscritionPlanOption) => {
+          if (data.code === '0') {
+            planListOriginal.current = data.data
 
-          plansOptionsList(plans)
-          setSelectedPlan(plans[0])
+            plansOptionsList(data.data)
 
-          setLoading(false)
+            setSelectedPlan(data.data[0])
+            setTax(data.tax)
+          }
         })
-        .catch(() => {
+        .finally(() => {
           setLoading(false)
         })
     }
@@ -178,13 +182,14 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
           <FormRowItem>
             <div className={styles.resumeContainer}>
               <p>
-                <strong>Price: </strong> $ {selectedPlan?.amount} {selectedPlan?.currency}
+                <strong>Price: </strong> {selectedPlan?.amount} {selectedPlan?.currency.toLocaleUpperCase()}
               </p>
               <p>
-                <strong>Tax: </strong> $ X.XX
+                <strong>Tax: </strong> {(selectedPlan?.amount || 0) * tax} {selectedPlan?.currency.toLocaleUpperCase()}
               </p>
               <p>
-                <strong>Total: </strong> $ {selectedPlan?.amountTaxIncluded} {selectedPlan?.currency}
+                <strong>Total: </strong> {((selectedPlan?.amount || 0) * (tax + 1)).toFixed(2)}{' '}
+                {selectedPlan?.currency.toLocaleUpperCase()}
               </p>
             </div>
           </FormRowItem>

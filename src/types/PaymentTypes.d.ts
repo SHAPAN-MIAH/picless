@@ -1,3 +1,5 @@
+import { CommonServiceResponse } from 'types/CommonTypes'
+
 export type ProviderType = 'VISA' | 'MASTER_CARD' | 'DINNERS' | 'DISCOVER' | 'AMERICAN_EXPRESS' | 'JCB'
 export type PaymentProcessorType = 'STRIPE'
 export type DocumentsType = 'PASSPORT' | 'DRIVING_LICENCE' | 'OTHER'
@@ -100,6 +102,11 @@ export interface SubscritionPlanOption {
   name: string
   paymentProcessor: PaymentProcessorType
   planId: string
+}
+
+export interface ServiceSubscritionPlanOption extends CommonServiceResponse {
+  data: SubscritionPlanOption[]
+  tax: 0.21
 }
 
 export interface AddBankType extends BillingAddressType {

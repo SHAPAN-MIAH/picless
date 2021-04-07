@@ -1,7 +1,13 @@
 import { useCallback, useContext, useState } from 'react'
+import {
+  ServiceSubscritionPlanOption,
+  CardType,
+  MovementType,
+  ServiceMovementType,
+  SubscritionPlanOption,
+} from '../types/PaymentTypes.d'
 import WalletContext from '../context/WalletContext'
 import PaymentService from '../services/PaymentService'
-import { CardType, MovementType, ServiceMovementType } from '../types/PaymentTypes.d'
 
 enum FoundReturn {
   Succeeded = 'SUCCEEDED',
@@ -14,19 +20,6 @@ const useWallet = () => {
 
   const [loading, setLoading] = useState(false)
   const [movements, setMovements] = useState<MovementType[]>([])
-
-  // const addFoundsToWallet = useCallback((amount: number, description: string, token: string) => {
-  //   return PaymentService.addCreditToWallet(amount, 'USD', description, token).then((data: any) => {
-  //     if (data.code === 0 && data.message === FoundReturn.Succeeded) {
-  //       updateBalance()
-  //     } else if (data.code === '0' && data.message !== 'redirect') {
-  //       // redirecciono al path y luego de confirmar el iframe me llega a la url de destino, en esa pantalla hago post a payments/confirmpayment
-  //       // con paymentIntent en el body, luego actualizo balance
-  //     } else if (data.code === '1' && data.message === 'error') {
-  //       alert('error')
-  //     }
-  //   })
-  // }, [])
 
   const getMovements = useCallback((s: AbortSignal) => {
     setLoading(true)
@@ -81,24 +74,20 @@ const useWallet = () => {
     [getDefaultCard]
   )
 
-  // const updateBalance = useCallback(() => {
-  //   PaymentService.getBalance().then((data: any) => {
-  //     if (data.code === 0) setBalance(parseFloat(data.value))
-  //   })
-  // }, [setBalance])
-
   const confirmPayment = useCallback((paymentIntent: string) => {
     return new Promise<string>((resolve, reject) => {
       PaymentService.confirmPayment(paymentIntent).then((data: any) => {
         if (data.code === 0) {
-          // updateBalance()
-
           resolve('SUCCESS')
         } else {
           reject(new Error('Error confirming the payment'))
         }
       })
     })
+  }, [])
+
+  const getPlanOptions = useCallback((userName: string, signal: AbortSignal) => {
+    return PaymentService.getPlanOptions(userName || '', signal)
   }, [])
 
   return {
@@ -113,6 +102,7 @@ const useWallet = () => {
     removeCard,
     getDefaultCard,
     updateCards,
+    getPlanOptions,
   }
 }
 

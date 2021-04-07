@@ -1,4 +1,10 @@
-import { AddCardType, CardType, DefaultCardType, ServiceMovementType, SubscritionPlanOption } from '../types/PaymentTypes.d'
+import {
+  AddCardType,
+  CardType,
+  DefaultCardType,
+  ServiceMovementType,
+  ServiceSubscritionPlanOption,
+} from '../types/PaymentTypes.d'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`
@@ -207,7 +213,7 @@ const confirmPayment = async (paymentIntent: string): Promise<any> => {
   return body
 }
 
-const getPlanOptions = async (userName: string, signal?: AbortSignal): Promise<SubscritionPlanOption[]> => {
+const getPlanOptions = async (userName: string, signal?: AbortSignal): Promise<ServiceSubscritionPlanOption> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const requestOptions: RequestInit = {

@@ -1,6 +1,6 @@
-import useSubscription from 'hooks/useSubscription'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
+import useSubscription from '../../../../hooks/useSubscription'
 import LiquidImage from '../../../../components/Common/LiquidImage'
 import UserAvatar from '../../../../components/UserAvatar'
 import { SubscriptorListType } from '../../../../types/UserType.d'
