@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import Popup from 'reactjs-popup'
+import useProfile from '../../../../hooks/useProfile'
 import CountryFlag from '../../../../components/CountryFlag/CountryFlag'
 import UserAvatar from '../../../../components/UserAvatar'
-import ProviderProfileContext from '../../../../context/ProviderProfileContext'
+
 import { WalletContextProvider } from '../../../../context/WalletContext'
 import useUser from '../../../../hooks/useUser'
 import { UserType } from '../../../../types/UserType.d'
@@ -20,7 +21,7 @@ type UserHeaderProps = {
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const { isSubscribed } = props
 
-  const { provider } = useContext(ProviderProfileContext.context)
+  const { provider, cancelSubscription } = useProfile({ disableMount: true })
   const { getUser } = useUser()
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
@@ -40,6 +41,14 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
   const countryName = GetCountryName(provider.countryCode || '')
 
+  const onUnsubscribe = (event: any) => {
+    const decision = window.confirm(`Are you sure to cancel the subscription to ${provider.userName}`)
+    event.preventDefault()
+
+    if (decision) {
+      // cancelSubscription(provider.subscriptionId, provider.userName)
+    }
+  }
   return (
     <>
       <WalletContextProvider>
@@ -93,6 +102,15 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                     >
                       <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span>{' '}
                       Message
+                    </a>
+
+                    <a
+                      title="Send a message"
+                      href=""
+                      onClick={onUnsubscribe}
+                      className="profile-header-info-action button remove"
+                    >
+                      Unsubscribe
                     </a>
                   </div>
                 )}

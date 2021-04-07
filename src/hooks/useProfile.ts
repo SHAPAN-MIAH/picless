@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
+import PaymentService from 'services/PaymentService'
 import ProviderProfileContext from '../context/ProviderProfileContext'
 import PostService from '../services/PostService'
 import UserService from '../services/UserService'
@@ -105,6 +106,16 @@ const useProfile = (props?: { disableMount: boolean }) => {
       })
   }
 
+  const cancelSubscription = async (subscriptionId: number, userName: string) => {
+    const cancelPromise = PaymentService.cancelSubscription(subscriptionId)
+
+    return toast.promise(cancelPromise, {
+      loading: 'Loading',
+      success: `Canceled the subscription to the user ${userName}`,
+      error: 'Error cancelling the subscription, please try again',
+    })
+  }
+
   return {
     loading,
     provider,
@@ -117,6 +128,7 @@ const useProfile = (props?: { disableMount: boolean }) => {
     getVideos,
     setProvider,
     cleanProfile,
+    cancelSubscription,
   }
 }
 

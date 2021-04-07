@@ -10,6 +10,10 @@ const LinkUserA = styled.a`
   margin-top: -3px;
 `
 
+const ContainerDiv = styled.div`
+  margin: 20px 0 20px 0;
+`
+
 interface SubscriptorProps {
   subscriptor: SubscriptorListType
 }
@@ -33,7 +37,7 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
 
   return (
     <>
-      <div className="user-preview landscape">
+      <ContainerDiv className="user-preview landscape">
         <LiquidImage className="user-preview-cover" src={imageCover} alt="cover-04" />
 
         <div className="user-preview-info">
@@ -91,7 +95,7 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
             </a>
           </div>
         </div>
-      </div>
+      </ContainerDiv>
     </>
   )
 }
