@@ -121,6 +121,7 @@ export type UserSettingsType = {
   privacityGoogleAuthenticator?: boolean
   privacityWhoCanSendMessage?: string
   users?: object
+  displayAdultContent?: boolean
 }
 
 export interface ServiceSubscriptorListType extends CommonServiceResponse {

@@ -24,6 +24,7 @@ type FormValues = {
   privacityDisplayProfileInSearchBar: boolean
   privacityDisplayChatActivity: boolean
   privacityGoogleAuthenticator: boolean
+  displayAdultContent: boolean
   // privacityWhoCanSendMessage: string
 }
 type formFieldsNames = keyof FormValues
@@ -37,6 +38,7 @@ const formFields: formFieldsNames[] = [
   'privacityDisplayProfileInSearchBar',
   'privacityDisplayChatActivity',
   'privacityGoogleAuthenticator',
+  'displayAdultContent',
   // 'privacityWhoCanSendMessage',
 ]
 
@@ -56,6 +58,7 @@ const UserSettings: FunctionComponent<{}> = () => {
     privacityDisplayProfileInSearchBar: Yup.boolean(),
     privacityDisplayChatActivity: Yup.boolean(),
     privacityGoogleAuthenticator: Yup.boolean(),
+    displayAdultContent: Yup.boolean(),
     // privacityWhoCanSendMessage: Yup.string(),
   })
 
@@ -257,6 +260,27 @@ const UserSettings: FunctionComponent<{}> = () => {
                 <p className="widget-box-title">{t('settings.privacyTitle')}</p>
 
                 <div className="widget-box-content">
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="displayAdultContent"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="enabled-display-adult-content"
+                            name={propsController.name}
+                            title={t('settings.fields.displayAdultContent')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
                   <FormRow classNameRow="split">
                     <FormItem>
                       <Controller

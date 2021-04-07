@@ -217,7 +217,8 @@
       "googleAuthenticator": "Multi Factor Authentication",
       "whoCanSendMessage": "Who Can Send You a Message",
       "sendEveryone": "Everyone",
-      "sendOnlySubscribers": "Only Subscribers"
+      "sendOnlySubscribers": "Only Subscribers",
+      "displayAdultContent": "Display Adult Content"
     }
   },
   "authentication": {
