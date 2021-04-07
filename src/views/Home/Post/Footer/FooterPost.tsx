@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import React, { FunctionComponent, useCallback, useRef, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Popup from 'reactjs-popup'
 import usePost from '../../../../hooks/usePost'
@@ -15,6 +15,18 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
   const { user, post } = props
 
   const [liked, setLiked] = useState<boolean>(false)
+
+  useEffect(() => {
+    const { postReactions } = post
+    if (postReactions) {
+      if (postReactions.length > 0) {
+        if (postReactions[0].id) {
+          likedRef.current = postReactions[0].id
+          setLiked(true)
+        }
+      }
+    }
+  }, [])
 
   const likedRef = useRef(-1)
 

@@ -18,9 +18,19 @@ export interface CommonPostType {
   endDate?: Date | string
   postType?: string
 }
+
+export type ReactionCodeType = 'LIKE'
+
+export interface PostReactionType {
+  id?: number
+  lastUser?: string
+  quantity?: number
+  reactionCode?: ReactionCodeType
+}
 export interface PostType extends CommonPostType {
   registerDate: string
   users: UserType // TODO: CHANGE NAME TO USER
+  postReactions: PostReactionType[]
 }
 
 export interface SourceType {
@@ -67,8 +77,6 @@ export interface ServiceMediaTypes extends CommonServiceResponse {
 export interface ServiceSinglePostType extends CommonServiceResponse {
   post: PostType
 }
-
-export type ReactionCodeType = 'LIKE'
 
 export interface ServiceReactionPostType extends CommonServiceResponse {
   reactionId: number
