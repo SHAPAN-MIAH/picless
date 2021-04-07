@@ -62,8 +62,11 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
             <svg className={classNames('post-option-icon icon-thumbs-up', liked ? styles.liked : '')}>
               <use xlinkHref="#svg-thumbs-up" />
             </svg>
-
-            <p className="post-option-text">{liked ? 'Liked!' : 'Like'}</p>
+            {liked ? (
+              <p className={classNames('post-option-text', styles.liked)}>Liked!</p>
+            ) : (
+              <p className="post-option-text">Like</p>
+            )}
           </div>
         </div>
 
