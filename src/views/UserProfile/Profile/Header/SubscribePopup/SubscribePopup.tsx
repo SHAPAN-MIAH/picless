@@ -109,6 +109,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
             setLoading(false)
 
             onClose()
+            window.location.reload()
           } else {
             setLoading(false)
             toast.error(data.message)

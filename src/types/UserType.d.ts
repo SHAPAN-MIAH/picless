@@ -90,17 +90,28 @@ export interface UserSearchType {
   avatarPicture: string
 }
 
+export interface SubscriptionType {
+  id: number
+  suscriptionId: number
+  cancelAtPeriodEnd: boolean
+  created: number
+  currentPeriodEnd: number
+  currentPeriodStart: number
+}
+
 export interface SubscriptorListType {
   id: number
   registerDate: Date
   subscriptionId: number
   suscribeUser: UserProfileType
+  subscription: SubscriptionType
 }
 
 export type ServiceUserProfileType = {
   code?: string
   message?: string
   user: UserProfileType
+  subscription: SubscriptionType
   isSuscribe: boolean
 }
 

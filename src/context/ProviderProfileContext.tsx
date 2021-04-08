@@ -1,12 +1,12 @@
 import React, { ReactNode, useState } from 'react'
 import { PostType, SourceType } from '../types/PostType.d'
-import { UserProfileType } from '../types/UserType.d'
+import { SubscriptionType, UserProfileType } from '../types/UserType.d'
 
 interface ProviderProfileContextProps {
   provider: UserProfileType
   setProvider: React.Dispatch<React.SetStateAction<UserProfileType>>
-  isSubscribed: boolean
-  setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>
+  subscription: SubscriptionType | null
+  setSubscription: React.Dispatch<React.SetStateAction<SubscriptionType | null>>
   posts: PostType[]
   setPosts: React.Dispatch<React.SetStateAction<PostType[]>>
   photos: SourceType[]
@@ -21,8 +21,8 @@ const defaultContextValues: ProviderProfileContextProps = {
   setProvider: (value: any): void => {
     console.warn(JSON.stringify(value))
   },
-  isSubscribed: false,
-  setIsSubscribed: (value: any): void => {
+  subscription: null,
+  setSubscription: (value: any): void => {
     console.warn(JSON.stringify(value))
   },
   posts: [],
@@ -49,14 +49,14 @@ export const ProviderProfileContextProvider = (props: { children: ReactNode }) =
 
   const [provider, setProvider] = useState<UserProfileType>({} as UserProfileType)
   const [posts, setPosts] = useState<PostType[]>([])
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
+  const [subscription, setSubscription] = useState<SubscriptionType | null>(null)
   const [photos, setPhotos] = useState<SourceType[]>([])
   const [videos, setVideos] = useState<SourceType[]>([])
 
   const cleanProfile = () => {
     setProvider(defaultContextValues.provider)
     setPosts(defaultContextValues.posts)
-    setIsSubscribed(defaultContextValues.isSubscribed)
+    setSubscription(defaultContextValues.subscription)
     setPhotos(defaultContextValues.photos)
     setVideos(defaultContextValues.videos)
   }
@@ -70,8 +70,8 @@ export const ProviderProfileContextProvider = (props: { children: ReactNode }) =
     setPhotos,
     videos,
     setVideos,
-    isSubscribed,
-    setIsSubscribed,
+    subscription,
+    setSubscription,
     cleanProfile,
   }
 

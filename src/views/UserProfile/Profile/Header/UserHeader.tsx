@@ -9,24 +9,24 @@ import UserAvatar from '../../../../components/UserAvatar'
 
 import { WalletContextProvider } from '../../../../context/WalletContext'
 import useUser from '../../../../hooks/useUser'
-import { UserType } from '../../../../types/UserType.d'
+import { SubscriptionType, UserType } from '../../../../types/UserType.d'
 import { GetCountryName } from '../../../../utils/Functions'
 import SubscribePopup from './SubscribePopup/SubscribePopup'
 import styles from './UserHeader.module.css'
 
 type UserHeaderProps = {
-  isSubscribed: boolean
+  subscription: SubscriptionType | null
 }
 
 const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
-  const { isSubscribed } = props
+  const { subscription } = props
 
   const { provider, cancelSubscription } = useProfile({ disableMount: true })
   const { getUser } = useUser()
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
-  const [subscribed, setSubscribed] = useState(isSubscribed)
+  const [subscribed, setSubscribed] = useState<boolean>(subscription !== null)
   const [userData, setUserData] = useState<UserType>({})
 
   useEffect(() => {
@@ -36,8 +36,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
     setImageProfile(provider.profilePicture)
-    setSubscribed(isSubscribed)
-  }, [provider, isSubscribed, getUser])
+    setSubscribed(subscription !== null)
+  }, [provider, subscription, getUser])
 
   const countryName = GetCountryName(provider.countryCode || '')
 
@@ -45,8 +45,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     const decision = window.confirm(`Are you sure to cancel the subscription to ${provider.userName}`)
     event.preventDefault()
 
-    if (decision) {
-      // cancelSubscription(provider.subscriptionId, provider.userName)
+    if (decision && subscription) {
+      cancelSubscription(subscription.id, provider.userName).then(() => {
+        window.location.reload()
+      })
     }
   }
   return (

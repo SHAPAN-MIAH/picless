@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
+import { unixTimestampToDate } from 'utils/Helpers'
 import useSubscription from '../../../../hooks/useSubscription'
 import LiquidImage from '../../../../components/Common/LiquidImage'
 import UserAvatar from '../../../../components/UserAvatar'
@@ -20,7 +21,7 @@ interface SubscriptorProps {
 
 const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
   const { subscriptor } = props
-  const { suscribeUser: subscribeUser } = subscriptor
+  const { suscribeUser: subscribeUser, subscription } = subscriptor
 
   const { cancelSubscription } = useSubscription()
 
@@ -72,6 +73,12 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
               <p className="user-stat-title">{subscribeUser.numberVideos}</p>
 
               <p className="user-stat-text">Videos</p>
+            </div>
+
+            <div className="user-stat">
+              <p className="user-stat-title">{unixTimestampToDate(subscription.currentPeriodEnd)}</p>
+
+              <p className="user-stat-text">End Date</p>
             </div>
           </div>
 

@@ -7,7 +7,7 @@ import ProfileRoutes from './ProfileRoutes'
 import SectionMenu from './SectionMenu/SectionMenu'
 
 const Profile: FunctionComponent<{}> = () => {
-  const { loading, isSubscribed, provider } = useProfile()
+  const { loading, subscription, provider } = useProfile()
   const { user } = useUser()
 
   return (
@@ -22,11 +22,11 @@ const Profile: FunctionComponent<{}> = () => {
         )}
         {!loading && provider && (
           <>
-            <UserHeader isSubscribed={isSubscribed} />
+            <UserHeader subscription={subscription} />
 
             <SectionMenu />
 
-            <ProfileRoutes isSubscribed={isSubscribed} isOwner={user.userName === provider.userName} />
+            <ProfileRoutes subscription={subscription} isOwner={user.userName === provider.userName} />
           </>
         )}
       </div>

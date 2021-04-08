@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import PaymentService from 'services/PaymentService'
+import PaymentService from '../services/PaymentService'
 import ProviderProfileContext from '../context/ProviderProfileContext'
 import PostService from '../services/PostService'
 import UserService from '../services/UserService'
@@ -22,12 +22,12 @@ const useProfile = (props?: { disableMount: boolean }) => {
     posts,
     photos,
     videos,
-    isSubscribed,
+    subscription,
     setProvider,
     setPosts,
     setPhotos,
     setVideos,
-    setIsSubscribed,
+    setSubscription,
     cleanProfile,
   } = useContext(ProviderProfileContext.context)
 
@@ -57,7 +57,7 @@ const useProfile = (props?: { disableMount: boolean }) => {
 
             setProvider(data.user)
 
-            setIsSubscribed(data.isSuscribe)
+            setSubscription(data.subscription)
           }
         })
         .catch((err) => {
@@ -122,7 +122,7 @@ const useProfile = (props?: { disableMount: boolean }) => {
     posts,
     photos,
     videos,
-    isSubscribed,
+    subscription,
     getPosts,
     getPhotos,
     getVideos,

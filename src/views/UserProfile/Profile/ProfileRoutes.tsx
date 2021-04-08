@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
 import { Redirect, Route, Switch } from 'react-router-dom'
+import { SubscriptionType } from '../../../types/UserType.d'
 import { Tabs } from '../../../hooks/useProfile'
 import useRouter from '../../../hooks/useRouter'
 
@@ -11,7 +12,7 @@ const AboutTab = React.lazy(() => import('./SectionTab/AboutTab'))
 const BlockedContent = React.lazy(() => import('./SectionTab/BlockedContent'))
 
 type ProfileRoutesProps = {
-  isSubscribed: boolean
+  subscription: SubscriptionType | null
   isOwner: boolean
   // username: string
 }
@@ -23,12 +24,12 @@ const Loading = (
 )
 
 const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
-  const { isSubscribed, isOwner } = props
+  const { subscription, isOwner } = props
   const { match } = useRouter()
 
   return (
     <>
-      {(isSubscribed || isOwner) && (
+      {(subscription || isOwner) && (
         <>
           <React.Suspense fallback={Loading}>
             <Switch>
@@ -40,7 +41,7 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
               <Route
                 path={`${match.path}/`}
                 render={() => {
-                  if (isSubscribed || isOwner) {
+                  if (subscription || isOwner) {
                     return <Redirect to={`${match.url}/${Tabs.POSTS}`} />
                   }
                   return <Redirect to={`${match.url}/${Tabs.ABOUT}`} />
@@ -51,7 +52,7 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
         </>
       )}
 
-      {!isSubscribed && !isOwner && (
+      {!subscription && !isOwner && (
         <>
           <React.Suspense fallback={Loading}>
             <Switch>
