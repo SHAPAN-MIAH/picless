@@ -1,7 +1,11 @@
 import React from 'react'
 
-const SimpleCheckboxForm = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>((props, ref) => {
-  const { name, placeholder, defaultValue, id, ...rest } = props
+interface SimpleCheckboxForm extends React.InputHTMLAttributes<HTMLInputElement> {
+  placeholderHTML?: JSX.Element
+}
+
+const SimpleCheckboxForm = React.forwardRef<HTMLInputElement, SimpleCheckboxForm>((props, ref) => {
+  const { name, placeholder, placeholderHTML, defaultValue, id, ...rest } = props
 
   const checked: boolean = defaultValue === 'true'
 
@@ -15,7 +19,7 @@ const SimpleCheckboxForm = React.forwardRef<HTMLInputElement, React.InputHTMLAtt
         </svg>
       </div>
 
-      <label htmlFor={id || name}>{placeholder}</label>
+      <label htmlFor={id || name}>{placeholder || placeholderHTML}</label>
     </div>
   )
 })

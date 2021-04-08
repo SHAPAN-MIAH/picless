@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -15,6 +16,10 @@ import useAuth from '../../../../hooks/useAuth'
 
 import { RegisterViewType } from './Register'
 import SimpleCheckboxForm from '../../../../components/Common/SimpleCheckboxForm'
+
+const LinkA = styled.a`
+  color: #00c7d9;
+`
 
 type FormValues = {
   username: string
@@ -71,6 +76,15 @@ const RegisterForm: FunctionComponent<{
     t('passwordStrengthBar.scoreWords.good'),
     t('passwordStrengthBar.scoreWords.strong'),
   ]
+
+  const labelOverEighteenAndTermsAndPrivacy = (
+    <span>
+      {t('authentication.overEighteenAndTermsAndPrivacy')}{' '}
+      <LinkA href="/terms-conditions">{t('authentication.termsAndConditions')}</LinkA> {t('authentication.and')}{' '}
+      <LinkA href="/privacy">{t('authentication.privacyPolicy')}</LinkA>
+    </span>
+  )
+
   return (
     <div>
       <h2 className="form-box-title">{t('authentication.registerTitle')}</h2>
@@ -140,7 +154,7 @@ const RegisterForm: FunctionComponent<{
                 name={propsController.name}
                 ref={propsController.ref}
                 defaultValue={propsController.value}
-                placeholder={t('authentication.overEighteen')}
+                placeholderHTML={labelOverEighteenAndTermsAndPrivacy}
                 onChange={(e) => propsController.onChange(e.target.checked)}
               />
             )}

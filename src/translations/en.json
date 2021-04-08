@@ -253,7 +253,10 @@
     "confirmResetPasswordCode": "Please enter the verification code you received in your mailbox, and type a new password",
     "register_password_repeat": "Repeat the new password",
     "sendConfirmNewPassword": "Save new password",
-    "overEighteen": "I confirm I am over 18 years old",
+    "overEighteenAndTermsAndPrivacy": "I'm over 18 years old and I accepted the",
+    "termsAndConditions": "Terms and Conditions",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
 
     "messages": {
       "successfullyLoggedIn": "You are successfully logged in",

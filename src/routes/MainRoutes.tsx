@@ -12,7 +12,7 @@ import TermsAndConditions from '../views/HelpCenter/TermsAndCondition/TermsAndCo
 import Home from '../views/Home/Home'
 import SinglePost from '../views/Home/SinglePost'
 import LayoutMain from '../views/LayoutMain/LayoutMain'
-import LayoutUnauthorize from '../views/LayoutUnauthorize/LayoutUnauthorize'
+import Authorization from '../views/Authorization/Authorization'
 import Messages from '../views/Messages/Messages'
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import TestView from '../views/TestView/TestView'
@@ -102,8 +102,13 @@ const MainRoutes: FunctionComponent<{}> = () => {
         {!isAuthenticated && (
           <Switch>
             <Route exact path="/">
-              <LayoutUnauthorize />
+              <Authorization />
             </Route>
+
+            <Route path="/privacy" component={PrivacyPolicy} />
+
+            <Route path="/terms-conditions" component={TermsAndConditions} />
+
             <Route path="/">
               <h1>ERROR</h1>
             </Route>

@@ -12,7 +12,7 @@ const LandingContainer = styled.div`
   overflow: hidden;
 `
 
-const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
+const Authorization: React.FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -65,4 +65,4 @@ const LayoutWithouAuth: React.FunctionComponent<{}> = () => {
   )
 }
 
-export default LayoutWithouAuth
+export default Authorization

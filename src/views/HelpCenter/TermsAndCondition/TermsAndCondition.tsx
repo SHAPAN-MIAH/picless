@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const TermsAndConditions: FunctionComponent<{}> = () => {
   useEffect(() => {
@@ -12,6 +14,11 @@ const TermsAndConditions: FunctionComponent<{}> = () => {
           <div className="account-hub-content">
             <div className="section-header">
               <div className="section-header-info">
+                <Link to="/#login" style={{ color: '#00c7d9' }}>
+                  <FontAwesomeIcon icon="arrow-left" size="1x" />
+                  {'  '}
+                  Back
+                </Link>
                 <h1 className="section-title">
                   <svg className="reaction-count-icon icon-info">
                     <use xlinkHref="#svg-info" fill="#3e3f5e" />
