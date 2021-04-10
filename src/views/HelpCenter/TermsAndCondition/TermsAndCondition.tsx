@@ -48,7 +48,7 @@ const TermsAndConditions: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid" style={{ maxWidth: '800px' }}>
+      <div className="content-grid" style={{ maxWidth: '800px', paddingTop: '0px' }}>
         <div className="grid grid-2-7-2">
           <div className="account-hub-content">
             <div className="section-header">
@@ -68,6 +68,7 @@ const TermsAndConditions: FunctionComponent<{}> = () => {
             </div>
             <div className="grid-column" />
             <div className="grid-column">
+              <hr />
               <p>
                 The website <strong>https://picless.com</strong> is a platform or social network that provides an application
                 service which allows Users to create a profile, through which they share photos, videos, and make Live TV.
