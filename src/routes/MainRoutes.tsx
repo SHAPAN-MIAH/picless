@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import Discover from 'views/Discover/Discover'
+import CreatePost from 'views/CreatePost/CreatePost'
 import AuthorizationContext from '../context/AuthorizationContext'
 import AddCard from '../views/Account/Card/AddCard'
 import Movements from '../views/Account/Movements'
@@ -16,6 +18,7 @@ import Authorization from '../views/Authorization/Authorization'
 import Messages from '../views/Messages/Messages'
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import TestView from '../views/TestView/TestView'
+import Notification from '../views/Notification/Notification'
 import UserProfile from '../views/UserProfile/UserProfile'
 import routes from './MenuRoutes'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
@@ -71,6 +74,10 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} path="/user/home" component={Home} />
               <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
               <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
+              <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
+              <ProtectedRoute {...routerProps} exact path="/user/notification" component={Notification} />
+
+              <ProtectedRoute {...routerProps} exact path="/discover" component={Discover} />
 
               <ProtectedRoute {...routerProps} exact path="/account/add-bank" component={AddBank} />
 

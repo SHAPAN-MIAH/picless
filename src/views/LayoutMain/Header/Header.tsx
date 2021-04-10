@@ -35,16 +35,6 @@ const Header: FunctionComponent<{}> = () => {
                 <use xlinkHref="#svg-grid" />
               </svg>
             </div>
-
-            <div className="mobilemenu-trigger" onClick={handleMenu}>
-              <div className="burger-icon inverted">
-                <div className="burger-icon-bar" />
-
-                <div className="burger-icon-bar" />
-
-                <div className="burger-icon-bar" />
-              </div>
-            </div>
           </div>
         </div>
 

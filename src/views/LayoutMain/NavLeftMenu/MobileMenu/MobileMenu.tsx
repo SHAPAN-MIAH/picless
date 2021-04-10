@@ -35,7 +35,6 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
   const handleCloseMenu = () => {
     setShowMenu(false)
-    console.log('sdfdsfdsfds')
   }
 
   return (

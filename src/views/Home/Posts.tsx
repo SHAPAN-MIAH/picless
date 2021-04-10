@@ -8,16 +8,10 @@ export enum HomeTabs {
   PURCHASED = 'purchased',
 }
 
-const Posts: FunctionComponent<{ showPosts: boolean }> = (props) => {
-  const { showPosts } = props
-
+const Posts: FunctionComponent<{}> = () => {
   return (
     <>
-      {showPosts && (
-        <>
-          <HomeRoutes />
-        </>
-      )}
+      <HomeRoutes />
     </>
   )
 }
