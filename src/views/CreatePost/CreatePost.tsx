@@ -26,8 +26,7 @@ const BlockedDiv = styled.div`
   margin-top: -326px;
 `
 
-const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => void }> = (props) => {
-  const { selectedTab } = props
+const CreatePost: FunctionComponent<{}> = () => {
   const [currentTab, setCurrentTab] = useState<TabNamesType>('STATUS')
   const [blocked, setBlocked] = useState<boolean>(true)
 
@@ -35,7 +34,6 @@ const CreatePost: FunctionComponent<{ selectedTab: (tabName: TabNamesType) => vo
 
   const changeTab = (tabName: TabNamesType) => {
     setCurrentTab(tabName)
-    selectedTab(tabName)
   }
 
   useEffect(() => {

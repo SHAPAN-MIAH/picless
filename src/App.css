@@ -173,7 +173,6 @@
 }
 
 /* TEMPlATE FIXES*/
-
 @media screen and (max-width: 1070px){
   .grid.grid-3-9 {
     grid-template-columns: 100%;
@@ -181,4 +180,15 @@
         "sidebar"
         "content"
   }
+
+  .quick-post .quick-post-footer {
+    height: 100px;
+  }
+}
+
+.quick-post .quick-post-footer .quick-post-footer-actions .quick-post-footer-action {
+  margin: 0px;
+  padding-right: 11px;
+  padding-left: 11px;
+  border-right: 1px solid #eaeaf5;
 }

@@ -20,3 +20,19 @@
 .quickPostText {
   font-weight: 500 !important;
 }
+
+.scheduleMessageContainer {
+  height: 0;
+  transition: 0.3s height ease;
+}
+
+.scheduleMessageContainer.active {
+  height: 85px;
+  border-top: 1px solid rgba(173, 175, 202, 0.3);
+  max-height: 85px;
+}
+
+.quickPostFooterActionsLeft{
+  flex-wrap: wrap;
+}
+

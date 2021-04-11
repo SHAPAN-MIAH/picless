@@ -6,6 +6,8 @@ export enum IMAGE_ORIENTATION {
   square = 'square',
 }
 
+export type PrivacityType = 'PUBLIC' | 'PRIVATE'
+
 export interface CommonPostType {
   id: number
   content: string
@@ -16,6 +18,7 @@ export interface CommonPostType {
   videos?: SourceType[]
   startDate?: Date | string
   endDate?: Date | string
+  privacity?: PrivacityType
   postType?: string
 }
 

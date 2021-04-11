@@ -63,7 +63,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   }, [getUser, setValue])
 
   const onSubmit = (data: FormValues) => {
-    console.log('afadsfdsafasdf')
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)

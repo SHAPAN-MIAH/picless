@@ -107,8 +107,7 @@
       },
       "fields": {
         "addTags": "Add Tags",
-        "scheduleStart": "Sechedule Start",
-        "scheduleEnd": "Schedule End"
+        "scheduleStart": "Publish date"
       }
     },
     "createLive": {

@@ -2,39 +2,65 @@ import classNames from 'classnames'
 import React, { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
+
+import useRouter from 'hooks/useRouter'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import useUser from '../../../hooks/useUser'
 import PostService from '../../../services/PostService'
-import { CommonPostType, SourceType } from '../../../types/PostType.d'
+import { CommonPostType, PrivacityType, SourceType } from '../../../types/PostType.d'
 import styles from './CreateStatus.module.css'
+import ScheduleMessage from './ScheduleMessage/ScheduleMessage'
 import UploadSourcePost from './UploadSourcePost/UploadSourcePost'
+import Monetized from './Monetized/Monetized'
 
 const FormTextAreaDiv = styled.div`
   margin-right: 0px;
+`
+
+const PrivacyIconContainerDiv = styled.div`
+  position: absolute;
+  top: 34%;
+  margin-left: 85px;
+
+  @media screen and (max-width: 1070px) {
+    top: 55px;
+    margin-left: 70px;
+  }
+`
+const PrivacySelector = styled.select`
+  width: 110px;
+  border-radius: 5px;
+  padding: 1px 1px 1px 10px;
+
+  @media screen and (max-width: 1070px) {
+    margin-top: 10px;
+    margin-left: -15px;
+  }
 `
 
 const CreateStatus: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   const { user } = useUser()
+  const router = useRouter()
 
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
   // const [showTags, setShowTags] = useState<boolean>(false)
-  // const [showSchedule, setShowSchedule] = useState<boolean>(false)
+  const [showSchedule, setShowSchedule] = useState<boolean>(false)
 
   const [qtyCharactersPost, setQtyCharactersPost] = useState<number>(0)
 
   const [content, setContent] = useState<string>('')
+  const [startDate, setStartDate] = useState<Date | null>()
+  const [privacy, setPrivacy] = useState<PrivacityType>('PUBLIC')
   const [loading, setLoading] = useState<boolean>(false)
   const [imageList, setImageList] = useState<SourceType[]>()
   const [videoList, setVideoList] = useState<SourceType[]>()
 
   // const [tagsList, setTagsList] = useState<string[]>([])
-
-  let scheduleStartDate: Date | null
-  let scheduleEndDate: Date | null
 
   const onChangeCreatePost = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { target } = e
@@ -67,10 +93,10 @@ const CreateStatus: FunctionComponent<{}> = () => {
         content,
         featuredPost: false,
         tags: [],
-        startDate: scheduleStartDate || '',
-        endDate: scheduleEndDate || '',
+        startDate: startDate || '',
         images: imageList,
         videos: videoList,
+        privacity: privacy,
       }
 
       PostService.createPost(post).then(() => {
@@ -91,11 +117,10 @@ const CreateStatus: FunctionComponent<{}> = () => {
   // }
 
   const cleanCreatePost = () => {
-    window.location.reload()
+    router.push('/user/home')
   }
 
   const onLoading = (status: boolean) => {
-    console.log(status)
     setLoading(status)
   }
 
@@ -154,21 +179,21 @@ const CreateStatus: FunctionComponent<{}> = () => {
           </div> */}
 
           {/* SCHEDULE VIEW */}
-          {/* <div className={classNames(styles.scheduleContainer, showSchedule ? styles.show : styles.hide)}>
-            <ScheduleMessage
-              onApplySchedule={(start, end) => {
-                scheduleStartDate = start
-                scheduleEndDate = end
-              }}
-            />
-          </div> */}
+          <ScheduleMessage
+            className={classNames(styles.scheduleMessageContainer, showSchedule ? styles.active : '')}
+            onApplySchedule={(start) => {
+              setStartDate(start)
+              setShowSchedule(false)
+            }}
+          />
         </form>
       </div>
 
-      <div className="quick-post-footer">
-        <div className="quick-post-footer-actions">
+      <div className="quick-post-footer" style={{ position: 'relative', backgroundColor: '#fff' }}>
+        <div className={classNames('quick-post-footer-actions', isMobile ? styles.quickPostFooterActionsLeft : '')}>
           <div
             className="quick-post-footer-action"
+            style={{ paddingLeft: '0px' }}
             onClick={() => {
               setShowUploadPhotos(!showUploadPhotos)
             }}
@@ -190,17 +215,40 @@ const CreateStatus: FunctionComponent<{}> = () => {
             </svg>
           </div> */}
 
-          {/* <div
+          <div
             className="quick-post-footer-action"
             onClick={() => {
               setShowSchedule(!showSchedule)
-              setShowTags(false)
             }}
           >
             <svg className="menu-item-link-icon icon-events">
               <use xlinkHref="#svg-events" />
             </svg>
-          </div> */}
+          </div>
+
+          <Monetized
+            onApplyMonetize={(amount: number) => {
+              console.log(amount)
+            }}
+          />
+
+          <div className="quick-post-footer-action">
+            <PrivacySelector
+              defaultValue={privacy}
+              onChange={(e) => {
+                setPrivacy(e.target.value as PrivacityType)
+                console.log(e.target.value)
+              }}
+            >
+              <option value="PUBLIC">Public</option>
+              <option value="PRIVATE">Private</option>
+            </PrivacySelector>
+            <PrivacyIconContainerDiv>
+              <svg className="form-input-icon icon-private">
+                <use xlinkHref="#svg-private" fill="#adafca" />
+              </svg>
+            </PrivacyIconContainerDiv>
+          </div>
         </div>
 
         <div className="quick-post-footer-actions">
