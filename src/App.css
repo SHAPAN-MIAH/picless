@@ -103,7 +103,9 @@
 
 .rec.rec-arrow {
   font-size: 14px;
-  background-color: rgba(245, 245, 245, 0.5);
+  background-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0px 0px #333;
+  color: rgba(245, 245, 245, 1);
   margin-right: 10px;
   margin-left: 10px;
   position: absolute;
