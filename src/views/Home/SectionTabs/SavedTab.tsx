@@ -1,3 +1,4 @@
+import EmptyPost from 'components/EmptyPost/EmptyPost'
 import React, { FunctionComponent, Suspense, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
@@ -11,6 +12,9 @@ const LoaderDiv = (
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
   </div>
 )
+
+const notPostsMessage = 'you have not saved any content yet'
+const notPostsFooterMessage = 'when you save some content, it will appear here'
 
 const SavedTab: FunctionComponent<{}> = () => {
   //   const [page, setPage] = useState<number>(0)
@@ -29,7 +33,7 @@ const SavedTab: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <h1>SAVED_TAB</h1>
+      <EmptyPost message={notPostsMessage} footer={notPostsFooterMessage} />
     </>
   )
 }
