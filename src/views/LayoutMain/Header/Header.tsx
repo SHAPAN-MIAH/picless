@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import useUser from 'hooks/useUser'
 import React, { FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
@@ -8,6 +9,7 @@ import SearchBar from './SearchBar/SearchBar'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
+  const { user } = useUser()
   const { title } = useAppContext()
 
   const handleMenu = () => {
@@ -44,13 +46,12 @@ const Header: FunctionComponent<{}> = () => {
           <div className="action-list dark">
             <div className="action-list-item-wrap">
               <Link to="/user/home" className="action-list-item">
-                <FontAwesomeIcon icon="home" size="lg" color="#8b88ff" />
-              </Link>
-            </div>
-
-            <div className="action-list-item-wrap">
-              <Link to="/user/home" className="action-list-item">
-                <FontAwesomeIcon icon="plus" size="lg" color="#8b88ff" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path
+                    fill="#8b88ff"
+                    d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"
+                  />
+                </svg>
               </Link>
             </div>
 
@@ -341,6 +342,14 @@ const Header: FunctionComponent<{}> = () => {
                 </a>
               </div>
             </div>
+
+            {user.verifiedAccount && (
+              <div className="action-list-item-wrap">
+                <Link to="/user/create-post" className="action-list-item">
+                  <FontAwesomeIcon icon="plus" size="lg" color="#8b88ff" />
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="action-item-wrap">
