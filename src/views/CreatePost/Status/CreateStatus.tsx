@@ -56,6 +56,8 @@ const CreateStatus: FunctionComponent<{}> = () => {
   const [content, setContent] = useState<string>('')
   const [startDate, setStartDate] = useState<Date | null>()
   const [privacy, setPrivacy] = useState<PrivacityType>('PUBLIC')
+  const [monetizedAmount, setMonetizedAmount] = useState<number>(0)
+
   const [loading, setLoading] = useState<boolean>(false)
   const [imageList, setImageList] = useState<SourceType[]>()
   const [videoList, setVideoList] = useState<SourceType[]>()
@@ -97,6 +99,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
         images: imageList,
         videos: videoList,
         privacity: privacy,
+        amount: monetizedAmount,
       }
 
       PostService.createPost(post).then(() => {
@@ -228,7 +231,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
 
           <Monetized
             onApplyMonetize={(amount: number) => {
-              console.log(amount)
+              setMonetizedAmount(amount)
             }}
           />
 
@@ -237,7 +240,6 @@ const CreateStatus: FunctionComponent<{}> = () => {
               defaultValue={privacy}
               onChange={(e) => {
                 setPrivacy(e.target.value as PrivacityType)
-                console.log(e.target.value)
               }}
             >
               <option value="PUBLIC">Public</option>

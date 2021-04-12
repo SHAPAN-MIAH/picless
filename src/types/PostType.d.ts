@@ -20,6 +20,7 @@ export interface CommonPostType {
   endDate?: Date | string
   privacity?: PrivacityType
   postType?: string
+  amount?: number
 }
 
 export type ReactionCodeType = 'LIKE'

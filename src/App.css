@@ -192,3 +192,7 @@
   padding-left: 11px;
   border-right: 1px solid #eaeaf5;
 }
+
+.quick-post .quick-post-footer .quick-post-footer-actions .quick-post-footer-action:last-child {
+  border-right: 0px solid #eaeaf5;
+}
