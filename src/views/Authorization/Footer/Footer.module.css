@@ -1,10 +1,10 @@
 .footer {
-  position:absolute;
-  left:0;
-  bottom:0;
-  right:0;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background-color: rgba(173, 175, 202, 0.9);
-  padding: 10px
+  padding: 10px;
 }
 
 .innerFooter {
