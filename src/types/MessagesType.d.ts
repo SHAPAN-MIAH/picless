@@ -20,7 +20,7 @@ export interface MessageType {
   receivedUserId?: string
   fromUserId?: string
   toUserId?: string
-  connectionId?: string
+  connectionId?: string | null
 }
 
 export interface SingleMessageType {

@@ -8,6 +8,7 @@ import { PostType } from '../../../../types/PostType.d'
 import { UserType } from '../../../../types/UserType.d'
 import SendATip from '../../../UserProfile/Profile/Header/SendATip/SendATip'
 import styles from './FooterPost.module.css'
+import SendPrivateMessage from './SendPrivateMessage/SendPrivateMessage'
 
 type FooterPostProps = { user?: UserType; post: PostType }
 
@@ -69,14 +70,22 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
             )}
           </div>
         </div>
+        <Popup
+          modal
+          contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+          position="center center"
+          trigger={
+            <div className="post-option">
+              <svg className="post-option-icon icon-comment">
+                <use xlinkHref="#svg-comment" />
+              </svg>
 
-        {/* <div className="post-option">
-          <svg className="post-option-icon icon-comment">
-            <use xlinkHref="#svg-comment" />
-          </svg>
-
-          <p className="post-option-text">Comment</p>
-        </div> */}
+              <p className="post-option-text">Send private message</p>
+            </div>
+          }
+        >
+          {(close: any) => <SendPrivateMessage post={post || {}} onClose={close} />}
+        </Popup>
 
         <Popup
           modal

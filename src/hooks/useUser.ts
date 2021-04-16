@@ -25,10 +25,6 @@ const defaultToastOptions = {
 const useUser = (): UseUserReturn => {
   const { user, setUser, userId, settings, setSettings } = useContext(UserContext.context)
 
-  useEffect(() => {
-    getCurrentUser()
-  }, [user])
-
   const getCurrentUser = useCallback((): Promise<UserType> => {
     return new Promise<UserType>((resolve, reject) => {
       if (_.isEmpty(user)) {

@@ -1,3 +1,4 @@
+import { UserType } from './UserType.d'
 import { CommonServiceResponse } from './CommonTypes.d'
 
 export enum IMAGE_ORIENTATION {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { HubConnection } from '@microsoft/signalr'
 
+import useChat from 'hooks/useChat'
 import ChatService from '../../services/ChatService'
 
 import {
@@ -29,6 +30,7 @@ const Messages: FunctionComponent<{}> = () => {
   const [connection, setConnection] = useState<HubConnection | null>(null)
 
   const { userId } = useUser()
+  const { sendMessage } = useChat()
 
   const listOfUser: UserStatusMessagesType[] = useSelector(getUserListSelector)
   const userSelected = useSelector(getUserSelector)
@@ -108,26 +110,8 @@ const Messages: FunctionComponent<{}> = () => {
     }
   }, [])
 
-  const sendMessage = async (message: string) => {
-    if (userSelected?.email) {
-      const chatMessage: MessageType = {
-        user: userSelected.email,
-        connectionId: userSelected.connectionId,
-        type: 'TEXT',
-        message,
-        registerDate: new Date().toISOString(),
-        fromUserId: userId,
-        senderUserId: userId,
-        toUserId: userSelected.userId.toString(),
-        receivedUserId: userSelected.userId.toString(),
-      }
-
-      try {
-        dispatch(sendMessageChat(chatMessage))
-      } catch (e) {
-        console.log('Sending message failed.', e)
-      }
-    }
+  const sendMessageToUser = async (message: string) => {
+    sendMessage(userSelected, message)
   }
 
   return (
@@ -180,7 +164,7 @@ const Messages: FunctionComponent<{}> = () => {
               </div>
 
               <div className="chat-widget" ref={fieldRef}>
-                {!!userSelected && <Conversation key={userSelected.userId} sendMessage={sendMessage} />}
+                {!!userSelected && <Conversation key={userSelected.userId} sendMessage={sendMessageToUser} />}
 
                 {!userSelected && (
                   <div className="chat-widget-header">
