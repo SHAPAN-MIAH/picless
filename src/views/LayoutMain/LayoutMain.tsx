@@ -29,11 +29,8 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
     getUser().then(() => {
       getSettings().then(() => {
         setShowLoading(false)
-
         if (window.tpl) {
-          window.tpl.load()
-
-          dispatchEvent(new Event('load'))
+          window.tpl.load(['sidebar', 'header-dropdown'])
         }
       })
     })

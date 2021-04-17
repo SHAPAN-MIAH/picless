@@ -1,36 +1,30 @@
 import classNames from 'classnames'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import UserAvatar from '../../../../components/UserAvatar'
 import useAuth from '../../../../hooks/useAuth'
 import useMenu from '../../../../hooks/useMenu'
-import useRouter from '../../../../hooks/useRouter'
-import useUser from '../../../../hooks/useUser'
-import MenuRoutes from '../../../../routes/MenuRoutes'
-import { UserType } from '../../../../types/UserType.d'
 
-const BrowserMenu: FunctionComponent<{}> = () => {
+import useUser from '../../../../hooks/useUser'
+
+const BrowserMenu: FunctionComponent<{}> = React.memo(() => {
   const { t } = useTranslation()
 
-  const { getUser } = useUser()
+  const { user } = useUser()
   const { signOut } = useAuth()
-  const route = useRouter()
 
   const { showMenu } = useMenu()
 
-  const [imageCover, setImageCover] = useState()
   const [imageProfile, setImageProfile] = useState()
-  const [user, setUser] = useState<UserType>()
 
   useEffect(() => {
-    getUser().then((userData) => {
-      setUser(userData)
+    setImageProfile(user.profilePicture)
+  }, [user])
 
-      setImageCover(process.env.REACT_APP_BUCKET_IMAGES + userData.coverPicture)
-      setImageProfile(userData.profilePicture)
-    })
-  }, [getUser])
+  const validateUrl = useCallback((url: string) => {
+    return window.location.href.includes(url)
+  }, [])
 
   return (
     <>
@@ -46,28 +40,84 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           <UserAvatar size="S" imageName={imageProfile || ''} />
         </Link>
         <ul className="menu small">
-          {MenuRoutes.map((item) => {
-            if (item.showInMenu && item.path) {
-              return (
-                <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
-                  <Link className="menu-item-link text-tooltip-tfr" to={item.path} data-title={t(item.title)}>
-                    {item.iconType === 'template' && (
-                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
-                        <use xlinkHref={`#svg-${item.icon}`} />
-                      </svg>
-                    )}
-                    {item.iconType === 'templateWithoutColor' && (
-                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
-                        <use xlinkHref={`#svg-${item.icon}`} style={{ fill: '#adafca' }} />
-                      </svg>
-                    )}
-                  </Link>
-                </li>
-              )
-            }
+          {/* PROFILE-INFO */}
+          <li className={classNames('menu-item', validateUrl('/account/profile-info') ? 'active' : '')}>
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              to="/account/profile-info"
+              data-title={t('navLeftMenu.profileInfo')}
+            >
+              <svg className="menu-item-link-icon icon-members">
+                <use xlinkHref="#svg-members" />
+              </svg>
+            </Link>
+          </li>
 
-            return null
-          })}
+          {/* ACCOUNT-INFO */}
+          <li className={classNames('menu-item', validateUrl('/account/account-info') ? 'active' : '')}>
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              to="/account/account-info"
+              data-title={t('navLeftMenu.accountInfo')}
+            >
+              <svg className="menu-item-link-icon icon-private">
+                <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
+              </svg>
+            </Link>
+          </li>
+
+          {/* SETTINGS */}
+          <li className={classNames('menu-item', validateUrl('/account/settings') ? 'active' : '')}>
+            <Link className="menu-item-link text-tooltip-tfr" to="/account/settings" data-title={t('navLeftMenu.settings')}>
+              <svg className="menu-item-link-icon icon-settings">
+                <use xlinkHref="#svg-settings" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* MY-SUBSCRIBERS */}
+          <li className={classNames('menu-item', validateUrl('/account/my-subscriptions') ? 'active' : '')}>
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              to="/account/my-subscriptions"
+              data-title={t('navLeftMenu.mySubscriptions')}
+            >
+              <svg className="menu-item-link-icon icon-group">
+                <use xlinkHref="#svg-group" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* CARDS/WALLET */}
+          <li className={classNames('menu-item', validateUrl('/account/wallet') ? 'active' : '')}>
+            <Link className="menu-item-link text-tooltip-tfr" to="/account/wallet" data-title={t('navLeftMenu.cardWallet')}>
+              <svg className="menu-item-link-icon icon-wallet">
+                <use xlinkHref="#svg-wallet" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* ADD-BANK */}
+          <li className={classNames('menu-item', validateUrl('/account/verification') ? 'active' : '')}>
+            <Link
+              className="menu-item-link text-tooltip-tfr"
+              to="/account/verification"
+              data-title={t('navLeftMenu.addBank')}
+            >
+              <svg className="menu-item-link-icon icon-earnings">
+                <use xlinkHref="#svg-earnings" />
+              </svg>
+            </Link>
+          </li>
+
+          {/* HELP-SUPPORT */}
+          <li className={classNames('menu-item', validateUrl('/support') ? 'active' : '')}>
+            <Link className="menu-item-link text-tooltip-tfr" to="/support" data-title={t('navLeftMenu.helpSupport')}>
+              <svg className="menu-item-link-icon icon-info">
+                <use xlinkHref="#svg-info" />
+              </svg>
+            </Link>
+          </li>
 
           <li className="menu-item">
             <a
@@ -90,7 +140,6 @@ const BrowserMenu: FunctionComponent<{}> = () => {
       <nav
         id="navigation-widget"
         className={classNames('navigation-widget navigation-widget-desktop sidebar left', showMenu ? 'delayed' : 'hidden')}
-        data-simplebar
       >
         <div className="navigation-widget-cover" />
         <div className="user-short-description">
@@ -108,7 +157,6 @@ const BrowserMenu: FunctionComponent<{}> = () => {
             </Link>
           </p>
         </div>
-
         <div className="user-stats">
           <div className="user-stat">
             <p className="user-stat-title">{user?.numberOfFollowers}</p>
@@ -129,8 +177,79 @@ const BrowserMenu: FunctionComponent<{}> = () => {
           </div>
         </div>
 
-        <ul className="menu">
-          {MenuRoutes.map((item) => {
+        {showMenu && (
+          <>
+            <ul className="menu">
+              {/* PROFILE-INFO */}
+              <li className={classNames('menu-item', validateUrl('/account/profile-info') ? 'active' : '')}>
+                <Link className="menu-item-link" to="/account/profile-info">
+                  <svg className="menu-item-link-icon icon-members">
+                    <use xlinkHref="#svg-members" />
+                  </svg>
+                  {t('navLeftMenu.profileInfo')}
+                </Link>
+              </li>
+
+              {/* ACCOUNT-INFO */}
+              <li className={classNames('menu-item', validateUrl('/account/account-info') ? 'active' : '')}>
+                <Link className="menu-item-link" to="/account/account-info">
+                  <svg className="menu-item-link-icon icon-private">
+                    <use xlinkHref="#svg-private" style={{ fill: '#adafca' }} />
+                  </svg>
+                  {t('navLeftMenu.accountInfo')}
+                </Link>
+              </li>
+
+              {/* SETTINGS */}
+              <li className={classNames('menu-item', validateUrl('/account/settings') ? 'active' : '')}>
+                <Link className="menu-item-link" to="/account/settings">
+                  <svg className="menu-item-link-icon icon-settings">
+                    <use xlinkHref="#svg-settings" />
+                  </svg>
+                  {t('navLeftMenu.settings')}
+                </Link>
+              </li>
+
+              {/* MY-SUBSCRIBERS */}
+              <li className={classNames('menu-item', validateUrl('/account/my-subscriptions') ? 'active' : '')}>
+                <Link className="menu-item-link" to="/account/my-subscriptions">
+                  <svg className="menu-item-link-icon icon-group">
+                    <use xlinkHref="#svg-group" />
+                  </svg>
+                  {t('navLeftMenu.mySubscriptions')}
+                </Link>
+              </li>
+
+              {/* CARDS/WALLET */}
+              <li className={classNames('menu-item', validateUrl('/account/wallet') ? 'active' : '')}>
+                <Link className="menu-item-link" to="/account/wallet">
+                  <svg className="menu-item-link-icon icon-wallet">
+                    <use xlinkHref="#svg-wallet" />
+                  </svg>
+                  {t('navLeftMenu.cardWallet')}
+                </Link>
+              </li>
+
+              {/* ADD-BANK */}
+              <li className={classNames('menu-item', validateUrl('/account/verification') ? 'active' : '')}>
+                <Link className="menu-item-link " to="/account/verification">
+                  <svg className="menu-item-link-icon icon-earnings">
+                    <use xlinkHref="#svg-earnings" />
+                  </svg>
+                  {t('navLeftMenu.addBank')}
+                </Link>
+              </li>
+
+              {/* HELP-SUPPORT */}
+              <li className={classNames('menu-item', validateUrl('/support') ? 'active' : '')}>
+                <Link className="menu-item-link" to="/support">
+                  <svg className="menu-item-link-icon icon-info">
+                    <use xlinkHref="#svg-info" />
+                  </svg>
+                  {t(t('navLeftMenu.helpSupport'))}
+                </Link>
+              </li>
+              {/* {MenuRoutes.map((item) => {
             if (item.showInMenu && item.path) {
               return (
                 <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
@@ -152,26 +271,28 @@ const BrowserMenu: FunctionComponent<{}> = () => {
             }
 
             return null
-          })}
+          })} */}
 
-          <li className="menu-item">
-            <a
-              href=""
-              className="menu-item-link"
-              onClick={() => {
-                signOut()
-              }}
-            >
-              <svg className="menu-item-link-icon icon-login">
-                <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
-              </svg>
-              {t('navLeftMenu.logout')}
-            </a>
-          </li>
-        </ul>
+              <li className="menu-item">
+                <a
+                  href=""
+                  className="menu-item-link"
+                  onClick={() => {
+                    signOut()
+                  }}
+                >
+                  <svg className="menu-item-link-icon icon-login">
+                    <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
+                  </svg>
+                  {t('navLeftMenu.logout')}
+                </a>
+              </li>
+            </ul>
+          </>
+        )}
       </nav>
     </>
   )
-}
+})
 
 export default BrowserMenu
