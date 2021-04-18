@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Popup from 'reactjs-popup'
-import usePost from '../../../../hooks/usePost'
+import usePosts from '../../../../hooks/usePosts'
 import { PostType } from '../../../../types/PostType.d'
 import { UserType } from '../../../../types/UserType.d'
 import SendATip from '../../../UserProfile/Profile/Header/SendATip/SendATip'
@@ -17,6 +17,10 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
 
   const [liked, setLiked] = useState<boolean>(false)
 
+  const likedRef = useRef(-1)
+
+  const { addReaction, removeReaction } = usePosts()
+
   useEffect(() => {
     const { postReactions } = post
     if (postReactions) {
@@ -28,10 +32,6 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
       }
     }
   }, [])
-
-  const likedRef = useRef(-1)
-
-  const { addReaction, removeReaction } = usePost()
 
   const handleCallback = (status: string, message?: string) => {
     if (status === 'SUCCESS') {
@@ -48,7 +48,7 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
         setLiked(true)
       })
     } else {
-      removeReaction(likedRef.current).then(() => {
+      removeReaction(post.id, 'LIKE', likedRef.current).then(() => {
         likedRef.current = -1
         setLiked(false)
       })

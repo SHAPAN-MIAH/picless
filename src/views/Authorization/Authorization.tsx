@@ -16,11 +16,9 @@ const Authorization: React.FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    if (window.tpl) {
-      window.tpl.load()
-
-      dispatchEvent(new Event('load'))
-    }
+    setTimeout(() => {
+      window.tpl.load(['landing-tabs'])
+    }, 500)
   }, [])
 
   return (

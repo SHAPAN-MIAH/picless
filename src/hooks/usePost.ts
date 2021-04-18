@@ -7,34 +7,34 @@ import { PostType, ServicePostType, ServiceReactionPostType } from '../types/Pos
 const usePost = () => {
   const { posts, setPosts } = useContext(PostContext.context)
 
-  const getPosts = useCallback(
-    async (page?: number): Promise<void> => {
-      return PostService.getPosts(page).then((p: ServicePostType): void => {
-        if (p.code === '0') {
-          setPosts([...posts, ...p.posts])
-        } else {
-          toast.error('Error loading posts')
-        }
-      })
-    },
-    [posts]
-  )
+  // const getPosts = useCallback(
+  //   async (page?: number): Promise<void> => {
+  //     return PostService.getPosts(page).then((p: ServicePostType): void => {
+  //       if (p.code === '0') {
+  //         setPosts([...posts, ...p.posts])
+  //       } else {
+  //         toast.error('Error loading posts')
+  //       }
+  //     })
+  //   },
+  //   [posts]
+  // )
 
-  const deletePost = useCallback(async (postId: number) => {
-    PostService.deletePost(postId)
-      .then((data: { code: number; message: string }) => {
-        if (data.code !== 0) {
-          throw new Error(data.message)
-        }
-        const newPosts = posts.filter((post: PostType) => post.id !== postId)
+  // const deletePost = useCallback(async (postId: number) => {
+  //   PostService.deletePost(postId)
+  //     .then((data: { code: number; message: string }) => {
+  //       if (data.code !== 0) {
+  //         throw new Error(data.message)
+  //       }
+  //       const newPosts = posts.filter((post: PostType) => post.id !== postId)
 
-        setPosts(newPosts)
-      })
-      .catch((err) => {
-        toast.error('Error deleting post')
-        console.error(err.message)
-      })
-  }, [])
+  //       setPosts(newPosts)
+  //     })
+  //     .catch((err) => {
+  //       toast.error('Error deleting post')
+  //       console.error(err.message)
+  //     })
+  // }, [])
 
   const addReaction = useCallback((postId, reaction = 'LIKE'): Promise<number> => {
     return new Promise<number>((resolve) => {
@@ -56,8 +56,8 @@ const usePost = () => {
 
   return {
     posts,
-    getPosts,
-    deletePost,
+    // getPosts,
+    // deletePost,
     addReaction,
     removeReaction,
   }

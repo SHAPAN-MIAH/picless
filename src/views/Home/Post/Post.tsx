@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback } from 'react'
 import { dateToUnixTimestamp } from 'utils/Helpers'
 import ThreeDotsMenu from '../../../components/ThreeDotsMenu/ThreeDotsMenu'
-import usePost from '../../../hooks/usePost'
+import usePosts from '../../../hooks/usePosts'
 import useUser from '../../../hooks/useUser'
 import { PostType, SourceType } from '../../../types/PostType.d'
 import PictureCarousel from './Content/PictureCarousel'
@@ -20,7 +20,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
 
   const datePost = new Date(data.registerDate)
 
-  const { deletePost } = usePost()
+  const { deletePost } = usePosts()
   const { user } = useUser()
 
   const onDeletePost = useCallback((postId: number) => {
@@ -30,7 +30,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
-        {user.id === data.users.id && (
+        {user.id !== data.users.id && (
           <ThreeDotsMenu>
             <div className="simple-dropdown widget-box-post-settings-dropdown">
               <EditPost />
