@@ -114,6 +114,22 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
             return null
           })}
+
+          <li className="menu-item">
+            <a
+              href=""
+              className="menu-item-link"
+              data-title={t('navLeftMenu.logout')}
+              onClick={() => {
+                signOut()
+              }}
+            >
+              <svg className="menu-item-link-icon icon-login">
+                <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
+              </svg>
+              {t('navLeftMenu.logout')}
+            </a>
+          </li>
         </ul>
       </nav>
 
