@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
+import { Link } from 'react-router-dom'
 import TextInput from '../../../../components/Common/TextInput'
 
 import FormRowItem from '../../../../components/Common/Form/FormRowItem'
@@ -80,8 +81,8 @@ const RegisterForm: FunctionComponent<{
   const labelOverEighteenAndTermsAndPrivacy = (
     <span>
       {t('authentication.overEighteenAndTermsAndPrivacy')}{' '}
-      <LinkA href="/terms-conditions">{t('authentication.termsAndConditions')}</LinkA> {t('authentication.and')}{' '}
-      <LinkA href="/privacy">{t('authentication.privacyPolicy')}</LinkA>
+      <LinkA href="/support/terms-conditions">{t('authentication.termsAndConditions')}</LinkA> {t('authentication.and')}{' '}
+      <LinkA href="/support/privacy">{t('authentication.privacyPolicy')}</LinkA>
     </span>
   )
 
@@ -177,7 +178,7 @@ const RegisterForm: FunctionComponent<{
 
       <p className="form-text">
         {t('authentication.registerConfimationEmailMessage')}
-        <a href="mailto:GregorioTeAyuda@enjoyr.com">{t('authentication.contactUs')}</a>!
+        <Link to="/support/contact">{t('authentication.contactUs')}</Link>!
       </p>
     </div>
   )

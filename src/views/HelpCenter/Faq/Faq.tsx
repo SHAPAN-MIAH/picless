@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent } from 'react'
 import Faq from 'react-faq-component'
+import { Link } from 'react-router-dom'
 // import { useTranslation } from 'react-i18next'
 import dataFaq from '../../../constants/faq.json'
 

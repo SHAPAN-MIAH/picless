@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Discover from 'views/Discover/Discover'
 import CreatePost from 'views/CreatePost/CreatePost'
+import HelpSupport from 'views/HelpCenter/HelpCenter'
 import AuthorizationContext from '../context/AuthorizationContext'
 import AddCard from '../views/Account/Card/AddCard'
 import Movements from '../views/Account/Movements'
@@ -111,10 +112,11 @@ const MainRoutes: FunctionComponent<{}> = () => {
             <Route exact path="/">
               <Authorization />
             </Route>
-
-            <Route path="/privacy" component={PrivacyPolicy} />
-
-            <Route path="/terms-conditions" component={TermsAndConditions} />
+            <Route path="/support/faq" component={Faq} />
+            <Route path="/support/contact" component={Contact} />
+            <Route path="/support/privacy" component={PrivacyPolicy} />
+            <Route path="/support/terms-conditions" component={TermsAndConditions} />
+            <Route path="/support" component={HelpSupport} />
 
             <Route path="/">
               <h1>ERROR</h1>

@@ -13,10 +13,10 @@ const Footer: FunctionComponent<{}> = () => {
             </div>
           </div>
           <div className={styles.footerThird}>
-            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/support/privacy">Privacy Policy</Link>
           </div>
           <div className={styles.footerThird}>
-            <Link to="/terms-conditions">Terms &amp; Conditions</Link>
+            <Link to="/support/terms-conditions">Terms &amp; Conditions</Link>
           </div>
           <div className={styles.footerThird}>
             <Link to="/support">Help / Support</Link>

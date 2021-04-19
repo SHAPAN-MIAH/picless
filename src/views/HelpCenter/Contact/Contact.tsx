@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -44,6 +45,11 @@ const Contact: FunctionComponent<{}> = () => {
         <div className="grid grid-3-6-3">
           <div className="grid-column" />
           <div className="grid-column">
+            <Link to="/#login" style={{ color: '#00c7d9' }}>
+              <FontAwesomeIcon icon="arrow-left" size="1x" />
+              {'  '}
+              Back
+            </Link>
             <HeaderDiv>
               <h1>
                 <BlueDash>-</BlueDash> Contact <BlueDash>-</BlueDash>
