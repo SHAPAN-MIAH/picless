@@ -1,0 +1,65 @@
+.mainPopup {
+    padding: 25px;
+  }
+  
+  .headerTip {
+    text-align: left;
+    margin-bottom: 25px;
+  }
+  
+  @media only screen and (max-width: 1366px) {
+    /* For mobile phones: */
+    [class*='mainPopup'] {
+      padding: 15px;
+    }
+  }
+  
+  .userInfoContainer {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  .userInfoImage {
+    flex: none;
+  }
+  
+  .userInfoName {
+    margin-top: 10px;
+    margin-left: 10px;
+    flex: 2;
+  }
+  
+  .unlockContent {
+    text-align: center;
+  }
+  
+  .unlockContent p {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  
+  .resumeContainer {
+    text-align: right;
+    margin-right: 10px;
+  }
+  
+  .resumeContainer p {
+    margin-top: 5px;
+  }
+  
+  .closePopup {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: #615dfa;
+    margin-left: 285px;
+    top: 0;
+    margin-top: -10px;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+  }
+  

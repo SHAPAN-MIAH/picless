@@ -29,7 +29,7 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     }
-  }, [getPostList])
+  }, [])
 
   return (
     <>

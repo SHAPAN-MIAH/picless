@@ -2,7 +2,6 @@ import EmptyPost from 'components/EmptyPost/EmptyPost'
 import React, { FunctionComponent, Suspense, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
-import usePost from '../../../hooks/usePost'
 import { simpleKeyGenerator } from '../../../utils/Functions'
 
 import Post from '../Post/Post'

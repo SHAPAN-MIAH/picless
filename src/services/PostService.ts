@@ -44,7 +44,24 @@ const createPost = async (post: Partial<CommonPostType>) => {
   return body
 }
 
-const getPosts = async (page = 0): Promise<ServicePostType> => {
+const editPost = async (post: Partial<CommonPostType>) => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(post),
+  }
+
+  const url = `${baseUrl}/editpost`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
+const getPosts = async (page = 0, userName = ''): Promise<ServicePostType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {
@@ -52,7 +69,7 @@ const getPosts = async (page = 0): Promise<ServicePostType> => {
     headers,
   }
 
-  const url = `${baseUrl}/getpostsbyuser?page=${page}`
+  const url = `${baseUrl}/getpostsbyuser?page=${page}${userName ? `&userName=${userName}` : ''}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
@@ -152,6 +169,7 @@ const deleteReaction = async (reactionId = 0): Promise<CommonServiceResponse> =>
 export default {
   uploadPostResource,
   createPost,
+  editPost,
   deletePost,
   getPosts,
   getPostById,

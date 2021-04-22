@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import CheckboxForm from 'components/Common/CheckboxForm'
+import DatePickerForm from 'components/Common/DatePickerForm/DatePickerForm'
 import FormItem from 'components/Common/Form/FormItem'
 import FormRow from 'components/Common/Form/FormRow'
 import FormRowItem from 'components/Common/Form/FormRowItem'
@@ -8,34 +9,34 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import DatePickerForm from '../../../../components/Common/DatePickerForm/DatePickerForm'
 
 const TooltipContainerDiv = styled.div`
   padding: 10px;
 `
 
-interface MonetizedProps extends React.BaseHTMLAttributes<HTMLDivElement> {
-  onApplyMonetize: (amount: number) => void
-  name?: string
-  defaultAmount?: number
+interface ScheduleTooltipProps extends React.BaseHTMLAttributes<HTMLDivElement> {
+  onApplySchedule: (value: Date) => void
+  name: string
+  scheduleDate?: Date
 }
 
-const Monetized: FunctionComponent<MonetizedProps> = (props) => {
-  const { onApplyMonetize, name = 'monetized-amount', defaultAmount } = props
+const ScheduleTooltip: FunctionComponent<ScheduleTooltipProps> = (props) => {
+  const { onApplySchedule, name, scheduleDate } = props
 
-  const [amount, setAmount] = useState<number>(0)
-  const [monetize, setMonetize] = useState<boolean>(true)
+  const { t } = useTranslation()
+
+  const [schedule, setSchedule] = useState<Date>()
 
   const onApply = (close: () => void) => {
-    if (monetize && amount > 0) {
+    if (schedule) {
       close()
-      onApplyMonetize(amount)
+      onApplySchedule(schedule)
     }
   }
 
   useEffect(() => {
-    if (defaultAmount) {
-      setAmount(defaultAmount)
+    if (scheduleDate) {
+      setSchedule(scheduleDate)
     }
   }, [])
 
@@ -44,8 +45,8 @@ const Monetized: FunctionComponent<MonetizedProps> = (props) => {
       <Popup
         trigger={
           <div className="quick-post-footer-action">
-            <svg className="menu-item-link-icon icon-revenue">
-              <use xlinkHref="#svg-revenue" />
+            <svg className="menu-item-link-icon icon-events">
+              <use xlinkHref="#svg-events" />
             </svg>
           </div>
         }
@@ -57,25 +58,17 @@ const Monetized: FunctionComponent<MonetizedProps> = (props) => {
             <>
               <TooltipContainerDiv>
                 <FormRowItem>
-                  <CheckboxForm
-                    id="enabled-display-adult-content"
-                    name="monetize"
-                    title="Monetize"
-                    checked={monetize}
-                    onChange={(value: boolean) => {
-                      setMonetize(value)
-                    }}
-                  />
-                </FormRowItem>
-
-                <FormRowItem>
-                  <TextInput
-                    type="text"
+                  <DatePickerForm
+                    // classNameFormInput={styles.datepicker}
+                    placeholderText={t('home.createPost.fields.scheduleStart')}
+                    customInputRef="startDateRef"
+                    selected={schedule}
+                    minDate={new Date()}
+                    timeInputLabel="Time:"
+                    showTimeInput
+                    dateFormat="dd/MM/yyyy h:mm aa"
                     name={name}
-                    value={amount}
-                    classNameFormInput="small active"
-                    placeholder="Enter amount"
-                    onChange={(e: any) => setAmount(e.target.value)}
+                    onChange={(date: Date) => setSchedule(date)}
                   />
                 </FormRowItem>
                 <FormRowItem>
@@ -98,4 +91,4 @@ const Monetized: FunctionComponent<MonetizedProps> = (props) => {
   )
 }
 
-export default Monetized
+export default ScheduleTooltip

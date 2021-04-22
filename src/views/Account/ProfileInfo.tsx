@@ -1,10 +1,10 @@
-import { yupResolver } from '@hookform/resolvers/yup'
 import _ from 'lodash'
 import React, { FunctionComponent, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import * as Yup from 'yup'
 import ButtonWithLoader from '../../components/Common/ButtonWithLoader'
 import DatePickerForm from '../../components/Common/DatePickerForm/DatePickerForm'
 import FormItem from '../../components/Common/Form/FormItem'
@@ -40,7 +40,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     profileDescription: Yup.string(),
   })
 
-  const { getUser, updateUser } = useUser()
+  const { user, updateUser } = useUser()
   const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
   })
@@ -48,19 +48,13 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   const professionList: SelectOptionsType[] = professions
 
   useEffect(() => {
-    getUser()
-      .then((user) => {
-        formFields.forEach((field: string) => {
-          const value = _.get(user, field)
+    formFields.forEach((field: string) => {
+      const value = _.get(user, field)
 
-          if (field === 'birthDate') setValue(field, new Date(value))
-          else setValue(field as formFieldsNames, value || '')
-        })
-      })
-      .catch((err) => {
-        toast.error(err.message)
-      })
-  }, [getUser, setValue])
+      if (field === 'birthDate') setValue(field, new Date(value))
+      else setValue(field as formFieldsNames, value || '')
+    })
+  }, [user, setValue])
 
   const onSubmit = (data: FormValues) => {
     const formData: any[] = []

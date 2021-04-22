@@ -70,9 +70,8 @@ const useProfile = (props?: { disableMount: boolean }) => {
     }
   }, [username])
 
-  // NEED TO CHANGE FOR THE REAL SERVICE
   const getPosts = async (page?: number): Promise<void> => {
-    return PostService.getPosts(page).then((p: ServicePostType): void => {
+    return PostService.getPosts(page, provider.userName).then((p: ServicePostType): void => {
       if (p.code === '0') {
         setPosts([...posts, ...p.posts])
       } else {

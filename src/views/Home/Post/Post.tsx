@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useCallback } from 'react'
+import Popup from 'reactjs-popup'
 import { dateToUnixTimestamp } from 'utils/Helpers'
 import ThreeDotsMenu from '../../../components/ThreeDotsMenu/ThreeDotsMenu'
 import usePosts from '../../../hooks/usePosts'
@@ -33,7 +34,16 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
         {user.id !== data.users.id && (
           <ThreeDotsMenu>
             <div className="simple-dropdown widget-box-post-settings-dropdown">
-              <EditPost />
+              <Popup
+                modal
+                nested
+                contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+                position="center center"
+                trigger={<p className="simple-dropdown-link">Edit</p>}
+              >
+                {(close: any) => <EditPost post={data} onClose={close} />}
+              </Popup>
+
               <p
                 className="simple-dropdown-link"
                 onClick={() => {

@@ -14,6 +14,7 @@ const ThreeDotsMenu: FunctionComponent<ThreeDotsMenuProps> = React.memo((props) 
     <div className="widget-box-settings">
       <div className="post-settings-wrap">
         <Popup
+          nested
           trigger={
             <div className="post-settings widget-box-post-settings-dropdown-trigger">
               <svg className="post-settings-icon icon-more-dots">
