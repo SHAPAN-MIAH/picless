@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useCallback } from 'react'
 import Popup from 'reactjs-popup'
-import { dateToUnixTimestamp } from 'utils/Helpers'
 import ThreeDotsMenu from '../../../components/ThreeDotsMenu/ThreeDotsMenu'
 import usePosts from '../../../hooks/usePosts'
 import useUser from '../../../hooks/useUser'
@@ -31,7 +30,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
-        {user.id !== data.users.id && (
+        {user.id === data.users.id && (
           <ThreeDotsMenu>
             <div className="simple-dropdown widget-box-post-settings-dropdown">
               <Popup
@@ -61,7 +60,9 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             <HeaderPost user={data.users || {}} datePost={datePost} />
             <p className="widget-box-status-text">{data.content}</p>
           </div>
-          {listImages && listImages.length > 0 && <PictureCarousel sources={listImages} />}
+          {listImages && listImages.length > 0 && (
+            <PictureCarousel sources={listImages} amount={data.amount || 0} blocked={data.blocked} />
+          )}
           {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
 
           <div className="widget-box-status-content">

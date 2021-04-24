@@ -13,6 +13,7 @@ export interface CommonPostType {
   id: number
   content: string
   featuredPost: boolean
+  blocked: boolean
   tags?: TagType[]
   schedule?: ScheduleType
   images?: SourceType[]

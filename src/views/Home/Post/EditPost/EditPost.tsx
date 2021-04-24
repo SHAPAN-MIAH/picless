@@ -53,13 +53,14 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
   })
 
   const onSubmit = (data: FormValues) => {
-    console.log(data)
+    const scheduleData = data.schedule && (data.schedule.toISOString() || '')
 
     const postEdited: Partial<CommonPostType> = {
+      id: post.id,
       content: data.content,
       featuredPost: false,
       tags: [],
-      startDate: data.schedule || '',
+      startDate: scheduleData,
       privacity: data.privacity,
       amount: data.amount,
     }
@@ -72,9 +73,7 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
         error: 'Error editing post ....',
       })
       .then((data: any) => {
-        console.log(data)
-
-        onClose()
+        window.location.reload()
       })
   }
 

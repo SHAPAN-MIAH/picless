@@ -45,12 +45,19 @@ const createPost = async (post: Partial<CommonPostType>) => {
 }
 
 const editPost = async (post: Partial<CommonPostType>) => {
-  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('postId', post.id?.toString() || '')
+  bodyData.append('content', post.content?.toString() || '')
+  bodyData.append('privacity', post.privacity?.toString() || '')
+  bodyData.append('startDate', post.startDate?.toString() || '')
+  bodyData.append('amount', post.amount?.toString() || '')
 
   const requestOptions: RequestInit = {
-    method: 'POST',
+    method: 'PUT',
     headers,
-    body: JSON.stringify(post),
+    body: bodyData,
   }
 
   const url = `${baseUrl}/editpost`

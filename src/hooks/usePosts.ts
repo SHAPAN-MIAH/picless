@@ -141,6 +141,7 @@ const usePosts = () => {
 
   return {
     posts: state.posts,
+    hasMore: state.pages <= state.nextPage - 1,
     getPosts,
     deletePost,
     addReaction,
