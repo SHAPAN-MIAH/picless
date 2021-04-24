@@ -8,7 +8,7 @@ import styles from './StyledPopup.module.css'
 type SizeType = 'S' | 'M'
 
 type StyledPopupProps = {
-  trigger: JSX.Element
+  trigger?: JSX.Element
   children: ReactNode
   show: boolean
   onClose: () => void
@@ -39,12 +39,11 @@ const StyledPopup: FunctionComponent<StyledPopupProps> = React.memo((props) => {
       default:
         break
     }
-  } else {
   }
 
   return (
     <>
-      <Popup open={show} modal contentStyle={contentStyle} position="center center" trigger={trigger}>
+      <Popup modal nested open={show} contentStyle={contentStyle} position="center center" trigger={trigger}>
         <div className={styles.mainPopup}>
           <div
             className={styles.closePopup}

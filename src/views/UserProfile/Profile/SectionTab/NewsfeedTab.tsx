@@ -34,7 +34,7 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
   return (
     <>
       <div>
-        {posts.length === 0 && (
+        {posts && posts.length === 0 && (
           <Alert alertType="PRIMARY" message="Nothing to show" style={{ width: '100%', textAlign: 'center' }} />
         )}
 

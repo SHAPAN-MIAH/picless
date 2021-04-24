@@ -34,7 +34,7 @@ const useProfile = (props?: { disableMount: boolean }) => {
   const router = useRouter()
   const { disableMount = false } = props || {}
 
-  const { username, tab } = useParams<{ username: string; tab: string }>()
+  const { username } = useParams<{ username: string; tab: string }>()
 
   const [loading, setLoading] = useState<boolean>(false)
 

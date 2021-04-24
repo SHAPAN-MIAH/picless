@@ -1,9 +1,11 @@
-import React, { FunctionComponent } from 'react'
+import MessageModal from 'components/MessageModal/MessageModal'
+import React, { FunctionComponent, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import UserService from 'services/UserService'
 
 const TestView: FunctionComponent<{}> = () => {
+  const [showMessage, setShowMessage] = useState(false)
   const handleSimpleToast = () => {
     toast('test')
   }
@@ -27,6 +29,10 @@ const TestView: FunctionComponent<{}> = () => {
       success: 'Got the data',
       error: 'Error when fetching',
     })
+  }
+
+  const handleMessage = () => {
+    setShowMessage(true)
   }
 
   // const handleSimpleToast = () => {
@@ -57,6 +63,20 @@ const TestView: FunctionComponent<{}> = () => {
             <button type="button" onClick={handlePromiseToast}>
               Promise Toast
             </button>
+
+            <button type="button" onClick={handleMessage}>
+              Test Message
+            </button>
+
+            {showMessage && (
+              <MessageModal
+                message="Message Test"
+                onClose={() => {
+                  setShowMessage(false)
+                  console.log('onClose View')
+                }}
+              />
+            )}
           </div>
           <div className="grid-column">{'  '}</div>
         </div>

@@ -1,9 +1,11 @@
-import React, { FunctionComponent, useCallback } from 'react'
+import MessageModal from 'components/MessageModal/MessageModal'
+import React, { FunctionComponent, useCallback, useState } from 'react'
 import Popup from 'reactjs-popup'
 import ThreeDotsMenu from '../../../components/ThreeDotsMenu/ThreeDotsMenu'
 import usePosts from '../../../hooks/usePosts'
 import useUser from '../../../hooks/useUser'
 import { PostType, SourceType } from '../../../types/PostType.d'
+import LivePromotion from './Content/LivePromotion/LivePromotion'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
 import EditPost from './EditPost/EditPost'
@@ -23,36 +25,56 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
   const { deletePost } = usePosts()
   const { user } = useUser()
 
-  const onDeletePost = useCallback((postId: number) => {
-    deletePost(postId)
+  const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false)
+
+  const onDeletePost = useCallback(() => {
+    deletePost(data.id).then(() => {
+      window.location.reload()
+    })
   }, [])
 
   return (
     <>
       <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
         {user.id === data.users.id && (
-          <ThreeDotsMenu>
-            <div className="simple-dropdown widget-box-post-settings-dropdown">
-              <Popup
-                modal
-                nested
-                contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
-                position="center center"
-                trigger={<p className="simple-dropdown-link">Edit</p>}
-              >
-                {(close: any) => <EditPost post={data} onClose={close} />}
-              </Popup>
+          <>
+            <ThreeDotsMenu>
+              <div className="simple-dropdown widget-box-post-settings-dropdown">
+                <Popup
+                  modal
+                  nested
+                  contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+                  position="center center"
+                  trigger={<p className="simple-dropdown-link">Edit</p>}
+                >
+                  {(close: any) => <EditPost post={data} onClose={close} />}
+                </Popup>
 
-              <p
-                className="simple-dropdown-link"
-                onClick={() => {
-                  onDeletePost(data.id)
+                <p
+                  className="simple-dropdown-link"
+                  onClick={() => {
+                    setDeleteConfirmation(true)
+                  }}
+                >
+                  Delete
+                </p>
+              </div>
+            </ThreeDotsMenu>
+
+            {deleteConfirmation && (
+              <MessageModal
+                message="Are you sure you want to delete your post?"
+                onClose={(ok: boolean | undefined) => {
+                  console.log('onClose View')
+                  setDeleteConfirmation(false)
+
+                  if (ok) {
+                    onDeletePost()
+                  }
                 }}
-              >
-                Delete
-              </p>
-            </div>
-          </ThreeDotsMenu>
+              />
+            )}
+          </>
         )}
 
         <div className="widget-box-status">
@@ -64,6 +86,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             <PictureCarousel sources={listImages} amount={data.amount || 0} blocked={data.blocked} />
           )}
           {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
+          {/* <LivePromotion user={data.users} /> */}
 
           <div className="widget-box-status-content">
             {/* {data.tags && <TagList tags={data.tags || []} />} */}
