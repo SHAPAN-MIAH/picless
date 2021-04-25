@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { isMobile } from 'react-device-detect'
 
-import { ImageType, UploadImageType } from '../../types/UserType.d'
+import { ImageType, UploadImageType } from '../../types/UserType'
 import useUser from '../../hooks/useUser'
 
 interface UploadBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -5,7 +5,7 @@ import * as Utils from '../../../../utils/Functions'
 import MessageLeft from './MessageLeft'
 import MessageRight from './MessageRight'
 
-import { MessageType, SingleMessageTypeRef } from '../../../../types/MessagesType.d'
+import { MessageType, SingleMessageTypeRef } from '../../../../types/MessagesType'
 import useUser from '../../../../hooks/useUser'
 
 const Chat = forwardRef<HTMLDivElement | null, { messages: MessageType[] }>((props, ref) => {

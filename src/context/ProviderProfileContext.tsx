@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import { PostType, SourceType } from '../types/PostType.d'
-import { SubscriptionType, UserProfileType } from '../types/UserType.d'
+import { SubscriptionType, UserProfileType } from '../types/UserType'
 
 interface ProviderProfileContextProps {
   provider: UserProfileType

@@ -1,5 +1,5 @@
 import React, { ReactNode, useCallback, useState } from 'react'
-import { UserType, UserSettingsType } from '../types/UserType.d'
+import { UserType, UserSettingsType } from '../types/UserType'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 interface UserContextProps {

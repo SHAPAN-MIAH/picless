@@ -2,7 +2,7 @@ import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import UserAvatar from '../../../../components/UserAvatar'
-import { UserType } from '../../../../types/UserType.d'
+import { UserType } from '../../../../types/UserType'
 
 type HeaderPostProps = {
   user: UserType

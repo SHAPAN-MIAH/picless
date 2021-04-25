@@ -7,7 +7,7 @@ import Chat from './Message/Chat'
 import SendMessage from './SendMessage/SendMessage'
 import HeaderConversation from './HeaderConversation/HeaderConversation'
 
-import { UserStatusMessagesType, MessageType } from '../../../types/MessagesType.d'
+import { UserStatusMessagesType, MessageType } from '../../../types/MessagesType'
 
 type ConversationProps = {
   sendMessage: (value: string) => void

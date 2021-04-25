@@ -1,6 +1,6 @@
 // import { RootState } from '../store'
 import { createSelector } from 'reselect'
-import { MessageType, UserStatusMessagesType } from '../../types/MessagesType.d'
+import { MessageType, UserStatusMessagesType } from '../../types/MessagesType'
 
 const usersSelector = (state: any): UserStatusMessagesType[] => state.chat.userList
 const userIdSelector = (state: any): number | null => state.chat.userSelected

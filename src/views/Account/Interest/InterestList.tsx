@@ -8,7 +8,7 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import StyledPopup from '../../../components/StyledPopup/StyledPopup'
 import useUser from '../../../hooks/useUser'
-import { UserInterestType } from '../../../types/UserType.d'
+import { UserInterestType } from '../../../types/UserType'
 import * as Utils from '../../../utils/Functions'
 import AddOrEditInterest from './AddOrEditInterest'
 

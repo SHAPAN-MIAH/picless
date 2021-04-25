@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import UserAvatar from '../../../../../components/UserAvatar'
-import { UserSearchType } from '../../../../../types/UserType.d'
+import { UserSearchType } from '../../../../../types/UserType'
 
 const SearchBarItem: FunctionComponent<{ data: UserSearchType; onClick: () => void }> = (props) => {
   const { data, onClick } = props

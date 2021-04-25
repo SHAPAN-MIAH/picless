@@ -4,11 +4,8 @@ import { isMobile } from 'react-device-detect'
 import Loader from 'react-loader-spinner'
 import styled from 'styled-components'
 import useSearch from '../../../../hooks/useSearch'
-import { UserSearchType } from '../../../../types/UserType.d'
+import { UserSearchType } from '../../../../types/UserType'
 import style from './SearchBar.module.css'
-
-
-
 
 const SearchBarItem = React.lazy(() => import('./SearchBarItem/SearchBarItem'))
 

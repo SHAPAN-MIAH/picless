@@ -1,4 +1,4 @@
-import { AddBankType } from 'types/PaymentTypes'
+import { AddBankType } from '../types/PaymentTypes'
 import {
   ServiceSubscriptorListType,
   ServiceUserProfileType,
@@ -6,8 +6,8 @@ import {
   UploadImageType,
   UserSearchType,
   UserSettingsType,
-  UserType
-} from '../types/UserType.d'
+  UserType,
+} from '../types/UserType'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/users`

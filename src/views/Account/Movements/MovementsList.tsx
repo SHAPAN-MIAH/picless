@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
 import useWallet from '../../../hooks/useWallet'
-import { MovementType } from '../../../types/PaymentTypes.d'
+import { MovementType } from '../../../types/PaymentTypes'
 import Movement from './Movement'
 
 const MovementList: FunctionComponent<{}> = () => {

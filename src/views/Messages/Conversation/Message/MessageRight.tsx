@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import moment from 'moment'
 
-import { MessageType } from '../../../../types/MessagesType.d'
+import { MessageType } from '../../../../types/MessagesType'
 
 const MessageRight = forwardRef<HTMLDivElement | null, { message: MessageType }>((props, ref) => {
   const { message } = props

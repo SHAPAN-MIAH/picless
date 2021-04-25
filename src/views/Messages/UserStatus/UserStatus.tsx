@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import moment from 'moment'
 
 import UserAvatar from '../../../components/UserAvatar'
-import { UserStatusMessagesType } from '../../../types/MessagesType.d'
+import { UserStatusMessagesType } from '../../../types/MessagesType'
 
 interface UserStatusProps extends React.BaseHTMLAttributes<HTMLDivElement> {
   statusData: UserStatusMessagesType

@@ -1,4 +1,4 @@
-import { ServiceStreamingType, StreamType } from '../types/StreamingType.d'
+import { ServiceStreamingType, StreamType } from '../types/StreamingType'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/streaming`

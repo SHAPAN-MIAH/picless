@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { MessageType, UserStatusMessagesType } from '../../types/MessagesType.d'
+import { MessageType, UserStatusMessagesType } from '../../types/MessagesType'
 
 interface ChatState {
   userList: UserStatusMessagesType[]

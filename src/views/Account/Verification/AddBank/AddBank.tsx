@@ -12,7 +12,7 @@ import SelectForm from '../../../../components/Common/SelectForm'
 import TextInput from '../../../../components/Common/TextInput'
 import SelectCountry from '../../../../components/SelectCountry/SelectCountry'
 import UserService from '../../../../services/UserService'
-import { AddBankType, DocumentsType } from '../../../../types/PaymentTypes.d'
+import { AddBankType, DocumentsType } from '../../../../types/PaymentTypes'
 
 type FormValues = {
   adultContent: boolean

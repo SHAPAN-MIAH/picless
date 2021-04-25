@@ -5,7 +5,7 @@ import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
-import { UserTimeLineType } from '../../../types/UserType.d'
+import { UserTimeLineType } from '../../../types/UserType'
 
 type TimeLineEventProps = {
   item: UserTimeLineType

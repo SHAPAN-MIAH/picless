@@ -14,8 +14,8 @@ import TextInput from '../../../components/Common/TextInput'
 import SelectCountry from '../../../components/SelectCountry/SelectCountry'
 import useUser from '../../../hooks/useUser'
 import PaymentService from '../../../services/PaymentService'
-import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes.d'
-import { UserType } from '../../../types/UserType.d'
+import { AddCardType, MonthNumbers } from '../../../types/PaymentTypes'
+import { UserType } from '../../../types/UserType'
 
 type FormValues = {
   street: string

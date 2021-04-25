@@ -6,7 +6,7 @@ import ProviderProfileContext from '../context/ProviderProfileContext'
 import PostService from '../services/PostService'
 import UserService from '../services/UserService'
 import { ServiceMediaTypes, ServicePostType } from '../types/PostType.d'
-import { ServiceUserProfileType } from '../types/UserType.d'
+import { ServiceUserProfileType } from '../types/UserType'
 import useRouter from './useRouter'
 
 export enum Tabs {

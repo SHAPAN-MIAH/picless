@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { SubscriptionType } from '../../../types/UserType.d'
+import { SubscriptionType } from '../../../types/UserType'
 import { Tabs } from '../../../hooks/useProfile'
 import useRouter from '../../../hooks/useRouter'
 

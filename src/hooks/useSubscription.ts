@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import SubscriptionsContext from '../context/SubscriptionsContext'
 import UserService from '../services/UserService'
-import { ServiceSubscriptorListType } from '../types/UserType.d'
+import { ServiceSubscriptorListType } from '../types/UserType'
 import useProfile from './useProfile'
 
 const useSubscription = () => {

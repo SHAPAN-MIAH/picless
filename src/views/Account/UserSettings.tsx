@@ -12,7 +12,7 @@ import CheckboxForm from '../../components/Common/CheckboxForm'
 import FormItem from '../../components/Common/Form/FormItem'
 import FormRow from '../../components/Common/Form/FormRow'
 import useUser from '../../hooks/useUser'
-import { UserSettingsType } from '../../types/UserType.d'
+import { UserSettingsType } from '../../types/UserType'
 
 type FormValues = {
   enabledPushNotifications: boolean

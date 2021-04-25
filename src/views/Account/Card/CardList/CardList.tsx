@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import useWallet from '../../../../hooks/useWallet'
-import { CardType } from '../../../../types/PaymentTypes.d'
+import { CardType } from '../../../../types/PaymentTypes'
 import CardItem from './Card/CardItem'
 
 const CardList: FunctionComponent<{}> = () => {

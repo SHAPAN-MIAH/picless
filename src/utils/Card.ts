@@ -1,4 +1,4 @@
-import { ProviderType } from '../types/PaymentTypes.d'
+import { ProviderType } from '../types/PaymentTypes'
 // Providers - Patterns
 
 // VISA: ^4[0-9]{12}(?:[0-9]{3})?$

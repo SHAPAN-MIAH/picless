@@ -19,7 +19,7 @@ import UserStatus from './UserStatus/UserStatus'
 
 import Conversation from './Conversation/Conversation'
 
-import { MessageType, UserStatusMessagesType, OnReceiveMessageType } from '../../types/MessagesType.d'
+import { MessageType, UserStatusMessagesType, OnReceiveMessageType } from '../../types/MessagesType'
 import useUser from '../../hooks/useUser'
 
 const Messages: FunctionComponent<{}> = () => {

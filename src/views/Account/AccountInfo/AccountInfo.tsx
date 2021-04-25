@@ -12,7 +12,7 @@ import SelectForm, { SelectOptionsType } from '../../../components/Common/Select
 import TextInput from '../../../components/Common/TextInput'
 import plans from '../../../constants/plans.json'
 import useUser from '../../../hooks/useUser'
-import { UserType } from '../../../types/UserType.d'
+import { UserType } from '../../../types/UserType'
 
 type FormValues = {
   fullName: string

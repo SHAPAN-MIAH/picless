@@ -1,4 +1,4 @@
-import { CommonServiceResponse } from './CommonTypes.d';
+import { CommonServiceResponse } from './CommonTypes'
 
 export enum StreamType {
   PLAY = 'play',

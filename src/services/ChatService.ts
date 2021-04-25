@@ -1,7 +1,7 @@
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
 import * as ApiHelper from './ApiHelpers'
 
-import { MessageType } from '../types/MessagesType.d'
+import { MessageType } from '../types/MessagesType'
 
 const baseUrlUsers = `${process.env.REACT_APP_BASE_URL_API}/users`
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/chat`

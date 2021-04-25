@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { UserType, UserStateType, UserInterestType, UserTimeLineType } from '../../types/UserType.d'
+import { UserType, UserStateType, UserInterestType, UserTimeLineType } from '../../types/UserType'
 
 const initialState: UserStateType = {
   loading: false,

@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import UserContext from '../context/UserContext'
 import UserService from '../services/UserService'
-import { UploadImageType, UserSettingsType, UserType } from '../types/UserType.d'
+import { UploadImageType, UserSettingsType, UserType } from '../types/UserType'
 
 type UseUserReturn = {
   userId: string

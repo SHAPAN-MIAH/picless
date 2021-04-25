@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { SubscriptorListType } from '../types/UserType.d'
+import { SubscriptorListType } from '../types/UserType'
 
 interface SubscriptionsContextProps {
   subscriptions: SubscriptorListType[]

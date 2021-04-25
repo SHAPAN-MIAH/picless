@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 import { unixTimestampToDate } from '../../../utils/Helpers'
 
-import { MovementType } from '../../../types/PaymentTypes.d'
+import { MovementType } from '../../../types/PaymentTypes'
 
 type MovementProps = {
   item: MovementType

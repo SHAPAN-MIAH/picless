@@ -9,7 +9,7 @@ import UserAvatar from '../../../../components/UserAvatar'
 
 import { WalletContextProvider } from '../../../../context/WalletContext'
 import useUser from '../../../../hooks/useUser'
-import { SubscriptionType, UserType } from '../../../../types/UserType.d'
+import { SubscriptionType, UserType } from '../../../../types/UserType'
 import { GetCountryName } from '../../../../utils/Functions'
 import SubscribePopup from './SubscribePopup/SubscribePopup'
 import styles from './UserHeader.module.css'

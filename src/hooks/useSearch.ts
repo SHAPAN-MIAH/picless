@@ -1,6 +1,6 @@
 import { Reducer, useReducer } from 'react'
 import UserService from '../services/UserService'
-import { UserSearchType } from '../types/UserType.d'
+import { UserSearchType } from '../types/UserType'
 import reducer, { ACTIONS, SearchAction, SearchState } from './useSearch/reducer'
 
 let controllerCancelable: AbortController

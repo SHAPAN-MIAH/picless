@@ -4,7 +4,7 @@ import {
   DefaultCardType,
   ServiceMovementType,
   ServiceSubscritionPlanOption,
-} from '../types/PaymentTypes.d'
+} from '../types/PaymentTypes'
 import * as ApiHelper from './ApiHelpers'
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL_API}/payments`

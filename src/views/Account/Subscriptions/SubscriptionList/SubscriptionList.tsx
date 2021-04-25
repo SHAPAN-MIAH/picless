@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import useSubscription from '../../../../hooks/useSubscription'
 import Alert from '../../../../components/Common/Alerts/Alerts'
-import { SubscriptorListType } from '../../../../types/UserType.d'
+import { SubscriptorListType } from '../../../../types/UserType'
 import Subscriptor from './Subscriptor'
 
 const noSubscriptorsMessage = 'Nothing was found'

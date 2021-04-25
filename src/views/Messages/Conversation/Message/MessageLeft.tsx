@@ -3,10 +3,7 @@ import React, { forwardRef } from 'react'
 import { useSelector } from 'react-redux'
 import UserAvatar from '../../../../components/UserAvatar'
 import { getUserSelector } from '../../../../redux/Chat/ChatSelectors'
-import { SingleMessageType, UserStatusMessagesType } from '../../../../types/MessagesType.d'
-
-
-
+import { SingleMessageType, UserStatusMessagesType } from '../../../../types/MessagesType'
 
 const MessageLeft = forwardRef<HTMLDivElement | null, SingleMessageType>((props, ref) => {
   const userSelected: UserStatusMessagesType | undefined = useSelector(getUserSelector)

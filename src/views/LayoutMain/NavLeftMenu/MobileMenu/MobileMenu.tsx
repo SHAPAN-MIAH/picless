@@ -9,7 +9,7 @@ import useMenu from '../../../../hooks/useMenu'
 import useRouter from '../../../../hooks/useRouter'
 import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
-import { UserType } from '../../../../types/UserType.d'
+import { UserType } from '../../../../types/UserType'
 
 const AvatarContainerDiv = styled.div`
   position: relative;

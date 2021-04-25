@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import UserAvatar from '../../../../../components/UserAvatar'
-import { UserType } from '../../../../../types/UserType.d'
+import { UserType } from '../../../../../types/UserType'
 
 import styles from './LivePromotion.module.css'
 

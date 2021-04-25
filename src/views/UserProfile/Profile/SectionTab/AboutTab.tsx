@@ -2,7 +2,7 @@ import moment from 'moment'
 import React, { FunctionComponent, useContext } from 'react'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import ProviderProfileContext from '../../../../context/ProviderProfileContext'
-import { UserInterestType, UserTimeLineType } from '../../../../types/UserType.d'
+import { UserInterestType, UserTimeLineType } from '../../../../types/UserType'
 import { GetCountryName } from '../../../../utils/Functions'
 
 const noInterests = 'The user has not yet added interests.'

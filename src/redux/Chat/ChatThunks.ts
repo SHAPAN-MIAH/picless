@@ -3,7 +3,7 @@ import ChatService from '../../services/ChatService'
 
 import * as Actions from './ChatSlice'
 
-import { UserStatusMessagesType, MessageType } from '../../types/MessagesType.d'
+import { UserStatusMessagesType, MessageType } from '../../types/MessagesType'
 
 export const getFavoriteUsers = (): AppThunk => async (dispatch) => {
   dispatch(Actions.actionWaiting())

@@ -10,7 +10,7 @@ import FormRow from '../../../components/Common/Form/FormRow'
 import TextArea from '../../../components/Common/TextArea'
 import TextInput from '../../../components/Common/TextInput'
 import useUser from '../../../hooks/useUser'
-import { UserInterestType, UserType } from '../../../types/UserType.d'
+import { UserInterestType, UserType } from '../../../types/UserType'
 
 type AddOrEditInterestProps = {
   onAdd: () => void

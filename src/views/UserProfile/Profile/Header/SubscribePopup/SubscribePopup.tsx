@@ -11,7 +11,7 @@ import SelectForm, { SelectOptionsType } from '../../../../../components/Common/
 import UserAvatar from '../../../../../components/UserAvatar'
 import ProviderProfileContext from '../../../../../context/ProviderProfileContext'
 import PaymentService from '../../../../../services/PaymentService'
-import { ServiceSubscritionPlanOption, SubscritionPlanOption } from '../../../../../types/PaymentTypes.d'
+import { ServiceSubscritionPlanOption, SubscritionPlanOption } from '../../../../../types/PaymentTypes'
 import styles from './SubscribePopup.module.css'
 
 const LoadingPlanOptionsDiv = styled.div`

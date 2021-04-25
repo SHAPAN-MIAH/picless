@@ -14,7 +14,7 @@ import TextInput from '../../../../../components/Common/TextInput'
 import UserAvatar from '../../../../../components/UserAvatar'
 import useUser from '../../../../../hooks/useUser'
 import UserService from '../../../../../services/UserService'
-import { TipType, UserType } from '../../../../../types/UserType.d'
+import { TipType, UserType } from '../../../../../types/UserType'
 import styles from './SendATip.module.css'
 
 type FormValues = {

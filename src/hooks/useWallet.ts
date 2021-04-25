@@ -5,7 +5,7 @@ import {
   MovementType,
   ServiceMovementType,
   SubscritionPlanOption,
-} from '../types/PaymentTypes.d'
+} from '../types/PaymentTypes'
 import WalletContext from '../context/WalletContext'
 import PaymentService from '../services/PaymentService'
 

@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import UserAvatar from '../../../../components/UserAvatar'
 import { loadingSelector } from '../../../../redux/Chat/ChatSelectors'
 import { setUserSelected } from '../../../../redux/Chat/ChatThunks'
-import { UserStatusMessagesType } from '../../../../types/MessagesType.d'
-
-
-
+import { UserStatusMessagesType } from '../../../../types/MessagesType'
 
 type HeaderConversationProps = {
   user: UserStatusMessagesType

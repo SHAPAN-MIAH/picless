@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { UserStatusMessagesType, MessageType } from '../types/MessagesType.d'
+import { UserStatusMessagesType, MessageType } from '../types/MessagesType'
 
 import useUser from './useUser'
 

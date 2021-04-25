@@ -6,7 +6,7 @@ import useUser from './useUser'
 import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import useLiveChat, { LiveChatMessageType } from './useLiveChat'
 
-import { UserType } from '../types/UserType.d'
+import { UserType } from '../types/UserType'
 
 const streamingName = 'lupanarStream'
 const token = ''
@@ -167,7 +167,7 @@ const useLiveView = (props: UseLiveViewProps) => {
       type = 'application/dash+xml'
       liveStream = true
     } else {
-      console.log('Unknown extension: ' + extension)
+      console.log(`Unknown extension: ${extension}`)
       return
     }
 

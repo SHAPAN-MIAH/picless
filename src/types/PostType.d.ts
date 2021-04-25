@@ -1,5 +1,5 @@
-import { UserType } from './UserType.d'
-import { CommonServiceResponse } from './CommonTypes.d'
+import { UserType } from './UserType'
+import { CommonServiceResponse } from './CommonTypes'
 
 export enum IMAGE_ORIENTATION {
   HORIZONTAL = 'horizontal',

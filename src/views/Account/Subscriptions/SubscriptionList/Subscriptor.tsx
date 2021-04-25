@@ -4,7 +4,7 @@ import { unixTimestampToDate } from 'utils/Helpers'
 import useSubscription from '../../../../hooks/useSubscription'
 import LiquidImage from '../../../../components/Common/LiquidImage'
 import UserAvatar from '../../../../components/UserAvatar'
-import { SubscriptorListType } from '../../../../types/UserType.d'
+import { SubscriptorListType } from '../../../../types/UserType'
 
 const LinkUserA = styled.a`
   left: -32px !important;

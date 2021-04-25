@@ -1,4 +1,4 @@
-import { UserSearchType } from '../../types/UserType.d'
+import { UserSearchType } from '../../types/UserType'
 
 export interface SearchState {
   loading: boolean

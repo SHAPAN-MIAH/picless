@@ -2,7 +2,7 @@ import toast from 'react-hot-toast'
 import { AppThunk } from '../store'
 
 import * as Actions from './UserSlice'
-import { UploadImageType, UserType, UserInterestType, UserTimeLineType } from '../../types/UserType.d'
+import { UploadImageType, UserType, UserInterestType, UserTimeLineType } from '../../types/UserType'
 
 import UserService from '../../services/UserService'
 

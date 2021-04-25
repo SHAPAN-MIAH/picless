@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { CardType, DefaultCardType } from '../types/PaymentTypes.d'
+import { CardType, DefaultCardType } from '../types/PaymentTypes'
 
 interface WalletContextProps {
   cards: CardType[]

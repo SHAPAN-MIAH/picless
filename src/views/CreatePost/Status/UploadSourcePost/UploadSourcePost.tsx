@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import React, { FunctionComponent, useState } from 'react'
-import { UserType } from '../../../../types/UserType.d'
+import { UserType } from '../../../../types/UserType'
 import FormItem from '../../../../components/Common/Form/FormItem'
 import FormRow from '../../../../components/Common/Form/FormRow'
 import PostService from '../../../../services/PostService'
