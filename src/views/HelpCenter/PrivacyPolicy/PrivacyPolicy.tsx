@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import useRouter from 'hooks/useRouter'
+import useRouter from 'hooks/commons/useRouter'
 import React, { FunctionComponent, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'

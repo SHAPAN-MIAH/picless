@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 
-import useRouter from 'hooks/useRouter'
+import useRouter from 'hooks/commons/useRouter'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'

@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 import FormItem from '../../../components/Common/Form/FormItem'
 import FormRow from '../../../components/Common/Form/FormRow'
-import useRouter from '../../../hooks/useRouter'
+import useRouter from '../../../hooks/commons/useRouter'
 import UserService from '../../../services/UserService'
 
 const H4Title = styled.h4`

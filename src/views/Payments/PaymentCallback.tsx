@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import useRouter from '../../hooks/useRouter'
+import useRouter from '../../hooks/commons/useRouter'
 
 import useWallet from '../../hooks/useWallet'
 

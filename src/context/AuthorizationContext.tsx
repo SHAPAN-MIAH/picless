@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import useLocalStorage from '../hooks/useLocalStorage'
+import useLocalStorage from '../hooks/commons/useLocalStorage'
 
 interface AuthorizationContextProps {
   isAuthenticated: boolean

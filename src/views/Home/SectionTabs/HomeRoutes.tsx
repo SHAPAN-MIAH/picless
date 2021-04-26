@@ -4,7 +4,7 @@ import Loader from 'react-loader-spinner'
 import { Link, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import useRouter from '../../../hooks/useRouter'
+import useRouter from '../../../hooks/commons/useRouter'
 import Home from '../Home'
 import { HomeTabs } from '../Posts'
 

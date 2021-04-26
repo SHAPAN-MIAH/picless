@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { SubscriptionType } from '../../../types/UserType'
 import { Tabs } from '../../../hooks/useProfile'
-import useRouter from '../../../hooks/useRouter'
+import useRouter from '../../../hooks/commons/useRouter'
 
 const Newsfeed = React.lazy(() => import('./SectionTab/NewsfeedTab'))
 const PhotoGalleryTab = React.lazy(() => import('./SectionTab/PhotoGalleryTab'))

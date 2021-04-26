@@ -3,10 +3,12 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import Fade from 'react-reveal/Fade'
+
 import UserAvatar from '../../../../components/UserAvatar'
 import useAuth from '../../../../hooks/useAuth'
 import useMenu from '../../../../hooks/useMenu'
-import useRouter from '../../../../hooks/useRouter'
+import useRouter from '../../../../hooks/commons/useRouter'
 import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
 import { UserType } from '../../../../types/UserType'
@@ -39,99 +41,104 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <nav
-        id="navigation-widget-mobile"
-        className={classNames('navigation-widget navigation-widget-mobile sidebar left', showMenu ? 'visible' : 'hidden')}
-        data-simplebar
-      >
-        <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 999 }}>
-          <svg className="navigation-widget-close-button-icon icon-back-arrow">
-            <use xlinkHref="#svg-back-arrow" />
-          </svg>
-        </div>
-
-        <div className="">
-          <div className="user-short-description" style={{ paddingTop: '24px' }}>
-            <AvatarContainerDiv>
-              <UserAvatar size="L" imageName={user?.profilePicture || ''} removeContainerStyle />
-            </AvatarContainerDiv>
-
-            <p className="user-short-description-title">
-              <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-                {user?.fullName}
-              </Link>
-            </p>
-
-            <p className="user-short-description-text">
-              <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-                www.lupanar.com/{user?.userName}
-              </Link>
-            </p>
+      <Fade duration={400} left when={showMenu}>
+        <nav
+          id="navigation-widget-mobile"
+          className={classNames('navigation-widget navigation-widget-mobile sidebar left', showMenu ? 'visible' : 'hidden')}
+          data-simplebar
+        >
+          <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 999 }}>
+            <svg className="navigation-widget-close-button-icon icon-back-arrow">
+              <use xlinkHref="#svg-back-arrow" />
+            </svg>
           </div>
 
-          <div className="user-stats">
-            <div className="user-stat">
-              <p className="user-stat-title">{user?.numberOfFollowers}</p>
+          <div className="">
+            <div className="user-short-description" style={{ paddingTop: '24px' }}>
+              <AvatarContainerDiv>
+                <UserAvatar size="L" imageName={user?.profilePicture || ''} removeContainerStyle />
+              </AvatarContainerDiv>
 
-              <p className="user-stat-text">Followers</p>
+              <p className="user-short-description-title">
+                <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+                  {user?.fullName}
+                </Link>
+              </p>
+
+              <p className="user-short-description-text">
+                <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
+                  www.lupanar.com/{user?.userName}
+                </Link>
+              </p>
             </div>
 
-            <div className="user-stat">
-              <p className="user-stat-title">{user?.numberImages}</p>
+            <div className="user-stats">
+              <div className="user-stat">
+                <p className="user-stat-title">{user?.numberOfFollowers}</p>
 
-              <p className="user-stat-text">Photos</p>
-            </div>
+                <p className="user-stat-text">Followers</p>
+              </div>
 
-            <div className="user-stat">
-              <p className="user-stat-title">{user?.numberVideos}</p>
+              <div className="user-stat">
+                <p className="user-stat-title">{user?.numberImages}</p>
 
-              <p className="user-stat-text">Videos</p>
+                <p className="user-stat-text">Photos</p>
+              </div>
+
+              <div className="user-stat">
+                <p className="user-stat-title">{user?.numberVideos}</p>
+
+                <p className="user-stat-text">Videos</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <ul className="menu">
-          {MenuRoutes.map((item) => {
-            if (item.showInMenu && item.path) {
-              return (
-                <li className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')} key={item.name}>
-                  <Link className="menu-item-link" to={item.path} onClick={handleCloseMenu}>
-                    {item.iconType === 'template' && (
-                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
-                        <use xlinkHref={`#svg-${item.icon}`} />
-                      </svg>
-                    )}
-                    {item.iconType === 'templateWithoutColor' && (
-                      <svg className={`menu-item-link-icon icon-${item.icon}`}>
-                        <use xlinkHref={`#svg-${item.icon}`} style={{ fill: '#adafca' }} />
-                      </svg>
-                    )}
-                    {t(item.title)}
-                  </Link>
-                </li>
-              )
-            }
+          <ul className="menu">
+            {MenuRoutes.map((item) => {
+              if (item.showInMenu && item.path) {
+                return (
+                  <li
+                    className={classNames('menu-item', route.pathname.includes(item.path) ? 'active' : '')}
+                    key={item.name}
+                  >
+                    <Link className="menu-item-link" to={item.path} onClick={handleCloseMenu}>
+                      {item.iconType === 'template' && (
+                        <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                          <use xlinkHref={`#svg-${item.icon}`} />
+                        </svg>
+                      )}
+                      {item.iconType === 'templateWithoutColor' && (
+                        <svg className={`menu-item-link-icon icon-${item.icon}`}>
+                          <use xlinkHref={`#svg-${item.icon}`} style={{ fill: '#adafca' }} />
+                        </svg>
+                      )}
+                      {t(item.title)}
+                    </Link>
+                  </li>
+                )
+              }
 
-            return null
-          })}
+              return null
+            })}
 
-          <li className="menu-item">
-            <a
-              href=""
-              className="menu-item-link"
-              data-title={t('navLeftMenu.logout')}
-              onClick={() => {
-                signOut()
-              }}
-            >
-              <svg className="menu-item-link-icon icon-login">
-                <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
-              </svg>
-              {t('navLeftMenu.logout')}
-            </a>
-          </li>
-        </ul>
-      </nav>
+            <li className="menu-item">
+              <a
+                href=""
+                className="menu-item-link"
+                data-title={t('navLeftMenu.logout')}
+                onClick={() => {
+                  signOut()
+                }}
+              >
+                <svg className="menu-item-link-icon icon-login">
+                  <use xlinkHref="#svg-login" style={{ fill: '#adafca' }} />
+                </svg>
+                {t('navLeftMenu.logout')}
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </Fade>
 
       {showMenu && (
         <div

@@ -6,7 +6,7 @@ import UserService from '../services/UserService'
 
 import AuthorizationContext from '../context/AuthorizationContext'
 
-import useRouter from './useRouter'
+import useRouter from './commons/useRouter'
 
 const useAuth = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthorizationContext.context)

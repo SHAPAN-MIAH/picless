@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
-import useRouter from '../../../../hooks/useRouter'
+import useRouter from '../../../../hooks/commons/useRouter'
 import { Tabs } from '../../../../hooks/useProfile'
 
 const SectionMenu: FunctionComponent<{}> = (props) => {

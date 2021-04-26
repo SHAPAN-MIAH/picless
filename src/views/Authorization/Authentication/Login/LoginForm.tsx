@@ -16,7 +16,7 @@ import FormRow from '../../../../components/Common/Form/FormRow'
 import useAuth from '../../../../hooks/useAuth'
 
 import { CurrentView } from './Login'
-import useRouter from '../../../../hooks/useRouter'
+import useRouter from '../../../../hooks/commons/useRouter'
 
 type FormValues = {
   username: string

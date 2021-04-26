@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
-import useRouter from '../../../hooks/useRouter'
+import useRouter from '../../../hooks/commons/useRouter'
 
 const NavLoginRegister: React.FunctionComponent<{}> = () => {
   const { t } = useTranslation()

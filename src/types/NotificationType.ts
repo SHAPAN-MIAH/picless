@@ -2,7 +2,7 @@ import { CommonServiceResponse } from './CommonTypes'
 
 export enum TypeOfNotifications {
   POSTLIKE = 'POSTLIKE',
-  NEWSUBSCRIBER = 'NEWSUBSCRIBER',
+  NEWSUBSCRIBER = 'NEWSUSCRIBER',
   RECEIVETIP = 'RECEIVETIP',
   ACCOUNTVERIFIED = 'ACCOUNTVERIFIED',
   NEWLIVE = 'NEWLIVE',
