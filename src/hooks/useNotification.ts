@@ -24,10 +24,6 @@ const useNotifications = () => {
     getNotifications()
   }, [])
 
-  useInterval(() => {
-    getNotifications()
-  }, 300000)
-
   return { getNotifications, notifications }
 }
 

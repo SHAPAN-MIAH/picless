@@ -2,12 +2,17 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
 
+import useInterval from '../../../../hooks/commons/useInterval'
 import useNotifications from '../../../../hooks/useNotification'
 
 import Notification from './Notification/Notification'
 
 const NotificationPopup: FunctionComponent<{}> = () => {
-  const { notifications } = useNotifications()
+  const { getNotifications, notifications } = useNotifications()
+
+  useInterval(() => {
+    getNotifications()
+  }, 300000)
 
   return (
     <>
