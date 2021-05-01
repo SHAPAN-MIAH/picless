@@ -97,7 +97,7 @@ const useLive = () => {
   useEffect(() => {
     StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
       setStreamData(data.data)
-      streamingName = data.data.streamId
+      streamingName = 'lup20k' // data.data.streamId
       tokenId = data.data.tokenId
       getUser().then((user: UserType) => {
         setUserName(user.userName)

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import LiveTab from 'views/UserProfile/Profile/SectionTab/LiveTab'
 import Discover from '../views/Discover/Discover'
 import CreatePost from '../views/CreatePost/CreatePost'
 import HelpSupport from '../views/HelpCenter/HelpCenter'
@@ -99,6 +100,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <Route path="/support/contact" component={Contact} />
               <Route path="/support/privacy" component={PrivacyPolicy} />
               <Route path="/support/terms-conditions" component={TermsAndConditions} />
+              <Route path="/LiveTabTest" component={LiveTab} />
 
               <Route path="/">
                 <Redirect to="/user/home/timeline" />

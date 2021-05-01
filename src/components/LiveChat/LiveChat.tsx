@@ -1,8 +1,15 @@
 import React, { FormEvent, useState } from 'react'
+import styled from 'styled-components'
 
 type LiveChatProps = {
   sendMessageChat: (message: string) => void
 }
+
+const ChatConversationDiv = styled.div`
+  overflowy: 'scroll';
+  height: 400px;
+  padding: 15px;
+`
 
 const LiveChat = React.forwardRef<HTMLDivElement | null, LiveChatProps>((props, ref) => {
   const { sendMessageChat } = props
@@ -30,9 +37,9 @@ const LiveChat = React.forwardRef<HTMLDivElement | null, LiveChatProps>((props, 
   return (
     <>
       <div className="chat-widget-header"> LIVE</div>
-      <div ref={ref} className="chat-widget-conversation" style={{ overflowY: 'scroll' }}>
+      <ChatConversationDiv ref={ref} className="chat-widget-conversation">
         {' '}
-      </div>
+      </ChatConversationDiv>
 
       <form onSubmit={onSendMessage}>
         <div className="form-row split">

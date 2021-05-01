@@ -8,7 +8,7 @@ import useLiveChat, { LiveChatMessageType } from './useLiveChat'
 
 import { UserType } from '../types/UserType'
 
-const streamingName = 'lupanarStream'
+const streamingName = 'lup20k'
 const token = ''
 let webRTCAdaptor: any = {}
 
