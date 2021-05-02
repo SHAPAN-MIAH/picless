@@ -5,6 +5,10 @@ type LiveChatProps = {
   sendMessageChat: (message: string) => void
 }
 
+const ChatHeaderDiv = styled.div`
+  padding: 0 15px 15px 15px;
+`
+
 const ChatConversationDiv = styled.div`
   overflowy: 'scroll';
   height: 400px;
@@ -36,7 +40,9 @@ const LiveChat = React.forwardRef<HTMLDivElement | null, LiveChatProps>((props, 
 
   return (
     <>
-      <div className="chat-widget-header"> LIVE</div>
+      <ChatHeaderDiv className="chat-widget-header">
+        <h2>Chat</h2>
+      </ChatHeaderDiv>
       <ChatConversationDiv ref={ref} className="chat-widget-conversation">
         {' '}
       </ChatConversationDiv>
