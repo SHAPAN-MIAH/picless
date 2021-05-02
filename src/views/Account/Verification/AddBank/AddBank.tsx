@@ -128,7 +128,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.firstName')}
+                        placeholder={t('verification.addBank.firstName')}
                         errorMessage={errors.firstName?.message}
                       />
                     </FormItem>
@@ -142,7 +142,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.lastName')}
+                        placeholder={t('verification.addBank.lastName')}
                         errorMessage={errors.lastName?.message}
                       />
                     </FormItem>
@@ -158,7 +158,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.email')}
+                        placeholder={t('verification.addBank.email')}
                         errorMessage={errors.email?.message}
                       />
                     </FormItem>
@@ -172,7 +172,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.phoneNumber')}
+                        placeholder={t('verification.addBank.phoneNumber')}
                         errorMessage={errors.phoneNumber?.message}
                       />
                     </FormItem>
@@ -188,7 +188,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.fullAddress')}
+                        placeholder={t('verification.addBank.fullAddress')}
                         errorMessage={errors.fullAddress?.message}
                       />
                     </FormItem>
@@ -204,7 +204,7 @@ const AddBank: FunctionComponent<{}> = () => {
                           <SelectCountry
                             id="country-code"
                             name={propsController.name}
-                            placeholder={t('addBank.countryField')}
+                            placeholder={t('verification.addBank.countryField')}
                             value={propsController.value || ''}
                             required
                             onChange={(val: any) => {
@@ -224,7 +224,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.state')}
+                        placeholder={t('verification.addBank.state')}
                         errorMessage={errors.state?.message}
                       />
                     </FormItem>
@@ -240,7 +240,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.city')}
+                        placeholder={t('verification.addBank.city')}
                         errorMessage={errors.city?.message}
                       />
                     </FormItem>
@@ -254,7 +254,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         defaultValue=""
                         required
                         classNameFormInput="small full"
-                        placeholder={t('addBank.zipPostalCodeField')}
+                        placeholder={t('verification.addBank.zipPostalCodeField')}
                         errorMessage={errors.zipCode?.message}
                       />
                     </FormItem>
@@ -273,7 +273,7 @@ const AddBank: FunctionComponent<{}> = () => {
                               ref={propsController.ref}
                               customInputRef="birthdayRef"
                               classNameFormInput="small"
-                              placeholderText={t('addBank.dateofbirth')}
+                              placeholderText={t('verification.addBank.dateofbirth')}
                               selected={propsController.value}
                               onChange={(date: any) => propsController.onChange(date)}
                               iconName="events"
@@ -293,7 +293,7 @@ const AddBank: FunctionComponent<{}> = () => {
                         as={SelectForm}
                         defaultValue=""
                         name="documentType"
-                        placeholder={t('addBank.documentType')}
+                        placeholder={t('verification.addBank.documentType')}
                         options={documentType}
                         errorMessage={errors.documentType?.message}
                       />
@@ -327,7 +327,7 @@ const AddBank: FunctionComponent<{}> = () => {
               <FormRow classNameRow="split" style={{ marginTop: '15px' }}>
                 <FormItem>
                   <ButtonWithLoader type="submit" className="small primary" showLoader={formState.isSubmitting}>
-                    {t('wallet.addCard.addCardButton')}
+                    {t('verification.addBank.submitButton')}
                   </ButtonWithLoader>
                 </FormItem>
               </FormRow>

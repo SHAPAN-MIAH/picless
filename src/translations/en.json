@@ -281,5 +281,21 @@
       "CodeMismatchException": "Incorrect verification code",
       "CodeDeliveryFailureException": "Imposible to send the verification code to this email address"
     }
+  },
+  "verification": {
+    "addBank": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "fullAddress": "Full address",
+      "countryField": "Country",
+      "city": "City",
+      "state": "State / Province",
+      "zipPostalCodeField": "ZIP / Postal Code",
+      "dateofbirth": "Birthday",
+      "documentType": "Document type",
+      "submitButton": "Submit"
+    }
   }
 }
