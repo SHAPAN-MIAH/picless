@@ -4,24 +4,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Loader from 'react-loader-spinner'
 
 import styles from '../UploadSourcePost.module.css'
+import LiquidImage from 'components/Common/LiquidImage'
 
 type PhotoPreviewProps = {
   item: any
   imgSrc: string
+  imgReference: React.RefObject<HTMLImageElement>
   onRemoveImage: (itemName: string) => void
 }
 
 const PhotoPreview: FunctionComponent<PhotoPreviewProps> = (props) => {
-  const { item, imgSrc, onRemoveImage } = props
+  const { item, imgSrc, imgReference, onRemoveImage } = props
 
   return (
     <>
-      <div
+      <LiquidImage
+        imgReference={imgReference}
         className={classNames(styles.itemBase, 'fixed-height')}
+        src={imgSrc}
         title={item.name}
-        style={{
-          background: `url(${imgSrc}) center center / cover no-repeat`,
-        }}
       >
         {/* PENDING */}
         {item.status === 'PENDING' && (
@@ -54,7 +55,7 @@ const PhotoPreview: FunctionComponent<PhotoPreviewProps> = (props) => {
 
         {/* ERROR */}
         {item.status === 'ERROR' && <div className={classNames(styles.previewStatusBase, styles.previewStatusError)} />}
-      </div>
+      </LiquidImage>
     </>
   )
 }

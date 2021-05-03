@@ -11,6 +11,7 @@ import { ResourceType, SourceType } from '../../../../types/PostType.d'
 import * as Utils from '../../../../utils/Functions'
 import PhotoPreview from './PhotoPreview/PhotoPreview'
 import styles from './UploadSourcePost.module.css'
+import useImageHelper from 'hooks/commons/useImageHelper'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   user: UserType
@@ -25,12 +26,15 @@ interface FilePreviewType extends File {
   url?: string
   internalName?: string
   status?: fileUploadStatus
+  reference?: React.RefObject<HTMLImageElement | HTMLVideoElement>
 }
 
 const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
   const { user, onUploadedFile, onRemove, onLoading, className } = props
+
+  const { getImageDimensions } = useImageHelper()
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -52,6 +56,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
             file.internalName = `${Utils.simpleKeyGenerator(5)}_${file.name}`
             file.url = URL.createObjectURL((target.files as FileList)[i])
             file.status = 'PENDING'
+            file.reference = React.createRef()
 
             files.push(file)
           } else {
@@ -105,15 +110,19 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
           previewList = updateResourcePreviewStatus(previewList, file, 'UPLOADING')
 
+          // Upload Image after selected
           PostService.uploadPostResource(formData)
             .then((data) => {
               previewList = updateResourcePreviewStatus(previewList, file, 'FINISHED')
               setSelectedFile(previewList)
 
               const sourceName = file.internalName || file.name
-              const source = { name: sourceName, pathName: data.path }
+              const source: SourceType = { name: sourceName, pathName: data.path }
 
               if (imageList && fileType === 'IMAGE') {
+                source.width = file.reference?.current?.width
+                source.height = file.reference?.current?.height
+
                 imageList.push(source)
               } else if (videoList) {
                 videoList.push(source)
@@ -189,7 +198,15 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
                   const key = `${item.lastModified}${item.name}${index}`
 
-                  return <PhotoPreview key={key} item={item} imgSrc={imgSrc} onRemoveImage={removeImage} />
+                  return (
+                    <PhotoPreview
+                      imgReference={item.reference as React.RefObject<HTMLImageElement>}
+                      key={key}
+                      item={item}
+                      imgSrc={imgSrc}
+                      onRemoveImage={removeImage}
+                    />
+                  )
                 }
 
                 return ''
