@@ -9,6 +9,7 @@ const Metrics: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="content-grid">
+        <Revenue/>
         <DailyIncome/>
       </div>
     </>
