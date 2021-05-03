@@ -43,8 +43,8 @@ const DailyIncome: FunctionComponent<{}> = () => {
   return (
     <>
     <div className="widget-box">
+    <h3 className="section-title">Daily Earnings report (Stacked column chart)</h3>
       <div className="widget-box-content">
-      <p>Stack BarChart</p>
           <div className="chart-wrap">
             <ResponsiveContainer width='100%' height={ isMobile ? 200 : 400}>
               <BarChart data={data}>

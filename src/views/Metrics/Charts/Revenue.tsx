@@ -39,6 +39,7 @@ const Revenue: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="widget-box" style={{ margin: "0 0 20px 0"}}>
+        <h3 className="section-title">Revenue table: Time period vs Amount</h3>
         <div className="grid grid-3-3-3-3 change-on-desktop centered">
         {data.map(element => (
             <div className="widget-box">
