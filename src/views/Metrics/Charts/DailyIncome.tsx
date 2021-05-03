@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList, ResponsiveContainer
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList, ResponsiveContainer
 } from 'recharts';
 import { isMobile } from 'react-device-detect'
 
