@@ -39,18 +39,7 @@ const CreateLive: FunctionComponent<{}> = () => {
   const startLive = () => {
     publish()
 
-    const post: Partial<CommonPostType> = {
-      content: `Live - ${liveName}`,
-      featuredPost: false,
-      tags: [],
-      startDate: '',
-      endDate: '',
-      images: [],
-      videos: [],
-      postType: 'live',
-    }
-
-    PostService.createPost(post)
+    videoRef.current?.scrollIntoView()
   }
 
   const stopLive = () => {
@@ -96,7 +85,7 @@ const CreateLive: FunctionComponent<{}> = () => {
         )}
 
         {liveStatus === 'ON_AIR' && (
-          <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} />
+          <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} chatRef={chatRef} />
         )}
       </div>
 

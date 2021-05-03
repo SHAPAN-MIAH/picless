@@ -4,23 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import style from './OnAirLiveFooter.module.css'
 
-type OnAirLiveFooterProps = { stopLive: () => void; audioStatus: boolean; changeAudioStatus: () => void }
+type OnAirLiveFooterProps = {
+  stopLive: () => void
+  audioStatus: boolean
+  changeAudioStatus: () => void
+  chatRef: React.RefObject<HTMLDivElement>
+}
 
 const OnAirLiveFooter: FunctionComponent<OnAirLiveFooterProps> = (props) => {
-  const { stopLive, audioStatus, changeAudioStatus } = props
+  const { stopLive, audioStatus, changeAudioStatus, chatRef } = props
 
   return (
     <>
-      <div className="widget-box-status-content">
-        <div className="content-actions" style={{ flexDirection: 'row-reverse' }}>
-          <div className="content-action">
-            <div className="meta-line">
-              <p className="meta-line-link">2 Comments</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="post-options">
         <div className={classNames('post-option', style.stopLiveButton)} onClick={stopLive}>
           <FontAwesomeIcon icon="stop-circle" />
@@ -51,7 +46,12 @@ const OnAirLiveFooter: FunctionComponent<OnAirLiveFooterProps> = (props) => {
           )}
         </div>
 
-        <div className="post-option">
+        <div
+          className="post-option"
+          onClick={() => {
+            chatRef.current?.scrollIntoView()
+          }}
+        >
           <svg className="post-option-icon icon-comment">
             <use xlinkHref="#svg-comment" />
           </svg>
