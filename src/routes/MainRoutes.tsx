@@ -19,6 +19,7 @@ import Authorization from '../views/Authorization/Authorization'
 import Messages from '../views/Messages/Messages'
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import TestView from '../views/TestView/TestView'
+import Metrics from '../views/Metrics/Metrics'
 import Notification from '../views/Notifications/Notifications'
 import UserProfile from '../views/UserProfile/UserProfile'
 import routes from './MenuRoutes'
@@ -83,6 +84,9 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/account/add-bank" component={AddBank} />
 
               <ProtectedRoute {...routerProps} path="/u/:username/post/:id" exact component={SinglePost} />
+
+
+              <ProtectedRoute {...routerProps} path="/u/:username/metrics" exact component={Metrics} />
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
 
