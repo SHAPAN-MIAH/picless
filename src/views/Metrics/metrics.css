@@ -1,3 +1,11 @@
 .recharts-label > tspan {
     display: none;   
 }
+text > tspan {
+    font-family: Rajdhani, sans-serif;
+    color: #3e3f5e;
+    font-size: .875rem;
+}
+.recharts-cartesian-axis-line, .recharts-cartesian-axis-tick-line {
+    display: none;
+}
