@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList
 } from 'recharts';
+import { isMobile } from 'react-device-detect'
 
 
 const DailyIncome: FunctionComponent<{}> = () => {
@@ -41,11 +42,11 @@ const DailyIncome: FunctionComponent<{}> = () => {
 
   return (
     <>
-    <div className="widget-box" >
+    <div className="widget-box">
       <div className="widget-box-content">
       <p>Stack BarChart</p>
           <div className="chart-wrap">
-            <BarChart width={900} height={400} data={data}>
+            <BarChart width={isMobile ? 300 : 600} height={isMobile ? 300 : 400} data={data}>
               <XAxis dataKey="name"/>
               <YAxis />
               <Tooltip />
