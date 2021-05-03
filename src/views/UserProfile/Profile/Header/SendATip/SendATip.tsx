@@ -92,7 +92,7 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
         </div>
 
         <div className={styles.headerTip}>
-          <h6>Send tip top</h6>
+          <h6>Send tip</h6>
         </div>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
