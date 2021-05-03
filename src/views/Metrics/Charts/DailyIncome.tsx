@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList, ResponsiveContainer
 } from 'recharts';
 import { isMobile } from 'react-device-detect'
 
@@ -46,17 +46,19 @@ const DailyIncome: FunctionComponent<{}> = () => {
       <div className="widget-box-content">
       <p>Stack BarChart</p>
           <div className="chart-wrap">
-            <BarChart width={isMobile ? 300 : 600} height={isMobile ? 300 : 400} data={data}>
-              <XAxis dataKey="name"/>
-              <YAxis />
-              <Tooltip />
-              <CartesianGrid vertical={false}/>
-              <Bar stackId="0" dataKey="uv" fill="#6f42c1">
-                <LabelList />
-              </Bar>
-              <Bar stackId="0" dataKey="pv" fill="#23d2e2" />
-              <Legend layout="vertical" />
-            </BarChart>
+            <ResponsiveContainer width='100%' height={ isMobile ? 200 : 400}>
+              <BarChart data={data}>
+                <XAxis dataKey="name"/>
+                <YAxis />
+                <Tooltip />
+                <CartesianGrid vertical={false}/>
+                <Bar stackId="0" dataKey="uv" fill="#6f42c1">
+                  <LabelList />
+                </Bar>
+                <Bar stackId="0" dataKey="pv" fill="#23d2e2" />
+                <Legend layout="vertical" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
     </div>
