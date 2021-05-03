@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "header": {
     "searchPlaceholder": "Search here for people or groups",
@@ -283,3 +284,306 @@
     }
   }
 }
+=======
+{
+  "header": {
+    "searchPlaceholder": "Search here for people or groups",
+    "navigation": {
+      "home": "Home",
+      "messages": "Messages"
+    }
+  },
+  "navLeftMenu": {
+    "profileInfo": "Profile Info",
+    "accountInfo": "Account",
+    "settings": "Settings",
+    "mySubscriptions": "My Subscriptions",
+    "cardWallet": "Cards / Wallet",
+    "addBank": "Add Bank",
+    "helpSupport": "Help / Support",
+    "logout": "Log Out"
+  },
+
+  "passwordStrengthBar": {
+    "shortScoreWord": "too short",
+    "scoreWords": {
+      "weak": "weak",
+      "okay": "okay",
+      "good": "good",
+      "strong": "strong"
+    }
+  },
+  "accountSidebar": {
+    "accountTitle": "Account",
+    "walletTitle": "Wallet",
+    "accountDescription": "Change your avatar & cover, update information, email and more!",
+    "accountInfo": "Account Info",
+    "profileInfo": "Profile Info",
+    "accountdevices": "Devices",
+    "changePassword": "Change Password",
+    "logout": "Log Out",
+    "saveButtonText": "Save Changes!",
+    "discardAllButton": "Discard All",
+    "settings": "Account Settings",
+    "walletDescription": "Review your wallet, manage payment and more",
+    "walletOverview": "Overview",
+    "walletPaymentMethods": "Payment Methods",
+    "walletMyMovements": "Movements",
+    "walletAddFounds": "Add Founds"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "subTitle": "Overview",
+    "addCardTitle": "Add Card",
+    "movements": "Movements",
+    "lastMovement": "Last Movements",
+    "paymentMethodSubTitle": "Payment Methods",
+    "myCards": "My Cards",
+    "addNewCard": "Add New Card",
+    "myMovementsSubTitle": "My Movements",
+
+    "addCard": {
+      "billingInfoTitle": "Billing Info",
+      "cardDetailsTitle": "Card Details",
+      "streetField": "Street",
+      "cityField": "City",
+      "stateProvinceField": "State / Province",
+      "zipPostalCodeField": "ZIP / Postal Code",
+      "country": "Country",
+      "emailField": "Email",
+      "nameCardField": "Name on the card",
+      "cardNumberField": "Card Number",
+      "expirationMonthField": "MM",
+      "expirationYearField": "YYYY",
+      "ccvField": "CCV",
+
+      "addCardButton": "Submit"
+    }
+  },
+  "accountInfo": {
+    "accountTitle": "Account",
+    "accountSubTitle": "Account Info",
+    "personalInfo": "Personal Info",
+    "fullNameField": "Full Name",
+    "accountEmailField": "Account Email",
+    "countryField": "Country",
+    "recoveryEmailField": "Recovery Email",
+    "phoneNumberField": "Phone Number",
+    "urlUserNameField": "URL Username",
+    "occupationField": "Occupation",
+    "subscriptionPriceField": "Subscription price / per Month",
+    "deleteAccount": "DeleteAccount"
+  },
+  "accountDevices": {
+    "devicesTitle": "Devices",
+    "devicesSubTitle": "My Devices",
+    "devicesList": "List Of Remebered Devices"
+  },
+  "home": {
+    "createPost": {
+      "title": "Create Post",
+      "placeholderPostText": "Hi {{fullName}}, share your post here...",
+      "discardButton": "Discard Post",
+      "postButton": "Post Now!",
+      "uploadsources": {
+        "title": "Upload Photos Or Videos",
+        "": ""
+      },
+      "error": {
+        "limitCharacters": "Too Long!"
+      },
+      "fields": {
+        "addTags": "Add Tags",
+        "scheduleStart": "Publish date"
+      }
+    },
+    "createLive": {
+      "liveName": "Live Name"
+    }
+  },
+  "profileInfo": {
+    "profileInfo": "Profile Info",
+    "aboutYourProfile": "Aboute Your Profile",
+    "changeAvatar": "Change Avatar",
+    "changeCover": "Change Cover",
+    "changeAvatarDescription": "110x110px size minimum",
+    "changeCoverDescription": "1184x300px size minimum",
+    "profileNameField": "Profile Name",
+    "writeDescriptionField": "Write a little description about you..",
+    "interestTitle": "Interests",
+    "taglineField": "Tagline",
+    "countryField": "Country",
+    "birthdayField": "Birthday",
+    "interestsMusicField": "Favourite Music Bands /Artists",
+    "interestsListField": "Things that you really enjoy...",
+    "myProfileTitle": "My Profile",
+    "cityField": "City",
+    "occupationsField": "Occupation",
+    "interests": {
+      "hasNoInterests": "You Has No Interests Yet",
+      "addNewInterest": "Add New Interest",
+      "addNewTitleInterestField": "Title",
+      "addNewDescriptionInterestField": "Description",
+      "AddedSuccessfully": "Interest Added Successfully",
+      "addNewInterestButton": "Add Interest",
+      "editInterestButton": "Save",
+      "cancelNewInterestButton": "Cancel",
+      "newInterest": "New Interest",
+      "editInterest": "edit Interest",
+      "errors": {
+        "updatingData": "Error while updating data"
+      }
+    },
+    "errors": {
+      "fetchingData": "Some information is still missing",
+      "uploadingAnImage": "Error while uploading the media file",
+      "updatingData": "Error while updating data"
+    },
+    "timelineTitle": "Timeline",
+    "timeline": {
+      "hasNoEvents": "You Has No Events Yet",
+      "addNewEvent": "Add New Event",
+      "editEvent": "Edit Event",
+      "addNewTitleTimelineEventField": "Title Or Place",
+      "newYearStarted": "Started",
+      "newYearEnded": "Ended",
+      "addNewDescriptionEventField": "Event Description",
+      "cancelNewTimeLineEventButton": "Cancel",
+      "editTimeLineEventButton": "Save",
+      "addNewTimeLineEventButton": "Add New Field",
+      "AddedSuccessfully": "Event Added Successfully",
+      "newTimeLineEvent": "New Timelime Event",
+      "errors": {
+        "addingTimeLine": "Error While Adding Timeline",
+        "removingTimeLine": "Error While Removing Timeline",
+        "updatingTimeline": "Error While Updating Timeline"
+      }
+    }
+  },
+  "changePassword": {
+    "changePasswordTitle": "Change Password",
+    "changeYourPasswordHere": "Change Your Password Here",
+    "oldPasswordField": "Confirm Your Current Password",
+    "newPasswordField": "Your New Password",
+    "passwordRepeatField": "Confirm New Password",
+    "buttonChangePassowrd": "Change Password Now!",
+    "messageSuccessfully": "Your password has been updated sucessfully",
+    "errors": {
+      "NotAuthorizedException": "Incorrect password",
+      "passwordDoesntMatch": "Passwords do not match",
+      "InvalidParameterException": "The new password does not meet the requirements",
+      "LimitExceededException": "Attempt limit exceeded, please try after some minutes"
+    }
+  },
+  "accountSettings": {
+    "changePassword": "Change Password",
+    "myProfileSection": "My Profile",
+    "profileInfo": "Profile Info",
+    "accountSection": "My Account",
+    "accountInfo": "Account Info",
+    "settings": "Account Settings",
+    "messages": "Messages",
+    "logout": "Logout"
+  },
+  "settings": {
+    "title": "My Settings",
+    "subTitle": "Account Settings",
+    "generalTitle": "Notification Settings",
+    "typeNotification": "Type Of Notification",
+    "privacyTitle": "Privacy Settings",
+    "fields": {
+      "enabledPushNotifications": "Push Notification",
+      "enabledEmailNotifications": "Email Notification",
+      "comments": "Comments",
+      "newSubscriber": "New Subscriber",
+      "tips": "Tips",
+      "messages": "Messages",
+      "displayProfileInSearchBar": "Display Your Profile In The Search Bar",
+      "displayChatActivity": "Display Chat Activity",
+      "googleAuthenticator": "Multi Factor Authentication",
+      "whoCanSendMessage": "Who Can Send You a Message",
+      "sendEveryone": "Everyone",
+      "sendOnlySubscribers": "Only Subscribers",
+      "displayAdultContent": "Display Adult Content"
+    }
+  },
+  "authentication": {
+    "welcome": "Welcome to ",
+    "welcomeDescription": "The next generation social network community! Connect with your friends and play with our quests and badges gamification system!",
+    "login": "Login",
+    "register": "Register",
+    "accountLogin": "Account Login",
+    "usernameOrEmail": "Email",
+    "yourEmail": "Your Email",
+    "registerTitle": "Create your Account!",
+    "password": "Password",
+    "repeatPassword": "Repeat Password",
+    "registerButton": "Register Now!",
+    "rememberMe": "Remember Me",
+    "forgotPassword": "Forgot Password?",
+    "loginToYourAccount": "Login to your account",
+    "code": "Verification code",
+    "confirmEmailMessage": "We send you an email with the verification code",
+    "confirmEmail": "Please confirm your email",
+    "enterEmailCode": "Please enter your verification code",
+    "resendVerificationCode": "Resend verification code",
+    "confirm": "Confirm",
+    "changeLanguage": "Change language",
+    "registerConfimationEmailMessage": "You'll receive a confirmation email in your inbox with a link to activate your account. If you have any problems, ",
+    "contactUs": "contact us",
+    "putEmailToResetPassword": "Password reset",
+    "putEmailToResetPasswordMessage": "Type your email address to receive the verification code",
+    "resetPasswordEmail": "Email address",
+    "sendVerificationCode": "Send verification code",
+    "enterResetPasswordVerificationCode": "Password reset",
+    "confirmResetPasswordCode": "Please enter the verification code you received in your mailbox, and type a new password",
+    "register_password_repeat": "Repeat the new password",
+    "sendConfirmNewPassword": "Save new password",
+    "overEighteenAndTermsAndPrivacy": "I'm over 18 years old and I accepted the",
+    "termsAndConditions": "Terms and Conditions",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+
+    "messages": {
+      "successfullyLoggedIn": "You are successfully logged in",
+      "successfullyPasswordReset": "Your password has been updated successfully",
+      "registerSuccessfully": "You have been registered successfully"
+    },
+    "errors": {
+      "UsernameExistsException": "An account with the given email already exists.",
+      "UserNotConfirmedException": "User is not confirmed.",
+      "NotAuthorizedException": "Incorrect username or password",
+      "enterValidEmailAddress": "Please enter a valid email address",
+      "emailRequired": "Email field is required",
+      "passwordRequired": "Password field is required",
+      "confirmPasswordRequired": "Confirm password field is required",
+      "codeRequired": "Code field is required",
+      "confirmYourEmailAccount": "Please confirm your email account GO TO FORGOT PASSWORD",
+      "LimitExceededException": "Attempt limit exceeded, please try after some minutes",
+      "passwordDoesntMatch": "Passwords do not match",
+      "UnknownError": "Unknown error, please contact support",
+      "emptyVerificationCode": "The verification code filed cannot be empty",
+      "InvalidParameterException": "The new password does not meet the requirements",
+      "InvalidPasswordException": "Invalid password, please try with new one",
+      "CodeMismatchException": "Incorrect verification code",
+      "CodeDeliveryFailureException": "Imposible to send the verification code to this email address"
+    }
+  },
+  "verification": {
+    "addBank": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "fullAddress": "Full address",
+      "countryField": "Country",
+      "city": "City",
+      "state": "State / Province",
+      "zipPostalCodeField": "ZIP / Postal Code",
+      "dateofbirth": "Birthday",
+      "documentType": "Document type",
+      "submitButton": "Submit"
+    }
+  }
+}
+>>>>>>> stage-5
