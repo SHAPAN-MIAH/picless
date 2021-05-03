@@ -7,10 +7,10 @@ import {
 const DailyIncome: FunctionComponent<{}> = () => {
 
   const data = [
-    { name: 'food', uv: -2000, pv: -2013, amt: -4500, bmk: -4301, time: 1, uvError: [100, 50], pvError: [110, 20] },
-    { name: 'cosmetic', uv: 3300, pv: 2000, amt: 6500, bmk: 2000, time: 2, uvError: 120, pvError: 50 },
-    { name: 'storage', uv: 3200, pv: 1398, amt: 5000, bmk: 3000, time: 3, uvError: [120, 80], pvError: [200, 100] },
-    { name: 'digital', uv: 2800, pv: 2800, amt: 4000, bmk: 1500, time: 4, uvError: 100, pvError: 30 },
+    { name: 'food', uv: 2000, pv: 2013 },
+    { name: 'cosmetic', uv: 3300, pv: 2000 },
+    { name: 'storage', uv: 3200, pv: 1398 },
+    { name: 'digital', uv: 2800, pv: 2800 },
   ];
 
   return (
@@ -22,13 +22,10 @@ const DailyIncome: FunctionComponent<{}> = () => {
             <YAxis />
             <Tooltip />
             <CartesianGrid vertical={false} />
-            <Bar stackId="0" dataKey="uv" fill="#ff7300">
+            <Bar stackId="0" dataKey="uv" fill="#6f42c1">
               <LabelList />
             </Bar>
-            <Bar stackId="0" dataKey="pv" fill="#387908" />
-            <Bar dataKey="amt" fill="#387908">
-              <LabelList />
-            </Bar>
+            <Bar stackId="0" dataKey="pv" fill="#23d2e2" />
             <Legend layout="vertical" />
           </BarChart>
         </div>
