@@ -1,56 +1,52 @@
 import React, { FunctionComponent, useState } from 'react'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
-
-import month from '../../../assets/img/badge/level-badge.png'
-import time from '../../../assets/img/badge/splanner-b.png'
-import historic from '../../../assets/img/badge/rulerm-b.png'
+import { PieChart, Pie, Sector, Cell, Tooltip } from 'recharts';
 
 const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-  ];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  { name: 'USA', value: 500 },
+  { name: 'JAPAN', value: 300 },
+  { name: 'U.K', value: 100 },
+  { name: 'CANADA', value: 50 },
+  { name: 'FRANCE', value: 50 },
+];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
+  const radius =  22 + innerRadius + (outerRadius - innerRadius);
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  return (
+    <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'}  fontSize={12}>
+      {`${data[index].name} - ${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
+  const COLORS = ['#007bff', '#6610f2', '#6f42c1', '#e83e8c', '#dc3545', '#fd7e14', '#ffc107', '#28a745', '#20c997', '#17a2b8', '#fff', '#6c757d', '#343a40', '#007bff', '#6c757d', '#28a745', '#17a2b8', '#ffc107', '#dc3545', '#f8f9fa', '#343a40'];
+
 
 const FollowersSummary: FunctionComponent<{}> = () => {
 
   return (
     <>
-        <ResponsiveContainer width="100%" height="100%">
-            <PieChart width={800} height={400}>
-                <Pie
+        <div className="widget-box" style={{ margin: '10px 0 5px 0' }}>
+            <h3 className="section-title">Followers summary</h3>
+            <h4 className="section-title">Country</h4>
+            <PieChart width={400} height={400}>
+            <Pie
                 data={data}
-                cx={120}
-                cy={200}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                paddingAngle={5}
+                cx="50%"
+                cy="50%"
+                label={renderCustomizedLabel}
+                outerRadius={70}
                 dataKey="value"
-                >
+            >
                 {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
-                </Pie>
-                <Pie
-                data={data}
-                cx={420}
-                cy={200}
-                startAngle={180}
-                endAngle={0}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                paddingAngle={5}
-                dataKey="value"
-                >
-                {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-                </Pie>
+            </Pie>
+            <Tooltip />
             </PieChart>
-        </ResponsiveContainer>
+        </div>
     </>
   )
 }

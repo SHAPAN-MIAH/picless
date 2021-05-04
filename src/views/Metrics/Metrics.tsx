@@ -15,6 +15,7 @@ const Metrics: FunctionComponent<{}> = () => {
         <DailyIncome />
         <ContentAndInteractios />
         <PostTable />
+        <FollowersSummary />
       </div>
     </>
   )
