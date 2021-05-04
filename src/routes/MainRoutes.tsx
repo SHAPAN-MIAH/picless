@@ -85,7 +85,6 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <ProtectedRoute {...routerProps} path="/u/:username/post/:id" exact component={SinglePost} />
 
-
               <ProtectedRoute {...routerProps} path="/u/:username/metrics" exact component={Metrics} />
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
