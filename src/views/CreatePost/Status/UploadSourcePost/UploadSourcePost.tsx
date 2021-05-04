@@ -11,7 +11,6 @@ import { ResourceType, SourceType } from '../../../../types/PostType.d'
 import * as Utils from '../../../../utils/Functions'
 import PhotoPreview from './PhotoPreview/PhotoPreview'
 import styles from './UploadSourcePost.module.css'
-import useImageHelper from 'hooks/commons/useImageHelper'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   user: UserType
@@ -33,8 +32,6 @@ const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST |
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
   const { user, onUploadedFile, onRemove, onLoading, className } = props
-
-  const { getImageDimensions } = useImageHelper()
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [isLoading, setIsLoading] = useState<boolean>(false)
