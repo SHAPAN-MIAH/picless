@@ -5,7 +5,7 @@ import ContentAndInteractios from './Charts/ContentAndInteractions'
 import PostTable from './Charts/PostTable'
 import FollowersSummary from './Charts/FollowersSummary'
 
-import './Metrics.css'
+import './metrics.css'
 
 const Metrics: FunctionComponent<{}> = () => {
   return (
