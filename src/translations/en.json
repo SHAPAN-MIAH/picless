@@ -78,11 +78,11 @@
     "accountSubTitle": "Account Info",
     "personalInfo": "Personal Info",
     "fullNameField": "Full Name",
-    "accountEmailField": "Account Email",
+    "accountEmailField": "Email",
     "countryField": "Country",
     "recoveryEmailField": "Recovery Email",
     "phoneNumberField": "Phone Number",
-    "urlUserNameField": "URL Username",
+    "urlUserNameField": "Username",
     "occupationField": "Occupation",
     "subscriptionPriceField": "Subscription price / per Month",
     "deleteAccount": "DeleteAccount"
