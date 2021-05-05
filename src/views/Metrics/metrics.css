@@ -9,3 +9,7 @@ text > tspan {
 .recharts-cartesian-axis-line, .recharts-cartesian-axis-tick-line {
     display: none;
 }
+.text-category {
+    font-size: 1em;
+    font-weight: bolder;
+}

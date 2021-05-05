@@ -4,6 +4,7 @@ import DailyIncome from './Charts/DailyIncome'
 import ContentAndInteractios from './Charts/ContentAndInteractions'
 import PostTable from './Charts/PostTable'
 import FollowersSummary from './Charts/FollowersSummary'
+import FollowersTable from './Charts/FollowersTable'
 
 import './metrics.css'
 
@@ -16,6 +17,7 @@ const Metrics: FunctionComponent<{}> = () => {
         <ContentAndInteractios />
         <PostTable />
         <FollowersSummary />
+        <FollowersTable />
       </div>
     </>
   )

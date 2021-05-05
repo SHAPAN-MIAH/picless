@@ -1,9 +1,8 @@
-import React, { FunctionComponent} from 'react';
-import PieCharts from './PieCharts';
-import Barcharts from './BarCharts';
+import React, { FunctionComponent } from 'react'
+import PieCharts from './PieCharts'
+import Barcharts from './BarCharts'
 
 const FollowersSummary: FunctionComponent<{}> = () => {
-
   return (
     <>
       <div className="widget-box" style={{ margin: '10px 0 5px 0' }}>

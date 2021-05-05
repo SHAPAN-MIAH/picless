@@ -43,14 +43,12 @@ const DailyIncome: FunctionComponent<{}> = () => {
         <div className="widget-box-content">
           <div className="chart-wrap">
             <ResponsiveContainer width="100%" height={isMobile ? 280 : 400}>
-              <BarChart
-                  data={data}
-                  barSize={12}>
+              <BarChart data={data} barSize={12}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <CartesianGrid vertical={false} stroke="#E8EBEE" height={100} />
-                <Bar stackId="0" dataKey="uv" fill="#6f42c1" background={{ fill: '#eee' }}/>
+                <Bar stackId="0" dataKey="uv" fill="#6f42c1" background={{ fill: '#eee' }} />
                 <Bar stackId="0" dataKey="pv" fill="#23d2e2" />
                 <Legend width={100} wrapperStyle={{ right: 20, borderRadius: 3, lineHeight: '40px' }} />
               </BarChart>
