@@ -22,7 +22,7 @@ const appName = process.env.REACT_APP_ANTMEDIA_APPNAME
 
 const mediaConstraints = { video: true, audio: true }
 const sdpConstraints = { OfferToReceiveAudio: false, OfferToReceiveVideo: false }
-const websocketURL = `${process.env.REACT_APP_WEBSOCKET_MAIN_URL}/${appName}/websocket?rtmpForward=false`
+const websocketURL = `${process.env.REACT_APP_WEBSOCKET_MAIN_URL}:/${appName}/websocket?rtmpForward=undefined`
 const pc_config = {
   iceServers: [
     {
@@ -58,6 +58,7 @@ const useLive = () => {
           console.log('Initialized')
         } else if (info === 'publish_started') {
           setLiveStatus('ON_AIR')
+          console.log('ON_AIR')
 
           if (autoRepublishIntervalJob == null) {
             autoRepublishIntervalJob = setInterval(() => {
@@ -97,7 +98,7 @@ const useLive = () => {
   useEffect(() => {
     StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
       setStreamData(data.data)
-      streamingName = 'lup20k' // data.data.streamId
+      streamingName = 'lupanarC' // data.data.streamId
       tokenId = data.data.tokenId
       getUser().then((user: UserType) => {
         setUserName(user.userName)
@@ -121,19 +122,6 @@ const useLive = () => {
       webRTCAdaptor.closeWebSocket()
       initWebRTCAdaptor()
     }
-  }
-
-  const enableAudioLevel = () => {
-    // Put variables in global scope to make them available to the
-    // browser console.
-    window.stream = webRTCAdaptor.localStream
-    window.soundMeter = new SoundMeter(webRTCAdaptor.audioContext)
-    const { soundMeter } = window
-
-    soundMeter.connectToSource(window.stream, (e: any) => {
-      console.log('SOUNDMETER')
-      console.log(e)
-    })
   }
 
   const changeVideoDevice = () => {
@@ -164,8 +152,7 @@ const useLive = () => {
   }
 
   const publish = () => {
-    webRTCAdaptor.publish(streamingName, tokenId)
-    enableAudioLevel()
+    webRTCAdaptor.publish(streamingName, '')
   }
 
   const stop = () => {
