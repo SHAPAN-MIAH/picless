@@ -31,7 +31,8 @@ export default class WebRTCAdaptor {
     this.isWebSocketTriggered = false
     this.webSocketAdaptor = null
     this.isPlayMode = false
-    this.debug = false
+    this.debug = true
+    this.composedStream = new MediaStream()
 
     this.publishMode = 'camera' // screen, screen+camera
 
@@ -223,9 +224,7 @@ export default class WebRTCAdaptor {
       const media_audio_constraint = { audio: audioConstraint }
       this.navigatorUserMedia(
         media_audio_constraint,
-        (audio_Stream) => {
-          audioStream = this.setGainNodeStream(audio_Stream)
-
+        (audioStream) => {
           // add callback if desktop is sharing
           const onended = () => {
             this.callback('screen_share_stopped')
@@ -235,16 +234,16 @@ export default class WebRTCAdaptor {
           if (this.publishMode === 'screen') {
             this.updateVideoTrack(stream, streamId, mediaConstraints, onended, true)
             if (audioTrack.length > 0) {
-              const mixedStream = this.mixAudioStreams(stream, audioStream, streamId)
-              this.updateAudioTrack(mixedStream, streamId, null)
+              this.captureScreenSound(stream, audioStream, streamId)
+              this.updateAudioTrack(this.composedStream, streamId, null)
             } else {
               this.updateAudioTrack(audioStream, streamId, null)
             }
           } else if (this.publishMode === 'screen+camera') {
             if (audioTrack.length > 0) {
-              const mixedStream = this.mixAudioStreams(stream, audioStream, streamId)
-              this.updateAudioTrack(mixedStream, streamId, null)
-              this.setDesktopwithCameraSource(stream, streamId, mixedStream, onended)
+              this.captureScreenSound(stream, audioStream, streamId)
+              this.updateAudioTrack(this.composedStream, streamId, null)
+              this.setDesktopwithCameraSource(stream, streamId, this.composedStream, onended)
             } else {
               this.updateAudioTrack(audioStream, streamId, null)
               this.setDesktopwithCameraSource(stream, streamId, audioStream, onended)
@@ -259,7 +258,7 @@ export default class WebRTCAdaptor {
         true
       )
     } else {
-      if (typeof audioStream !== 'undefined' && audioStream.getAudioTracks()[0] != null) {
+      if (typeof audioStream !== 'undefined' && audioStream.getAudioTracks()[0] !== null) {
         stream.addTrack(audioStream.getAudioTracks()[0])
       }
       this.gotStream(stream)
@@ -267,15 +266,15 @@ export default class WebRTCAdaptor {
   }
 
   navigatorUserMedia(mediaConstraints, func, catch_error) {
-    if (catch_error === true) {
+    if (catch_error == true) {
       navigator.mediaDevices
         .getUserMedia(mediaConstraints)
         .then(func)
         .catch((error) => {
-          if (error.name === 'NotFoundError') {
+          if (error.name == 'NotFoundError') {
             this.getDevices()
           } else {
-            // this.callbackError(error.name, error.message)
+            this.callbackError(error.name, error.message)
           }
         })
     } else {
@@ -409,11 +408,10 @@ export default class WebRTCAdaptor {
   publish(streamId, token, subscriberId, subscriberCode) {
     // If it started with playOnly mode and wants to publish now
     let jsCmd
-    if (this.localStream == null) {
+    if (this.localStream === null) {
       this.navigatorUserMedia(
         this.mediaConstraints,
         (stream) => {
-          alert('asdfadsfds')
           this.gotStream(stream)
           jsCmd = {
             command: 'publish',
@@ -433,10 +431,10 @@ export default class WebRTCAdaptor {
         command: 'publish',
         streamId,
         token,
-        subscriberId: typeof subscriberId !== undefined ? subscriberId : '',
-        subscriberCode: typeof subscriberCode !== undefined ? subscriberCode : '',
-        video: this.localStream.getVideoTracks().length > 0,
-        audio: this.localStream.getAudioTracks().length > 0,
+        // subscriberId: typeof subscriberId !== undefined ? subscriberId : '',
+        // subscriberCode: typeof subscriberCode !== undefined ? subscriberCode : '',
+        video: true,
+        audio: true,
       }
     }
     this.webSocketAdaptor.send(JSON.stringify(jsCmd))
@@ -551,8 +549,6 @@ export default class WebRTCAdaptor {
   }
 
   gotStream(stream) {
-    stream = this.setGainNodeStream(stream)
-
     this.localStream = stream
     this.localVideo.srcObject = stream
 
@@ -562,7 +558,6 @@ export default class WebRTCAdaptor {
         webrtcadaptor: this,
         callback: this.callback,
         callbackError: this.callbackError,
-        debug: this.debug,
       })
     }
     this.getDevices()
@@ -580,105 +575,40 @@ export default class WebRTCAdaptor {
   }
 
   /*
-   * This method mixed the first stream audio to the second stream audio and
-   * returns mixed stream.
-   * stream: Initiali stream that contain video and audio
-   *
+   * This method captures the sound of desktop and merge it with the sound of microphone.
+   * Gain values can be adjusted in the merged sound. composedStream is the merged sound stream.
    */
-  mixAudioStreams(stream, secondStream, streamId) {
-    // console.debug("audio stream track count: " + audioStream.getAudioTracks().length);
-    const composedStream = new MediaStream()
-    // added the video stream from the screen
+  captureScreenSound(stream, micStream, streamId) {
+    //console.debug("audio stream track count: " + audioStream.getAudioTracks().length);
+    var composedStream = new MediaStream()
+    //added the video stream from the screen
     stream.getVideoTracks().forEach(function (videoTrack) {
       composedStream.addTrack(videoTrack)
     })
 
-    this.audioContext = new AudioContext()
-    const audioDestionation = this.audioContext.createMediaStreamDestination()
+    var audioContext = new AudioContext()
+    var desktopSoundGainNode = audioContext.createGain()
 
-    if (stream.getAudioTracks().length > 0) {
-      this.soundOriginGainNode = this.audioContext.createGain()
+    //Adjust the gain for screen sound
+    desktopSoundGainNode.gain.value = 1
 
-      // Adjust the gain for screen sound
-      this.soundOriginGainNode.gain.value = 1
-      const audioSource = this.audioContext.createMediaStreamSource(stream)
+    var audioDestionation = audioContext.createMediaStreamDestination()
+    var audioSource = audioContext.createMediaStreamSource(stream)
 
-      audioSource.connect(this.soundOriginGainNode).connect(audioDestionation)
-    } else {
-      console.debug('Origin stream does not have audio track')
-    }
+    audioSource.connect(desktopSoundGainNode).connect(audioDestionation)
 
-    if (secondStream.getAudioTracks().length > 0) {
-      this.secondStreamGainNode = this.audioContext.createGain()
+    this.micGainNode = audioContext.createGain()
 
-      // Adjust the gain for second sound
-      this.secondStreamGainNode.gain.value = 1
+    //Adjust the gain for microphone sound
+    this.micGainNode.gain.value = 0
 
-      const audioSource2 = this.audioContext.createMediaStreamSource(secondStream)
-      audioSource2.connect(this.secondStreamGainNode).connect(audioDestionation)
-    } else {
-      console.debug('Second stream does not have audio track')
-    }
+    var audioSource2 = audioContext.createMediaStreamSource(micStream)
+    audioSource2.connect(this.micGainNode).connect(audioDestionation)
 
     audioDestionation.stream.getAudioTracks().forEach(function (track) {
       composedStream.addTrack(track)
-      console.log('audio destination add track')
     })
-
-    return composedStream
-  }
-
-  setGainNodeStream(stream) {
-    // Get the videoTracks from the stream.
-    const videoTracks = stream.getVideoTracks()
-
-    // Get the audioTracks from the stream.
-    const audioTracks = stream.getAudioTracks()
-
-    /**
-     * Create a new audio context and build a stream source,
-     * stream destination and a gain node. Pass the stream into
-     * the mediaStreamSource so we can use it in the Web Audio API.
-     */
-    this.audioContext = new AudioContext()
-    const mediaStreamSource = this.audioContext.createMediaStreamSource(stream)
-    const mediaStreamDestination = this.audioContext.createMediaStreamDestination()
-    this.soundOriginGainNode = this.audioContext.createGain()
-
-    /**
-     * Connect the stream to the gainNode so that all audio
-     * passes through the gain and can be controlled by it.
-     * Then pass the stream from the gain to the mediaStreamDestination
-     * which can pass it back to the RTC client.
-     */
-    mediaStreamSource.connect(this.soundOriginGainNode)
-    this.soundOriginGainNode.connect(mediaStreamDestination)
-
-    if (this.currentVolume == null) {
-      this.soundOriginGainNode.gain.value = 1
-    } else {
-      this.soundOriginGainNode.gain.value = this.currentVolume
-    }
-
-    /**
-     * The mediaStreamDestination.stream outputs a MediaStream object
-     * containing a single AudioMediaStreamTrack. Add the video track
-     * to the new stream to rejoin the video with the controlled audio.
-     */
-    const controlledStream = mediaStreamDestination.stream
-
-    for (const videoTrack of videoTracks) {
-      controlledStream.addTrack(videoTrack)
-    }
-    for (const audioTrack of audioTracks) {
-      controlledStream.addTrack(audioTrack)
-    }
-
-    /**
-     * Use the stream that went through the gainNode. This
-     * is the same stream but with altered input volume levels.
-     */
-    return controlledStream
+    this.composedStream = composedStream
   }
 
   switchAudioInputSource(streamId, deviceId) {
@@ -953,14 +883,19 @@ export default class WebRTCAdaptor {
     if (this.remotePeerConnection[streamId] == null) {
       const closedStreamId = streamId
       console.log(`stream id in init peer connection: ${streamId} close stream id: ${closedStreamId}`)
+
       this.remotePeerConnection[streamId] = new RTCPeerConnection(this.peerconnection_config)
+
       this.remoteDescriptionSet[streamId] = false
-      this.iceCandidateList[streamId] = []
+
+      this.iceCandidateList[streamId] = new Array()
+
       if (!this.playStreamId.includes(streamId)) {
         if (this.localStream != null) {
           this.remotePeerConnection[streamId].addStream(this.localStream)
         }
       }
+
       this.remotePeerConnection[streamId].onicecandidate = (event) => {
         this.iceCandidateReceived(event, closedStreamId)
       }
@@ -969,6 +904,7 @@ export default class WebRTCAdaptor {
       }
 
       if (dataChannelMode === 'publish') {
+        console.debug(`publish`)
         // open data channel if it's publish mode peer connection
         const dataChannelOptions = {
           ordered: true,
@@ -1060,7 +996,7 @@ export default class WebRTCAdaptor {
       .setLocalDescription(configuration)
       .then(() => {
         console.debug(`Set local description successfully for stream Id ${streamId}`)
-
+        console.log(configuration)
         const jsCmd = {
           command: 'takeConfiguration',
           streamId,
@@ -1138,7 +1074,7 @@ export default class WebRTCAdaptor {
     }
 
     this.initPeerConnection(streamId, dataChannelMode)
-
+    console.log(`-------`)
     this.remotePeerConnection[streamId]
       .setRemoteDescription(
         new RTCSessionDescription({
@@ -1250,12 +1186,13 @@ export default class WebRTCAdaptor {
 
   startPublishing(idOfStream) {
     const streamId = idOfStream
-
     this.initPeerConnection(streamId, 'publish')
-
+    console.log(this.remotePeerConnection[streamId])
     this.remotePeerConnection[streamId]
       .createOffer(this.sdp_constraints)
       .then((configuration) => {
+        console.debug(`-----configuration`)
+
         this.gotDescription(configuration, streamId)
       })
       .catch((error) => {
