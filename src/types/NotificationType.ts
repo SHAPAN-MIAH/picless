@@ -6,6 +6,7 @@ export enum TypeOfNotifications {
   RECEIVETIP = 'RECEIVETIP',
   ACCOUNTVERIFIED = 'ACCOUNTVERIFIED',
   NEWLIVE = 'NEWLIVE',
+  SENDTIP = 'SENDTIP',
   NEWCHATMESSAGE = 'NEWCHATMESSAGE',
 }
 
@@ -13,10 +14,14 @@ export interface NotificationType {
   id: number
   registerDate: Date
   type: TypeOfNotifications
+  postId: number
+  postType: string
+  profilePicture: string
   message: string
   amount: number
   sourceUserId: number
-  sourceFullName: string
+  fullName: string
+  userName: string
   readed: boolean
   userId: number
 }
