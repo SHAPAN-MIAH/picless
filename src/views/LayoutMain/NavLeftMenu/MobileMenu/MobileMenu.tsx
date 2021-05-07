@@ -47,9 +47,9 @@ const MobileMenu: FunctionComponent<{}> = () => {
           className={classNames('navigation-widget navigation-widget-mobile sidebar right', showMenu ? 'visible' : 'hidden')}
           data-simplebar
         >
-          <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 999 }}>
-            <svg className="navigation-widget-close-button-icon icon-back-arrow">
-              <use xlinkHref="#svg-back-arrow" />
+          <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 999, right: '80%' }}>
+            <svg className="navigation-widget-close-button-icon icon-big-arrow">
+              <use xlinkHref="#svg-small-arrow" />
             </svg>
           </div>
 
