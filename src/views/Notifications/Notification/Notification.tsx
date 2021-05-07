@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React from 'react'
 import UserAvatar from '../../../components/UserAvatar'
 import { NotificationType } from '../../../types/NotificationType'
@@ -8,17 +9,17 @@ const Notification = (props: NotificationProps) => (
   <div className="notification-box">
     <div className="user-status notification">
       <a className="user-status-avatar" href="profile-timeline.html">
-        <UserAvatar size="S" imageName="" />
+        <UserAvatar size="S" imageName={props.notification.profilePicture} />
       </a>
 
       <p className="user-status-title">
         <a className="bold" href="profile-timeline.html">
-          {props.notification.sourceFullName}
+          {props.notification.fullName}
         </a>{' '}
         {props.notification.message}
       </p>
 
-      <p className="user-status-timestamp small-space">2 minutes ago</p>
+      <p className="user-status-timestamp small-space">{moment(props.notification.registerDate).fromNow()}</p>
 
       <div className="user-status-icon">
         <svg className="icon-comment">
