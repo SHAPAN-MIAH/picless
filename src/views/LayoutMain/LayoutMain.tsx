@@ -45,8 +45,7 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
             <NavigationLeftMenu />
 
             <Notifications />
-
-            <Header />
+            {!isMobile && <Header />}
             <FloatyBar />
 
             <ChildrenContainer>{children}</ChildrenContainer>

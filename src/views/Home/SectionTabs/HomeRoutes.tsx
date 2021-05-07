@@ -59,7 +59,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
 
   return (
     <>
-      <TabContainerDiv className="option-items" style={{ justifyContent: 'center' }}>
+      <TabContainerDiv className="option-items" style={{ justifyContent: 'center', position: 'sticky', top: 0, zIndex: 10}}>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.TIMELINE ? 'active' : '')}
           to={`${url}/${HomeTabs.TIMELINE}`}
