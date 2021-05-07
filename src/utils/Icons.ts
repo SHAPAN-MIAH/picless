@@ -53,7 +53,8 @@ library.add(
   faPlayCircle,
   faSignOutAlt,
   faPlus,
-  faArrowLeft
+  faArrowLeft,
+  faHeart
 )
 
 // BRAND ICONS

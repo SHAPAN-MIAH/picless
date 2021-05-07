@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
@@ -28,16 +29,23 @@ const Notification: FunctionComponent<NotificationProps> = (props) => {
 
           <p className="user-status-timestamp">{timeElapsed}</p>
 
-          <Link to={`/u/${notification.userName}/post/${notification.postId}`}>
+          {notification.type === 'POSTLIKE' && (
+            <Link to={`/u/${notification.userName}/post/${notification.postId}`}>
+              <div className="user-status-icon">
+                <FontAwesomeIcon icon="heart" color="tomato" />
+              </div>
+            </Link>
+          )}
 
-
-          <div className="user-status-icon">
-            <svg className="icon-comment">
-              <use xlinkHref="#svg-comment" />
-            </svg>
-          </div>
-          </Link>
-
+          {notification.type !== 'POSTLIKE' && (
+            <Link to={`/u/${notification.userName}/post/${notification.postId}`}>
+              <div className="user-status-icon">
+                <svg className="icon-comment">
+                  <use xlinkHref="#svg-comment" />
+                </svg>
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </>

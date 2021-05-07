@@ -24,8 +24,6 @@ const Notifications: FunctionComponent<{}> = () => {
                 <h2 className="section-title">Notifications</h2>
               </div>
               <div className="section-header-actions">
-                <p className="section-header-action">Mark all as Read</p>
-
                 <Link to="/account/settings" className="section-header-action">
                   Settings
                 </Link>
