@@ -23,7 +23,7 @@ const Header: FunctionComponent<{}> = () => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <header className="header">
+      <header className="header ">
         <div className="header-actions">
           <div className="header-brand">
             <div className="logo">

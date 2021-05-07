@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react'
+import React, { FunctionComponent, ReactNode, useEffect, useState, useRef } from 'react'
 import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
 import MainLoader from '../../components/MainLoading/MainLoading'
@@ -22,6 +22,7 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
   const { children } = props
 
   const [showLoading, setShowLoading] = useState<boolean>(true)
+  const [landscape, islandscape] = useState<boolean>(window.matchMedia("(orientation: landscape)").matches)
 
   const { getUser, getSettings } = useUser()
 
@@ -45,7 +46,8 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
             <NavigationLeftMenu />
 
             <Notifications />
-            {!isMobile && <Header />}
+            <Header />
+            {console.log(landscape)}
             <FloatyBar />
 
             <ChildrenContainer>{children}</ChildrenContainer>
