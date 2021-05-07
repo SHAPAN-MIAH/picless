@@ -13,13 +13,17 @@ const FloatyBar: FunctionComponent<{}> = () => {
     setShowMenu(!showMenu)
   }
 
+  const handleCloseMenu = () => {
+    showMenu && setShowMenu(false);
+  }
+
   return (
     <>
-      <aside className="floaty-bar">
+      <aside className="floaty-bar" style={{ zIndex: 999999 }}>
         <div className="bar-actions"> </div>
 
         <div className="bar-actions">
-          <div className="action-list dark">
+          <div className="action-list dark" onClick={handleCloseMenu}>
             <Link className="action-list-item" to="/user/home">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path
