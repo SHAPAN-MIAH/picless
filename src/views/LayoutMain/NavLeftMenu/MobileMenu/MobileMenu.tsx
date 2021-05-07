@@ -41,10 +41,10 @@ const MobileMenu: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <Fade duration={400} left when={showMenu}>
+      <Fade duration={400} right when={showMenu}>
         <nav
           id="navigation-widget-mobile"
-          className={classNames('navigation-widget navigation-widget-mobile sidebar left', showMenu ? 'visible' : 'hidden')}
+          className={classNames('navigation-widget navigation-widget-mobile sidebar right', showMenu ? 'visible' : 'hidden')}
           data-simplebar
         >
           <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 999 }}>

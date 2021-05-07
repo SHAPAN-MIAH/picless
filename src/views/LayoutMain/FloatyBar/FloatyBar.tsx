@@ -58,7 +58,10 @@ const FloatyBar: FunctionComponent<{}> = () => {
             </Link>
 
             <a className="action-list-item" href="" onClick={handleMenu}>
-              <div className="burger-icon inverted">
+              <div className="menu-item-link-icon icon-members">
+                <svg className="icon-members">
+                  <use xlinkHref="#svg-members" />
+                </svg>
                 <div className="burger-icon-bar" />
 
                 <div className="burger-icon-bar" />
