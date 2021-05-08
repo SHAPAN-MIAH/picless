@@ -113,7 +113,6 @@ const CreateStatus: FunctionComponent<{}> = () => {
   const handlePrivacy = () => {    
     const privacity = privacy  === "PUBLIC" ? "PRIVATE" : "PUBLIC"; 
     setPrivacy(privacity as PrivacityType)
-    console.log(privacity)
   }
   // const convertToTagType = (): TagType[] => {
   //   const tags: TagType[] = []
@@ -241,11 +240,9 @@ const CreateStatus: FunctionComponent<{}> = () => {
           />
 
           <div className="quick-post-footer-action">
-            <PrivacyIconContainerDiv>
-            <svg className="form-input-icon icon-private" onClick={handlePrivacy}>
+            <svg className="form-input-icon icon-private" onClick={handlePrivacy} >
                 {privacy === 'PUBLIC' ? <use xlinkHref="#svg-public" fill="#adafca" /> : <use xlinkHref="#svg-private" fill="#adafca" />}
               </svg>
-            </PrivacyIconContainerDiv>
           </div>
         </div>
 

@@ -52,6 +52,8 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
     resolver: yupResolver(validationSchema),
   })
 
+  const [privacy, setPrivacy] = useState<PrivacityType>(post.privacity as PrivacityType)
+
   const onSubmit = (data: FormValues) => {
     const scheduleData = data.schedule && (data.schedule.toISOString() || '')
 
@@ -61,7 +63,7 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
       featuredPost: false,
       tags: [],
       startDate: scheduleData,
-      privacity: data.privacity,
+      privacity: privacy,
       amount: data.amount,
     }
 
@@ -83,6 +85,11 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
     setValue('schedule', post.schedule)
   }, [])
 
+  const handlePrivacy = () => {    
+    const privacity = privacy  === "PUBLIC" ? "PRIVATE" : "PUBLIC"; 
+    setPrivacy(privacity as PrivacityType)
+  }
+  
   return (
     <>
       <div className={styles.mainPopup}>
@@ -146,24 +153,10 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
               />
             </FormItem>
             <FormItem>
-              <div className="">
-                <Controller
-                  control={control}
-                  name="privacity"
-                  defaultValue=""
-                  render={(propsController) => (
-                    <PrivacySelector
-                      defaultValue={propsController.value || 0}
-                      name={propsController.name}
-                      onChange={(e) => {
-                        propsController.onChange(e.target.value as PrivacityType)
-                      }}
-                    >
-                      <option value="PUBLIC">Public</option>
-                      <option value="PRIVATE">Private</option>
-                    </PrivacySelector>
-                  )}
-                />
+              <div className="quick-post-footer-action">
+              <svg className="form-input-icon icon-private" onClick={handlePrivacy} >
+                  {privacy === 'PUBLIC' ? <use xlinkHref="#svg-public" fill="#adafca" /> : <use xlinkHref="#svg-private" fill="#adafca" />}
+                </svg>
               </div>
             </FormItem>
           </FormRow>
