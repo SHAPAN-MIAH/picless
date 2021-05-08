@@ -217,7 +217,8 @@
       "whoCanSendMessage": "Who Can Send You a Message",
       "sendEveryone": "Everyone",
       "sendOnlySubscribers": "Only Subscribers",
-      "displayAdultContent": "Display Adult Content"
+      "displayAdultContent": "Display Adult Content",
+      "whenUserYouFollowStartLiveStream": "When user you follow start a livestream"
     }
   },
   "authentication": {

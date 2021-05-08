@@ -18,7 +18,7 @@ const H4Title = styled.h4`
 const bulletsVerifiedUser = [
   'Post photos, videos and live stream.',
   'Set a monthly price for your subscribers to access your content.',
-  'Get tipos, from your subscribers.',
+  'Get tips, from your subscribers.',
   'Sell content like photo and video for your subscribers.',
   'Get access to the analysis tool to see how much you have earn.',
   'Withdraw your money, weekly or monthly',
@@ -26,8 +26,8 @@ const bulletsVerifiedUser = [
 
 const bulletsVerifiedImage = [
   `A photo of you holding up a sign with your username and  ${process.env.REACT_APP_WEBSITE_NAME?.toLocaleLowerCase()}.com written on it.`,
-  'The photo must show of your face.',
-  'You cannot weara mask or sunglasses in the picture.',
+  'The photo must show your face.',
+  "You can't wear mask or sunglasses in the picture.",
   'Digitally modified text or images will be rejected.',
   'Max file size is 5mb.',
   'Supported file types: jpg, gif and png.',

@@ -25,6 +25,7 @@ type FormValues = {
   privacityDisplayChatActivity: boolean
   privacityGoogleAuthenticator: boolean
   displayAdultContent: boolean
+  whenUserYouFollowStartLiveStream: boolean
   // privacityWhoCanSendMessage: string
 }
 type formFieldsNames = keyof FormValues
@@ -39,6 +40,7 @@ const formFields: formFieldsNames[] = [
   'privacityDisplayChatActivity',
   'privacityGoogleAuthenticator',
   'displayAdultContent',
+  'whenUserYouFollowStartLiveStream',
   // 'privacityWhoCanSendMessage',
 ]
 
@@ -59,6 +61,7 @@ const UserSettings: FunctionComponent<{}> = () => {
     privacityDisplayChatActivity: Yup.boolean(),
     privacityGoogleAuthenticator: Yup.boolean(),
     displayAdultContent: Yup.boolean(),
+    whenUserYouFollowStartLiveStream: Yup.boolean(),
     // privacityWhoCanSendMessage: Yup.string(),
   })
 
@@ -334,6 +337,27 @@ const UserSettings: FunctionComponent<{}> = () => {
                             id="enabled-google-authenticator"
                             name={propsController.name}
                             title={t('settings.fields.googleAuthenticator')}
+                            checked={propsController.value}
+                            onChange={(value: boolean) => {
+                              propsController.onChange(value)
+                            }}
+                          />
+                        )}
+                      />
+                    </FormItem>
+                  </FormRow>
+
+                  <FormRow classNameRow="split">
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        name="whenUserYouFollowStartLiveStream"
+                        defaultValue=""
+                        render={(propsController) => (
+                          <CheckboxForm
+                            id="follow-start-stream"
+                            name={propsController.name}
+                            title={t('settings.fields.whenUserYouFollowStartLiveStream')}
                             checked={propsController.value}
                             onChange={(value: boolean) => {
                               propsController.onChange(value)

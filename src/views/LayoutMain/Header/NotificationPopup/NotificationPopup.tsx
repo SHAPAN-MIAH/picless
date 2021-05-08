@@ -19,14 +19,10 @@ const NotificationPopup: FunctionComponent<{}> = () => {
       <div className="dropdown-box header-dropdown">
         <div className="dropdown-box-header">
           <p className="dropdown-box-header-title">Notifications</p>
-
-          <div className="dropdown-box-header-actions">
-            <p className="dropdown-box-header-action">Mark all as Read</p>
-          </div>
         </div>
 
         <SimpleBar className="dropdown-box-list">
-          {notifications.map((notification) => {
+          {notifications.slice(0, 10).map((notification) => {
             return <Notification key={notification.id} notification={notification} />
           })}
         </SimpleBar>

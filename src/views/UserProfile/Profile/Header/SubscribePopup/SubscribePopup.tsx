@@ -103,7 +103,7 @@ const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const subscribeToUser = (token: any, amount: number) => {
     if (provider.id && provider.planId && selectedPlan) {
       toast.loading('Loading ...')
-      PaymentService.suscribeToUser(selectedPlan?.planId, provider.id, 'securionpay', token.id, amount)
+      PaymentService.suscribeToUser(selectedPlan?.planId, provider.id, 'stripe', token.id, amount)
         .then((data: any) => {
           if (data.code === 0) {
             setLoading(false)
