@@ -15,7 +15,7 @@ const Profile: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid">
+      <div className="content-grid grid-profile">
         {loading && !provider && (
           <>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
