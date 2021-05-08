@@ -28,3 +28,10 @@
     justify-content: center;
   }
 }
+
+
+@media only screen and (max-width: 680px) {
+  .profileHeaderCoverMobile {
+    border-radius: 0!important;
+  }
+}

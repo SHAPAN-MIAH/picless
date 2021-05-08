@@ -8,6 +8,7 @@ import useRouter from '../../../hooks/commons/useRouter'
 import Home from '../Home'
 import { HomeTabs } from '../Posts'
 
+
 const Newsfeed = React.lazy(() => import('./NewsfeedTab'))
 const Saved = React.lazy(() => import('./SavedTab'))
 const Purchased = React.lazy(() => import('./PurchasedTab'))
@@ -34,6 +35,9 @@ const TabContainerDiv = styled.div`
   background-color: #fff;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
+  @media screen and (max-width: 680px) {
+    border-radius: 0;
+  }
 `
 
 const TabLink = styled(Link)`
