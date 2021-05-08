@@ -4,6 +4,8 @@ import { PostsContextProvider } from '../../context/PostsReducerContext'
 import Posts from './Posts'
 import HomeRoutes from './SectionTabs/HomeRoutes'
 
+import './Home.css'
+
 const Home: FunctionComponent<{}> = () => {
   return (
     <>

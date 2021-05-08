@@ -6,9 +6,12 @@ import UserHeader from './Header/UserHeader'
 import ProfileRoutes from './ProfileRoutes'
 import SectionMenu from './SectionMenu/SectionMenu'
 
+import './Profile.css'
+
 const Profile: FunctionComponent<{}> = () => {
   const { loading, subscription, provider } = useProfile()
   const { user } = useUser()
+
 
   return (
     <>

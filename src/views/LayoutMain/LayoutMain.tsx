@@ -14,7 +14,7 @@ interface LayoutMainProps {
 }
 
 const ChildrenContainer = styled.div`
-  ${isMobile ? '' : 'padding-top: 100px;'}
+  ${isMobile ? '' : 'padding-top: 0;'}
   ${isMobile ? '' : 'min-height: 100vh !important'};
 `
 
@@ -22,7 +22,6 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
   const { children } = props
 
   const [showLoading, setShowLoading] = useState<boolean>(true)
-  const [landscape, islandscape] = useState<boolean>(window.matchMedia("(orientation: landscape)").matches)
 
   const { getUser, getSettings } = useUser()
 
@@ -44,10 +43,8 @@ const LayoutMain: FunctionComponent<LayoutMainProps> = (props) => {
         {!showLoading && (
           <>
             <NavigationLeftMenu />
-
             <Notifications />
-            <Header />
-            {console.log(landscape)}
+              <Header />
             <FloatyBar />
 
             <ChildrenContainer>{children}</ChildrenContainer>

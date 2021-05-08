@@ -1,0 +1,6 @@
+@media screen and (max-width: 680px) {
+    .content-grid {
+        margin-top: -60px!important;
+        padding: 0 0 200px!important;
+    }
+}

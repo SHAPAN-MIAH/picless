@@ -9,6 +9,8 @@ import useMenu from '../../../hooks/useMenu'
 import NotificationPopup from './NotificationPopup/NotificationPopup'
 import SearchBar from './SearchBar/SearchBar'
 
+import './Header.css'
+
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
   const { user } = useUser()
@@ -19,7 +21,7 @@ const Header: FunctionComponent<{}> = () => {
   }
 
   return (
-    <>
+    <div className="header-display">
       <Helmet>
         <title>{title}</title>
       </Helmet>
@@ -89,7 +91,7 @@ const Header: FunctionComponent<{}> = () => {
           {/* <AccountSettings /> */}
         </div>
       </header>
-    </>
+    </div>
   )
 }
 
