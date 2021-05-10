@@ -35,6 +35,7 @@ const CloseButtonDiv = styled.div`
   text-align: center;
   padding-top: 5px;
   cursor: pointer;
+  z-index: 9;
 `
 
 const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any }> = (props) => {
@@ -58,6 +59,13 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any }>
         {(close: any) => {
           return (
             <>
+             <CloseButtonDiv
+                onClick={() => {
+                  close()
+                }}
+              >
+                <FontAwesomeIcon icon="times" color="white" size="1x" />
+              </CloseButtonDiv>
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} itemPosition={'CENTER'}>
                 {sources.map((item: SourceType) => (
                     <ImageImg loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
