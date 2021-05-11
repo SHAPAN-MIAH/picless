@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import { SourceType } from '../../types/PostType.d'
+import { SourceType, PostType } from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel';
+import VideoCollage from '../../views/Home/Post/Content/VideoCollage';
 
 import './imageWithPopupView.css'
 
@@ -38,14 +39,22 @@ const CloseButtonDiv = styled.div`
   z-index: 9;
 `
 
-const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any }> = (props) => {
-  const { image, sources } = props
+const VideoConatinerDiv = styled.div`
+`
 
-  const [values, setvalues] = useState({imgIndex: 0})
+const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, medios: SourceType[] }> = (props) => {
+  const { image, sources, medios } = props
 
   let imgIndex = 0;
   const handleImgIndex = (img: SourceType) => {
-    imgIndex = sources.indexOf(img);
+    imgIndex = medios.indexOf(img);
+  }
+
+  const handleSource = (item: SourceType) => {
+    if(!item.accessUrl) {
+      return <img loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
+    }
+    return <VideoConatinerDiv><VideoCollage sources={[item]}/> </VideoConatinerDiv>
   }
 
   return (
@@ -53,7 +62,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any }>
       <StyledPopup modal trigger={() => 
           {
             handleImgIndex(image)
-            return <img loading="lazy" decoding="async" src={image?.resized} alt={image.name} />
+            return handleSource(image)
           }
         } >
         {(close: any) => {
@@ -67,9 +76,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any }>
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} itemPosition={'CENTER'}>
-                {sources.map((item: SourceType) => (
-                    <ImageImg loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
-                ))}
+                {medios.map((item: SourceType) => {
+                  if(!item.accessUrl) {
+                    return <ImageImg loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
+                  }
+                  else {
+                    return <VideoConatinerDiv><VideoCollage sources={[item]}/> </VideoConatinerDiv>
+                  }
+                })}
               </Carousel>
             </>
           )
