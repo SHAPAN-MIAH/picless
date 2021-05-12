@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType, PostType } from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel';
 import VideoCollage from '../../views/Home/Post/Content/VideoCollage';
+import VideoPlayer from '../../views/Home/Post/Content/TestVideo';
 
 import './imageWithPopupView.css'
 
@@ -39,32 +40,41 @@ const CloseButtonDiv = styled.div`
   z-index: 9;
 `
 
-const VideoConatinerDiv = styled.div`
-`
-
 const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, medios: SourceType[] }> = (props) => {
   const { image, sources, medios } = props
 
+  const [isDisabled, setDisabled] = useState(false)
   let imgIndex = 0;
   const handleImgIndex = (img: SourceType) => {
     imgIndex = medios.indexOf(img);
   }
 
-  const handleSource = (item: SourceType) => {
-    if(!item.accessUrl) {
-      return <img loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
-    }
-    return <VideoConatinerDiv><VideoCollage sources={[item]}/> </VideoConatinerDiv>
-  }
+  const videoJsOptions = {
+    autoplay: false,
+    width: '100%',
+    controls: true,
+    responsive: true,
+  };
 
   return (
     <>
       <StyledPopup modal trigger={() => 
           {
             handleImgIndex(image)
-            return handleSource(image)
-          }
-        } >
+            if(!image.accessUrl) {
+              setDisabled(false)
+              return <img loading="lazy" decoding="async" src={image?.resized} alt={image.name} />
+            }
+            else {
+              setDisabled(true)
+            return (
+              <div className="video-triger-pop"> 
+                  <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/Marcus.m3u8' type='' options={videoJsOptions}  />
+              </div>)
+              }
+            }
+
+        } disabled={isDisabled}>
         {(close: any) => {
           return (
             <>
@@ -81,7 +91,9 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, m
                     return <ImageImg loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
                   }
                   else {
-                    return <VideoConatinerDiv><VideoCollage sources={[item]}/> </VideoConatinerDiv>
+                    return<div className="video-triger-pop">  
+                            <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/Marcus.m3u8' type='' options={videoJsOptions}/>
+                          </div>
                   }
                 })}
               </Carousel>

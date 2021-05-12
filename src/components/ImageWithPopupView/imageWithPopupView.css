@@ -14,3 +14,34 @@
     border-radius: 18px;
     border: 1px solid #cfcece;
   }
+
+
+.video-triger-pop {
+    width: 35em;
+    margin-bottom: 40px;
+}
+.video-js, .vjs_video_3-dimensions {
+    width: 100%;
+    height: 40vh;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    .video-js, .vjs_video_3-dimensions {
+        height: 70vh;
+    }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    .video-js, .vjs_video_3-dimensions {
+        height: 25vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-triger-pop {
+        width: 20em;
+    }
+    .video-js, .vjs_video_3-dimensions {
+        height: 25vh;
+    }
+}

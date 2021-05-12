@@ -1,29 +1,38 @@
-import React from 'react';
+import React, { FunctionComponent, useRef, useEffect,  useState} from 'react';
 import videojs from 'video.js';
 
-export default class VideoPlayer extends React.Component {
-    componentDidMount() {
-        this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
-          console.log('onPlayerReady', this)
-        });
-        console.log(this.videoNode)
-      }
+import 'video.js/dist/video-js.min.css';
 
+
+
+export const VideoPlayer = ({ 
+  src = '',
+  type = '',
+  options = {}
+}) => {
+  const videoRef = useRef(null);
+  const [player, setPlayer] = useState(null);
+
+  useEffect(() => {
+    const vjsPlayer = videojs(videoRef.current, options);
+    setPlayer(vjsPlayer);
+
+    return () => vjsPlayer.dispose();
+  }, []);
+
+  useEffect(() => {
+    if (player !== null) {
+      player.src({ src, type });
+    }
+  }, [src, type, player]);
+
+  return (
+    <div>
       
-    
-      componentWillUnmount() {
-        if (this.player) {
-          this.player.dispose()
-        }
-      }
-    
-      render() {
-        return (
-          <div className="video-js">	
-            <div data-vjs-player>
-              <video ref={ node => this.videoNode = node } className="video-js"></video>
-            </div>
-          </div>
-        )
-      }
-}
+      <video ref={videoRef} className="video-js">
+      </video>
+    </div>
+  );
+};
+
+export default VideoPlayer;

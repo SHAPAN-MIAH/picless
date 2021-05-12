@@ -17,7 +17,7 @@
     "baseUrl": "./src"
   },
   "typeRoots": ["../node_modules/@types", "../@types"],
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/views/Home/Post/Content/TestVideo.js"],
   "exclude": [
     "node_modules",
     "public",
