@@ -22,6 +22,9 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((pr
     responsive: true,
     preload: 'auto',
     controls: true,
+    controlBar: { 
+      'pictureInPictureToggle': false
+     },
   }
   return (
     <>

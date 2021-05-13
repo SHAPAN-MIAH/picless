@@ -17,7 +17,7 @@
 
 
 .video-triger-pop {
-    width: 35em;
+    width: 70em;
     margin-bottom: 40px;
 }
 .video-js, .vjs_video_3-dimensions {
@@ -26,22 +26,20 @@
 }
 
 @media (max-width: 1024px) and (orientation: landscape) {
-    .video-js, .vjs_video_3-dimensions {
-        height: 70vh;
+    .video-triger-pop {
+        width: 30em;
     }
 }
 
 @media (max-width: 1024px) and (orientation: portrait) {
-    .video-js, .vjs_video_3-dimensions {
-        height: 25vh;
+    .video-triger-pop {
+        width: 50em;
+        margin-bottom: 40px;
     }
 }
 
 @media (max-width: 480px) {
     .video-triger-pop {
         width: 20em;
-    }
-    .video-js, .vjs_video_3-dimensions {
-        height: 25vh;
     }
 }

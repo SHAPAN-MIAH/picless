@@ -54,6 +54,11 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, m
     width: '100%',
     controls: true,
     responsive: true,
+    fill: true,
+    fluid: true,
+    controlBar: { 
+      'pictureInPictureToggle': false
+     },
   };
 
   return (
