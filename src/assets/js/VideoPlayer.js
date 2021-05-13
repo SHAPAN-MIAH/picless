@@ -8,7 +8,8 @@ import 'video.js/dist/video-js.min.css';
 export const VideoPlayer = ({ 
   src = '',
   type = '',
-  options = {}
+  options = {},
+  aspect = '2:1'
 }) => {
   const videoRef = useRef(null);
   const [player, setPlayer] = useState(null);
@@ -26,6 +27,7 @@ export const VideoPlayer = ({
     const optionsIntersection = {
       threshol: .7
     }
+    vjsPlayer.aspectRatio(aspect)
 
     const inter = new IntersectionObserver((entries) => {
       if(!entries[0].isIntersecting && !vjsPlayer.isDisposed_ && !vjsPlayer.paused()) {

@@ -38,7 +38,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
         <Carousel isRTL={false}>
           {media.map((item: SourceType) => (
             <div key={Utils.simpleKeyGenerator(5)}>
-              <ImageWithPopupView image={item} sources={sources}  medios={media}/>
+              <ImageWithPopupView image={item}  medios={media}/>
             </div>
           ))}
         </Carousel>

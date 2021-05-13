@@ -4,8 +4,7 @@ import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType, PostType } from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel';
-import VideoCollage from '../../views/Home/Post/Content/VideoCollage';
-import VideoPlayer from '../../views/Home/Post/Content/TestVideo';
+import VideoPlayer from '../../assets/js/VideoPlayer';
 
 import './imageWithPopupView.css'
 
@@ -40,8 +39,8 @@ const CloseButtonDiv = styled.div`
   z-index: 9;
 `
 
-const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, medios: SourceType[] }> = (props) => {
-  const { image, sources, medios } = props
+const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceType[] }> = (props) => {
+  const { image, medios } = props
 
   const [isDisabled, setDisabled] = useState(false)
   let imgIndex = 0;
@@ -61,6 +60,9 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, m
      },
   };
 
+  
+  const appearance = medios[0].width && medios[0].height && (medios[0].width > medios[0].height) ? '2:1' :  '9:16';
+
   return (
     <>
       <StyledPopup modal trigger={() => 
@@ -74,7 +76,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, m
               setDisabled(true)
             return (
               <div className="video-triger-pop"> 
-                  <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/Marcus.m3u8' type='' options={videoJsOptions}  />
+                  <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={videoJsOptions} aspect={appearance}  />
               </div>)
               }
             }
@@ -97,7 +99,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, sources: any, m
                   }
                   else {
                     return<div className="video-triger-pop">  
-                            <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/Marcus.m3u8' type='' options={videoJsOptions}/>
+                            <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={videoJsOptions}/>
                           </div>
                   }
                 })}
