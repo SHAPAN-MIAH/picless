@@ -24,7 +24,7 @@ export const VideoPlayer = ({
      });
 
     const optionsIntersection = {
-      threshol: .5
+      threshol: .7
     }
 
     const inter = new IntersectionObserver((entries) => {
