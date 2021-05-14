@@ -81,12 +81,14 @@ const usePosts = () => {
 
     return PostService.getPosts(state.nextPage).then((p: ServicePostType): void => {
       if (p.code === '0') {
-        if (state.posts.length > 0) {
+        if (state.nextPage === 0) {
+          console.log(`posts pages`)
           dispatch({
             type: ACTIONS.SET_TOTAL_PAGES,
             payload: p.pages,
           })
         }
+
         dispatch({
           type: ACTIONS.GET_POSTS,
           payload: p.posts,
@@ -141,7 +143,7 @@ const usePosts = () => {
 
   return {
     posts: state.posts,
-    hasMore: state.pages <= state.nextPage - 1,
+    hasMore: state.pages >= state.nextPage - 1,
     getPosts,
     deletePost,
     addReaction,
