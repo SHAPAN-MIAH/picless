@@ -30,9 +30,7 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((pr
   return (
     <>
     <div data-vjs-player>
-      <VideoContainer>
         <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={options}  />
-      </VideoContainer>
     </div>
     </>
   )
