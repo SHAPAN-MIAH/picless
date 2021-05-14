@@ -18,10 +18,7 @@ const StyledPopup = styled(Popup)`
 `
 
 const ImageImg = styled.img`
-  max-height: 100vh;
-  max-width: 100%;
-  margin-right: auto;
-  margin-left: auto;
+  margin: calc(5%) 0 0 0;
 `
 
 const CloseButtonDiv = styled.div`
@@ -60,8 +57,26 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
      },
   };
 
-  
-  const appearance = medios[0].width && medios[0].height && (medios[0].width > medios[0].height) ? '2:1' :  '9:16';
+  const width = medios[0].width ? medios[0].width : 0
+  const height = medios[0].height ? medios[0].height : 0;
+
+
+  const maximoComunDivisor = (width:number, height:number): any => {
+    if (height === 0) return width;
+    return maximoComunDivisor(height, width % height);
+};
+
+  const base = maximoComunDivisor(width, height);
+  const numerator = width/base;
+  const denominator = height/base;
+
+
+  const appearance = `${numerator}:${denominator}`;
+
+  const srd = [
+    "https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8",
+    "https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/Marcus.m3u8"
+  ]
 
   return (
     <>
@@ -70,13 +85,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
             handleImgIndex(image)
             if(!image.accessUrl) {
               setDisabled(false)
-              return <img loading="lazy" decoding="async" src={image?.resized} alt={image.name} />
+              return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
             }
             else {
               setDisabled(true)
+              console.log()
             return (
               <div className="video-triger-pop"> 
-                  <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={videoJsOptions} aspect={appearance}  />
+                  <VideoPlayer src={srd[Math.round(Math.random() * (1 - 0) + 0)]} type='' options={videoJsOptions} aspect={appearance}  />
               </div>)
               }
             }

@@ -10,7 +10,7 @@ const VideoComponent = styled(ReactHlsPlayer)`
 `
 
 const VideoContainer = styled.div`
-  margin-top: 20px;
+max-height: 78vh;
   background-color: #212529;
 `
 
@@ -30,7 +30,9 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((pr
   return (
     <>
     <div data-vjs-player>
-      <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={options}  />
+      <VideoContainer>
+        <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={options}  />
+      </VideoContainer>
     </div>
     </>
   )

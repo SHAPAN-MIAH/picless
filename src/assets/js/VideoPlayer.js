@@ -9,7 +9,7 @@ export const VideoPlayer = ({
   src = '',
   type = '',
   options = {},
-  aspect = '2:1'
+  aspect = '9:16'
 }) => {
   const videoRef = useRef(null);
   const [player, setPlayer] = useState(null);
@@ -24,9 +24,19 @@ export const VideoPlayer = ({
     vjsPlayer.on('pause', () => {
      });
 
+    vjsPlayer.on('fullscreenchange', () => {
+      if(vjsPlayer.isFulscreen()){
+       vjsPlayer.aspectRatio('9:16')
+      }
+      else {
+        vjsPlayer.aspectRatio(aspect)
+      }
+    });
+
     const optionsIntersection = {
       threshol: .7
     }
+
     vjsPlayer.aspectRatio(aspect)
 
     const inter = new IntersectionObserver((entries) => {
@@ -48,7 +58,7 @@ export const VideoPlayer = ({
   return (
     <div>
       
-      <video ref={videoRef} className="video-js">
+      <video ref={videoRef} className="video-js vjs-big-play-centered">
       </video>
     </div>
   );
