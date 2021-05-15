@@ -2,6 +2,7 @@
     .grid-photos {
         display: flex;
         flex-wrap: wrap;
+        grid-gap: 8px!important;
     }
     .widget-photos {
         padding: 10px 10px;
