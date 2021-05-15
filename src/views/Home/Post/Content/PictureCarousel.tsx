@@ -3,14 +3,15 @@ import Carousel from 'react-elastic-carousel'
 import styled from 'styled-components'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
 import ImageWithPopupView from '../../../../components/ImageWithPopupView/ImageWithPopupView'
-import { SourceType } from '../../../../types/PostType.d'
+import { SourceType, PostType } from '../../../../types/PostType.d'
 import * as Utils from '../../../../utils/Functions'
 import styles from './PictureCarousel.module.css'
 
 type PictureCarouselProps = {
   sources: SourceType[]
   amount: number
-  blocked: boolean
+  blocked: boolean,
+  allData: PostType
 }
 
 const ContainerBlockedContentDiv = styled.div`
@@ -18,15 +19,26 @@ const ContainerBlockedContentDiv = styled.div`
 `
 
 const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((props) => {
-  const { sources, blocked = false, amount } = props
+  const { sources, blocked = false, amount, allData } = props
+
+  const listImages: SourceType[] = allData.images || []
+  const listVideos: SourceType[] = allData.videos || []
+
+  let media: any = [];
+  listImages.map((images: SourceType) => {
+    media.push(images)
+  })
+  listVideos.map((videos: SourceType) => {
+    media.push(videos)
+  })
 
   return (
     <>
       <div className={styles.imageContainer}>
         <Carousel isRTL={false}>
-          {sources.map((item: SourceType) => (
+          {media.map((item: SourceType) => (
             <div key={Utils.simpleKeyGenerator(5)}>
-              <ImageWithPopupView image={item} />
+              <ImageWithPopupView image={item}  medios={media}/>
             </div>
           ))}
         </Carousel>

@@ -29,7 +29,7 @@ const SinglePost: FunctionComponent<{}> = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [setSinglePost])
+  }, [id, setSinglePost])
 
   return (
     <>

@@ -83,9 +83,9 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             <p className="widget-box-status-text">{data.content}</p>
           </div>
           {listImages && listImages.length > 0 && (
-            <PictureCarousel sources={listImages} amount={data.amount || 0} blocked={data.blocked} />
+            <PictureCarousel sources={listImages} amount={data.amount || 0} blocked={data.blocked} allData={data}/>
           )}
-          {listVideos && listVideos.length > 0 && <VideoCollage sources={listVideos} />}
+          {(listVideos && listVideos.length > 0 && listImages.length <= 0) && <VideoCollage sources={listVideos} />}
           {/* <LivePromotion user={data.users} /> */}
 
           <div className="widget-box-status-content">

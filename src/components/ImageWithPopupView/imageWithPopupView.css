@@ -1,0 +1,51 @@
+.popup-overlay {
+    z-index: 9999!important;
+}
+.modal > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+  }
+
+
+.video-triger-pop {
+    width: 70em;
+    margin-bottom: 40px;
+
+}
+
+.PictureCarousel_imageContainer__32Cfw{
+    min-height: 0px!important
+}
+
+@media (max-width: 1366px) and (orientation: landscape) {
+    .video-triger-pop {
+        width: 30em;
+    }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    .video-triger-pop {
+        width: 30em;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-triger-pop {
+        width: 23em;
+    }
+}
+
+@media (max-width: 300px) {
+    .video-triger-pop {
+        width: 17em;
+    }
+}
