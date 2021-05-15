@@ -120,7 +120,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               </div>
             )}
 
-            <div className="user-stats user-stats-menu">
+            <div className="user-stats">
               <div className="user-stat big">
                 <p className="user-stat-title">{provider.numberOfFollowers}</p>
 

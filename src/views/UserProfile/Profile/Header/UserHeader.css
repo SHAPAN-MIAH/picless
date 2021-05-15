@@ -1,11 +1,8 @@
 @media only screen and (max-width: 480px) {
-    .user-stats-menu {
-        justify-content: left!important;
-    }
     .profile-header .profile-header-info .user-stats .user-stat:last-child, .profile-header .profile-header-info .user-stats .user-stat:nth-last-child(2):after {
         display: block!important;
     }
     .user-stat.big {
-        padding: 0 26px!important;
+        padding: 0 15px!important;
     }
 }
