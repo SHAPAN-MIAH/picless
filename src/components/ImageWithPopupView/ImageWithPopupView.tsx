@@ -69,14 +69,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
   const base = maximoComunDivisor(width, height);
   const numerator = width/base;
   const denominator = height/base;
-
-
   const appearance = `${numerator}:${denominator}`;
-
-  const srd = [
-    "https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8",
-    "https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/Marcus.m3u8"
-  ]
 
   return (
     <>
@@ -89,10 +82,9 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
             }
             else {
               setDisabled(true)
-              console.log()
             return (
               <div className="video-triger-pop"> 
-                  <VideoPlayer src={srd[Math.round(Math.random() * (1 - 0) + 0)]} type='' options={videoJsOptions} aspect={appearance}  />
+                  <VideoPlayer src={image.accessUrl} type='' options={videoJsOptions} aspect={appearance}  />
               </div>)
               }
             }
@@ -115,7 +107,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
                   }
                   else {
                     return<div className="video-triger-pop">  
-                            <VideoPlayer src='https://s3-image-dev.s3-eu-west-1.amazonaws.com/hls/vide.m3u8' type='' options={videoJsOptions}/>
+                            <VideoPlayer src={item.accessUrl} type='' options={videoJsOptions}/>
                           </div>
                   }
                 })}
