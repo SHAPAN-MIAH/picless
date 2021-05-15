@@ -1,0 +1,13 @@
+@media screen and (max-width: 812px) {
+    .grid-photos {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .widget-photos {
+        padding: 10px 10px;
+    }
+    .album-preview {
+        width: 30%;
+        height: auto!important;
+    }
+  }

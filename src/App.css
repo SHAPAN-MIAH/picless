@@ -22,7 +22,7 @@
 
 @media screen and (max-width: 680px) {
   .content-grid {
-    width: 96%;
+    width: 100%;
     padding: 20px 0 200px;
   }
 }
