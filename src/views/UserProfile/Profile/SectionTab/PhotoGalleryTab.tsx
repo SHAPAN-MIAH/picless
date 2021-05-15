@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import useProfile from '../../../../hooks/useProfile'
+import { isMobile } from 'react-device-detect'
+
+import './PhotoGalleryTabs.css'
 
 const noPhotos = 'Nothing to show'
 
@@ -53,7 +56,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     <>
       <div className="grid">
         <div className="grid-column">
-          <div className="widget-box">
+          <div className="widget-box widget-photos">
             {photos.length === 0 && (
               <Alert alertType="PRIMARY" message={noPhotos} style={{ width: '100%', textAlign: 'center' }} />
             )}
@@ -66,7 +69,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                 </div>
 
                 <InfiniteScroll dataLength={photos.length} next={getPhotosList} hasMore loader={LoaderDiv}>
-                  <div className="grid grid-3-3-3-3 centered">
+                  <div className="grid grid-3-3-3-3 centered grid-photos">
                     {photos.map((item) => {
                       return (
                         <>
@@ -78,11 +81,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             <ImageContainerDiv>
                               <ImageImg src={item.thumbnail} alt={item.name} />
                             </ImageContainerDiv>
-                            <div className="album-preview-info" style={{ top: '-284px' }}>
-                              <p className="album-preview-title">View post</p>
+                            {!isMobile &&
+                              <div className="album-preview-info" style={{ top: '-284px' }}>
+                                <p className="album-preview-title">View post</p>
 
-                              <p className="album-preview-text">{item.registerDate}</p>
-                            </div>
+                                <p className="album-preview-text">{item.registerDate}</p>
+                              </div>
+                            }
                           </ContainerLink>
                         </>
                       )
