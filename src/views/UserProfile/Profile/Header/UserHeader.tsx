@@ -103,12 +103,12 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                       href={`/user/messages/${provider.id}`}
                       className="profile-header-info-action button secondary"
                     >
-                      <FontAwesomeIcon color="white" icon="comments" /> <span className="hide-text-mobile"> Send </span>{' '}
+                      <span className="hide-text-mobile"> Send </span>{' '}
                       Message
                     </a>
 
                     <a
-                      title="Send a message"
+                      title="Unsubscribe"
                       href=""
                       onClick={onUnsubscribe}
                       className="profile-header-info-action button remove"

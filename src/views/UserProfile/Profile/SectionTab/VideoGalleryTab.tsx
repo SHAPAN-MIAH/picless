@@ -40,11 +40,6 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
             {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
             {videos.length > 0 && (
               <>
-                <div className="section-header-info">
-                  <p className="section-pretitle">Check {provider.firstName || provider.fullName}</p>
-
-                  <h2 className="section-title">Videos</h2>
-                </div>
 
                 <InfiniteScroll dataLength={videos.length} next={getVideoList} hasMore loader={LoaderDiv}>
                   <div className="photos-masonry">

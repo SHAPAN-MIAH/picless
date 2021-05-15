@@ -62,12 +62,6 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
             )}
             {photos.length > 0 && (
               <>
-                <div className="section-header-info">
-                  <p className="section-pretitle">Check {provider.firstName || provider.fullName}</p>
-
-                  <h2 className="section-title">Photos</h2>
-                </div>
-
                 <InfiniteScroll dataLength={photos.length} next={getPhotosList} hasMore loader={LoaderDiv}>
                   <div className="grid grid-3-3-3-3 centered grid-photos">
                     {photos.map((item) => {
