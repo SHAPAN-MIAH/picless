@@ -13,6 +13,7 @@ import { SubscriptionType, UserType } from '../../../../types/UserType'
 import { GetCountryName } from '../../../../utils/Functions'
 import SubscribePopup from './SubscribePopup/SubscribePopup'
 import styles from './UserHeader.module.css'
+import  './UserHeader.css'
 
 type UserHeaderProps = {
   subscription: SubscriptionType | null
@@ -138,7 +139,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <p className="user-stat-text">Videos</p>
               </div>
 
-              <div className="user-stat big flag" style={{display: 'block', padding: '0 8px'}}>
+              <div className="user-stat big flag">
                 <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName} />
 
                 <p className="user-stat-text">{countryName}</p>
