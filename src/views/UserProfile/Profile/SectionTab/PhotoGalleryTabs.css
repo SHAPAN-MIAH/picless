@@ -2,13 +2,19 @@
     .grid-photos {
         display: flex;
         flex-wrap: wrap;
-        grid-gap: 8px!important;
+        grid-gap: 1px!important;
     }
     .widget-photos {
         padding: 10px 10px;
     }
     .album-preview {
-        width: 30%;
+        width: 33%;
         height: auto!important;
+    }
+    .album-preview img {
+        border-radius: 0!important;
+    }
+    .widget-photos {
+        padding: 0%!important;
     }
   }

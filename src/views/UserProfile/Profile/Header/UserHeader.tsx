@@ -142,7 +142,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <p className="user-stat-text">Videos</p>
               </div>
 
-              <div className="user-stat big flag" style={{ display: 'block', padding: '0 8px' }}>
+              <div className="user-stat big flag">
                 <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName} />
 
                 <p className="user-stat-text">{countryName}</p>

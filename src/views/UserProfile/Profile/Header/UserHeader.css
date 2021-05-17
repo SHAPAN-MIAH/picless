@@ -5,4 +5,8 @@
     .user-stat.big {
         padding: 0 13px!important;
     }
+    .user-stat-image {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
