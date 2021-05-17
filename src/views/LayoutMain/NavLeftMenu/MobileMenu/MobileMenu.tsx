@@ -159,7 +159,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
             top: '0',
             left: '0',
             zIndex: 99998,
-            backgroundColor: 'rgba(21, 21, 31, .96)',
+            backgroundColor: 'rgba(21, 21, 31, .0)',
             opacity: '1',
             visibility: 'visible',
             transition: 'opacity .3s ease-in-out, visibility .3s ease-in-out',
