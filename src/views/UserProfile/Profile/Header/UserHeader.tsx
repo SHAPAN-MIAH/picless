@@ -13,7 +13,8 @@ import { SubscriptionType, UserType } from '../../../../types/UserType'
 import { GetCountryName } from '../../../../utils/Functions'
 import SubscribePopup from './SubscribePopup/SubscribePopup'
 import styles from './UserHeader.module.css'
-import  './UserHeader.css'
+import './UserHeader.css'
+import { Link } from 'react-router-dom'
 
 type UserHeaderProps = {
   subscription: SubscriptionType | null
@@ -101,14 +102,13 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
                 {subscribed && (
                   <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
-                    <a
+                    <Link
                       title="Send a message"
-                      href={`/user/chat/${provider.id}`}
+                      to={`/user/chat/${provider.id}`}
                       className="profile-header-info-action button secondary"
                     >
-                      <span className="hide-text-mobile"> Send </span>{' '}
-                      Message
-                    </a>
+                      <span className="hide-text-mobile"> Send </span> Message
+                    </Link>
 
                     <a
                       title="Unsubscribe"
