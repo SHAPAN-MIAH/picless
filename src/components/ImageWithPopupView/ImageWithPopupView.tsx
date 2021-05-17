@@ -21,6 +21,10 @@ const ImageImg = styled.img`
   margin: calc(5%) 0 0 0;
 `
 
+const ImagePop = styled.img`
+  max-height: 99vh;
+`
+
 const CloseButtonDiv = styled.div`
   position: absolute;
   width: 35px;
@@ -103,7 +107,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} itemPosition={'CENTER'}>
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {
-                    return <ImageImg loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
+                    return <ImagePop loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
                   }
                   else {
                     return<div className="video-triger-pop">  
