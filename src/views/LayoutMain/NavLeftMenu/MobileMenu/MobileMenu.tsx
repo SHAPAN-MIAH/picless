@@ -18,6 +18,7 @@ const AvatarContainerDiv = styled.div`
   position: relative;
   left: 50%;
   margin-left: -49px;
+  width: 50%;
 `
 
 const MobileMenu: FunctionComponent<{}> = () => {
