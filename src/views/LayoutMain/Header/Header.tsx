@@ -80,7 +80,7 @@ const Header: FunctionComponent<{}> = () => {
 
           <div className="action-item-wrap">
             <div className="action-item dark">
-              <Link to="/user/messages" data-title="Messages">
+              <Link to="/user/chat" data-title="Messages">
                 <svg className="action-item-icon icon-messages">
                   <use xlinkHref="#svg-messages" />
                 </svg>

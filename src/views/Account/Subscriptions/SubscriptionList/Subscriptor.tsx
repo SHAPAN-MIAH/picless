@@ -89,7 +89,7 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
               </svg>
             </p> */}
 
-            <a href={`/user/messages/${subscribeUser.id}`} className="button primary" title="Send a message">
+            <a href={`/user/chat/${subscribeUser.id}`} className="button primary" title="Send a message">
               <svg className="button-icon icon-comment">
                 <use xlinkHref="#svg-comment" />
               </svg>

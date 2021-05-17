@@ -29,9 +29,9 @@ const useChat = () => {
           message,
           registerDate: new Date().toISOString(),
           fromUserId: userId,
-          senderUserId: userId,
+          // senderUserId: userId,
           toUserId: userSelected.userId.toString(),
-          receivedUserId: userSelected.userId.toString(),
+          // receivedUserId: userSelected.userId.toString(),
         }
 
         try {

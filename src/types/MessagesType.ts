@@ -7,6 +7,7 @@ export interface UserStatusMessagesType {
   lastMessage: string
   connectionId?: string
   lastMessageDate: string
+  selected?: boolean
 }
 
 export interface MessageType {
@@ -18,8 +19,8 @@ export interface MessageType {
   type: TypeMessageType
   senderUserId?: string
   receivedUserId?: string
-  fromUserId?: string
-  toUserId?: string
+  fromUserId?: string | number
+  toUserId?: string | number
   connectionId?: string | null
 }
 
@@ -38,6 +39,7 @@ export interface OnReceiveMessageType {
   registerDate?: string
   message: string
   user: string
+  toUserId?: string
   fromUserId: string
 }
 

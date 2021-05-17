@@ -56,7 +56,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     <>
       <WalletContextProvider>
         <div className="profile-header" style={{ marginTop: isMobile ? '60px' : '0px' }}>
-          <div className={classNames("profile-header-cover", styles.profileHeaderCoverMobile)} style={{ background: `url(${imageCover}) center center / cover no-repeat`, height: '20em'}}>
+          <div
+            className={classNames('profile-header-cover', styles.profileHeaderCoverMobile)}
+            style={{ background: `url(${imageCover}) center center / cover no-repeat`, height: '20em' }}
+          >
             <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
           </div>
 
@@ -100,7 +103,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                   <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
                     <a
                       title="Send a message"
-                      href={`/user/messages/${provider.id}`}
+                      href={`/user/chat/${provider.id}`}
                       className="profile-header-info-action button secondary"
                     >
                       <span className="hide-text-mobile"> Send </span>{' '}
@@ -139,7 +142,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <p className="user-stat-text">Videos</p>
               </div>
 
-              <div className="user-stat big flag">
+              <div className="user-stat big flag" style={{ display: 'block', padding: '0 8px' }}>
                 <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName} />
 
                 <p className="user-stat-text">{countryName}</p>

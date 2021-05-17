@@ -25,6 +25,7 @@ import Notification from '../views/Notifications/Notifications'
 import UserProfile from '../views/UserProfile/UserProfile'
 import routes from './MenuRoutes'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
+import ChatMain from 'views/MessagesNew/ChatMain'
 
 const NoMatchPage = () => {
   return (
@@ -75,8 +76,11 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
 
               <ProtectedRoute {...routerProps} path="/user/home" component={Home} />
-              <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
-              <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} />
+              {/* <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
+              <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} /> */}
+
+              <ProtectedRoute {...routerProps} exact path={['/user/chat', '/user/chat/:userid']} component={ChatMain} />
+
               <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
               <ProtectedRoute {...routerProps} exact path="/user/notification" component={Notification} />
 

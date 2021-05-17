@@ -6,13 +6,7 @@ import { HubConnection } from '@microsoft/signalr'
 import useChat from 'hooks/useChat'
 import ChatService from '../../services/ChatService'
 
-import {
-  addMessageChat,
-  getFavoriteUsers,
-  sendMessageChat,
-  setUserSelected,
-  changeStatus,
-} from '../../redux/Chat/ChatThunks'
+import { addMessageChat, getFavoriteUsers, setUserSelected, changeStatus } from '../../redux/Chat/ChatThunks'
 import { getUserListSelector, getUserSelector } from '../../redux/Chat/ChatSelectors'
 
 import UserStatus from './UserStatus/UserStatus'
@@ -59,7 +53,6 @@ const Messages: FunctionComponent<{}> = () => {
     ChatService.getConnectionChat()
       .then((conn) => {
         conn.on('ReceiveMessage', (message: OnReceiveMessageType) => {
-          console.log(message)
           onReceiveMessage(message)
         })
 
