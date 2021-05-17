@@ -1,4 +1,4 @@
-@media only screen and (max-width: 480px) {
+@media only screen and (max-device-width: 480px) {
     .profile-header .profile-header-info .user-stats .user-stat:last-child, .profile-header .profile-header-info .user-stats .user-stat:nth-last-child(2):after {
         display: block!important;
     }

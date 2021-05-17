@@ -1,15 +1,16 @@
-@media screen and (max-width: 812px) {
+@media screen and (max-device-width: 812px) {
     .grid-photos {
         display: flex;
         flex-wrap: wrap;
-        grid-gap: 1px!important;
+        grid-gap: .1px!important;
     }
     .widget-photos {
         padding: 10px 10px;
     }
     .album-preview {
-        width: 33%;
+        width: 32%;
         height: auto!important;
+        margin: .5px;
     }
     .album-preview img {
         border-radius: 0!important;
