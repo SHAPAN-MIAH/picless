@@ -4,6 +4,8 @@ import { Link, useRouteMatch } from 'react-router-dom'
 import useRouter from '../../../../hooks/commons/useRouter'
 import { Tabs } from '../../../../hooks/useProfile'
 
+import './SectionMenu.css'
+
 const SectionMenu: FunctionComponent<{}> = (props) => {
   const { url } = useRouteMatch()
   const router = useRouter()
