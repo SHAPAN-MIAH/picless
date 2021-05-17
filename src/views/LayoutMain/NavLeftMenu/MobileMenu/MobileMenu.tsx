@@ -164,6 +164,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
             opacity: '1',
             visibility: 'visible',
             transition: 'opacity .3s ease-in-out, visibility .3s ease-in-out',
+            overflow: 'hidden',
           }}
           onClick={handleCloseMenu}
         >
