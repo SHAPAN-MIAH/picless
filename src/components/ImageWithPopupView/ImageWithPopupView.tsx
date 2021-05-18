@@ -73,9 +73,9 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
   };
 
   const base = maximoComunDivisor(width, height);
-  const numerator = width/base;
-  const denominator = height/base;
-  const appearance = `${numerator}:${denominator}`;
+  const numerator = Math.round(width/base);
+  const denominator = Math.round(height/base);
+  const appearance = `${numerator}:${denominator}` != 'NaN:NaN' ? `${numerator}:${denominator}` : '4:5';
 
   return (
     <>

@@ -27,6 +27,18 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
 
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false)
 
+  const handleReturn = () => {
+    if(listImages && listImages.length > 0) {
+      return <PictureCarousel amount={data.amount || 0} blocked={data.blocked} allData={data}/>
+    }
+    else if(listVideos.length > 1 && listImages.length <= 0) {
+      return <PictureCarousel amount={data.amount || 0} blocked={data.blocked} allData={data}/>
+    }
+    else if(listVideos && listVideos.length > 0 && listImages.length <= 0) {
+      return <VideoCollage sources={listVideos} />
+    }
+  }
+
   const onDeletePost = useCallback(() => {
     deletePost(data.id).then(() => {
       window.location.reload()
@@ -82,10 +94,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             <HeaderPost user={data.users || {}} datePost={datePost} />
             <p className="widget-box-status-text">{data.content}</p>
           </div>
-          {listImages && listImages.length > 0 && (
-            <PictureCarousel sources={listImages} amount={data.amount || 0} blocked={data.blocked} allData={data}/>
-          )}
-          {(listVideos && listVideos.length > 0 && listImages.length <= 0) && <VideoCollage sources={listVideos} />}
+          {handleReturn()}
           {/* <LivePromotion user={data.users} /> */}
 
           <div className="widget-box-status-content">

@@ -8,7 +8,6 @@ import * as Utils from '../../../../utils/Functions'
 import styles from './PictureCarousel.module.css'
 
 type PictureCarouselProps = {
-  sources: SourceType[]
   amount: number
   blocked: boolean,
   allData: PostType
@@ -19,7 +18,7 @@ const ContainerBlockedContentDiv = styled.div`
 `
 
 const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((props) => {
-  const { sources, blocked = false, amount, allData } = props
+  const { blocked = false, amount, allData } = props
 
   const listImages: SourceType[] = allData.images || []
   const listVideos: SourceType[] = allData.videos || []
