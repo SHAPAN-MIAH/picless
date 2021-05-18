@@ -10,7 +10,6 @@ import Post from './Post/Post'
 
 const DivContainer = styled.div`
   width: 100%;
-  height: 560px;
 `
 
 const noPost = 'Nothing to show'
