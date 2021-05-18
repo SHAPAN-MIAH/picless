@@ -15,6 +15,9 @@
     border: 1px solid #cfcece;
   }
 
+  .rec .rec-swipable {
+      align-items: center;
+  }
 
 .video-triger-pop {
     width: 70em;

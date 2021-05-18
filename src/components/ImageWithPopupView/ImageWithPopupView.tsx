@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { FunctionComponent, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import { SourceType, PostType } from '../../types/PostType.d'
+import { SourceType} from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel';
 import VideoPlayer from '../../assets/js/VideoPlayer';
 
@@ -26,16 +26,20 @@ const ImagePop = styled.img`
 `
 
 const CloseButtonDiv = styled.div`
-  position: absolute;
-  width: 35px;
-  height: 35px;
-  margin-left: calc(100% - 30px);
-  bottom: 0;
-  border-radius: 5px;
-  text-align: center;
-  padding-top: 10px;
-  cursor: pointer;
-  z-index: 9;
+    position: absolute;
+    bottom: 0;
+    margin-left: calc(100% - 53%);
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0px 0px #333;
+    color: rgba(245, 245, 245, 1);
+    height: 30px;
+    min-width: 30px;
+    line-height: 30px;
+    z-index: 9;
+    border-radius: 50%;
+    text-align: center;
+}
 `
 
 const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceType[] }> = (props) => {
@@ -67,18 +71,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
     if (height === 0) return width;
     return maximoComunDivisor(height, width % height);
   };
-
-  const handlePosition = (item: any) =>  {
-    let maxHeigth = 0;
-    medios.forEach(el => {
-      if(el.height && el.height > maxHeigth) {
-        maxHeigth = el.height;
-      }
-    })
-    const margin = Math.round((100-(item.height*100)/maxHeigth)/2);
-    return margin;
-
-  }
 
   const base = maximoComunDivisor(width, height);
   const numerator = width/base;
@@ -117,7 +109,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} itemPosition={'CENTER'}>
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {
-                    const margin = handlePosition(item)
                     return <ImagePop loading="lazy" decoding="async" src={item?.resized} alt={item.name}/>
                   }
                   else {
