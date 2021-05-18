@@ -113,7 +113,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
                   }
                   else {
                     return<div className="video-triger-pop">  
-                            <VideoPlayer src={item.accessUrl} type='' options={videoJsOptions}/>
+                            <VideoPlayer src={item.accessUrl} type='' options={videoJsOptions} />
                           </div>
                   }
                 })}
