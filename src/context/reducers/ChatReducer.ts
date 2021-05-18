@@ -61,9 +61,20 @@ const ACTIONS_REDUCERS = {
       currentChat: []
     }
   },
-  [ACTIONS.CHANGE_USER_STATUS]: (state: ChatState, action: ChatAction) => ({
-    ...state,
-  }),
+  [ACTIONS.CHANGE_USER_STATUS]: (state: ChatState, action: ChatAction) => {
+    const users = state.users.map((u) => {
+      if(u.userId === action.payload as number){
+        return {...u, connectionId: 'online'}
+      }
+      return {...u}
+    })
+
+    return {
+      ...state,
+      loadingUsers: false,
+      users,
+    }
+  },
   [ACTIONS.SET_CURRENT_CHAT]: (state: ChatState, action: ChatAction) => ({
     ...state,
     loadingMessages: false,

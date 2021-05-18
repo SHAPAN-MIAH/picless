@@ -63,7 +63,7 @@ const sendMessage = async (message: MessageType): Promise<any> => {
   return fetch(url, requestOptions)
 }
 
-const notifyConnected = async (userId: string): Promise<any> => {
+const notifyConnected = async (userId: number): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
   const requestOptions: RequestInit = {

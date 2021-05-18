@@ -3,6 +3,7 @@ import { UserStatusMessagesType } from 'types/MessagesType'
 import UserAvatar from 'components/UserAvatar'
 import Loader from 'react-loader-spinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import useChatMessages from 'hooks/useChatMessages'
 
 type HeaderProps = {
   user: UserStatusMessagesType
@@ -11,6 +12,7 @@ type HeaderProps = {
 
 const Header: FunctionComponent<HeaderProps> = (props) => {
   const { user, loading } = props
+  const { getMessageHistory } = useChatMessages()
 
   const status = user.connectionId ? 'online' : 'offline'
 
@@ -21,7 +23,13 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
         <div className="chat-widget-settings">
           {loading && <Loader type="TailSpin" color="#615dfa" height={25} width={25} visible />}
           {!loading && (
-            <div onClick={() => {}} title="Reload">
+            <div
+              onClick={() => {
+                getMessageHistory(user.userId)
+              }}
+              title="Reload"
+              style={{ cursor: 'pointer' }}
+            >
               <FontAwesomeIcon color="#8f91ac" icon="redo" />
             </div>
           )}
