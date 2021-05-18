@@ -78,6 +78,15 @@ const useChatMessages = () => {
     dispatch({ type: ACTIONS.INSERT_MESSAGE_TO_CURRENT_CHAT, payload: msg })
   }
 
+  const changeUserStatus = (userId: number) => {
+    dispatch({ type: ACTIONS.CHANGE_USER_STATUS, payload: userId })
+    
+  }
+
+  const notifyConnected = () => {
+    ChatService.notifyConnected(user.id || -1)
+  }
+
   const findSelectedUser = (user: UserStatusMessagesType) => user.selected
   const userSelected = state.users.find(findSelectedUser)
 
@@ -90,6 +99,8 @@ const useChatMessages = () => {
     getUserList,
     getMessageHistory,
     receiveMessage,
+    notifyConnected,
+    changeUserStatus,
     sendMessage: sendMsg,
     selectUser,
   }

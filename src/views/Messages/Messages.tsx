@@ -95,7 +95,7 @@ const Messages: FunctionComponent<{}> = () => {
     }
 
     const notifyOnline = () => {
-      ChatService.notifyConnected(userId)
+      ChatService.notifyConnected(Number(userId))
     }
 
     return () => {
