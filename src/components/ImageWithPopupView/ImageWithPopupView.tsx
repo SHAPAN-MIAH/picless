@@ -18,24 +18,22 @@ const StyledPopup = styled(Popup)`
 `
 
 const ImageImg = styled.img`
-  margin: calc(5%) 0 0 0;
 `
 
 const ImagePop = styled.img`
   max-height: 99vh;
+  max-width: 100%;
 `
 
 const CloseButtonDiv = styled.div`
   position: absolute;
   width: 35px;
   height: 35px;
-  background-color: #615dfa;
   margin-left: calc(100% - 30px);
-  top: 0;
-  margin-top: -10px;
+  bottom: 0;
   border-radius: 5px;
   text-align: center;
-  padding-top: 5px;
+  padding-top: 10px;
   cursor: pointer;
   z-index: 9;
 `
@@ -68,7 +66,19 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
   const maximoComunDivisor = (width:number, height:number): any => {
     if (height === 0) return width;
     return maximoComunDivisor(height, width % height);
-};
+  };
+
+  const handlePosition = (item: any) =>  {
+    let maxHeigth = 0;
+    medios.forEach(el => {
+      if(el.height && el.height > maxHeigth) {
+        maxHeigth = el.height;
+      }
+    })
+    const margin = Math.round((100-(item.height*100)/maxHeigth)/2);
+    return margin;
+
+  }
 
   const base = maximoComunDivisor(width, height);
   const numerator = width/base;
@@ -107,7 +117,8 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} itemPosition={'CENTER'}>
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {
-                    return <ImagePop loading="lazy" decoding="async" src={item?.resized} alt={item.name} />
+                    const margin = handlePosition(item)
+                    return <ImagePop loading="lazy" decoding="async" src={item?.resized} alt={item.name}/>
                   }
                   else {
                     return<div className="video-triger-pop">  
