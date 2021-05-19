@@ -22,8 +22,8 @@ const ImageImg = styled.img`
 `
 
 const ImagePop = styled.img`
-  max-height: 99vh;
-  max-width: 100%;
+  max-height: 98vh;
+  max-width: 95%;
 `
 
 const CloseButtonDiv = styled.div`
