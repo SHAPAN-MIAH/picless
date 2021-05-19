@@ -12,7 +12,6 @@ import useRouter from '../../../../hooks/commons/useRouter'
 import useUser from '../../../../hooks/useUser'
 import MenuRoutes from '../../../../routes/MenuRoutes'
 import { UserType } from '../../../../types/UserType'
-import { Tabs } from '../../../../hooks/useProfile'
 
 const AvatarContainerDiv = styled.div`
   position: relative;

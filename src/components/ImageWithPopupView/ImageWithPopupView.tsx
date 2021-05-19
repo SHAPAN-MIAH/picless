@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType} from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel';
 import VideoPlayer from '../../assets/js/VideoPlayer';
+import * as Utils from '../../utils/Functions'
 
 import './imageWithPopupView.css'
 
@@ -42,10 +43,11 @@ const CloseButtonDiv = styled.div`
 }
 `
 
-const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceType[] }> = (props) => {
-  const { image, medios } = props
+const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceType[], isDisabled:boolean }> = (props) => {
 
-  const [isDisabled, setDisabled] = useState(false)
+  const { image, medios, isDisabled } = props
+
+
   let imgIndex = 0;
   const handleImgIndex = (img: SourceType) => {
     imgIndex = medios.indexOf(img);
@@ -83,11 +85,9 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
           {
             handleImgIndex(image)
             if(!image.accessUrl) {
-              setDisabled(false)
               return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
             }
             else {
-              setDisabled(true)
             return (
               <div className="video-triger-pop"> 
                   <VideoPlayer src={image.accessUrl} type='' options={videoJsOptions} aspect={appearance}  />
@@ -106,13 +106,13 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
               >
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
-              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} itemPosition={'CENTER'}>
+              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false}>
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {
-                    return <ImagePop loading="lazy" decoding="async" src={item?.resized} alt={item.name}/>
+                    return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.resized} alt={item.name}/>
                   }
                   else {
-                    return<div className="video-triger-pop">  
+                    return<div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">  
                             <VideoPlayer src={item.accessUrl} type='' options={videoJsOptions} />
                           </div>
                   }
