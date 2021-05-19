@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import Carousel from 'react-elastic-carousel'
 import styled from 'styled-components'
 import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
@@ -20,12 +20,12 @@ const ContainerBlockedContentDiv = styled.div`
 const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((props) => {
   const { blocked = false, amount, allData } = props
 
+  let media: any = [];
   let isDisabled = false;
 
   const listImages: SourceType[] = allData.images || []
   const listVideos: SourceType[] = allData.videos || []
 
-  let media: any = [];
   listImages.map((images: SourceType) => {
     media.push(images)
   })
@@ -52,7 +52,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
               <ImageWithPopupView image={item}  medios={media} isDisabled={isDisabled}/>
             </div>
           ))}
-        </Carousel>
+        </Carousel>     
       </div>
       {blocked && (
         <ContainerBlockedContentDiv>

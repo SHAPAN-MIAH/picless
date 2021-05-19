@@ -1,18 +1,8 @@
 import React, { FunctionComponent } from 'react'
-import ReactHlsPlayer from 'react-hls-player/dist'
-import styled from 'styled-components'
 import { SourceType } from '../../../../types/PostType.d'
 import VideoPlayer from '../../../../assets/js/VideoPlayer';
 import { isMobileOnly } from 'react-device-detect'
-
-const VideoComponent = styled(ReactHlsPlayer)`
-  max-height: 670px;
-`
-
-const VideoContainer = styled.div`
-max-height: 78vh;
-  background-color: #212529;
-`
+import * as Utils from '../../../../utils/Functions'
 
 
 const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((props) => {
@@ -34,7 +24,7 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((pr
      {sources &&
         sources.map((video: any) => {
           return (
-            <div data-vjs-player>
+            <div key={Utils.simpleKeyGenerator(5)} data-vjs-player>
               <VideoPlayer src={video.accessUrl} type='' options={options} aspect={aspect} />
             </div>
           )

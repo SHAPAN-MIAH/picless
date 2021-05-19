@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType} from '../../types/PostType.d'
