@@ -58,6 +58,10 @@ const useProfile = (props?: { disableMount: boolean }) => {
             setProvider(data.user)
 
             setSubscription(data.subscription)
+
+            setPosts([])
+            setPhotos([])
+            setVideos([])
           }
         })
         .catch((err) => {
