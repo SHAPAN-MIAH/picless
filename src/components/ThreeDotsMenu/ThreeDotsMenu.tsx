@@ -23,7 +23,7 @@ const ThreeDotsMenu: FunctionComponent<ThreeDotsMenuProps> = React.memo((props) 
           }
           position="bottom left"
           on="click"
-          closeOnDocumentClick
+          closeOnDocumentClick={false}
           mouseLeaveDelay={300}
           mouseEnterDelay={0}
           contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '-100px' }}

@@ -33,12 +33,6 @@ type FormValues = {
   privacity: PrivacityType
 }
 
-const PrivacySelector = styled.select`
-  width: 110px;
-  border-radius: 5px;
-  padding: 1px 1px 1px 10px;
-`
-
 const EditPost: FunctionComponent<EditPostProps> = (props) => {
   const { post, onClose } = props
   const user = post.users

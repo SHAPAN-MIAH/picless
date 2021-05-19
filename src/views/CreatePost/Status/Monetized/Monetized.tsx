@@ -51,6 +51,7 @@ const Monetized: FunctionComponent<MonetizedProps> = (props) => {
         }
         position="bottom center"
         closeOnDocumentClick
+        contentStyle={{ zIndex: 9999 }}
       >
         {(close: any) => {
           return (
