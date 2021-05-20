@@ -16,7 +16,6 @@ import Home from '../views/Home/Home'
 import SinglePost from '../views/Home/SinglePost'
 import LayoutMain from '../views/LayoutMain/LayoutMain'
 import Authorization from '../views/Authorization/Authorization'
-import Messages from '../views/Messages/Messages'
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import TestView from '../views/TestView/TestView'
 import img from '../views/TestView/Img'
@@ -76,8 +75,6 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
 
               <ProtectedRoute {...routerProps} path="/user/home" component={Home} />
-              {/* <ProtectedRoute {...routerProps} exact path="/user/messages/:userid" component={Messages} />
-              <ProtectedRoute {...routerProps} exact path="/user/messages" component={Messages} /> */}
 
               <ProtectedRoute {...routerProps} exact path={['/user/chat', '/user/chat/:userid']} component={ChatMain} />
 

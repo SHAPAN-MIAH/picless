@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Amplify from '@aws-amplify/auth'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/lib/integration/react'
+// import { Provider } from 'react-redux'
+// import { PersistGate } from 'redux-persist/lib/integration/react'
 
-import { store, persistor } from './redux/store'
+// import { store, persistor } from './redux/store'
 import awsconfig from './aws-exports'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -18,11 +18,7 @@ Amplify.configure(awsconfig)
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={<div>Loading ...</div>} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 )

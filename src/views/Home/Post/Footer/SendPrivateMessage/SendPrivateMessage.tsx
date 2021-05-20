@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
 import TextInput from 'components/Common/TextInput'
-import useChat, { UserStatusMessagesOptionalType } from 'hooks/useChat'
+import useChat, { UserStatusMessagesOptionalType } from 'hooks/useChatMessages'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
