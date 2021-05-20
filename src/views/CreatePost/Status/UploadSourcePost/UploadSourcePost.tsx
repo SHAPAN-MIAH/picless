@@ -117,6 +117,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               const source: SourceType = { name: sourceName, pathName: data.path }
 
               if (imageList && fileType === 'IMAGE') {
+                source.index = index
                 source.width = file.reference?.current?.width
                 source.height = file.reference?.current?.height
 

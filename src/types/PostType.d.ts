@@ -50,6 +50,7 @@ export interface SourceType {
   pathName?: string
   postId?: number
   iLikeIt?: boolean
+  index?: number
   resized?: string
   registerDate?: string
   thumbnail?: string
