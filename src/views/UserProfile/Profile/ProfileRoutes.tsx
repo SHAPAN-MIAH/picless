@@ -37,7 +37,6 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
               <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGalleryTab} />
               <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGalleryTab} />
               <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={AboutTab} />
-
               <Route
                 path={`${match.path}/`}
                 render={() => {

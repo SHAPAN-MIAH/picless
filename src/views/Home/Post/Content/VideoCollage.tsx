@@ -19,13 +19,29 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((pr
       'pictureInPictureToggle': false
      },
   }
+
+  const width = 525;
+  const height = 657
+
+
+  const maximoComunDivisor = (width:number, height:number): any => {
+    if (height === 0) return width;
+    return maximoComunDivisor(height, width % height);
+  };
+
+  const base = maximoComunDivisor(width, height);
+  const numerator = Math.round(width/base);
+  const denominator = Math.round(height/base);
+  const appearance = `${numerator}:${denominator}` != 'NaN:NaN' ? `${numerator}:${denominator}` : '4:5';
+
+
   return (
     <>
      {sources &&
         sources.map((video: any) => {
           return (
             <div key={Utils.simpleKeyGenerator(5)} data-vjs-player>
-              <VideoPlayer src={video.accessUrl} type='' options={options} aspect={aspect} />
+              <VideoPlayer src={video.accessUrl} type='' options={options} aspect={appearance} />
             </div>
           )
         })}

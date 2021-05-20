@@ -69,7 +69,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                         <>
                           <ContainerLink
                             key={item.id}
-                            to={`/u/${provider.userName}/post/${item.postId}`}
+                            to={`/u/${provider.userName}/posts/${item.postId}`}
                             className="album-preview"
                           >
                             <ImageContainerDiv>

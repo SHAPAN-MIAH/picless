@@ -29,7 +29,7 @@ const ImagePop = styled.img`
 const CloseButtonDiv = styled.div`
     position: absolute;
     bottom: 0;
-    margin-left: calc(100% - 53%);
+    margin-left: calc(100% - 10%);
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0px 0px #333;
@@ -65,8 +65,8 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
      },
   };
 
-  const width = medios[0].width ? medios[0].width : 0
-  const height = medios[0].height ? medios[0].height : 0;
+  const width = medios[0]?.width ? medios[0].width : 0
+  const height = medios[0]?.height ? medios[0].height : 0;
 
 
   const maximoComunDivisor = (width:number, height:number): any => {
@@ -85,7 +85,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
           {
             handleImgIndex(image)
             if(!image.accessUrl) {
-              return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
+              return <ImageImg loading="lazy" decoding="async" src={image?.original} alt={image.name}/>
             }
             else {
             return (
