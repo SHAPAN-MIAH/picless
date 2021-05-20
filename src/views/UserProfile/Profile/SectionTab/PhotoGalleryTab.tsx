@@ -73,7 +73,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             className="album-preview"
                           >
                             <ImageContainerDiv>
-                              <ImageImg src='https://d3hhpxkzty0y9v.cloudfront.net/eyJidWNrZXQiOiJzMy1pbWFnZS1kZXYiLCJrZXkiOiJ4eHguanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6OTAwLCJoZWlnaHQiOjkwMCwiZml0IjoiY292ZXIifSwiYmx1ciI6MzUsIm92ZXJsYXlXaXRoIjp7ImJ1Y2tldCI6InMzLWltYWdlLWRldiIsImtleSI6ImNsb3NlZF9uZXcucG5nIiwiYWxwaGEiOjQwLCJvcHRpb25zIjp7InRvcCI6MjE0LCJsZWZ0IjoyNDJ9fX19' alt={item.name} />
+                              <ImageImg src={item.thumbnail} alt={item.name} />
                             </ImageContainerDiv>
                             {!isMobile &&
                               <div className="album-preview-info" style={{ top: '-284px' }}>
