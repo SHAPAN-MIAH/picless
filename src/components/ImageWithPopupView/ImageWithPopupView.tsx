@@ -22,16 +22,16 @@ const ImageImg = styled.img`
 `
 
 const ImagePop = styled.img`
-  max-height: 98vh;
-  max-width: 95%;
+  max-height: 100vh;
+  max-width: 99%;
 `
 
 const CloseButtonDiv = styled.div`
     position: absolute;
     bottom: 0;
     margin-left: calc(100% - 53%);
-    font-size: 18px;
-    background-color: rgba(0, 0, 0, 0.05);
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0px 0px #333;
     color: rgba(245, 245, 245, 1);
     height: 30px;
