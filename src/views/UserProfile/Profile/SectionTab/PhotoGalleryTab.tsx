@@ -30,6 +30,7 @@ const StyledPopup = styled(Popup)`
     width: 100%;
     background-color: rgba(0, 0, 0, 0);
     padding: 0px;
+    margin: 0!important;
     border: 0px;
   }
 `
@@ -41,7 +42,7 @@ const ImagePop = styled.img`
 
 const CloseButtonDiv = styled.div`
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     margin-left: calc(100% - 10%);
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.3);
@@ -123,12 +124,12 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             {(close: any) => {
                               return (
                                 <>
-                                <CloseButtonDiv
-                                    onClick={() => {
-                                      close()
-                                    }}
-                                  >
-                                    <FontAwesomeIcon icon="times" color="white" size="1x" />
+                                  <CloseButtonDiv
+                                      onClick={() => {
+                                        close()
+                                      }}
+                                    >
+                                     <FontAwesomeIcon icon="times" color="white" size="1x" />
                                   </CloseButtonDiv>
                                   <Carousel 
                                     isRTL={false}
@@ -141,7 +142,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                                     }}
                                     >
                                     {photos.map((item) => {
-                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.original} alt={item.name}/>
+                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original} alt={item.name}/>
                                     })}
                                   </Carousel>
                                 </>

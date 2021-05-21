@@ -17,7 +17,6 @@ const StyledPopup = styled(Popup)`
     border: 0px;
   }
 `
-
 const ImageImg = styled.img`
 `
 

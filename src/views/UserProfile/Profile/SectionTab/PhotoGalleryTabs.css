@@ -23,3 +23,7 @@
   .album-preview {
     max-height: 284px!important;
   }
+
+  .rec .rec-slider-container {
+    height: 100vh!important;
+  }
