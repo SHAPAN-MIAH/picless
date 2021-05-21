@@ -135,7 +135,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                                     initialActiveIndex={imgIndex}
                                     pagination={false}
                                     onNextEnd={(currentItem) => {
-                                      if(currentItem.index + 3 >= photos.length){
+                                      if(currentItem.index + 4 >= photos.length){
                                           getPhotosList()
                                         }
                                     }}
