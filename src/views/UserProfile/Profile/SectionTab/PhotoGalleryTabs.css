@@ -19,3 +19,7 @@
         padding: 0%!important;
     }
   }
+
+  .album-preview {
+    max-height: 284px!important;
+  }

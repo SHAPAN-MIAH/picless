@@ -3,8 +3,8 @@ import React, { FunctionComponent } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType} from '../../types/PostType.d'
-import Carousel from 'react-elastic-carousel';
-import VideoPlayer from '../../assets/js/VideoPlayer';
+import Carousel from 'react-elastic-carousel'
+import VideoPlayer from '../../assets/js/VideoPlayer'
 import * as Utils from '../../utils/Functions'
 
 import './imageWithPopupView.css'
