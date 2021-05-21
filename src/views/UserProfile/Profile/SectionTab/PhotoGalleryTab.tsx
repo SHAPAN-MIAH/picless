@@ -74,6 +74,8 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     })
   }, [getPhotos, setPage, page])
 
+  let imgIndex = 0;
+
   useEffect(() => {
     if (provider && photos && photos.length === 0) {
       getPhotosList()
@@ -81,10 +83,11 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     }
+    imgIndex = 0
   }, [])
 
 
-  let imgIndex = 0;
+  
   const handleImgIndex = (img: any) => {
     imgIndex = photos.indexOf(img);
   }
@@ -140,7 +143,6 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                                           getPhotosList()
                                         }
                                     }}
-                                    className='carousel-father'
                                     >
                                     {photos.map((item) => {
                                         return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original || 'https://i.pinimg.com/originals/37/ba/98/37ba9848d777fa3f790922f5926c898f.jpg'} alt={item.name}/>
