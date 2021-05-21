@@ -85,7 +85,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
           {
             handleImgIndex(image)
             if(!image.accessUrl) {
-              return <ImageImg loading="lazy" decoding="async" src={image?.original} alt={image.name}/>
+              return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
             }
             else {
             return (
@@ -109,7 +109,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false}>
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {
-                    return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.resized} alt={item.name}/>
+                    return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.original} alt={item.name}/>
                   }
                   else {
                     return<div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">  

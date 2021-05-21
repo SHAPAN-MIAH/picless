@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import useProfile from '../../../../hooks/useProfile'
@@ -15,9 +14,6 @@ import './PhotoGalleryTabs.css'
 
 const noPhotos = 'Nothing to show'
 
-const ContainerLink = styled(Link)`
-  height: 284px !important;
-`
 
 const ImageContainerDiv = styled.div`
   width: 100%;
@@ -134,9 +130,18 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                                   >
                                     <FontAwesomeIcon icon="times" color="white" size="1x" />
                                   </CloseButtonDiv>
-                                  <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false}>
+                                  <Carousel 
+                                    isRTL={false}
+                                    initialActiveIndex={imgIndex}
+                                    pagination={false}
+                                    onNextEnd={(currentItem) => {
+                                      if(currentItem.index + 3 >= photos.length){
+                                          getPhotosList()
+                                        }
+                                    }}
+                                    >
                                     {photos.map((item) => {
-                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.resized} alt={item.name}/>
+                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.original} alt={item.name}/>
                                     })}
                                   </Carousel>
                                 </>
