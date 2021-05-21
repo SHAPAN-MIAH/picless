@@ -42,8 +42,8 @@ const ImagePop = styled.img`
 
 const CloseButtonDiv = styled.div`
     position: absolute;
-    bottom: 0px;
-    margin-left: calc(100% - 10%);
+    bottom: 80px;
+    margin-left: calc(100% - 80px);
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0px 0px #333;
@@ -140,9 +140,10 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                                           getPhotosList()
                                         }
                                     }}
+                                    className='carousel-father'
                                     >
                                     {photos.map((item) => {
-                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original} alt={item.name}/>
+                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original || 'https://i.pinimg.com/originals/37/ba/98/37ba9848d777fa3f790922f5926c898f.jpg'} alt={item.name}/>
                                     })}
                                   </Carousel>
                                 </>

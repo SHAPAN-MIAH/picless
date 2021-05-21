@@ -41,6 +41,7 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
         <InfiniteScroll dataLength={posts.length} next={getPostList} hasMore loader={LoaderDiv}>
           {posts.map((item) => {
             return (
+              
               <div key={simpleKeyGenerator(5)} style={{ maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
                 <Post data={item} />
               </div>
