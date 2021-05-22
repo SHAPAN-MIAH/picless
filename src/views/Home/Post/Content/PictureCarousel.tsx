@@ -33,6 +33,8 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
     media.push(videos)
   })
 
+  const page = media.length > 1 ? true: false; 
+
   const handleDisable = (item: SourceType) => {
     if(!item.accessUrl) {
       isDisabled = false;
@@ -45,7 +47,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
   return (
     <>
       <div className={styles.imageContainer}>
-        <Carousel isRTL={false}>
+        <Carousel isRTL={false} pagination={page}>
           {media.map((item: SourceType) => (
             <div key={Utils.simpleKeyGenerator(5)}>
               {handleDisable(item)}
