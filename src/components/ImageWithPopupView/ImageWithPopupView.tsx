@@ -18,7 +18,7 @@ const StyledPopup = styled(Popup)`
   }
 `
 const ImageImg = styled.img`
-  margin-bottom: 20px
+  margin-bottom: 2px
 `
 
 const ImagePop = styled.img`

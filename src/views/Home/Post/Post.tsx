@@ -101,7 +101,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             {/* {data.tags && <TagList tags={data.tags || []} />} */}
 
             {data.postReactions && data.postReactions.length > 0 && (
-              <div className="content-actions" style={{ flexDirection: 'row-reverse' }}>
+              <div className="content-actions" style={{ flexDirection: 'row-reverse', marginTop: '10px', border: 'none', height: '30px'}}>
                 <div className="content-action">
                   <div className="meta-line">
                     {data.postReactions[0].quantity && data.postReactions[0].quantity > 1 ? (
