@@ -75,7 +75,6 @@
   width: inherit;
   height: fit-content;
   position: relative;
-  max-height: 670px !important;
 }
 
 .rec.rec-slider-container {

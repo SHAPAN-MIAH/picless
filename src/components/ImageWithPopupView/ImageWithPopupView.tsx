@@ -21,7 +21,7 @@ const ImageImg = styled.img`
 `
 
 const ImagePop = styled.img`
-  max-height: 100vh;
+  max-height: 100vh!important;
   max-width: 99%;
 `
 
@@ -76,7 +76,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
   const base = maximoComunDivisor(width, height);
   const numerator = Math.round(width/base);
   const denominator = Math.round(height/base);
-  const appearance = `${numerator}:${denominator}` != 'NaN:NaN' ? `${numerator}:${denominator}` : '4:5';
+  const appearance = `${numerator}:${denominator}` != 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9';
 
   return (
     <>
@@ -88,7 +88,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
             }
             else {
             return (
-              <div className="video-triger-pop"> 
+              <div className="video-triger-pop">
                   <VideoPlayer src={image.accessUrl} type='' options={videoJsOptions} aspect={appearance}  />
               </div>)
               }

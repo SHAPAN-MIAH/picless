@@ -19,12 +19,9 @@
     align-items: center;
 }
 
-.rec .rec-item-wrapper {
-}
-
 .video-triger-pop {
-    width: 70em;
-    margin-bottom: 40px;
+    width: 45em;
+    margin-bottom: 20px;
 }
 
 .rec.rec-carousel {
@@ -57,4 +54,12 @@
     .video-triger-pop {
         width: 17em;
     }
+}
+
+.rec .rec-slider-container {
+    height: 100vh!important;
+  }
+  
+.rec .rec-carousel {
+    max-height: 100vh!important;
 }

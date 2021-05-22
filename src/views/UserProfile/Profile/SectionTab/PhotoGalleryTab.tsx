@@ -74,8 +74,6 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     })
   }, [getPhotos, setPage, page])
 
-  let imgIndex = 0;
-
   useEffect(() => {
     if (provider && photos && photos.length === 0) {
       getPhotosList()
@@ -83,11 +81,10 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
         window.tpl.load(['dropdown'])
       }
     }
-    imgIndex = 0
   }, [])
 
 
-  
+  let imgIndex = 0;
   const handleImgIndex = (img: any) => {
     imgIndex = photos.indexOf(img);
   }

@@ -14,6 +14,8 @@
   margin-left: auto;
   margin-right: auto;
   max-width: 100%;
+  max-height: 670px;
+  object-fit: fill;
   cursor: pointer;
 }
 

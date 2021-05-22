@@ -35,7 +35,7 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
     <>
       <div>
         {posts && posts.length === 0 && (
-          <Alert alertType="PRIMARY" message="Nothing to show" style={{ width: '100%', textAlign: 'center' }} />
+          <Alert alertType="PRIMARY" message="Nothing to show" style={{ width: '100%', textAlign: 'center', overflow: 'unset!important' }} />
         )}
 
         <InfiniteScroll dataLength={posts.length} next={getPostList} hasMore loader={LoaderDiv}>
