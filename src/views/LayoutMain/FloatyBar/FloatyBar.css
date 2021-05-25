@@ -3,4 +3,10 @@
 .floaty-bar .action-list .action-list-item {
     padding: 0 25px!important;
 }
+.floaty-bar {
+    height: 40px!important;
+}
+.unread:after {
+    right: 25px!important;
+}
 }
