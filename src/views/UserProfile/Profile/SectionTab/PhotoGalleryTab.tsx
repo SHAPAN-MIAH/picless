@@ -68,6 +68,9 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
 
   const [page, setPage] = useState<number>(0)
 
+  const [values, setOpen] = useState({open: false, index: 0});
+  const closeModal = () => setOpen({...values, open: false});
+
   const getPhotosList = useCallback(() => {
     getPhotos(page).then(() => {
       setPage(page + 1)
@@ -87,6 +90,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   let imgIndex = 0;
   const handleImgIndex = (img: any) => {
     imgIndex = photos.indexOf(img);
+    setOpen({open: true, index: imgIndex})
   }
 
   return (
@@ -103,57 +107,46 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                   <div className="grid grid-3-3-3-3 centered grid-photos" style={{ overflow: 'hidden' }}>
                     {photos.map((item) => {
                       return (
-                        <>
-                          {<StyledPopup modal trigger={() => 
-                              {
-                                handleImgIndex(item)
-                                return (
-                                  <div className='album-preview' style={{ height: '284px !important;'}}>
-                                    <ImageContainerDiv>
-                                      <ImageImg src={item.thumbnail} alt={item.name} />
-                                    </ImageContainerDiv>
-                                    {!isMobile &&
-                                      <div className="album-preview-info" style={{ top: '-284px' }}>
-                                        <p className="album-preview-title">View post</p>
-                                        <p className="album-preview-text">{item.registerDate}</p>
-                                      </div>
-                                    }
-                                  </div>
-                                )
-                            }}>
-                            {(close: any) => {
-                              return (
-                                <>
-                                  <CloseButtonDiv
-                                      onClick={() => {
-                                        close()
-                                      }}
-                                    >
-                                     <FontAwesomeIcon icon="times" color="white" size="1x" />
-                                  </CloseButtonDiv>
-                                  <Carousel 
-                                    isRTL={false}
-                                    initialActiveIndex={imgIndex}
-                                    pagination={false}
-                                    onNextEnd={(currentItem) => {
-                                      if(currentItem.index + 4 >= photos.length){
-                                          getPhotosList()
-                                        }
-                                    }}
-                                    >
-                                    {photos.map((item) => {
-                                        return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original || 'https://i.pinimg.com/originals/37/ba/98/37ba9848d777fa3f790922f5926c898f.jpg'} alt={item.name}/>
-                                    })}
-                                  </Carousel>
-                                </>
-                              )
-                            }}
-                          </StyledPopup>}
-                        </>
+                        <div key={Utils.simpleKeyGenerator(5)} className='album-preview' style={{ height: '284px !important;'}} onClick={() => handleImgIndex(item)}>
+                          <ImageContainerDiv>
+                            <ImageImg src={item.thumbnail} alt={item.name} />
+                          </ImageContainerDiv>
+                          {!isMobile &&
+                            <div className="album-preview-info" style={{ top: '-284px' }}>
+                              <p className="album-preview-title">View post</p>
+                              <p className="album-preview-text">{item.registerDate}</p>
+                            </div>
+                          }
+                        </div>
                       )
                     })}
                   </div>
                 </InfiniteScroll>
+                {<StyledPopup modal open={values.open} onClose={closeModal}>
+                  <>
+                    <CloseButtonDiv
+                        onClick={() => {
+                          closeModal()
+                        }}
+                      >
+                        <FontAwesomeIcon icon="times" color="white" size="1x" />
+                    </CloseButtonDiv>
+                    <Carousel 
+                      isRTL={false}
+                      initialActiveIndex={values.index}
+                      pagination={false}
+                      onNextEnd={(currentItem) => {
+                        if(currentItem.index + 4 >= photos.length){
+                            getPhotosList()
+                          }
+                      }}
+                      >
+                      {photos.map((item) => {
+                          return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original || 'https://i.pinimg.com/originals/37/ba/98/37ba9848d777fa3f790922f5926c898f.jpg'} alt={item.name}/>
+                      })}
+                    </Carousel>
+                  </>
+                </StyledPopup>}
               </>
             )}
           </div>
