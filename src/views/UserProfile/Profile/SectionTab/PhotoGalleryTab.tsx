@@ -107,7 +107,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                   <div className="grid grid-3-3-3-3 centered grid-photos" style={{ overflow: 'hidden' }}>
                     {photos.map((item) => {
                       return (
-                        <div key={Utils.simpleKeyGenerator(5)} className='album-preview' style={{ height: '284px !important;'}} onClick={() => handleImgIndex(item)}>
+                        <div key={Utils.simpleKeyGenerator(5)} className='album-preview' onClick={() => handleImgIndex(item)}>
                           <ImageContainerDiv>
                             <ImageImg src={item.thumbnail} alt={item.name} />
                           </ImageContainerDiv>
