@@ -25,3 +25,5 @@ export const GetCountryName = (code: string): string => {
 
   return country?.name || ''
 }
+
+export const imgError = 'https://i.pinimg.com/originals/37/ba/98/37ba9848d777fa3f790922f5926c898f.jpg';

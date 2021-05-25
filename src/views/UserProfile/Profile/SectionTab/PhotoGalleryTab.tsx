@@ -109,7 +109,11 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                       return (
                         <div key={Utils.simpleKeyGenerator(5)} className='album-preview' onClick={() => handleImgIndex(item)}>
                           <ImageContainerDiv>
-                            <ImageImg src={item.thumbnail} alt={item.name} />
+                            <ImageImg 
+                              src={item.thumbnail}
+                              alt={item.name}
+                              onError={(e: any)=>{e.target.onerror = null; e.target.src=Utils.imgError}}
+                            />
                           </ImageContainerDiv>
                           {!isMobile &&
                             <div className="album-preview-info" style={{ top: '-284px' }}>
@@ -142,7 +146,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                       }}
                       >
                       {photos.map((item) => {
-                          return <ImagePop key={Utils.simpleKeyGenerator(5)} decoding="async" src={item?.original || 'https://i.pinimg.com/originals/37/ba/98/37ba9848d777fa3f790922f5926c898f.jpg'} alt={item.name}/>
+                          return <ImagePop
+                                    key={Utils.simpleKeyGenerator(5)}
+                                    decoding="async"
+                                    src={item?.original}
+                                    alt={item.name}
+                                    onError={(e: any)=>{e.target.onerror = null; e.target.src=Utils.imgError}}
+                                    />
                       })}
                     </Carousel>
                   </>
