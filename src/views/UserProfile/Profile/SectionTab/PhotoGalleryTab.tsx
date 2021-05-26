@@ -38,6 +38,7 @@ const StyledPopup = styled(Popup)`
 const ImagePop = styled.img`
   max-height: 100vh;
   max-width: 99%;
+  object-fit: contain;
 `
 
 const CloseButtonDiv = styled.div`

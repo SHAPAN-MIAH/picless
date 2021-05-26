@@ -24,22 +24,23 @@ const ImageImg = styled.img`
 const ImagePop = styled.img`
   max-height: 100vh!important;
   max-width: 99%;
+  object-fit: contain;
 `
 
 const CloseButtonDiv = styled.div`
-    position: absolute;
-    bottom: 0;
-    margin-left: calc(100% - 10%);
-    font-size: 20px;
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 0 0px 0px #333;
-    color: rgba(245, 245, 245, 1);
-    height: 30px;
-    min-width: 30px;
-    line-height: 30px;
-    z-index: 9;
-    border-radius: 50%;
-    text-align: center;
+  position: absolute;
+  bottom: 80px;
+  margin-left: calc(100% - 80px);
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0px 0px #333;
+  color: rgba(245, 245, 245, 1);
+  height: 30px;
+  min-width: 30px;
+  line-height: 30px;
+  z-index: 9;
+  border-radius: 50%;
+  text-align: center;
 }
 `
 
