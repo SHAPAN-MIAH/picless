@@ -18,16 +18,14 @@
     .widget-photos {
         padding: 0%!important;
     }
+    .rec .rec-carousel {
+        height: 100vh!important;
+    }
+    .class-up > div > div > div {
+        height: 100vh!important;
+    }
   }
 
   .album-preview {
     max-height: 284px!important;
-  }
-
-  .rec .rec-slider-container {
-    height: 100vh!important;
-  }
-  
-  .rec .rec-carousel {
-      max-height: 100vh!important;
   }

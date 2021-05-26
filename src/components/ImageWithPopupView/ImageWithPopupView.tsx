@@ -65,6 +65,8 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
      },
   };
 
+  console.log(medios)
+
   const width = medios[0]?.width ? medios[0].width : 0
   const height = medios[0]?.height ? medios[0].height : 0;
 

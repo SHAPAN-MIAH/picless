@@ -144,6 +144,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             getPhotosList()
                           }
                       }}
+                      className='class-up'
                       >
                       {photos.map((item) => {
                           return <ImagePop
