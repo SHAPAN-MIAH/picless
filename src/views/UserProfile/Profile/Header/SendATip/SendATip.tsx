@@ -54,21 +54,23 @@ const SendATip: FunctionComponent<SendATipProps> = (props) => {
     }
     toast.loading('Waiting...')
 
-    return UserService.sendATip(tip).then((data: { code: string; message: string }) => {
+    return UserService.sendATip(tip).then((data: { code: string; message: string; path: string }) => {
       switch (data.code) {
         case '0':
-          if (callback) {
-            callback('SUCCESS')
+          if (data.message === 'succeeded') {
+            if (callback) {
+              callback('SUCCESS')
+            }
+            if (onClose) onClose()
+            break
+          } else if (data.message === 'redirect') {
+            window.location.href = data.path
           }
-          if (onClose) onClose()
-          break
-        case '2':
+        case '1':
           if (callback) {
             callback('ERROR', data.message)
           }
 
-          if (data.message === 'Insufficient balance') setErrorMessage(data.message)
-          break
         default:
           if (callback) {
             callback('ERROR', data.message)
