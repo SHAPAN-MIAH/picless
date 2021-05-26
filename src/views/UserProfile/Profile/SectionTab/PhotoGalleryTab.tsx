@@ -70,7 +70,10 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
 
   const [values, setOpen] = useState({open: false, index: 0});
-  const closeModal = () => setOpen({...values, open: false});
+  const closeModal = () => {
+    document.body.style.overflow = 'auto';
+    setOpen({...values, open: false});
+  }
 
   const getPhotosList = useCallback(() => {
     getPhotos(page).then(() => {
@@ -92,6 +95,10 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const handleImgIndex = (img: any) => {
     imgIndex = photos.indexOf(img);
     setOpen({open: true, index: imgIndex})
+  }
+
+  const handleOpen = () => {
+    document.body.style.overflow = 'hidden';
   }
 
   return (
@@ -127,7 +134,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                     })}
                   </div>
                 </InfiniteScroll>
-                {<StyledPopup modal open={values.open} onClose={closeModal}>
+                {<StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
                   <>
                     <CloseButtonDiv
                         onClick={() => {
