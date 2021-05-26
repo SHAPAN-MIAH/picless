@@ -41,33 +41,9 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[]}> = React.memo((pr
     <>
      {sources &&
         sources.map((video: any) => {
-          let url = video.accessUrl
-          switch(video.id) {
-            case 29:
-              url = 'https://video-new.lup20.uk/gray/video.m3u8'
-            break;
-            case 30:
-              url = 'https://video-new.lup20.uk/black/video.m3u8'
-            break;
-            case 31:
-              url = 'https://video-new.lup20.uk/color/video.m3u8'
-            break;
-            case 32:
-              url = 'https://video-new.lup20.uk/color-transparent/video.m3u8'
-            break;
-            case 33:
-              url = 'https://video-new.lup20.uk/white/video.m3u8'
-            break;
-            case 34:
-              url = 'https://video-new.lup20.uk/color-white/video.m3u8'
-            break;
-            case 35:
-              url = 'https://video-new.lup20.uk/gray-white/video.m3u8'
-            break;
-          }
           return (
             <div key={Utils.simpleKeyGenerator(5)} data-vjs-player>
-              <VideoPlayer src={url} type='' options={options} aspect={appearance} />
+              <VideoPlayer src={video.accessUrl} type='' options={options} aspect={appearance} />
             </div>
           )
         })}

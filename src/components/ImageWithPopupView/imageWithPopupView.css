@@ -55,11 +55,3 @@
         width: 17em;
     }
 }
-
-.rec .rec-slider-container {
-    height: 100vh!important;
-  }
-  
-.rec .rec-carousel {
-    max-height: 100vh!important;
-}
