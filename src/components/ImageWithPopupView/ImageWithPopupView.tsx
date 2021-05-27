@@ -29,7 +29,7 @@ const ImagePop = styled.img`
 
 const CloseButtonDiv = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 50px;
   margin-left: calc(100% - 60px);
   font-size: 20px;
   background-color: rgba(0, 0, 0, 0.3);
