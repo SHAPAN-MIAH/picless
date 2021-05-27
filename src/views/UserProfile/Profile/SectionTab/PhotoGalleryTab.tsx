@@ -101,6 +101,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     document.body.style.overflow = 'hidden';
   }
 
+  const handleClick = (e: any) => {
+    if(e.target.tagName === 'DIV'){
+      closeModal()
+    }
+  }
+
+
   return (
     <>
       <div className="grid">
@@ -135,7 +142,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                   </div>
                 </InfiniteScroll>
                 {<StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
-                  <>
+                  <div onClick={(event) => handleClick(event)}>
                     <CloseButtonDiv
                         onClick={() => {
                           closeModal()
@@ -164,7 +171,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                                     />
                       })}
                     </Carousel>
-                  </>
+                  </div>
                 </StyledPopup>}
               </>
             )}

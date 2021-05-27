@@ -75,6 +75,13 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
     document.body.style.overflow = 'auto';
   }
 
+  const handleClick = (e: any) => {
+      if(e.target.tagName === 'DIV'){
+       return true;
+      }
+      return false;
+  }
+
   const width = medios[0]?.width ? medios[0].width : 0
   const height = medios[0]?.height ? medios[0].height : 0;
 
@@ -113,7 +120,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
         >
         {(close: any) => {
           return (
-            <>
+            <div onClick={(event) => {handleClick(event) === true && close()}}>
              <CloseButtonDiv
                 onClick={() => {
                   close()
@@ -121,7 +128,11 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
               >
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
-              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false}>
+              <Carousel 
+                isRTL={false}
+                initialActiveIndex={imgIndex}
+                pagination={false}
+              >
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {
                     return <ImagePop key={Utils.simpleKeyGenerator(5)} loading="lazy" decoding="async" src={item?.original} alt={item.name}/>
@@ -133,7 +144,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
                   }
                 })}
               </Carousel>
-            </>
+            </div>
           )
         }}
       </StyledPopup>
