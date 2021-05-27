@@ -17,6 +17,8 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
 
   const [liked, setLiked] = useState<boolean>(false)
 
+  const [save, setsaved] = useState<boolean>(false)
+
   const likedRef = useRef(-1)
 
   const { addReaction, removeReaction } = usePosts()
@@ -72,7 +74,7 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
         </div>
         <Popup
           modal
-          contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+          contentStyle={{ width: '330px', borderRadius: '5px', minWidth: ''}}
           position="center center"
           trigger={
             <div className="post-option">
@@ -80,7 +82,7 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
                 <use xlinkHref="#svg-comment" />
               </svg>
 
-              <p className="post-option-text">Send private message</p>
+              <p className="post-option-text">Message</p>
             </div>
           }
         >
@@ -93,16 +95,29 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
           position="center center"
           trigger={
             <div className="post-option">
-              <div className="post-option-icon">
-                <FontAwesomeIcon color="#adafca" icon="dollar-sign" />
-              </div>
-
-              <p className="post-option-text">Send a tip</p>
+              <svg className="post-option-icon icon-thumbs-up'" width={25} height={25} viewBox="0 0 24 24">
+                <path
+                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-8.8c-1.17-.24-2.06-.33-2.06-.87s.47-.57 1.17-.57a1.36 1.36 0 0 1 1 .48.53.53 0 0 0 .39.18H15a.24.24 0 0 0 .23-.25c0-.78-1-1.72-2.23-2V7.3a.29.29 0 0 0-.3-.3h-1.4a.29.29 0 0 0-.29.3v.82a2.57 2.57 0 0 0-2.2 2.26c0 3.13 4.52 2.07 4.52 3.22 0 .53-.52.59-1.41.59a1.47 1.47 0 0 1-1.16-.57.61.61 0 0 0-.44-.19h-1.4a.24.24 0 0 0-.22.24c0 1.11 1.12 1.9 2.31 2.21v.82a.29.29 0 0 0 .29.3h1.39a.29.29 0 0 0 .29-.3v-.78c1.28-.23 2.32-1 2.32-2.33s-.92-2.09-2.3-2.39z"
+                />
+              </svg>
+              <p className="post-option-text">Send tip</p>
             </div>
           }
         >
           {(close: any) => <SendATip user={user || {}} callback={handleCallback} onClose={close} />}
         </Popup>
+        <div className="post-option-wrap">
+          <div className="post-option" style={{width: '100px'}}>
+            <svg className={classNames('post-option-icon icon-thumbs-up', save ? styles.liked : '')}>
+              <use xlinkHref="#svg-pinned" />
+            </svg>
+              {save ? (
+                <p className={classNames('post-option-text', styles.liked)}>Saved!</p>
+              ) : (
+                <p className="post-option-text">Save</p>
+              )}
+          </div>
+        </div>
       </div>
     </>
   )
