@@ -29,8 +29,8 @@ const ImagePop = styled.img`
 
 const CloseButtonDiv = styled.div`
   position: absolute;
-  bottom: 80px;
-  margin-left: calc(100% - 80px);
+  bottom: 10px;
+  margin-left: calc(100% - 60px);
   font-size: 20px;
   background-color: rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 0px 0px #333;
@@ -66,7 +66,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
      },
   };
 
-  console.log(medios)
+
+  const handleOpen = () => {
+    document.body.style.overflow = 'hidden';
+  }
+
+  const handleClose = () => {
+    document.body.style.overflow = 'auto';
+  }
 
   const width = medios[0]?.width ? medios[0].width : 0
   const height = medios[0]?.height ? medios[0].height : 0;
@@ -84,21 +91,26 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
 
   return (
     <>
-      <StyledPopup modal trigger={() => 
-          {
-            handleImgIndex(image)
-            if(!image.accessUrl) {
-              return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
-            }
-            else {
-            return (
-              <div className="video-triger-pop">
-                  <VideoPlayer src={image.accessUrl} type='' options={videoJsOptions} aspect={appearance}  />
-              </div>)
+      <StyledPopup modal 
+        onClose={handleClose} 
+        onOpen={handleOpen} 
+        trigger={() => 
+            {
+              handleImgIndex(image)
+              if(!image.accessUrl) {
+                return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
               }
-            }
+              else {
+              return (
+                <div className="video-triger-pop">
+                    <VideoPlayer src={image.accessUrl} type='' options={videoJsOptions} aspect={appearance}  />
+                </div>)
+                }
+              }
 
-        } disabled={isDisabled}>
+          }
+          disabled={isDisabled}
+        >
         {(close: any) => {
           return (
             <>
