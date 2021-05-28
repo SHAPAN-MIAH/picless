@@ -57,6 +57,10 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
     }
   }, [])
 
+  const hanleSaved = () => {
+    setsaved(!save)
+  }
+
   return (
     <>
       <div className="post-options">
@@ -107,7 +111,7 @@ const FooterPost: FunctionComponent<FooterPostProps> = React.memo((props) => {
           {(close: any) => <SendATip user={user || {}} callback={handleCallback} onClose={close} />}
         </Popup>
         <div className="post-option-wrap">
-          <div className="post-option" style={{width: '100px'}}>
+          <div className="post-option" onClick={hanleSaved} style={{width: '100px'}}>
             <svg className={classNames('post-option-icon icon-thumbs-up', save ? styles.liked : '')}>
               <use xlinkHref="#svg-pinned" />
             </svg>
