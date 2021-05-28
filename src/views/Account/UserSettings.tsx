@@ -103,13 +103,6 @@ const UserSettings: FunctionComponent<{}> = () => {
         <div className="grid-column"> </div>
 
         <div className="account-hub-content">
-          <div className="section-header">
-            <div className="section-header-info">
-              <p className="section-pretitle">{t('settings.title')}</p>
-
-              <h2 className="section-title">{t('settings.subTitle')}</h2>
-            </div>
-          </div>
 
           <div className="grid-column">
             {loading && (
@@ -121,7 +114,7 @@ const UserSettings: FunctionComponent<{}> = () => {
             )}
 
             <form className={classNames('form', loading ? 'hidden' : '')} onSubmit={handleSubmit(onSubmit)}>
-              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
                 <p className="widget-box-title">{t('settings.generalTitle')}</p>
 
                 <div className="widget-box-content">
@@ -259,7 +252,7 @@ const UserSettings: FunctionComponent<{}> = () => {
                 </div>
               </div>
 
-              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px' }}>
+              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
                 <p className="widget-box-title">{t('settings.privacyTitle')}</p>
 
                 <div className="widget-box-content">
