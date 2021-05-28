@@ -196,7 +196,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
         </form>
       </div>
 
-      <div className="quick-post-footer" style={{ position: 'relative', backgroundColor: '#fff', padding: '0 8px' }}>
+      <div className="quick-post-footer" style={{ position: 'relative', backgroundColor: '#fff', padding: '0 15px' }}>
         <div className={classNames('quick-post-footer-actions', isMobile ? styles.quickPostFooterActionsLeft : '')}>
           <div
             className="quick-post-footer-action"
