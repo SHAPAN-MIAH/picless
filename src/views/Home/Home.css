@@ -3,4 +3,17 @@
         margin-top: -60px!important;
         padding: 0 0 200px!important;
     }
+    .grid-settings {
+        padding: 0 0 30px!important;
+    }
+    .form-row+.form-row {
+        margin-top: 5px!important;
+    }
+}
+
+.grid-settings {
+    padding: 0 0 30px!important;
+}
+.form-row+.form-row {
+    margin-top: 20px!important;
 }

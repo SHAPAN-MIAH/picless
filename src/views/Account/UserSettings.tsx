@@ -98,7 +98,7 @@ const UserSettings: FunctionComponent<{}> = () => {
   }
 
   return (
-    <div className="content-grid" style={{ maxWidth: '800px' }}>
+    <div className="content-grid grid-settings" style={{ maxWidth: '800px'}}>
       <div className="grid grid-2-8-2">
         <div className="grid-column"> </div>
 
