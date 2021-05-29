@@ -32,6 +32,14 @@
     min-height: 0px!important
 }
 
+.imgPop-zoom {
+    transform: scale(1.8);
+}
+
+.carousel-phater > div > div > div > div > div > div {
+    height: 98vh!important;
+}
+
 @media (max-width: 1366px) and (orientation: landscape) {
     .video-triger-pop {
         width: 30em;
