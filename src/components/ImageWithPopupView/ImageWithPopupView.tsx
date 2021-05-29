@@ -132,7 +132,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType, medios: SourceT
                 isRTL={false}
                 initialActiveIndex={imgIndex}
                 pagination={false}
-                className='carousel-phater'
               >
                 {medios.map((item: SourceType) => {
                   if(!item.accessUrl) {

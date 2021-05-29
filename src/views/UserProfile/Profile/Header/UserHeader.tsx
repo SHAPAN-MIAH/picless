@@ -89,7 +89,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                     position="center center"
                     trigger={
                       <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
-                        <p className="profile-header-info-action button primary">
+                        <p className="profile-header-info-action button primary custom-btn">
                           Suscribe
                           <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
                         </p>
