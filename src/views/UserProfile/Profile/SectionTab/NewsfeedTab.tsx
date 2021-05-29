@@ -35,14 +35,17 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
     <>
       <div>
         {posts && posts.length === 0 && (
-          <Alert alertType="PRIMARY" message="Nothing to show" style={{ width: '100%', textAlign: 'center', overflow: 'unset!important' }} />
+          <Alert
+            alertType="PRIMARY"
+            message="Nothing to show"
+            style={{ width: '100%', textAlign: 'center', overflow: 'unset!important' }}
+          />
         )}
 
         <InfiniteScroll dataLength={posts.length} next={getPostList} hasMore loader={LoaderDiv}>
           {posts.map((item) => {
             return (
-              
-              <div key={simpleKeyGenerator(5)} style={{ maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+              <div key={item.id} style={{ maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto' }}>
                 <Post data={item} />
               </div>
             )

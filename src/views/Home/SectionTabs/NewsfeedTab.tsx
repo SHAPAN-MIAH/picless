@@ -43,7 +43,7 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
           >
             {posts.length === 0 && <EmptyPost message={notPostsMessage} footer={notPostsFooterMessage} />}
             {posts.map((item) => {
-              return <Post key={simpleKeyGenerator(5)} data={item} />
+              return <Post key={item.id} data={item} />
             })}
           </InfiniteScroll>
         )}
