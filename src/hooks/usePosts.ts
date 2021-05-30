@@ -141,17 +141,26 @@ const usePosts = () => {
     })
   }, [])
 
-  const unblockPost = (postId: number) => {
-    PaymentService.unblockContent(postId)
-      .then((data: { code: number; message: string }) => {
+
+
+  const unlockPost = (postId: number) => {
+    return new Promise<{action: string, redirect?: string}>((resolve, reject) => {
+    
+      PaymentService.unlockContent(postId)
+      .then((data: { code: number; message: string, path: string }) => {
         if (data.code !== 0) {
           throw new Error(data.message)
         }
+
+        resolve({action: data.message, redirect: data.path})
       })
       .catch((err) => {
         toast.error('Error unblocking post')
         console.error(err.message)
+
+        reject()
       })
+    })
   }
 
   return {
@@ -161,6 +170,7 @@ const usePosts = () => {
     deletePost,
     addReaction,
     removeReaction,
+    unlockPost
   }
 }
 

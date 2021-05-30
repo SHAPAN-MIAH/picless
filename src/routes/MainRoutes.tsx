@@ -72,6 +72,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path="/wallet/movements" component={Movements} />
 
               <ProtectedRoute {...routerProps} path="/payment/stripe/wallet" component={PaymentCallback} />
+              <ProtectedRoute {...routerProps} path="/payment/stripe/unblock" component={PaymentCallback} />
               <ProtectedRoute {...routerProps} path="/payment/stripe/subscription" component={PaymentCallback} />
 
               <ProtectedRoute {...routerProps} path="/user/home" component={Home} />

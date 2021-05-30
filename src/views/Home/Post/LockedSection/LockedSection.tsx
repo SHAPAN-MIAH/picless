@@ -1,38 +1,45 @@
 import ButtonWithLoader from 'components/Common/ButtonWithLoader'
 import StyledPopup from 'components/StyledPopup/StyledPopup'
+import usePosts from 'hooks/usePosts'
 import React, { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import { PostType } from 'types/PostType'
 
-const ContainerBlockedContentDiv = styled.div`
+const ContainerLockedContentDiv = styled.div`
   margin: 25px 25% 15px 25%;
 `
 
-const BlockedSection: FunctionComponent<{ post: PostType }> = (props) => {
+const LockedSection: FunctionComponent<{ post: PostType }> = (props) => {
   const { post } = props
 
-  const [loading, setLoading] = useState(false)
+  const { unlockPost } = usePosts()
 
-  const showUnblockContent = () => {}
+  const payForContentLocked = () => {
+    unlockPost(post.id).then((data) => {
+      if (data.action === 'redirect' && data.redirect) {
+        window.location.href = data.redirect
+      }
+    })
+  }
   return (
     <>
-      <ContainerBlockedContentDiv>
+      <ContainerLockedContentDiv>
         <StyledPopup
           header="Unblock content"
           size="S"
           trigger={
             <ButtonWithLoader type="button" className="small primary" showLoader={false}>
-              Unblock Content for $ {post.amount}
+              Unlock Content for $ {post.amount}
             </ButtonWithLoader>
           }
         >
-          <ButtonWithLoader type="button" className="small primary" showLoader={loading}>
+          <ButtonWithLoader type="button" className="small primary" onClick={payForContentLocked} showLoader={false}>
             Pay $ {post.amount}
           </ButtonWithLoader>
         </StyledPopup>
-      </ContainerBlockedContentDiv>
+      </ContainerLockedContentDiv>
     </>
   )
 }
 
-export default React.memo(BlockedSection)
+export default React.memo(LockedSection)

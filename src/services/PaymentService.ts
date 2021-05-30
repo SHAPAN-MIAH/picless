@@ -248,7 +248,7 @@ const cancelSubscription = async (subscriptionId: number) => {
   return body
 }
 
-const unblockContent = async (postId: number) => {
+const unlockContent = async (postId: number) => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
@@ -281,5 +281,5 @@ export default {
   getMovements,
   getPlanOptions,
   confirmPayment,
-  unblockContent
+  unlockContent
 }
