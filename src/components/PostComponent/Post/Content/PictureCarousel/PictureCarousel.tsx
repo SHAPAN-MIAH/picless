@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react'
 import Carousel from 'react-elastic-carousel'
-import styled from 'styled-components'
-import ButtonWithLoader from '../../../../components/Common/ButtonWithLoader'
-import ImageWithPopupView from '../../../../components/ImageWithPopupView/ImageWithPopupView'
-import { SourceType, PostType } from '../../../../types/PostType.d'
-import * as Utils from '../../../../utils/Functions'
+import ButtonWithLoader from '../../../../Common/ButtonWithLoader'
+import ImageWithPopupView from '../../../../ImageWithPopupView/ImageWithPopupView'
+
+import { SourceType, PostType } from '../../../../../types/PostType.d'
+
 import styles from './PictureCarousel.module.css'
 
 type PictureCarouselProps = {
   allData: PostType
 }
 
-const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((props) => {
+const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
   const { allData } = props
 
   let media: any = []
@@ -51,6 +51,6 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
       </div>
     </>
   )
-})
+}
 
-export default PictureCarousel
+export default React.memo(PictureCarousel)

@@ -64,9 +64,7 @@ const ACTIONS_REDUCERS = {
   //     }),
   //   }
   // },
-  [ACTIONS.CLEAR]: (state: PostsState) => ({
-    ...state,
-  }),
+  [ACTIONS.CLEAR]: () => initialState
 }
 
 const reducer = (state: PostsState, action: PostsAction) => {

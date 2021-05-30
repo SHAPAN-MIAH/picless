@@ -1,13 +1,16 @@
 import React, { FunctionComponent } from 'react'
-import { SourceType } from '../../../../types/PostType.d'
-import VideoPlayer from '../../../../assets/js/VideoPlayer'
 import { isMobileOnly } from 'react-device-detect'
-import * as Utils from '../../../../utils/Functions'
 
-const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = React.memo((props) => {
+import VideoPlayer from '../../../../../assets/js/VideoPlayer'
+
+import { SourceType } from '../../../../../types/PostType.d'
+
+type VideoCollageProps = { sources: SourceType[] }
+
+const VideoCollage: FunctionComponent<VideoCollageProps> = (props) => {
   const { sources } = props
 
-  const aspect = isMobileOnly ? '4:5' : '4:3'
+  // const aspect = isMobileOnly ? '4:5' : '4:3'
   const options = {
     fill: true,
     fluid: true,
@@ -35,15 +38,15 @@ const VideoCollage: FunctionComponent<{ sources: SourceType[] }> = React.memo((p
   return (
     <>
       {sources &&
-        sources.map((video: any) => {
+        sources.map((video: SourceType) => {
           return (
-            <div key={Utils.simpleKeyGenerator(5)} data-vjs-player>
+            <div key={video.id} data-vjs-player>
               <VideoPlayer src={video.accessUrl} type="" options={options} aspect={appearance} />
             </div>
           )
         })}
     </>
   )
-})
+}
 
-export default VideoCollage
+export default React.memo(VideoCollage)

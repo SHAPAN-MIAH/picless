@@ -84,6 +84,22 @@ const getPosts = async (page = 0, userName = ''): Promise<ServicePostType> => {
   return body
 }
 
+const getPurchasedPosts = async (page = 0): Promise<ServicePostType> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getmybuyedposts?page=${page}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 const getPostById = async (id = 0): Promise<ServiceSinglePostType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
@@ -179,6 +195,7 @@ export default {
   editPost,
   deletePost,
   getPosts,
+  getPurchasedPosts,
   getPostById,
   getMedia,
   addReaction,

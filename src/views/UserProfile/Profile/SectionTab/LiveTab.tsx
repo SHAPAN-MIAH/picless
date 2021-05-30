@@ -6,8 +6,9 @@ import useLiveView from '../../../../hooks/useLiveView'
 
 import LiveChat from '../../../../components/LiveChat/LiveChat'
 import LiveView from '../../../../components/LiveView/LiveView'
-import SendATip from '../Header/SendATip/SendATip'
+
 import ProviderProfileContext from '../../../../context/ProviderProfileContext'
+import SendATip from 'components/SendATip/SendATip'
 
 const LiveTab: FunctionComponent<{}> = () => {
   const { provider } = useContext(ProviderProfileContext.context)

@@ -1,15 +1,16 @@
 import ButtonWithLoader from 'components/Common/ButtonWithLoader'
 import StyledPopup from 'components/StyledPopup/StyledPopup'
 import usePosts from 'hooks/usePosts'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { PostType } from 'types/PostType'
 
 const ContainerLockedContentDiv = styled.div`
   margin: 25px 25% 15px 25%;
 `
+type LockedProps = { post: PostType }
 
-const LockedSection: FunctionComponent<{ post: PostType }> = (props) => {
+const Locked: FunctionComponent<LockedProps> = (props) => {
   const { post } = props
 
   const { unlockPost } = usePosts()
@@ -42,4 +43,4 @@ const LockedSection: FunctionComponent<{ post: PostType }> = (props) => {
   )
 }
 
-export default React.memo(LockedSection)
+export default React.memo(Locked)
