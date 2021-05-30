@@ -1,5 +1,6 @@
 import { useCallback, useContext } from 'react'
 import toast from 'react-hot-toast'
+import PaymentService from 'services/PaymentService'
 import PostsReducerContext from '../context/PostsReducerContext'
 import PostService from '../services/PostService'
 import { PostReactionType, ReactionCodeType, ServicePostType, ServiceReactionPostType } from '../types/PostType.d'
@@ -82,7 +83,6 @@ const usePosts = () => {
     return PostService.getPosts(state.nextPage).then((p: ServicePostType): void => {
       if (p.code === '0') {
         if (state.nextPage === 0) {
-          console.log(`posts pages`)
           dispatch({
             type: ACTIONS.SET_TOTAL_PAGES,
             payload: p.pages,
@@ -140,6 +140,19 @@ const usePosts = () => {
       })
     })
   }, [])
+
+  const unblockPost = (postId: number) => {
+    PaymentService.unblockContent(postId)
+      .then((data: { code: number; message: string }) => {
+        if (data.code !== 0) {
+          throw new Error(data.message)
+        }
+      })
+      .catch((err) => {
+        toast.error('Error unblocking post')
+        console.error(err.message)
+      })
+  }
 
   return {
     posts: state.posts,

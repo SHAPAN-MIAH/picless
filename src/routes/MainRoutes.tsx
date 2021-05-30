@@ -98,7 +98,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               />
               <ProtectedRoute {...routerProps} exact path={['/u/not-exist']} component={ProfileNotExist} /> */}
 
-              <ProtectedRoute {...routerProps} exact path="/testview" component={TestView} />
+              <Route {...routerProps} exact path="/testviewd" component={TestView} />
 
               <Route path="/support/faq" component={Faq} />
               <Route path="/support/contact" component={Contact} />

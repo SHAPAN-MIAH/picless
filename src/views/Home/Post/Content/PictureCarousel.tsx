@@ -8,20 +8,14 @@ import * as Utils from '../../../../utils/Functions'
 import styles from './PictureCarousel.module.css'
 
 type PictureCarouselProps = {
-  amount: number
-  blocked: boolean,
   allData: PostType
 }
 
-const ContainerBlockedContentDiv = styled.div`
-  margin: 15px 25% 0 25%;
-`
-
 const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((props) => {
-  const { blocked = false, amount, allData } = props
+  const { allData } = props
 
-  let media: any = [];
-  let isDisabled = false;
+  let media: any = []
+  let isDisabled = false
 
   const listImages: SourceType[] = allData.images || []
   const listVideos: SourceType[] = allData.videos || []
@@ -33,14 +27,13 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
     media.push(videos)
   })
 
-  const page = media.length > 1 ? true: false; 
+  const page = media.length > 1 ? true : false
 
   const handleDisable = (item: SourceType) => {
-    if(!item.accessUrl) {
-      isDisabled = false;
-    }
-    else {
-      isDisabled = true;
+    if (!item.accessUrl) {
+      isDisabled = false
+    } else {
+      isDisabled = true
     }
   }
 
@@ -49,20 +42,13 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = React.memo((pro
       <div className={styles.imageContainer}>
         <Carousel isRTL={false} pagination={page}>
           {media.map((item: SourceType) => (
-            <div key={Utils.simpleKeyGenerator(5)}>
+            <div key={item.id}>
               {handleDisable(item)}
-              <ImageWithPopupView image={item}  medios={media} isDisabled={isDisabled}/>
+              <ImageWithPopupView image={item} medios={media} isDisabled={isDisabled} />
             </div>
           ))}
-        </Carousel>     
+        </Carousel>
       </div>
-      {blocked && (
-        <ContainerBlockedContentDiv>
-          <ButtonWithLoader type="button" className="small primary" showLoader={false}>
-            Unlock Content for $ {amount}
-          </ButtonWithLoader>
-        </ContainerBlockedContentDiv>
-      )}
     </>
   )
 })

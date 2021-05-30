@@ -1,10 +1,12 @@
 import MessageModal from 'components/MessageModal/MessageModal'
 import React, { FunctionComponent, useCallback, useState } from 'react'
 import Popup from 'reactjs-popup'
+import styled from 'styled-components'
 import ThreeDotsMenu from '../../../components/ThreeDotsMenu/ThreeDotsMenu'
 import usePosts from '../../../hooks/usePosts'
 import useUser from '../../../hooks/useUser'
 import { PostType, SourceType } from '../../../types/PostType.d'
+import BlockedSection from './BlockedSection/BlockedSection'
 import LivePromotion from './Content/LivePromotion/LivePromotion'
 import PictureCarousel from './Content/PictureCarousel'
 import VideoCollage from './Content/VideoCollage'
@@ -15,7 +17,7 @@ import HeaderPost from './Header/HeaderPost'
 type PostProps = { data: PostType; isSinglePost?: boolean }
 
 const Post: FunctionComponent<PostProps> = React.memo((props) => {
-  const { data, isSinglePost = false } = props
+  const { data } = props
 
   const listImages: SourceType[] = data.images || []
   const listVideos: SourceType[] = data.videos || []
@@ -28,13 +30,11 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false)
 
   const handleReturn = () => {
-    if(listImages && listImages.length > 0) {
-      return <PictureCarousel amount={data.amount || 0} blocked={data.blocked} allData={data}/>
-    }
-    else if(listVideos.length > 1 && listImages.length <= 0) {
-      return <PictureCarousel amount={data.amount || 0} blocked={data.blocked} allData={data}/>
-    }
-    else if(listVideos && listVideos.length > 0 && listImages.length <= 0) {
+    if (listImages && listImages.length > 0) {
+      return <PictureCarousel allData={data} />
+    } else if (listVideos.length > 1 && listImages.length <= 0) {
+      return <PictureCarousel allData={data} />
+    } else if (listVideos && listVideos.length > 0 && listImages.length <= 0) {
       return <VideoCollage sources={listVideos} />
     }
   }
@@ -97,11 +97,21 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
           {handleReturn()}
           {/* <LivePromotion user={data.users} /> */}
 
+          {/* TODO: Find out the correct way to validate a post blocked */}
+          {data.blocked && (
+            <>
+              <BlockedSection post={data} />
+            </>
+          )}
+
           <div className="widget-box-status-content">
             {/* {data.tags && <TagList tags={data.tags || []} />} */}
 
             {data.postReactions && data.postReactions.length > 0 && (
-              <div className="content-actions" style={{ flexDirection: 'row-reverse', marginTop: '10px', border: 'none', height: '30px'}}>
+              <div
+                className="content-actions"
+                style={{ flexDirection: 'row-reverse', marginTop: '10px', border: 'none', height: '30px' }}
+              >
                 <div className="content-action">
                   <div className="meta-line">
                     {data.postReactions[0].quantity && data.postReactions[0].quantity > 1 ? (
@@ -115,8 +125,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             )}
           </div>
         </div>
-
-        <FooterPost user={data.users || {}} post={data} />
+        {user.id !== data.users.id && <FooterPost user={data.users || {}} post={data} />}
       </div>
     </>
   )

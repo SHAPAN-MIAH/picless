@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import Loader from 'react-loader-spinner'
 
 interface ButtonWithLoaderProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,7 +8,7 @@ interface ButtonWithLoaderProps extends React.ButtonHTMLAttributes<HTMLButtonEle
   type: 'reset' | 'button' | 'submit'
 }
 
-export default function ButtonWithLoader(props: ButtonWithLoaderProps) {
+const ButtonWithLoader: FunctionComponent<ButtonWithLoaderProps> = React.forwardRef((props, ref) => {
   const { children, showLoader, className, type, ...rest } = props
 
   return (
@@ -18,4 +18,6 @@ export default function ButtonWithLoader(props: ButtonWithLoaderProps) {
       <Loader type="ThreeDots" color="#f5f3f9" height={40} width={40} visible={showLoader} />
     </button>
   )
-}
+})
+
+export default ButtonWithLoader
