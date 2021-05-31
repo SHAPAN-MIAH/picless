@@ -31,7 +31,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
 
   return (
     <>
-      <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
+      <div className="widget-box no-padding" style={{ marginTop: '20px', overflow: 'hidden', paddingBottom: user.id === data.users.id ? 20 : 0 }}>
         {user.id === data.users.id && (
           <>
             <ThreeDotsMenu>

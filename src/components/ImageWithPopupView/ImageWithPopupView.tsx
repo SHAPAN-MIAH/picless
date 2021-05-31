@@ -92,6 +92,12 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const denominator = Math.round(height / base)
   const appearance = `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
 
+  const imgHeight = () => {
+    const heightImg = height > 300 ?  height : '300px';
+    return heightImg;
+  }
+
+  console.log(medios)
   return (
     <>
       <StyledPopup
@@ -101,7 +107,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
         trigger={() => {
           handleImgIndex(image)
           if (!image.accessUrl) {
-            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name} />
+            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name} style={{height: imgHeight(), maxHeight: '80vh'}}/>
           } else {
             return (
               <div className="video-triger-pop">
@@ -126,7 +132,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
               >
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
-              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false}>
+              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} className='carousel-phater'>
                 {medios.map((item: SourceType) => {
                   if (!item.accessUrl) {
                     return (
