@@ -1,5 +1,6 @@
 import { useCallback, useContext } from 'react'
 import toast from 'react-hot-toast'
+import PaymentService from 'services/PaymentService'
 import PostsReducerContext from '../context/PostsReducerContext'
 import PostService from '../services/PostService'
 import { PostReactionType, ReactionCodeType, ServicePostType, ServiceReactionPostType } from '../types/PostType.d'
@@ -82,7 +83,32 @@ const usePosts = () => {
     return PostService.getPosts(state.nextPage).then((p: ServicePostType): void => {
       if (p.code === '0') {
         if (state.nextPage === 0) {
-          console.log(`posts pages`)
+          dispatch({
+            type: ACTIONS.SET_TOTAL_PAGES,
+            payload: p.pages,
+          })
+        }
+
+        dispatch({
+          type: ACTIONS.GET_POSTS,
+          payload: p.posts,
+        })
+
+        dispatch({
+          type: ACTIONS.CHANGE_PAGE,
+        })
+      } else {
+        toast.error('Error loading posts')
+      }
+    })
+  }
+
+  const getPurchasedPosts = async (): Promise<void> => {
+    dispatch({ type: ACTIONS.LOADING })
+
+    return PostService.getPurchasedPosts(state.nextPage).then((p: ServicePostType): void => {
+      if (p.code === '0') {
+        if (state.nextPage === 0) {
           dispatch({
             type: ACTIONS.SET_TOTAL_PAGES,
             payload: p.pages,
@@ -141,13 +167,39 @@ const usePosts = () => {
     })
   }, [])
 
+  const unlockPost = (postId: number) => {
+    return new Promise<{action: string, redirect?: string}>((resolve, reject) => {
+    
+      PaymentService.unlockContent(postId)
+      .then((data: { code: number; message: string, path: string }) => {
+        if (data.code !== 0) {
+          throw new Error(data.message)
+        }
+
+        resolve({action: data.message, redirect: data.path})
+      })
+      .catch((err) => {
+        toast.error('Error unblocking post')
+        console.error(err.message)
+
+        reject()
+      })
+    })
+  }
+
   return {
+    loading: state.loading,
     posts: state.posts,
     hasMore: state.pages >= state.nextPage - 1,
     getPosts,
+    getPurchasedPosts,
     deletePost,
     addReaction,
     removeReaction,
+    unlockPost,
+    cleanPost: () => dispatch({
+      type: ACTIONS.CLEAR,
+    })
   }
 }
 

@@ -1,10 +1,9 @@
+import Post from 'components/PostComponent/Post/Post'
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import useProfile from '../../../../hooks/useProfile'
-import { simpleKeyGenerator } from '../../../../utils/Functions'
-import Post from '../../../Home/Post/Post'
 
 const LoaderDiv = (
   <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
@@ -13,7 +12,7 @@ const LoaderDiv = (
 )
 
 const NewsfeedTab: FunctionComponent<{}> = () => {
-  const { provider, posts, getPosts } = useProfile({ disableMount: true })
+  const { loading, provider, posts, getPosts } = useProfile({ disableMount: true })
   const [page, setPage] = useState<number>(0)
 
   const getPostList = useCallback(() => {
@@ -34,15 +33,18 @@ const NewsfeedTab: FunctionComponent<{}> = () => {
   return (
     <>
       <div>
-        {posts && posts.length === 0 && (
-          <Alert alertType="PRIMARY" message="Nothing to show" style={{ width: '100%', textAlign: 'center', overflow: 'unset!important' }} />
+        {!loading && posts.length === 0 && (
+          <Alert
+            alertType="PRIMARY"
+            message="Nothing to show"
+            style={{ width: '100%', textAlign: 'center', overflow: 'unset!important' }}
+          />
         )}
 
         <InfiniteScroll dataLength={posts.length} next={getPostList} hasMore loader={LoaderDiv}>
           {posts.map((item) => {
             return (
-              
-              <div key={simpleKeyGenerator(5)} style={{ maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto'}}>
+              <div key={item.id} style={{ maxWidth: '800px', marginRight: 'auto', marginLeft: 'auto' }}>
                 <Post data={item} />
               </div>
             )

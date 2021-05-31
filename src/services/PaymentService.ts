@@ -248,6 +248,25 @@ const cancelSubscription = async (subscriptionId: number) => {
   return body
 }
 
+const unlockContent = async (postId: number) => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('postId', postId.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/unblockcontent`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 export default {
   getCards,
   addCard,
@@ -262,4 +281,5 @@ export default {
   getMovements,
   getPlanOptions,
   confirmPayment,
+  unlockContent
 }

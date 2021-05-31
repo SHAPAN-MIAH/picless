@@ -1,38 +1,24 @@
 import EmptyPost from 'components/EmptyPost/EmptyPost'
-import React, { FunctionComponent, Suspense, useCallback, useEffect, useState } from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import Loader from 'react-loader-spinner'
-import { simpleKeyGenerator } from '../../../utils/Functions'
-
-import Post from '../Post/Post'
-
-const LoaderDiv = (
-  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
-    <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
-  </div>
-)
+import PostList from 'components/PostComponent/PostList/PostList'
+import usePosts from 'hooks/usePosts'
+import React, { FunctionComponent, useEffect } from 'react'
 
 const notPostsMessage = 'you have not bought any content yet'
 const notPostsFooterMessage = 'when you buy some content, it will appear here'
 
 const PurchasedTab: FunctionComponent<{}> = () => {
-  //   const [page, setPage] = useState<number>(0)
+  const { getPurchasedPosts, cleanPost, posts, hasMore, loading } = usePosts()
 
-  //   const { getPosts, posts } = usePost()
+  useEffect(() => {
+    getPurchasedPosts()
 
-  //   const getPostList = useCallback(() => {
-  //     getPosts(page).then(() => {
-  //       setPage(page + 1)
-  //     })
-  //   }, [getPosts, setPage, page])
-
-  //   useEffect(() => {
-  //     getPostList()
-  //   }, [])
+    return () => cleanPost()
+  }, [])
 
   return (
     <>
-      <EmptyPost message={notPostsMessage} footer={notPostsFooterMessage} />
+      {!loading && posts.length === 0 && <EmptyPost message={notPostsMessage} footer={notPostsFooterMessage} />}
+      <PostList getItems={getPurchasedPosts} hasMore={hasMore} loading={loading} posts={posts} />
     </>
   )
 }

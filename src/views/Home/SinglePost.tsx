@@ -1,3 +1,4 @@
+import Post from 'components/PostComponent/Post/Post'
 import _ from 'lodash'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
@@ -5,8 +6,8 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import Alert from '../../components/Common/Alerts/Alerts'
 import PostService from '../../services/PostService'
+
 import { PostType, ServiceSinglePostType } from '../../types/PostType.d'
-import Post from './Post/Post'
 
 const DivContainer = styled.div`
   width: 100%;

@@ -12,7 +12,6 @@ const Profile: FunctionComponent<{}> = () => {
   const { loading, subscription, provider } = useProfile()
   const { user } = useUser()
 
-
   return (
     <>
       <div className="content-grid grid-profile">

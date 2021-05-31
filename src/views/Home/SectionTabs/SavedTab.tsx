@@ -1,15 +1,18 @@
 import EmptyPost from 'components/EmptyPost/EmptyPost'
+import usePosts from 'hooks/usePosts'
 import React, { FunctionComponent, Suspense, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 
-import { simpleKeyGenerator } from '../../../utils/Functions'
-
-import Post from '../Post/Post'
-
 const LoaderDiv = (
   <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+  </div>
+)
+
+const EndDiv = (
+  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
+    <h3>End of Line</h3>
   </div>
 )
 

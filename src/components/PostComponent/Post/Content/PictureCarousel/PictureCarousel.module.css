@@ -1,7 +1,6 @@
 .imageContainer {
   top: 0px;
   left: 0px;
-  margin-top: 25px;
   width: inherit;
   height: fit-content;
   position: relative;
@@ -9,7 +8,7 @@
   max-height: 670px;
 }
 
-.imageContainer img {
+img {
   display: block;
   margin-left: auto;
   margin-right: auto;
