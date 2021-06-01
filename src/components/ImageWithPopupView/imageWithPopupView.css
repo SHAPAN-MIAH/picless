@@ -63,3 +63,7 @@
         width: 17em;
     }
 }
+
+.rec.rec-pagination {
+    margin-top: -5px!important;
+}

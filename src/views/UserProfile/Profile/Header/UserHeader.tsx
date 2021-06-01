@@ -15,6 +15,9 @@ import SubscribePopup from './SubscribePopup/SubscribePopup'
 import styles from './UserHeader.module.css'
 import './UserHeader.css'
 import { Link } from 'react-router-dom'
+import useWallet from 'hooks/useWallet'
+import { ServiceSubscritionPlanOption} from '../../../../types/PaymentTypes'
+import { SelectOptionsType } from '../../../../components/Common/SelectForm'
 
 type UserHeaderProps = {
   subscription: SubscriptionType | null
@@ -25,11 +28,13 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
   const { provider, cancelSubscription } = useProfile({ disableMount: true })
   const { getUser } = useUser()
+  const { getPlanOptions } = useWallet()
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [subscribed, setSubscribed] = useState<boolean>(subscription !== null)
   const [userData, setUserData] = useState<UserType>({})
+  const [planList, setPlanList] = useState<any>()
 
   useEffect(() => {
     getUser().then((u: UserType) => {
@@ -39,6 +44,16 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
     setImageProfile(provider.profilePicture)
     setSubscribed(subscription !== null)
+
+    const controllerCancelable = new AbortController()
+    const { signal } = controllerCancelable  
+
+    getPlanOptions(provider.userName || '', signal)
+    .then((data: ServiceSubscritionPlanOption) => {
+      if(data.data) {
+        setPlanList(data.data[0])
+      }
+    })
   }, [provider, subscription, getUser])
 
   const countryName = GetCountryName(provider.countryCode || '')
@@ -53,6 +68,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
       })
     }
   }
+  console.log(planList)
   return (
     <>
       <WalletContextProvider>
@@ -90,7 +106,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                     trigger={
                       <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
                         <p className="profile-header-info-action button primary custom-btn">
-                          Suscribe
+                          Suscribe {planList ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}` : ''}
                           <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
                         </p>
                       </div>

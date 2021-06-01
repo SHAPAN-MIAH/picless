@@ -79,8 +79,20 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
     return false
   }
 
-  const width = medios[0]?.width ? medios[0].width : 0
-  const height = medios[0]?.height ? medios[0].height : 0
+  const getWidth = () => { 
+    const imgs = medios.filter(el => !el.accessUrl)
+    let index:any = imgs[0]
+    imgs.map(image => {
+        if(image.index && index.index && (image.index < index.index)) {
+          index = image
+        }
+    })
+    return index;
+  }
+  const initialImage = getWidth();
+
+  const width = initialImage ? initialImage.widthResized : 0
+  const height = initialImage ? initialImage.heightResized : 0
 
   const maximoComunDivisor = (width: number, height: number): any => {
     if (height === 0) return width
@@ -91,13 +103,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const numerator = Math.round(width / base)
   const denominator = Math.round(height / base)
   const appearance = `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
-
-  const imgHeight = () => {
-    const heightImg = height > 300 ?  height : '300px';
-    return heightImg;
-  }
-
-  console.log(medios)
+  
   return (
     <>
       <StyledPopup
@@ -107,7 +113,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
         trigger={() => {
           handleImgIndex(image)
           if (!image.accessUrl) {
-            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name} style={{height: imgHeight(), maxHeight: '80vh'}}/>
+            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
           } else {
             return (
               <div className="video-triger-pop">

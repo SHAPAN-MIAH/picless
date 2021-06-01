@@ -12,6 +12,10 @@
 
     .custom-btn {
         width: 340px!important;
-        font-size: 23px!important;
+        font-size: 20px!important;
     }
+}
+
+.custom-btn {
+    padding: 0 2px 0 2px;
 }

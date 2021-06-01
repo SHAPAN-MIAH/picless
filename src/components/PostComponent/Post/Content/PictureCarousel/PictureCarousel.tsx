@@ -40,7 +40,17 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
   return (
     <>
       <div className={styles.imageContainer}>
-        <Carousel isRTL={false} pagination={page}>
+        <Carousel isRTL={false} pagination={page}
+         renderPagination={({ pages, activePage, onClick }) => {
+           console.log(pages.length)
+           console.log(activePage)
+          return (
+            <>
+             {`${activePage+1}/${pages.length-1}`}
+            </>
+          )
+        }}
+        >
           {media.map((item: SourceType) => (
             <div key={item.id}>
               {handleDisable(item)}
