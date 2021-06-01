@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
+import { useState, useEffect } from 'react'
+import { HubConnection } from '@microsoft/signalr'
 import useChatMessages from './useChatMessages'
 import ChatService from 'services/ChatService'
 import { OnReceiveMessageType } from 'types/MessagesType'
-import useUser from './useUser'
 
 const useChatSignalR = () => {
   const { receiveMessage, userSelected, notifyConnected, changeUserStatus } = useChatMessages()
@@ -23,7 +22,6 @@ const useChatSignalR = () => {
     })
 
     return () => {
-      console.log('STOPED')
       connection?.stop()
     }
   }, [])
@@ -32,10 +30,13 @@ const useChatSignalR = () => {
     if (connection) {
       connection.off('ReceiveMessage')
       connection.off('NotifyOnline')
+      connection.off('NotifyOffline')
 
       connection.on('ReceiveMessage', onReceiveMessage)
 
-      connection.on('NotifyOnline', onChangeStatus)
+      connection.on('NotifyOnline', onConnectUser)
+
+      connection.on('NotifyOffline', onDisconnectUser)
     }
   }, [connection, userSelected])
 
@@ -43,8 +44,13 @@ const useChatSignalR = () => {
     if (Number(userSelected?.userId) === Number(message?.fromUserId)) receiveMessage(message)
   }
 
-  const onChangeStatus = function (userId: number) {
-    changeUserStatus(userId)
+  const onConnectUser = function (userId: number) {
+    changeUserStatus(userId, 'ONLINE')
+  }
+
+  const onDisconnectUser = function (userId: number) {
+    console.log('disconnected')
+    changeUserStatus(userId, 'OFFLINE')
   }
 
   return {}

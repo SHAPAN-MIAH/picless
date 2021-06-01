@@ -3,13 +3,22 @@ import useRouter from '../../hooks/commons/useRouter'
 
 import useWallet from '../../hooks/useWallet'
 
-type CallbackType = 'WALLET' | 'SUBSCRIPTION'
+type CallbackType = 'TIP' | 'SUBSCRIPTION' | 'POST'
 
 const PaymentCallback: FunctionComponent<{}> = () => {
   const router = useRouter()
   const { confirmPayment } = useWallet()
-  const callbackType = router.pathname.includes('wallet') ? 'WALLET' : 'SUBSCRIPTION'
-  const paymentIntent = (router.query as { payment_intent: string }).payment_intent
+  const callbackType = router.pathname.includes('unblock') ? 'POST' : ''
+  const parameters = router.query as {
+    id: string
+    payment_intent: string
+    payment_intent_client_secret: string
+    source_redirect_slug: string
+  }
+  const paymentIntent = parameters.payment_intent
+  const paymentIntentClientSecret = parameters.payment_intent_client_secret
+  const source_redirect_slug = parameters.source_redirect_slug
+  const postId = parameters.id
 
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false)
   const [paymentError, setPaymentError] = useState<boolean>(false)
@@ -24,6 +33,10 @@ const PaymentCallback: FunctionComponent<{}> = () => {
             setPaymentSuccess(true)
             setPaymentError(false)
             setLoading(false)
+
+            setTimeout(() => {
+              router.history.push(`/u/:username/post/${postId}`)
+            }, 1000)
           }
         })
         .catch((err) => {
@@ -52,8 +65,6 @@ const PaymentCallback: FunctionComponent<{}> = () => {
               <div className="widget-box">
                 <div className="widget-box-content">
                   <form className="form">
-                    <h1 style={{ marginBottom: '50px' }}> Under Construction</h1>
-
                     <h2>Type </h2>
                     <div style={{ marginBottom: '50px' }}>{callbackType}</div>
                     <h2>Payment Intent</h2>

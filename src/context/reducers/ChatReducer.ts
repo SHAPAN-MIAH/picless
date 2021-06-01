@@ -2,6 +2,7 @@ import { MessageType, UserStatusMessagesType } from 'types/MessagesType'
 import { isConstructorDeclaration } from 'typescript'
 import { PostType } from '../../types/PostType.d'
 
+export type StatusType = 'ONLINE' | 'OFFLINE'
 export interface ChatState {
   loadingUsers: boolean
   loadingMessages: boolean
@@ -62,9 +63,11 @@ const ACTIONS_REDUCERS = {
     }
   },
   [ACTIONS.CHANGE_USER_STATUS]: (state: ChatState, action: ChatAction) => {
+    const {userId, status} = (action.payload as {userId: number, status: StatusType})
+
     const users = state.users.map((u) => {
-      if(u.userId === action.payload as number){
-        return {...u, connectionId: 'online'}
+      if(u.userId === userId){
+        return {...u, connectionId: status.toLowerCase()}
       }
       return {...u}
     })

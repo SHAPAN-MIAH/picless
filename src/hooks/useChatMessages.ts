@@ -13,7 +13,7 @@ export interface UserStatusMessagesOptionalType {
 const useChatMessages = () => {
   const { state, ACTIONS, dispatch } = useContext(ChatReducerContext.context)
   const { user } = useUser()
-  
+
 
   const getUserList = async () => {
     dispatch({ type: ACTIONS.LOADING_USERS })
@@ -94,12 +94,16 @@ const useChatMessages = () => {
     dispatch({ type: ACTIONS.INSERT_MESSAGE_TO_CURRENT_CHAT, payload: msg })
   }
 
-  const changeUserStatus = (userId: number) => {
-    dispatch({ type: ACTIONS.CHANGE_USER_STATUS, payload: userId }) 
+  const changeUserStatus = (userId: number, status: 'ONLINE' | 'OFFLINE') => {
+    dispatch({ type: ACTIONS.CHANGE_USER_STATUS, payload: { userId, status }}) 
   }
 
   const notifyConnected = () => {
     ChatService.notifyConnected(user.id || -1)
+  }
+  
+  const notifyDisconnected = () => {
+    ChatService.notifyDisconnected(user.id || -1)
   }
 
   const findSelectedUser = (user: UserStatusMessagesType) => user.selected
@@ -115,6 +119,7 @@ const useChatMessages = () => {
     getMessageHistory,
     receiveMessage,
     notifyConnected,
+    notifyDisconnected,
     changeUserStatus,
     sendMessage: sendMsg,
     selectUser,
