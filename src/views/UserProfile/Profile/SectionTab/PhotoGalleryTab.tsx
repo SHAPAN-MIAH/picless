@@ -14,7 +14,6 @@ import './PhotoGalleryTabs.css'
 
 const noPhotos = 'Nothing to show'
 
-
 const ImageContainerDiv = styled.div`
   width: 100%;
   height: 100%;
@@ -30,7 +29,7 @@ const StyledPopup = styled(Popup)`
     width: 100%;
     background-color: rgba(0, 0, 0, 0);
     padding: 0px;
-    margin: 0!important;
+    margin: 0 !important;
     border: 0px;
   }
 `
@@ -69,10 +68,10 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
 
   const [page, setPage] = useState<number>(0)
 
-  const [values, setOpen] = useState({open: false, index: 0});
+  const [values, setOpen] = useState({ open: false, index: 0 })
   const closeModal = () => {
-    document.body.style.overflow = 'auto';
-    setOpen({...values, open: false});
+    document.body.style.overflow = 'auto'
+    setOpen({ ...values, open: false })
   }
 
   const getPhotosList = useCallback(() => {
@@ -90,23 +89,21 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     }
   }, [])
 
-
-  let imgIndex = 0;
+  let imgIndex = 0
   const handleImgIndex = (img: any) => {
-    imgIndex = photos.indexOf(img);
-    setOpen({open: true, index: imgIndex})
+    imgIndex = photos.indexOf(img)
+    setOpen({ open: true, index: imgIndex })
   }
 
   const handleOpen = () => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'
   }
 
   const handleClick = (e: any) => {
-    if(e.target.tagName === 'DIV'){
+    if (e.target.tagName === 'DIV') {
       closeModal()
     }
   }
-
 
   return (
     <>
@@ -122,57 +119,67 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                   <div className="grid grid-3-3-3-3 centered grid-photos" style={{ overflow: 'hidden' }}>
                     {photos.map((item) => {
                       return (
-                        <div key={Utils.simpleKeyGenerator(5)} className='album-preview' onClick={() => handleImgIndex(item)}>
+                        <div key={item.id} className="album-preview" onClick={() => handleImgIndex(item)}>
                           <ImageContainerDiv>
-                            <ImageImg 
+                            <ImageImg
                               src={item.thumbnail}
                               alt={item.name}
-                              onError={(e: any)=>{e.target.onerror = null; e.target.src=Utils.imgError}}
+                              onError={(e: any) => {
+                                e.target.onerror = null
+                                e.target.src = Utils.imgError
+                              }}
                             />
                           </ImageContainerDiv>
-                          {!isMobile &&
+                          {!isMobile && (
                             <div className="album-preview-info" style={{ top: '-284px' }}>
                               <p className="album-preview-title">View post</p>
                               <p className="album-preview-text">{item.registerDate}</p>
                             </div>
-                          }
+                          )}
                         </div>
                       )
                     })}
                   </div>
                 </InfiniteScroll>
-                {<StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
-                  <div onClick={(event) => handleClick(event)}>
-                    <CloseButtonDiv
+                {
+                  <StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
+                    <div onClick={(event) => handleClick(event)}>
+                      <CloseButtonDiv
                         onClick={() => {
                           closeModal()
                         }}
                       >
                         <FontAwesomeIcon icon="times" color="white" size="1x" />
-                    </CloseButtonDiv>
-                    <Carousel 
-                      isRTL={false}
-                      initialActiveIndex={values.index}
-                      pagination={false}
-                      onNextEnd={(currentItem) => {
-                        if(currentItem.index + 4 >= photos.length){
+                      </CloseButtonDiv>
+                      <Carousel
+                        isRTL={false}
+                        initialActiveIndex={values.index}
+                        pagination={false}
+                        onNextEnd={(currentItem) => {
+                          if (currentItem.index + 4 >= photos.length) {
                             getPhotosList()
                           }
-                      }}
-                      className='class-up'
+                        }}
+                        className="class-up"
                       >
-                      {photos.map((item) => {
-                          return <ImagePop
-                                    key={Utils.simpleKeyGenerator(5)}
-                                    decoding="async"
-                                    src={item?.original}
-                                    alt={item.name}
-                                    onError={(e: any)=>{e.target.onerror = null; e.target.src=Utils.imgError}}
-                                    />
-                      })}
-                    </Carousel>
-                  </div>
-                </StyledPopup>}
+                        {photos.map((item) => {
+                          return (
+                            <ImagePop
+                              key={item.id}
+                              decoding="async"
+                              src={item?.original}
+                              alt={item.name}
+                              onError={(e: any) => {
+                                e.target.onerror = null
+                                e.target.src = Utils.imgError
+                              }}
+                            />
+                          )
+                        })}
+                      </Carousel>
+                    </div>
+                  </StyledPopup>
+                }
               </>
             )}
           </div>

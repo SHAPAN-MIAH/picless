@@ -1,12 +1,17 @@
-import useChatMessages from 'hooks/useChatMessages'
-import useChatSignalR from 'hooks/useChatSignalR'
 import React, { FunctionComponent, useEffect } from 'react'
 import SimpleBar from 'simplebar-react'
+
+import useChatMessages from 'hooks/useChatMessages'
+import useChatSignalR from 'hooks/useChatSignalR'
+
 import Conversation from './Conversation/Conversation'
 import Users from './Users/Users'
 
 const Chat: FunctionComponent<{}> = () => {
   useChatSignalR()
+  const { notifyDisconnected } = useChatMessages()
+
+  useEffect(() => () => notifyDisconnected(), [])
 
   return (
     <>

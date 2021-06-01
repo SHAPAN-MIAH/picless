@@ -14,7 +14,7 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
   const { user, loading } = props
   const { getMessageHistory } = useChatMessages()
 
-  const status = user.connectionId ? 'online' : 'offline'
+  const status = user.connectionId || 'offline'
 
   return (
     <>

@@ -75,4 +75,16 @@ const notifyConnected = async (userId: number): Promise<any> => {
   return fetch(url, requestOptions)
 }
 
-export default { getConnectionChat, getChatHistoryByUser, getFavoriteUsers, sendMessage, notifyConnected }
+const notifyDisconnected = async (userId: number): Promise<any> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+  }
+
+  const url = `${baseUrl}/notifydisconnected?userId=${userId}`
+  return fetch(url, requestOptions)
+}
+
+export default { getConnectionChat, getChatHistoryByUser, getFavoriteUsers, sendMessage, notifyConnected, notifyDisconnected }
