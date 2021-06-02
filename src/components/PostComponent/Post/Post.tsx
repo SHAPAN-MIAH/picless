@@ -31,7 +31,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
 
   return (
     <>
-      <div className="widget-box no-padding" style={{ margin: '20px 0', overflow: 'hidden', paddingBottom: user.id === data.users.id ? 20 : 0 }}>
+      <div className="widget-box no-padding" style={{ marginTop: '20px', overflow: 'hidden'}}>
         {user.id === data.users.id && (
           <>
             <ThreeDotsMenu>
@@ -94,7 +94,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
             {data.postReactions && data.postReactions.length > 0 && (
               <div
                 className="content-actions"
-                style={{ flexDirection: 'row-reverse', marginTop: '10px', border: 'none', height: '30px' }}
+                style={{ flexDirection: 'row-reverse', marginTop: '0px', border: 'none', height: '20px' }}
               >
                 <div className="content-action">
                   <div className="meta-line">
