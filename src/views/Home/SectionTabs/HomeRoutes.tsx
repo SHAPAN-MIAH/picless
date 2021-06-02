@@ -70,6 +70,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           className={classNames('option-item', currentTab === HomeTabs.TIMELINE ? 'active' : '')}
           to={`${url}/${HomeTabs.TIMELINE}`}
           onClick={() => setCurrentTab(HomeTabs.TIMELINE)}
+          style={{width: '40%'}}
         >
           <svg className="option-item-icon icon-status">
             <use xlinkHref="#svg-status"> </use>
@@ -81,31 +82,29 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           className={classNames('option-item', currentTab === HomeTabs.SAVED ? 'active' : '')}
           to={`${url}/${HomeTabs.SAVED}`}
           onClick={() => setCurrentTab(HomeTabs.SAVED)}
+          style={{width: '20%'}}
         >
           <svg className="option-item-icon icon-pinned">
             <use xlinkHref="#svg-pinned"> </use>
           </svg>
-
-          <p className="option-item-title">Saved</p>
         </TabLink>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.PURCHASED ? 'active' : '')}
           to={`${url}/${HomeTabs.PURCHASED}`}
           onClick={() => setCurrentTab(HomeTabs.PURCHASED)}
+          style={{width: '20%'}}
         >
           <svg className="option-item-icon icon-revenue">
             <use xlinkHref="#svg-revenue"> </use>
           </svg>
-
-          <p className="option-item-title">Purchased</p>
         </TabLink>
         {user.verifiedAccount &&
-          <Link to="/user/create-post" className='option-item' style={{width: '50px'}}>
+          <Link to="/user/create-post" className='option-item' style={{width: '20%'}}>
             <svg 
             className="action-list-item-icon"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 40 40"
-            style={{marginTop: '40%', marginLeft: '25%'}}
+            style={{marginTop: 'auto', marginLeft: '40%'}}
             >
               <path
                 fill="#000000"
