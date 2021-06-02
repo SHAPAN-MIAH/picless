@@ -21,7 +21,7 @@ const CountContainerDiv = styled.div`
   min-width: 22px;
   line-height: 22px;
   z-index: 9;
-  border-radius: 50%;
+  border-radius: 10%;
   text-align: center;
 }
 `

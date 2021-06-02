@@ -76,7 +76,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
         <div className="widget-box-status">
           <div className="widget-box-status-content">
             <Header post={data} />
-            <p className="widget-box-status-text">{data.content}</p>
+            <p className="widget-box-status-text" style={{margin: '10px 0'}}>{data.content}</p>
           </div>
           <Content post={data} />
           {/* <LivePromotion user={data.users} /> */}
