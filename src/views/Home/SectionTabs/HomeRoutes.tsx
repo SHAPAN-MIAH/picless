@@ -84,7 +84,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           onClick={() => setCurrentTab(HomeTabs.SAVED)}
           style={{width: '20%'}}
         >
-          <svg className="option-item-icon icon-pinned">
+          <svg className="option-item-icon icon-pinned" style={{marginLeft: 'auto', marginRight: 'auto'}}>
             <use xlinkHref="#svg-pinned"> </use>
           </svg>
         </TabLink>
@@ -94,24 +94,20 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           onClick={() => setCurrentTab(HomeTabs.PURCHASED)}
           style={{width: '20%'}}
         >
-          <svg className="option-item-icon icon-revenue">
+          <svg className="option-item-icon icon-revenue" style={{marginLeft: 'auto', marginRight: 'auto'}}>
             <use xlinkHref="#svg-revenue"> </use>
           </svg>
         </TabLink>
         {user.verifiedAccount &&
-          <Link to="/user/create-post" className='option-item' style={{width: '20%'}}>
-            <svg 
-            className="action-list-item-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 40 40"
-            style={{marginTop: 'auto', marginLeft: '40%'}}
-            >
-              <path
-                fill="#000000"
-                d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
-              />
+          <TabLink
+            className={classNames('option-item', currentTab === HomeTabs.PURCHASED ? 'active' : '')}
+            to={`/user/create-post`}
+            style={{width: '20%'}}
+          >
+            <svg className="option-item-icon icon-plus" style={{marginLeft: 'auto', marginRight: 'auto'}}>
+              <use xlinkHref="#svg-plus"> </use>
             </svg>
-          </Link>
+        </TabLink>
         }
       </TabContainerDiv>
 
