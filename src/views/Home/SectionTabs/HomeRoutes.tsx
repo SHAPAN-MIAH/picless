@@ -100,7 +100,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
         </TabLink>
         {user.verifiedAccount &&
           <TabLink
-            className={classNames('option-item', currentTab === HomeTabs.PURCHASED ? 'active' : '')}
+            className={classNames('option-item')}
             to={`/user/create-post`}
             style={{width: '20%'}}
           >
