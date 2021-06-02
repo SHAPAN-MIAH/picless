@@ -97,6 +97,19 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
 
           <p className="option-item-title">Purchased</p>
         </TabLink>
+        <Link to="/user/create-post" className='option-item' style={{width: '50px'}}>
+          <svg 
+          className="action-list-item-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 50 50"
+          style={{marginTop: 'auto', position: 'relative', left: '25%'}}
+          >
+            <path
+              fill="#000000"
+              d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
+            />
+          </svg>
+        </Link>
       </TabContainerDiv>
 
       <ContentContainerDiv>

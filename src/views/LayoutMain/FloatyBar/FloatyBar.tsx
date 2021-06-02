@@ -46,27 +46,11 @@ const FloatyBar: FunctionComponent<{}> = () => {
                 />
               </svg>
             </Link>
-
-            {user.verifiedAccount ? (
-              <Link className="action-list-item" to="/user/create-post">
-                <svg className="action-list-item-icon" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
-                  <path
-                    fill="#000000"
-                    d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
-                  />
-                </svg>
-              </Link>
-            ) : (
-              <Link className="action-list-item" to="/user/discover">
-                <svg className="action-list-item-icon" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
-                  <path
-                    fill="#000000"
-                    d="M8,2c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S4.691,2,8,2 M8,0C3.582,0,0,3.582,0,8c0,4.418,3.582,8,8,8c4.418,0,8-3.582,8-8C16,3.582,12.418,0,8,0L8,0z"
-                  />
-                </svg>
-              </Link>
-            )}
-
+            <Link className="action-list-item" to="/user/discover">
+              <svg className="action-list-item-icon icon-magnifying-glass" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
+                  <use fill="#000000" xlinkHref="#svg-magnifying-glass" />
+              </svg>
+            </Link>
             <Link className="action-item-wrap" to="/user/messages">
               <div className="action-item">
                 <svg className="action-list-item-icon" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
@@ -108,6 +92,14 @@ const FloatyBar: FunctionComponent<{}> = () => {
           </div>
         </div>
       </aside>
+      {/*            <Link className="action-list-item" to="/user/create-post">
+              <svg className="action-list-item-icon" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
+                <path
+                  fill="#000000"
+                  d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
+                />
+              </svg>
+            </Link>*/}
     </>
   )
 }

@@ -68,7 +68,6 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
       })
     }
   }
-  console.log(planList)
   return (
     <>
       <WalletContextProvider>
