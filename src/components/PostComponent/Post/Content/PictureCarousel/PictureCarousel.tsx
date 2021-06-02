@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useRef } from 'react'
 import Carousel from 'react-elastic-carousel'
 import ButtonWithLoader from '../../../../Common/ButtonWithLoader'
 import ImageWithPopupView from '../../../../ImageWithPopupView/ImageWithPopupView'
@@ -11,15 +11,15 @@ import styles from './PictureCarousel.module.css'
 
 const CountContainerDiv = styled.div`
   position: absolute;
-  top: -15px;
-  margin-left: calc(100% - 30px);
-  font-size: 10px;
+  top: 7px;
+  margin-left: calc(100% - 35px);
+  font-size: 12px;
   background-color: rgba(245, 245, 245, 0.7);
   box-shadow: 0 0 0px 0px #111;
   color: rgba(0, 0, 0, 0.5);
-  height: 20px;
-  min-width: 20px;
-  line-height: 20px;
+  height: 22px;
+  min-width: 22px;
+  line-height: 22px;
   z-index: 9;
   border-radius: 50%;
   text-align: center;
@@ -32,6 +32,8 @@ type PictureCarouselProps = {
 
 const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
   const { allData } = props
+
+  const carouselRef = useRef<any>(null);
 
   let media: any = []
   let isDisabled = false
@@ -59,8 +61,11 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
   return (
     <>
       <div className={styles.imageContainer}>
-        <Carousel isRTL={false} pagination={page}
-         renderPagination={({ pages, activePage}) => {
+        <Carousel 
+          ref={carouselRef}
+          isRTL={false}
+          pagination={page}
+          renderPagination={({ pages, activePage}) => {
           return (
             <CountContainerDiv>
               {`${activePage+1}/${pages.length}`}
