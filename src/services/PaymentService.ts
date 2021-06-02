@@ -194,11 +194,16 @@ const addCreditToWallet = async (amount: number, currency: string, description: 
   return body
 }
 
-const confirmPayment = async (paymentIntent: string): Promise<any> => {
+const confirmPayment = async (paymentIntent: string, type: string,  postId: number, userName: string, paymentIntentClientSecret: string, sourceRedirectSlug: string): Promise<any> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
   bodyData.append('paymentIntent', paymentIntent)
+  bodyData.append('type', type)
+  bodyData.append('postId', postId.toString())
+  bodyData.append('userName', userName)
+  bodyData.append('paymentIntentClientSecret', paymentIntentClientSecret)
+  bodyData.append('sourceRedirectSlug', sourceRedirectSlug)
 
   const requestOptions: RequestInit = {
     method: 'POST',

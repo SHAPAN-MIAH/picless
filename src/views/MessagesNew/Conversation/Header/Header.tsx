@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useEffect } from 'react'
-import { UserStatusMessagesType } from 'types/MessagesType'
-import UserAvatar from 'components/UserAvatar'
 import Loader from 'react-loader-spinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import UserAvatar from 'components/UserAvatar'
 import useChatMessages from 'hooks/useChatMessages'
+import { UserStatusMessagesType } from 'types/MessagesType'
 
 type HeaderProps = {
   user: UserStatusMessagesType

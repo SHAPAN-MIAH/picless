@@ -1,10 +1,10 @@
 import { useCallback, useContext, useState } from 'react'
 import {
-  ServiceSubscritionPlanOption,
+  
   CardType,
   MovementType,
   ServiceMovementType,
-  SubscritionPlanOption,
+  
 } from '../types/PaymentTypes'
 import WalletContext from '../context/WalletContext'
 import PaymentService from '../services/PaymentService'
@@ -74,10 +74,12 @@ const useWallet = () => {
     [getDefaultCard]
   )
 
-  const confirmPayment = useCallback((paymentIntent: string) => {
+
+
+  const confirmPayment = useCallback((paymentIntent: string, type: string,  postId: number, userName: string, paymentIntentClientSecret: string, sourceRedirectSlug: string) => {
     return new Promise<string>((resolve, reject) => {
-      PaymentService.confirmPayment(paymentIntent).then((data: any) => {
-        if (data.code === 0) {
+      PaymentService.confirmPayment(paymentIntent, type, postId, userName, paymentIntentClientSecret, sourceRedirectSlug).then((data: any) => {
+        if (data.code === '0' && data.message === 'OK') {
           resolve('SUCCESS')
         } else {
           reject(new Error('Error confirming the payment'))
