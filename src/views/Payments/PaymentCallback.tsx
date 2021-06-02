@@ -1,24 +1,30 @@
+import ButtonWithLoader from 'components/Common/ButtonWithLoader'
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import useRouter from '../../hooks/commons/useRouter'
 
 import useWallet from '../../hooks/useWallet'
 
-type CallbackType = 'TIP' | 'SUBSCRIPTION' | 'POST'
+const CallbackType = ['unblock', 'tip', 'suscription']
 
 const PaymentCallback: FunctionComponent<{}> = () => {
   const router = useRouter()
   const { confirmPayment } = useWallet()
-  const callbackType = router.pathname.includes('unblock') ? 'POST' : ''
+
+  const type = CallbackType.find((item) => router.pathname.includes(item))
+
   const parameters = router.query as {
     id: string
+    userName: string
     payment_intent: string
     payment_intent_client_secret: string
     source_redirect_slug: string
   }
   const paymentIntent = parameters.payment_intent
   const paymentIntentClientSecret = parameters.payment_intent_client_secret
-  const source_redirect_slug = parameters.source_redirect_slug
-  const postId = parameters.id
+  const sourceRedirectSlug = parameters.source_redirect_slug
+  const userName = parameters.userName
+  const postId = Number(parameters.id) || 0
 
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false)
   const [paymentError, setPaymentError] = useState<boolean>(false)
@@ -27,16 +33,13 @@ const PaymentCallback: FunctionComponent<{}> = () => {
   useEffect(() => {
     setLoading(true)
     if (paymentIntent) {
-      confirmPayment(paymentIntent)
+      confirmPayment(paymentIntent, type || '', postId, userName, paymentIntentClientSecret, sourceRedirectSlug)
         .then((data: any) => {
+          debugger
           if (data === 'SUCCESS') {
             setPaymentSuccess(true)
             setPaymentError(false)
             setLoading(false)
-
-            setTimeout(() => {
-              router.history.push(`/u/:username/post/${postId}`)
-            }, 1000)
           }
         })
         .catch((err) => {
@@ -49,7 +52,11 @@ const PaymentCallback: FunctionComponent<{}> = () => {
     }
   }, [])
 
-  console.log(router)
+  const goToPost = () => {
+    setTimeout(() => {
+      router.history.push(`/u/${userName}/post/${postId}`)
+    }, 1000)
+  }
 
   return (
     <>
@@ -66,7 +73,7 @@ const PaymentCallback: FunctionComponent<{}> = () => {
                 <div className="widget-box-content">
                   <form className="form">
                     <h2>Type </h2>
-                    <div style={{ marginBottom: '50px' }}>{callbackType}</div>
+                    <div style={{ marginBottom: '50px' }}>{type}</div>
                     <h2>Payment Intent</h2>
                     <div style={{ marginBottom: '50px' }}>{paymentIntent}</div>
 
@@ -74,6 +81,12 @@ const PaymentCallback: FunctionComponent<{}> = () => {
 
                     {paymentSuccess && <h1 style={{ color: 'green' }}> SUCCESS </h1>}
                     {paymentError && <h1 style={{ color: 'red' }}> ERROR </h1>}
+
+                    {paymentSuccess && type === 'unblock' && (
+                      <ButtonWithLoader type="button" className="small secondary" onClick={goToPost} showLoader={false}>
+                        Go to post
+                      </ButtonWithLoader>
+                    )}
                   </form>
                 </div>
               </div>
