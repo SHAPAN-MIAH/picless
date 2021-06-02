@@ -2,10 +2,29 @@ import React, { FunctionComponent } from 'react'
 import Carousel from 'react-elastic-carousel'
 import ButtonWithLoader from '../../../../Common/ButtonWithLoader'
 import ImageWithPopupView from '../../../../ImageWithPopupView/ImageWithPopupView'
+import styled from 'styled-components'
 
 import { SourceType, PostType } from '../../../../../types/PostType.d'
 
 import styles from './PictureCarousel.module.css'
+
+
+const CountContainerDiv = styled.div`
+  position: absolute;
+  top: -15px;
+  margin-left: calc(100% - 30px);
+  font-size: 10px;
+  background-color: rgba(245, 245, 245, 0.7);
+  box-shadow: 0 0 0px 0px #111;
+  color: rgba(0, 0, 0, 0.5);
+  height: 20px;
+  min-width: 20px;
+  line-height: 20px;
+  z-index: 9;
+  border-radius: 50%;
+  text-align: center;
+}
+`
 
 type PictureCarouselProps = {
   allData: PostType
@@ -41,13 +60,11 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
     <>
       <div className={styles.imageContainer}>
         <Carousel isRTL={false} pagination={page}
-         renderPagination={({ pages, activePage, onClick }) => {
-           console.log(pages.length)
-           console.log(activePage)
+         renderPagination={({ pages, activePage}) => {
           return (
-            <>
-             {`${activePage+1}/${pages.length-1}`}
-            </>
+            <CountContainerDiv>
+              {`${activePage+1}/${pages.length}`}
+            </CountContainerDiv>
           )
         }}
         >
