@@ -3,6 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
 import { Link, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
+import useUser from '../../../hooks/useUser'
 
 import useRouter from '../../../hooks/commons/useRouter'
 import Home from '../Home'
@@ -51,6 +52,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
   //   const { isSubscribed, isOwner } = props
   const { url } = useRouteMatch()
   const router = useRouter()
+  const { user } = useUser()
   const { match } = router
 
   const [currentTab, setCurrentTab] = useState<HomeTabs>()
@@ -97,19 +99,21 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
 
           <p className="option-item-title">Purchased</p>
         </TabLink>
-        <Link to="/user/create-post" className='option-item' style={{width: '50px'}}>
-          <svg 
-          className="action-list-item-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 50 50"
-          style={{marginTop: 'auto', position: 'relative', left: '25%'}}
-          >
-            <path
-              fill="#000000"
-              d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
-            />
-          </svg>
-        </Link>
+        {user.verifiedAccount &&
+          <Link to="/user/create-post" className='option-item' style={{width: '50px'}}>
+            <svg 
+            className="action-list-item-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 40 40"
+            style={{marginTop: '40%', marginLeft: '25%'}}
+            >
+              <path
+                fill="#000000"
+                d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
+              />
+            </svg>
+          </Link>
+        }
       </TabContainerDiv>
 
       <ContentContainerDiv>

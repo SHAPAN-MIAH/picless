@@ -7,7 +7,6 @@ import useUser from '../../../hooks/useUser'
 import './FloatyBar.css'
 
 const FloatyBar: FunctionComponent<{}> = () => {
-  const { user } = useUser()
   const { showMenu, setShowMenu } = useMenu()
 
   const handleMenu = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
@@ -92,14 +91,6 @@ const FloatyBar: FunctionComponent<{}> = () => {
           </div>
         </div>
       </aside>
-      {/*            <Link className="action-list-item" to="/user/create-post">
-              <svg className="action-list-item-icon" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
-                <path
-                  fill="#000000"
-                  d="M20,11h-9v9H9v-9H0V9h9V0h2v9h9V11z"
-                />
-              </svg>
-            </Link>*/}
     </>
   )
 }
