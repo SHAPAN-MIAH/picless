@@ -64,7 +64,10 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
   }, [])
 
   const hanleStyles = (tab: any) => {
-    const width = tab === currentTab ? {width: '40%'} : {width: '20%'}
+    let width = {width: '20%'}
+    if(tab === currentTab) {
+      width = user.verifiedAccount ? {width: '40%'} : {width: '60%'}  
+    }
     return width;
   }
 
@@ -81,7 +84,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
             <use xlinkHref="#svg-status"> </use>
           </svg>
 
-          <p className={classNames("option-item-title", currentTab !== HomeTabs.TIMELINE ? 'd-none' : '')}>Timeline</p>
+          <p className={classNames("option-item-title", currentTab !== HomeTabs.TIMELINE ? 'hidden' : '')}>Timeline</p>
         </TabLink>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.SAVED ? 'active' : '')}
@@ -92,7 +95,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           <svg className={classNames('option-item-icon icon-pinned', currentTab !== HomeTabs.SAVED ? 'margins-svg' : '')}>
             <use xlinkHref="#svg-pinned"> </use>
           </svg>
-          <p className={classNames("option-item-title", currentTab !== HomeTabs.SAVED ? 'd-none' : '')}>Saved</p>
+          <p className={classNames("option-item-title", currentTab !== HomeTabs.SAVED ? 'hidden' : '')}>Saved</p>
         </TabLink>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.PURCHASED ? 'active' : '')}
@@ -103,7 +106,7 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           <svg className={classNames('option-item-icon icon-revenue', currentTab !== HomeTabs.PURCHASED ? 'margins-svg' : '')}>
             <use xlinkHref="#svg-revenue"> </use>
           </svg>
-          <p className={classNames("option-item-title", currentTab !== HomeTabs.PURCHASED ? 'd-none' : '')}>Purchased</p>
+          <p className={classNames("option-item-title", currentTab !== HomeTabs.PURCHASED ? 'hidden' : '')}>Purchased</p>
         </TabLink>
         {user.verifiedAccount &&
           <TabLink

@@ -146,10 +146,6 @@
 .hidden {
   display: none;
 }
-.d-none {
-  display: none;
-}
-
 .margins-svg {
   margin-left: auto!important;
   margin-right: auto!important;
