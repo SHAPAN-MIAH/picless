@@ -3,6 +3,7 @@
         display: flex;
         flex-wrap: wrap;
         grid-gap: .1px!important;
+        justify-content: space-between!important;
     }
     .widget-photos {
         padding: 10px 10px;

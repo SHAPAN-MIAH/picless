@@ -63,6 +63,11 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
     else setCurrentTab(HomeTabs.TIMELINE)
   }, [])
 
+  const hanleStyles = (tab: any) => {
+    const width = tab === currentTab ? {width: '40%'} : {width: '20%'}
+    return width;
+  }
+
   return (
     <>
       <TabContainerDiv className="option-items" style={{ justifyContent: 'center', position: 'sticky', top: 0, zIndex: 10, marginBottom: '-20px'}}>
@@ -70,33 +75,35 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           className={classNames('option-item', currentTab === HomeTabs.TIMELINE ? 'active' : '')}
           to={`${url}/${HomeTabs.TIMELINE}`}
           onClick={() => setCurrentTab(HomeTabs.TIMELINE)}
-          style={{width: '40%'}}
+          style={hanleStyles(HomeTabs.TIMELINE)}
         >
-          <svg className="option-item-icon icon-status">
+          <svg className={classNames('option-item-icon icon-status', currentTab !== HomeTabs.TIMELINE ? 'margins-svg' : '')}>
             <use xlinkHref="#svg-status"> </use>
           </svg>
 
-          <p className="option-item-title">Timeline</p>
+          <p className={classNames("option-item-title", currentTab !== HomeTabs.TIMELINE ? 'd-none' : '')}>Timeline</p>
         </TabLink>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.SAVED ? 'active' : '')}
           to={`${url}/${HomeTabs.SAVED}`}
           onClick={() => setCurrentTab(HomeTabs.SAVED)}
-          style={{width: '20%'}}
+          style={hanleStyles(HomeTabs.SAVED)}
         >
-          <svg className="option-item-icon icon-pinned" style={{marginLeft: 'auto', marginRight: 'auto'}}>
+          <svg className={classNames('option-item-icon icon-pinned', currentTab !== HomeTabs.SAVED ? 'margins-svg' : '')}>
             <use xlinkHref="#svg-pinned"> </use>
           </svg>
+          <p className={classNames("option-item-title", currentTab !== HomeTabs.SAVED ? 'd-none' : '')}>Saved</p>
         </TabLink>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.PURCHASED ? 'active' : '')}
           to={`${url}/${HomeTabs.PURCHASED}`}
           onClick={() => setCurrentTab(HomeTabs.PURCHASED)}
-          style={{width: '20%'}}
+          style={hanleStyles(HomeTabs.PURCHASED)}
         >
-          <svg className="option-item-icon icon-revenue" style={{marginLeft: 'auto', marginRight: 'auto'}}>
+          <svg className={classNames('option-item-icon icon-revenue', currentTab !== HomeTabs.PURCHASED ? 'margins-svg' : '')}>
             <use xlinkHref="#svg-revenue"> </use>
           </svg>
+          <p className={classNames("option-item-title", currentTab !== HomeTabs.PURCHASED ? 'd-none' : '')}>Purchased</p>
         </TabLink>
         {user.verifiedAccount &&
           <TabLink
