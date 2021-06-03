@@ -1,0 +1,23 @@
+.section-header-discovery {
+    display: none;
+}
+@media screen and (max-width: 680px) {
+    .section-header-discovery {
+        display: block;
+        top: 0;
+        position: sticky;
+        z-index: 10;
+        width: 100%;
+        background-color: #615dfa;
+        padding: 8px;
+    }
+    .section-header-discovery > div {
+        width: 100%!important;   
+    }
+    .section-header-discovery > div > div {
+        height: 35px!important;
+    }
+}
+.container-discovery {
+    margin-top: 10px;   
+}
