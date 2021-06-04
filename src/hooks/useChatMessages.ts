@@ -77,7 +77,6 @@ const useChatMessages = () => {
   }
 
   const receiveMessage = async (message: OnReceiveMessageType) => {
-    console.log(message)
     const msg: MessageType = {
       content: message.message,
       user: message.user,
@@ -88,6 +87,14 @@ const useChatMessages = () => {
     }
 
     insertMessage(msg)
+  }
+
+  const setLastMessage = async(msg: OnReceiveMessageType) => {
+
+    const message =  {userId: Number(msg.fromUserId), message: msg.message, dateMessage: new Date().toJSON()}
+    console.log(message)
+
+    dispatch({ type: ACTIONS.SET_LAST_MESSAGE_AND_SET_UNREAD, payload: message })
   }
 
   const insertMessage = async (msg: MessageType) => {
@@ -117,6 +124,7 @@ const useChatMessages = () => {
     currentConversation: state.currentChat,
     getUserList,
     getMessageHistory,
+    setLastMessage,
     receiveMessage,
     notifyConnected,
     notifyDisconnected,

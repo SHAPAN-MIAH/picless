@@ -7,6 +7,7 @@ export interface UserStatusMessagesType {
   lastMessage: string
   connectionId?: string
   lastMessageDate: string
+  hasUnreadMessages?: boolean
   selected?: boolean
 }
 
