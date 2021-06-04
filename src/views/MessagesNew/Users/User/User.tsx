@@ -1,14 +1,22 @@
 import React, { FunctionComponent, useEffect } from 'react'
-import useChatMessages from 'hooks/useChatMessages'
 import { UserStatusMessagesType } from 'types/MessagesType'
 import UserAvatar from 'components/UserAvatar'
 import classNames from 'classnames'
 import moment from 'moment'
+import styled from 'styled-components'
+
+const UnreadMessage = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: #23d2e2;
+  display: inline-block;
+  border-radius: 8px;
+  margin-right: 7px;
+`
 
 const User: FunctionComponent<{ data: UserStatusMessagesType }> = (props) => {
   const { data } = props
 
-  const { selectUser } = useChatMessages()
   return (
     <>
       <div
@@ -22,6 +30,7 @@ const User: FunctionComponent<{ data: UserStatusMessagesType }> = (props) => {
           </div>
 
           <p className="user-status-title">
+            {data.hasUnreadMessages && <UnreadMessage />}
             <span className="bold">{data.fullName}</span>
           </p>
 

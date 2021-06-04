@@ -5,7 +5,7 @@ import ChatService from 'services/ChatService'
 import { OnReceiveMessageType } from 'types/MessagesType'
 
 const useChatSignalR = () => {
-  const { receiveMessage, userSelected, notifyConnected, changeUserStatus } = useChatMessages()
+  const { receiveMessage, setLastMessage, userSelected, notifyConnected, changeUserStatus } = useChatMessages()
 
   const [connection, setConnection] = useState<HubConnection | null>(null)
 
@@ -42,6 +42,7 @@ const useChatSignalR = () => {
 
   const onReceiveMessage = function (message: OnReceiveMessageType) {
     if (Number(userSelected?.userId) === Number(message?.fromUserId)) receiveMessage(message)
+    else setLastMessage(message)
   }
 
   const onConnectUser = function (userId: number) {

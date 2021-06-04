@@ -29,6 +29,7 @@ export const ACTIONS = {
   SELECT_USER: 'select_user',
   CHANGE_USER_STATUS: 'change_user_status',
   SET_CURRENT_CHAT: 'set_current_chat',
+  SET_LAST_MESSAGE_AND_SET_UNREAD: 'set_last_message_and_set_unread',
   INSERT_MESSAGE_TO_CURRENT_CHAT: 'insert_message_to_current_chat',
   CLEAR: 'clear',
 }
@@ -67,7 +68,7 @@ const ACTIONS_REDUCERS = {
 
     const users = state.users.map((u) => {
       if(u.userId === userId){
-        return {...u, connectionId: status.toLowerCase()}
+        return {...u, connectionId: status.toLowerCase(), hasUnreadMessages: false}
       }
       return {...u}
     })
@@ -83,6 +84,23 @@ const ACTIONS_REDUCERS = {
     loadingMessages: false,
     currentChat: action.payload as MessageType[],
   }),
+  
+  [ACTIONS.SET_LAST_MESSAGE_AND_SET_UNREAD]: (state: ChatState, action: ChatAction) => {
+    const {userId, message, dateMessage} = (action.payload as {userId: number, message: string, dateMessage: string})
+
+    const users = state.users.map((u) => {
+      if(u.userId === userId){
+        return {...u, hasUnreadMessages: true, lastMessage: message, lastMessageDate: dateMessage }
+      }
+      return {...u}
+    })
+
+    return {
+      ...state,
+      loadingUsers: false,
+      users,
+    }
+  },
   [ACTIONS.INSERT_MESSAGE_TO_CURRENT_CHAT]: (state: ChatState, action: ChatAction) => {
     const updatedChat = [...state.currentChat]
     updatedChat.push(action.payload as MessageType)
