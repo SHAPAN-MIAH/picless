@@ -18,7 +18,6 @@ const Loading = (
 const TabContainerDiv = styled.div`
   width: 100%;
   border-bottom: 1px solid #eaeaf5;
-
   background-color: #fff;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;

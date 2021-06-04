@@ -6,9 +6,9 @@ export enum NotificationsTabs {
   All = 'all',
   Likes = 'likes',
   Subscriber = 'subscriber',
-  Money = 'Money',
-  Alerts = 'Alerts',
-  Settings = 'Settings'
+  Money = 'money',
+  Alerts = 'alerts',
+  Settings = 'settings'
 }
 
 const NotificationsT: FunctionComponent<{}> = () => {

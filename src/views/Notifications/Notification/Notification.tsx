@@ -9,7 +9,7 @@ import useNotifications from '../../../hooks/useNotification'
 const NotificationsAll: FunctionComponent<{}> = () => {
   const { notifications } = useNotifications()
   return (
-    <>
+    <div style={{marginTop: '10px'}}>
       {notifications.map((notification) => (
           <div key={notification.id} className="notification-box">
             <div className="user-status notification">
@@ -54,7 +54,7 @@ const NotificationsAll: FunctionComponent<{}> = () => {
               <div className="mark-unread-button" /> */}
           </div>
       ))}
-    </>
+    </div>
   )
 }
 
