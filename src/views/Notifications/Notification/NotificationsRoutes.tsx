@@ -7,7 +7,7 @@ import useRouter from '../../../hooks/commons/useRouter'
 import { NotificationsTabs } from '../NotificationsTabs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Notification = React.lazy(() => import('./Notification'))
+const NotificationsAll = React.lazy(() => import('./Notification'))
 
 const Loading = (
   <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
@@ -34,7 +34,7 @@ const TabLink = styled(Link)`
 
 const ContentContainerDiv = styled.div``
 
-const NotificationsTabsContainer: FunctionComponent<{}> = () => {
+const NotificationsRoutes: FunctionComponent<{}> = () => {
   const { url } = useRouteMatch()
   const router = useRouter()
   const { match } = router
@@ -107,9 +107,9 @@ const NotificationsTabsContainer: FunctionComponent<{}> = () => {
 
       <ContentContainerDiv>
         {<React.Suspense fallback={Loading}>
-            <Notification/>
+          <NotificationsAll/>
           <Switch>
-            <Route path={`${match.path}/${NotificationsTabs.All}`} component={Notification} />
+            <Route path={`${match.path}/${NotificationsTabs.All}`} component={NotificationsAll} />
             {/*<Route
               path={`${match.path}/`}
               render={() => {
@@ -123,4 +123,4 @@ const NotificationsTabsContainer: FunctionComponent<{}> = () => {
   )
 }
 
-export default NotificationsTabsContainer
+export default NotificationsRoutes

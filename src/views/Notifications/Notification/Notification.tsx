@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import moment from 'moment'
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import UserAvatar from '../../../components/UserAvatar'
 import { NotificationType } from '../../../types/NotificationType'
 import useNotifications from '../../../hooks/useNotification'
 
-const Notification = () => {
+const NotificationsAll: FunctionComponent<{}> = () => {
   const { notifications } = useNotifications()
   return (
     <>
@@ -58,4 +58,4 @@ const Notification = () => {
   )
 }
 
-export default Notification
+export default NotificationsAll
