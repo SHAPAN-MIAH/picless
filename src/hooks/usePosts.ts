@@ -130,7 +130,7 @@ const usePosts = () => {
   }
 
   const deletePost = async (postId: number) => {
-    PostService.deletePost(postId)
+    return PostService.deletePost(postId)
       .then((data: { code: number; message: string }) => {
         if (data.code !== 0) {
           throw new Error(data.message)
@@ -168,22 +168,21 @@ const usePosts = () => {
   }, [])
 
   const unlockPost = (postId: number) => {
-    return new Promise<{action: string, redirect?: string}>((resolve, reject) => {
-    
+    return new Promise<{ action: string; redirect?: string }>((resolve, reject) => {
       PaymentService.unlockContent(postId)
-      .then((data: { code: number; message: string, path: string }) => {
-        if (data.code !== 0) {
-          throw new Error(data.message)
-        }
+        .then((data: { code: number; message: string; path: string }) => {
+          if (data.code !== 0) {
+            throw new Error(data.message)
+          }
 
-        resolve({action: data.message, redirect: data.path})
-      })
-      .catch((err) => {
-        toast.error('Error unblocking post')
-        console.error(err.message)
+          resolve({ action: data.message, redirect: data.path })
+        })
+        .catch((err) => {
+          toast.error('Error unblocking post')
+          console.error(err.message)
 
-        reject()
-      })
+          reject()
+        })
     })
   }
 
@@ -197,9 +196,10 @@ const usePosts = () => {
     addReaction,
     removeReaction,
     unlockPost,
-    cleanPost: () => dispatch({
-      type: ACTIONS.CLEAR,
-    })
+    cleanPost: () =>
+      dispatch({
+        type: ACTIONS.CLEAR,
+      }),
   }
 }
 
