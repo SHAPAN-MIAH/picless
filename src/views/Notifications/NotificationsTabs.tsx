@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-import Notifications from './Notifications'
+import NotificationsTabsContainer from './Notification/NotificationsTabsContainer'
 
 export enum NotificationsTabs {
   All = 'all',
@@ -11,12 +11,12 @@ export enum NotificationsTabs {
   Settings = 'Settings'
 }
 
-const Posts: FunctionComponent<{}> = () => {
+const NotificationsT: FunctionComponent<{}> = () => {
   return (
     <>
-      <Notifications />
+      <NotificationsTabsContainer />
     </>
   )
 }
 
-export default Posts
+export default NotificationsT
