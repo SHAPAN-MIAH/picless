@@ -4,18 +4,10 @@ import Loader from 'react-loader-spinner'
 import { Link, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 import useRouter from '../../../hooks/commons/useRouter'
-import useNotifications from '../../../hooks/useNotification'
 import { NotificationsTabs } from '../NotificationsTabs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Saved = React.lazy(() => import('../../Home/SectionTabs/SavedTab'))
-//const Purchased = React.lazy(() => import('./PurchasedTab'))
-
-type HomeRoutesProps = {
-  //   isSubscribed: boolean
-  //   isOwner: boolean
-  // username: string
-}
+const Notification = React.lazy(() => import('./Notification'))
 
 const Loading = (
   <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
@@ -43,8 +35,6 @@ const TabLink = styled(Link)`
 const ContentContainerDiv = styled.div``
 
 const NotificationsTabsContainer: FunctionComponent<{}> = () => {
-  const { notifications } = useNotifications()
-
   const { url } = useRouteMatch()
   const router = useRouter()
   const { match } = router
@@ -117,9 +107,9 @@ const NotificationsTabsContainer: FunctionComponent<{}> = () => {
 
       <ContentContainerDiv>
         {<React.Suspense fallback={Loading}>
+            <Notification/>
           <Switch>
-            <Route path={`${match.path}/${NotificationsTabs.All}`} component={Saved} />
-            {console.log(currentTab)}
+            <Route path={`${match.path}/${NotificationsTabs.All}`} component={Notification} />
             {/*<Route
               path={`${match.path}/`}
               render={() => {
@@ -131,40 +121,6 @@ const NotificationsTabsContainer: FunctionComponent<{}> = () => {
       </ContentContainerDiv>
     </>
   )
-  /*useEffect(() => {
-    window.tpl.load(['sidebar'])
-  }, [])
-
-  return (
-    <>
-      <div className="content-grid" style={{ maxWidth: '800px' }}>
-        <div className="grid grid-2-7-2">
-          <div className="account-hub-content">
-            <div className="section-header">
-              <div className="section-header-info">
-                <p className="section-pretitle">My profile</p>
-
-                <h2 className="section-title">Notifications</h2>
-              </div>
-              <div className="section-header-actions">
-                <Link to="/account/settings" className="section-header-action">
-                  Settings
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid-column">
-              <div className="notification-box-list">
-                {notifications.map((notification) => {
-                  return <Notification key={notification.id} notification={notification} />
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  )*/
 }
 
 export default NotificationsTabsContainer
