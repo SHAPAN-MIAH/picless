@@ -3,12 +3,12 @@ import React, { FunctionComponent } from 'react'
 import NotificationsRoutes from './Notification/NotificationsRoutes'
 
 export enum NotificationsTabs {
-  All = 'all',
-  Likes = 'likes',
-  Subscriber = 'subscriber',
-  Money = 'money',
-  Alerts = 'alerts',
-  Settings = 'settings'
+  ALL = 'all',
+  LIKES = 'likes',
+  SUSCRIBER = 'subscriber',
+  MONEY = 'money',
+  ALERTS = 'alerts',
+  SETTINGS = 'settings'
 }
 
 const NotificationsT: FunctionComponent<{}> = () => {
