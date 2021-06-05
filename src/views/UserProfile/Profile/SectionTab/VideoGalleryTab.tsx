@@ -4,6 +4,11 @@ import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
 import LiquidImage from '../../../../components/Common/LiquidImage'
 import useProfile from '../../../../hooks/useProfile'
+import * as Utils from '../../../../utils/Functions'
+import { isMobile } from 'react-device-detect'
+import VideoPlayer from '../../../../assets/js/VideoPlayer'
+
+import './VideoGalleryTab..css'
 
 const noVideos = 'Nothing to show'
 
@@ -32,40 +37,51 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     }
   }, [])
 
+  const options = {
+    fill: true,
+    fluid: true,
+    responsive: true,
+    preload: 'auto',
+    controls: true,
+    controlBar: {
+      pictureInPictureToggle: false,
+    },
+  }
+
   return (
     <>
       <div className="grid">
         <div className="grid-column">
-          <div className="widget-box">
-            {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
+          <div className="widget-box widget-videos">
+          {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
             {videos.length > 0 && (
               <>
-
                 <InfiniteScroll dataLength={videos.length} next={getVideoList} hasMore loader={LoaderDiv}>
-                  <div className="photos-masonry">
+                  <div className="grid grid-3-3-3-3 centered grid-videos" style={{ overflow: 'hidden' }}>
                     {videos.map((item) => {
                       return (
-                        <>
-                          <div className="photo-preview popup-picture-trigger">
-                            <LiquidImage
-                              className="user-preview-cover"
-                              src={`${process.env.PUBLIC_URL}/img/cover/06.jpg`}
-                              alt="cover-04"
-                            />
-
-                            <div className="photo-preview-info">
-                              <div className="reaction-count-list landscape">
-                                <div className="reaction-count negative">
-                                  <svg className="reaction-count-icon icon-comment">
-                                    <use xlinkHref="#svg-comment" />
-                                  </svg>
-
-                                  <p className="reaction-count-text">View post {item.name}</p>
-                                </div>
-                              </div>
-                            </div>
+                        <div key={item.id} className="album-preview">
+                          <div key={item.id} data-vjs-player>
+                            <VideoPlayer src={item.accessUrl} type="" options={options} />
                           </div>
-                        </>
+                          {/*<div style={{width: '100%', height: '100%'}}>
+                            <img
+                              src={Utils.imgError}
+                              className='tumbail-video'
+                              alt={item.name}
+                              onError={(e: any) => {
+                                e.target.onerror = null
+                                e.target.src = Utils.imgError
+                              }}
+                            />
+                          </div>
+                          {!isMobile && (
+                            <div className="album-preview-info" style={{ top: '-284px' }}>
+                              <p className="album-preview-title">View post</p>
+                              <p className="album-preview-text">{item.registerDate}</p>
+                            </div>
+                          )}*/}
+                        </div>
                       )
                     })}
                   </div>

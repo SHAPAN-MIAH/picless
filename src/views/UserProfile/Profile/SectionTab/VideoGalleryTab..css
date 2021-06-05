@@ -1,0 +1,31 @@
+@media screen and (max-device-width: 812px) {
+    .grid-videos {
+        display: flex;
+        flex-wrap: wrap;
+        grid-gap: .1px!important;
+        justify-content: space-between!important;
+    }
+    .widget-videos {
+        padding: 10px 10px;
+    }
+    .album-preview {
+        width: 33%;
+        height: auto!important;
+        margin: .5px;
+    }
+    .album-preview img {
+        border-radius: 0!important;
+    }
+    .widget-videos {
+        padding: 0%!important;
+    }
+    .class-up > div > div > div {
+        height: 100vh!important;
+    }
+  }
+
+  .tumbail-video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
