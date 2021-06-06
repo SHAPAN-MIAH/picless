@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import UserAvatar from 'components/UserAvatar'
 import useChatMessages from 'hooks/useChatMessages'
 import { UserStatusMessagesType } from 'types/MessagesType'
+import { Link } from 'react-router-dom'
 
 type HeaderProps = {
   user: UserStatusMessagesType
@@ -36,7 +37,9 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
           )}
         </div>
         <p className="user-status-title">
-          <span className="bold">{user.fullName}</span>
+          <Link to={`/u/${user.userName}`}>
+            <span className="bold">{user.fullName}</span>
+          </Link>
         </p>
 
         <p className={`user-status-tag ${status}`}>{status}</p>
