@@ -81,7 +81,8 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path={['/user/chat', '/user/chat/:userid']} component={ChatMain} />
 
               <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
-              <ProtectedRoute {...routerProps} exact path="/user/notification" component={Notification} />
+
+              <ProtectedRoute {...routerProps} path="/user/notification" component={Notification} />
 
               <ProtectedRoute {...routerProps} exact path="/user/discover" component={Discover} />
 
