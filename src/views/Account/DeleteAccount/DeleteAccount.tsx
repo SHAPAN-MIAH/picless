@@ -35,7 +35,7 @@ const DeleteAccount: FunctionComponent<{}> = () => {
       <div className="grid-column">
         <div className="widget-box">
           <div className="widget-box-content">
-            <p>Once you delete your account, there is no going back. Please be certain.</p>
+            <TextContainerP>Once you delete your account, there is no going back. Please be certain.</TextContainerP>
             <StyledPopup
               header="Are you sure you want to do this?"
               size="S"
