@@ -11,7 +11,7 @@ const AllTab: FunctionComponent<{}> = () => {
   return (
     <div style={{ marginTop: '10px' }}>
       {notifications.map((notification) => (
-        <div key={notification.id} className="notification-box">
+        <div key={notification.id} className="notification-box" style={{ marginTop: '10px' }}>
           <div className="user-status notification">
             <a className="user-status-avatar" href="profile-timeline.html">
               <UserAvatar size="S" imageName={notification.profilePicture} />
