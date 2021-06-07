@@ -21,7 +21,7 @@ const ImageContainerDiv = styled.div`
 
 const ImageImg = styled.img`
   width: 100%;
-  height: 160px;
+  height: auto;
   border-radius: 10px;
 `
 const StyledPopup = styled(Popup)`

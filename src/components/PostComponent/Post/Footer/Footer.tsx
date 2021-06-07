@@ -70,7 +70,7 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
         <div className="post-option-wrap">
           <div className="post-option" onClick={onLike}>
             <div className={classNames('post-option-icon', liked ? styles.liked : '')}>
-              <FontAwesomeIcon icon="heart" color={!liked ? "": "red"} viewBox="0 10 400 400" />
+              <FontAwesomeIcon icon="heart" color={!liked ? "": "red"} viewBox="0 0 400 400" />
             </div>
             {liked ? (
               <p className={classNames('post-option-text', styles.liked)}>Liked!</p>
