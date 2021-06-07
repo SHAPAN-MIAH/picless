@@ -99,7 +99,8 @@ const UserSettings: FunctionComponent<{}> = () => {
 
   return (
     <div className="content-grid grid-settings" style={{ maxWidth: '800px'}}>
-
+      <div className="grid grid-2-8-2">
+        <div className="grid-column"> </div>
 
         <div className="account-hub-content">
 
@@ -113,7 +114,7 @@ const UserSettings: FunctionComponent<{}> = () => {
             )}
 
             <form className={classNames('form', loading ? 'hidden' : '')} onSubmit={handleSubmit(onSubmit)}>
-              <div className="widget-box" style={{ marginTop: '55px', marginBottom: '0', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+              <div className="widget-box" style={{ marginTop: '20px', marginBottom: '20px', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
                 <p className="widget-box-title">{t('settings.generalTitle')}</p>
 
                 <div className="widget-box-content">
@@ -404,6 +405,7 @@ const UserSettings: FunctionComponent<{}> = () => {
             </form>
           </div>
         </div>
+      </div>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const AllTab = React.lazy(() => import('./SectionTabs/AllTab'))
 const UserSettings = React.lazy(() => import('../Account/UserSettings'))
+const SettingsTab = React.lazy(() => import('./SectionTabs/SettingsTab'))
 
 const Loading = (
   <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
@@ -40,6 +41,8 @@ const NotificationsRoutes: FunctionComponent<{}> = () => {
   const { match } = router
 
   const [currentTab, setCurrentTab] = useState<NotificationsTabsNames>()
+
+  const notificationsContainer = <ContentContainerDiv>{UserSettings}</ContentContainerDiv>
 
   useEffect(() => {
     if (router.pathname.includes(NotificationsTabsNames.ALL)) setCurrentTab(NotificationsTabsNames.ALL)
@@ -142,8 +145,7 @@ const NotificationsRoutes: FunctionComponent<{}> = () => {
         <React.Suspense fallback={Loading}>
           <Switch>
             <Route exact path={`${match.path}/${NotificationsTabsNames.ALL}`} component={AllTab} />
-            <Route exact path={`${match.path}/${NotificationsTabsNames.SETTINGS}`} component={UserSettings} />
-            
+            <Route exact path={`${match.path}/${NotificationsTabsNames.SETTINGS}`} component={SettingsTab} />
             <Route
               path={`${match.path}/`}
               render={() => {
