@@ -57,6 +57,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
       isDisabled = true
     }
   }
+  const swipe = media.length > 1 ? true : false;
 
   return (
     <>
@@ -65,6 +66,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
           ref={carouselRef}
           isRTL={false}
           pagination={page}
+          enableSwipe={swipe}
           renderPagination={({ pages, activePage}) => {
           return (
             <CountContainerDiv>
