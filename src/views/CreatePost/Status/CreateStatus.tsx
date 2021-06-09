@@ -206,8 +206,8 @@ const CreateStatus: FunctionComponent<{}> = () => {
             style={{ paddingLeft: '0px' }}
             onClick={() => {
               {
-                !showUploadPhotos && uploadFile.current && uploadFile.current.click()
-                setShowUploadPhotos(!showUploadPhotos)
+                uploadFile.current && uploadFile.current.click()
+                setShowUploadPhotos(true)
               }
             }}
           >
