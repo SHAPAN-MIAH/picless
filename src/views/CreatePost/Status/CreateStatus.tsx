@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
@@ -46,6 +46,8 @@ const CreateStatus: FunctionComponent<{}> = () => {
 
   const { user } = useUser()
   const router = useRouter()
+
+  const uploadFile = React.createRef<any>();
 
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
   // const [showTags, setShowTags] = useState<boolean>(false)
@@ -150,6 +152,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
             onUploadedFile={onUploadedFile}
             onLoading={onLoading}
             onRemove={onRemoveImage}
+            fileInput={uploadFile}
           />
 
           <FormRow>
@@ -202,7 +205,10 @@ const CreateStatus: FunctionComponent<{}> = () => {
             className="quick-post-footer-action"
             style={{ paddingLeft: '0px' }}
             onClick={() => {
-              setShowUploadPhotos(!showUploadPhotos)
+              {
+                !showUploadPhotos && uploadFile.current && uploadFile.current.click()
+                setShowUploadPhotos(!showUploadPhotos)
+              }
             }}
           >
             <svg className="quick-post-footer-action-icon icon-camera">
