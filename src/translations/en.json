@@ -85,7 +85,7 @@
     "urlUserNameField": "Username",
     "occupationField": "Occupation",
     "subscriptionPriceField": "Subscription price / per Month",
-    "deleteAccount": "DeleteAccount"
+    "deleteAccount": "Delete Account"
   },
   "accountDevices": {
     "devicesTitle": "Devices",

@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react'
 
-import NotificationsRoutes from './Notification/NotificationsRoutes'
+import NotificationsRoutes from './NotificationsRoutes'
 
-export enum NotificationsTabs {
-  All = 'all',
-  Likes = 'likes',
-  Subscriber = 'subscriber',
-  Money = 'money',
-  Alerts = 'alerts',
-  Settings = 'settings'
+export enum NotificationsTabsNames {
+  ALL = 'all',
+  LIKES = 'likes',
+  SUSCRIBER = 'subscriber',
+  MONEY = 'money',
+  ALERTS = 'alerts',
+  SETTINGS = 'settings',
 }
 
-const NotificationsT: FunctionComponent<{}> = () => {
+const NotificationsTabs: FunctionComponent<{}> = () => {
   return (
     <>
       <NotificationsRoutes />
@@ -19,4 +19,4 @@ const NotificationsT: FunctionComponent<{}> = () => {
   )
 }
 
-export default NotificationsT
+export default NotificationsTabs

@@ -33,6 +33,23 @@ const useChatMessages = () => {
     })
   }
 
+  const getSingleUser = async (userId: number) => {
+    return new Promise<void>((resolve, reject) => {
+
+      ChatService.getFavoriteUsers(userId)
+        .then((data: UserStatusMessagesType[]) => {
+          dispatch({ type: ACTIONS.SET_SINGLE_USER, payload: data[0] })
+
+          resolve()
+        })
+        .catch((err) => {
+          console.error(err)
+
+          reject(err)
+        })
+    })
+  }
+
   const getMessageHistory = async (userId: number) => {
     return new Promise<void>((resolve, reject) => {
       dispatch({ type: ACTIONS.LOADING_MESSAGES })
@@ -91,6 +108,12 @@ const useChatMessages = () => {
 
   const setLastMessage = async(msg: OnReceiveMessageType) => {
 
+    const foundUser = state.users.find(u => u.userId === Number(msg.fromUserId))
+
+    if(!foundUser){
+      await getSingleUser(Number(msg.fromUserId))
+    }
+
     const message =  {userId: Number(msg.fromUserId), message: msg.message, dateMessage: new Date().toJSON()}
     console.log(message)
 
@@ -123,6 +146,7 @@ const useChatMessages = () => {
     userSelected,
     currentConversation: state.currentChat,
     getUserList,
+    getSingleUser,
     getMessageHistory,
     setLastMessage,
     receiveMessage,

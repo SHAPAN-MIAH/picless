@@ -17,6 +17,7 @@ interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> 
   onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void
   onLoading: (status: boolean) => void
   onRemove: (name: string) => void
+  fileInput: HTMLImageElement | any
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
@@ -31,7 +32,7 @@ interface FilePreviewType extends File {
 const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
-  const { user, onUploadedFile, onRemove, onLoading, className } = props
+  const { user, onUploadedFile, onRemove, onLoading, className, fileInput } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -166,7 +167,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     })
   }
 
-  let fileInput: HTMLInputElement | null
+  //let fileInput: HTMLInputElement | null
 
   return (
     <>
@@ -177,7 +178,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               <div
                 className={classNames(styles.itemBase, styles.addSource)}
                 onClick={() => {
-                  if (fileInput) fileInput.click()
+                  if (fileInput.current) fileInput.current.click()
                 }}
               >
                 <div style={{ textAlign: 'center', color: 'white' }}>
@@ -215,9 +216,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
                 type="file"
                 multiple
                 onChange={fileSelectedHandler}
-                ref={(input) => {
-                  fileInput = input
-                }}
+                ref={fileInput}
               />
             </div>
           </div>

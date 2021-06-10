@@ -257,6 +257,21 @@ const addBank = async (data: AddBankType) => {
   return body
 }
 
+const deleteAccount = async () => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'PUT',
+    headers
+  }
+
+  const url = `${baseUrl}/deleteaccount`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
 export default {
   getUserProfile,
   getUserProfileByUserName,
@@ -271,4 +286,5 @@ export default {
   register,
   uploadImageVerifiedAccount,
   addBank,
+  deleteAccount
 }

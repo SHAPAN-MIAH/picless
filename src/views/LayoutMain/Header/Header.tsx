@@ -12,7 +12,6 @@ import SearchBar from './SearchBar/SearchBar'
 import logo from '../../../Picless.png'
 
 import './Header.css'
-import { relative } from 'node:path'
 
 const Header: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
@@ -31,10 +30,10 @@ const Header: FunctionComponent<{}> = () => {
       <header className="header ">
         <div className="header-actions">
           <div className="header-brand">
-            <Link to='/' style={{maxWidth: '60px'}}>
-            <div className="logo" >
-              <img src={logo} alt="PICLESS"/>
-            </div>
+            <Link to="/" style={{ maxWidth: '60px' }}>
+              <div className="logo">
+                <img src={logo} alt="PICLESS" />
+              </div>
             </Link>
 
             <h1 className="header-brand-text">{process.env.REACT_APP_WEBSITE_NAME}</h1>

@@ -2,7 +2,7 @@ import React, { FunctionComponent, useCallback, useEffect, useRef, useState } fr
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
 import Popup from 'reactjs-popup'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import usePosts from '../../../../hooks/usePosts'
 
 import SendPrivateMessage from '../../../SendPrivateMessage/SendPrivateMessage'
@@ -69,25 +69,18 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
       <div className="post-options">
         <div className="post-option-wrap">
           <div className="post-option" onClick={onLike}>
-            {/*<svg 
-              className={classNames('post-option-icon icon-thumbs-up', liked ? styles.liked : '')}
-              xmlns="http://www.w3.org/2000/svg"
-              width={30}
-              height={30}
-              viewBox="0 0 16 16"
-              stroke-width=".25em"
-              >
-            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-            />
-            </svg>*/}
-            <svg 
-              className={classNames('post-option-icon icon-thumbs-up', liked ? styles.liked : '')}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 30 30"
-              >
-            <path d="M20.388,10.918L32,12.118l-8.735,7.749L25.914, 31.4l-9.893-6.088L6.127,31.4l2.695-11.533L0, 12.118l11.547-1.2L16.026,0.6L20.388,10.918z"
-            />
-            </svg>
+          {liked ? (<div className={classNames('post-option-icon', liked ? styles.liked : '')} style={{marginTop: '-7px'}}>
+              <FontAwesomeIcon icon="heart" color={!liked ? "": "red"} viewBox="0 0 400 400" />
+            </div>)
+            :
+            (<svg 
+                xmlns="http://www.w3.org/2000/svg"
+                className={classNames('post-option-icon', liked ? styles.liked : '')}
+                width={25}
+                height={25}
+                viewBox="0 0 20 20">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+            </svg>)}
             {liked ? (
               <p className={classNames('post-option-text', styles.liked)}>Liked!</p>
             ) : (
