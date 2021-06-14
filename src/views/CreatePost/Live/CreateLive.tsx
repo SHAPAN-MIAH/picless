@@ -10,6 +10,7 @@ import useLive from '../../../hooks/useLive'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
+import LiveSectionMenu from '../../../components/LiveSectionFeatures/LiveSectionMenu/LiveSectionMenu'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -88,7 +89,7 @@ const CreateLive: FunctionComponent<{}> = () => {
           <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} chatRef={chatRef} />
         )}
       </div>
-
+      <div className="widget-box">{ <LiveSectionMenu />}</div>
       <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
     </>
   )

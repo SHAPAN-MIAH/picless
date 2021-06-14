@@ -14,6 +14,7 @@ import './assets/css/styles.min.css'
 import './App.css'
 
 import './utils/Icons'
+// import LiveSectionRoutes from 'components/LiveSectionFeatures/LivesectionRoutes/LiveSectionRoutes'
 
 declare global {
   interface Window {
@@ -30,6 +31,7 @@ const App: FunctionComponent<{}> = () => {
       <AuthorizationContextProvider>
         <UserContextProvider>
           <MainRoutes />
+          {/* <LiveSectionRoutes/> */}
         </UserContextProvider>
       </AuthorizationContextProvider>
     </>

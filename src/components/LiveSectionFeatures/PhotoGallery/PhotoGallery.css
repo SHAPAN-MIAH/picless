@@ -1,0 +1,29 @@
+@media screen and (max-device-width: 812px) {
+    .grid-photos {
+        display: flex;
+        flex-wrap: wrap;
+        grid-gap: .1px!important;
+        justify-content: space-between!important;
+    }
+    .widget-photos {
+        padding: 10px 10px;
+    }
+    .album-preview {
+        width: 33%;
+        height: auto!important;
+        margin: .5px;
+    }
+    .album-preview img {
+        border-radius: 0!important;
+    }
+    .widget-photos {
+        padding: 0%!important;
+    }
+    .class-up > div > div > div {
+        height: 100vh!important;
+    }
+  }
+
+  .album-preview {
+    max-height: 284px!important;
+  }

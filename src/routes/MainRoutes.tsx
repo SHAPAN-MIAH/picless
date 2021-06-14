@@ -25,6 +25,9 @@ import UserProfile from '../views/UserProfile/UserProfile'
 import routes from './MenuRoutes'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 import ChatMain from 'views/MessagesNew/ChatMain'
+// import PhotoGallery from 'components/LiveSectionFeatures/PhotoGallery/PhotoGallery'
+// import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
+// import About from 'components/LiveSectionFeatures/About/About'
 
 const NoMatchPage = () => {
   return (
@@ -93,7 +96,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} path="/u/:username/metrics" exact component={Metrics} />
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
-
+        
               {/* <ProtectedRoute
                 {...routerProps}
                 path={['/u/:username', '/u/:username/', '/u/:username/:tab']}
@@ -107,7 +110,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <Route path="/support/contact" component={Contact} />
               <Route path="/support/privacy" component={PrivacyPolicy} />
               <Route path="/support/terms-conditions" component={TermsAndConditions} />
-
+              
               <Route path="/">
                 <Redirect to="/user/home/timeline" />
               </Route>
