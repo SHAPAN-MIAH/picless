@@ -1,3 +1,4 @@
+import { CommonServiceResponse } from './../types/CommonTypes';
 import { useCallback, useContext } from 'react'
 import toast from 'react-hot-toast'
 import PaymentService from 'services/PaymentService'
@@ -129,6 +130,32 @@ const usePosts = () => {
     })
   }
 
+  const getSavedPosts = async (): Promise<void> => {
+    dispatch({ type: ACTIONS.LOADING })
+
+    return PostService.getSavedPosts(state.nextPage).then((p: ServicePostType): void => {
+      if (p.code === '0') {
+        if (state.nextPage === 0) {
+          dispatch({
+            type: ACTIONS.SET_TOTAL_PAGES,
+            payload: p.pages,
+          })
+        }
+
+        dispatch({
+          type: ACTIONS.GET_POSTS,
+          payload: p.posts,
+        })
+
+        dispatch({
+          type: ACTIONS.CHANGE_PAGE,
+        })
+      } else {
+        toast.error('Error loading posts')
+      }
+    })
+  }
+
   const deletePost = async (postId: number) => {
     return PostService.deletePost(postId)
       .then((data: { code: number; message: string }) => {
@@ -186,20 +213,41 @@ const usePosts = () => {
     })
   }
 
+  const savePost = (postId: number) => {
+    return new Promise<void>((resolve, reject) => {
+    
+      PostService.savePost(postId).then((data: CommonServiceResponse) => {
+        if (data.code !== '0') {
+          throw new Error(data.message)
+        }
+        toast.success('Post saved')
+
+        resolve()
+      })
+      .catch((err) => {
+        toast.error('Error saving post')
+        console.error(err.message)
+
+        reject()
+      })
+    })
+  }
+
   return {
     loading: state.loading,
     posts: state.posts,
     hasMore: state.pages >= state.nextPage - 1,
     getPosts,
     getPurchasedPosts,
+    getSavedPosts,
     deletePost,
     addReaction,
     removeReaction,
     unlockPost,
-    cleanPost: () =>
-      dispatch({
-        type: ACTIONS.CLEAR,
-      }),
+    cleanPost: () => dispatch({
+      type: ACTIONS.CLEAR,
+    }),
+    savePost
   }
 }
 

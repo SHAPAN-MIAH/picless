@@ -1,4 +1,5 @@
 import EmptyPost from 'components/EmptyPost/EmptyPost'
+import PostList from 'components/PostComponent/PostList/PostList'
 import usePosts from 'hooks/usePosts'
 import React, { FunctionComponent, Suspense, useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -20,23 +21,18 @@ const notPostsMessage = 'you have not saved any content yet'
 const notPostsFooterMessage = 'when you save some content, it will appear here'
 
 const SavedTab: FunctionComponent<{}> = () => {
-  //   const [page, setPage] = useState<number>(0)
+  const { getSavedPosts, cleanPost, posts, hasMore, loading } = usePosts()
 
-  //   const { getPosts, posts } = usePost()
+  useEffect(() => {
+    getSavedPosts()
 
-  //   const getPostList = useCallback(() => {
-  //     getPosts(page).then(() => {
-  //       setPage(page + 1)
-  //     })
-  //   }, [getPosts, setPage, page])
-
-  //   useEffect(() => {
-  //     getPostList()
-  //   }, [])
+    return () => cleanPost()
+  }, [])
 
   return (
     <>
-      <EmptyPost message={notPostsMessage} footer={notPostsFooterMessage} />
+      {!loading && posts.length === 0 && <EmptyPost message={notPostsMessage} footer={notPostsFooterMessage} />}
+      <PostList getItems={getSavedPosts} hasMore={hasMore} loading={loading} posts={posts} />
     </>
   )
 }

@@ -24,7 +24,7 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
   const [save, setsaved] = useState<boolean>(false)
   const likedRef = useRef(-1)
 
-  const { addReaction, removeReaction } = usePosts()
+  const { addReaction, removeReaction, savePost } = usePosts()
 
   useEffect(() => {
     const { postReactions } = post
@@ -60,8 +60,10 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
     }
   }, [])
 
-  const hanleSaved = () => {
-    setsaved(!save)
+  const handleSaved = () => {
+    savePost(post.id).then(() => {
+      setsaved(!save)
+    })
   }
 
   return (
@@ -121,7 +123,7 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
           {(close: any) => <SendATip user={user || {}} callback={handleCallback} onClose={close} />}
         </Popup>
         <div className="post-option-wrap">
-          <div className="post-option" onClick={hanleSaved} style={{ width: '100px' }}>
+          <div className="post-option" onClick={handleSaved} style={{ width: '100px' }}>
             <svg className={classNames('post-option-icon icon-thumbs-up', save ? styles.liked : '')}>
               <use xlinkHref="#svg-pinned" />
             </svg>
