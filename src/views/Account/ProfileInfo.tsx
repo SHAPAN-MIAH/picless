@@ -79,13 +79,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     <div className="content-grid" style={{ maxWidth: '800px' }}>
       <div className="grid grid-2-7-2">
         <div className="account-hub-content">
-          <div className="section-header">
-            <div className="section-header-info">
-              <p className="section-pretitle">{t('profileInfo.myProfileTitle')}</p>
-
-              <h2 className="section-title">{t('profileInfo.profileInfo')}</h2>
-            </div>
-          </div>
+          <div className="section-header"></div>
 
           <div className="grid-column">
             <AccountHubMain />
