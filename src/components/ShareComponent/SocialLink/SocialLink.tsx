@@ -5,14 +5,14 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import styles from './SocialLink.module.css'
 
 interface SocialLinkProps {
-  icon: string
-  socialIcon: IconProp
+  iconStyle: string
+  icon: IconProp
 }
 
-const SocialLink: FunctionComponent<SocialLinkProps> = ({ icon, socialIcon }) => {
+const SocialLink: FunctionComponent<SocialLinkProps> = ({ iconStyle, icon }) => {
   return (
-    <li className={`social-link ${styles[icon]}`}>
-      <FontAwesomeIcon icon={socialIcon} color="white" />
+    <li className={`social-link ${styles[iconStyle]}`}>
+      <FontAwesomeIcon icon={icon} color="white" />
     </li>
   )
 }

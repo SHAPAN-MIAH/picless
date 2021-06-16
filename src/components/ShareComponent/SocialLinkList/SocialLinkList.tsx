@@ -6,19 +6,19 @@ import SocialLink from '../SocialLink/SocialLink'
 
 import './SocialLinkList.module.css'
 
-const socialIcons = [
-  { icon: 'facebook', socialIcon: faFacebook },
-  { icon: 'twitter', socialIcon: faTwitter },
-  { icon: 'whatsapp', socialIcon: faWhatsapp },
-  { icon: 'mail', socialIcon: faMailBulk },
-  { icon: 'clipboard', socialIcon: faClipboard },
+const socialMedia = [
+  { name: 'facebook', icon: faFacebook },
+  { name: 'twitter', icon: faTwitter },
+  { name: 'whatsapp', icon: faWhatsapp },
+  { name: 'mail', icon: faMailBulk },
+  { name: 'clipboard', icon: faClipboard },
 ]
 
 const SocialLinkList = () => {
   return (
     <ul className="social-links">
-      {socialIcons.map(({ icon, socialIcon }) => (
-        <SocialLink key={icon} icon={icon} socialIcon={socialIcon} />
+      {socialMedia.map(({ name, icon }) => (
+        <SocialLink key={name} iconStyle={name} icon={icon} />
       ))}
     </ul>
   )
