@@ -19,6 +19,7 @@ import { UserType } from '../../types/UserType'
 import AccountHubMain from './AccountHub/AccountHubMain'
 import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
+// import Hashtags from './HashTags/HashTags'
 
 type FormValues = {
   userName: string
@@ -79,13 +80,13 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     <div className="content-grid" style={{ maxWidth: '800px' }}>
       <div className="grid grid-2-7-2">
         <div className="account-hub-content">
-          <div className="section-header">
+          {/* <div className="section-header">
             <div className="section-header-info">
               <p className="section-pretitle">{t('profileInfo.myProfileTitle')}</p>
 
               <h2 className="section-title">{t('profileInfo.profileInfo')}</h2>
             </div>
-          </div>
+          </div> */}
 
           <div className="grid-column">
             <AccountHubMain />
@@ -165,14 +166,14 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                         />
                       </div>
                     </FormItem>
-                    <FormItem>
+                    {/* <FormItem>
                       <Controller
                         control={control}
                         name="occupationId"
                         defaultValue=""
                         render={(propsController) => (
                           <SelectForm
-                            id="occupation"
+                            id=""
                             name={propsController.name}
                             placeholder={t('accountInfo.occupationField')}
                             options={professionList}
@@ -182,6 +183,18 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                             }}
                           />
                         )}
+                      />
+                    </FormItem> */}
+                    <FormItem>
+                      <Controller
+                        control={control}
+                        type="text"
+                        as={TextInput}
+                        name="HashTag"
+                        defaultValue=""
+                        classNameFormInput="small"
+                        placeholder={t('Hashtags')}
+                        errorMessage={errors.cityName?.message}
                       />
                     </FormItem>
                   </FormRow>

@@ -9,6 +9,10 @@ import useRouter from '../../../hooks/commons/useRouter'
 import Home from '../Home'
 import { HomeTabs } from '../Posts'
 
+import PhotoGallery from './../../../components/LiveSectionFeatures/PhotoGallery/PhotoGallery';
+import VideoGallery from './../../../components/LiveSectionFeatures/VideoGallery/VideoGallery';
+import About from './../../../components/LiveSectionFeatures/About/About';
+import { Tabs } from 'hooks/useProfile'
 
 const Newsfeed = React.lazy(() => import('./NewsfeedTab'))
 const Saved = React.lazy(() => import('./SavedTab'))
@@ -16,6 +20,8 @@ const Purchased = React.lazy(() => import('./PurchasedTab'))
 // const PhotoGalleryTab = React.lazy(() => import('./SectionTab/PhotoGalleryTab'))
 // const VideoGalleryTab = React.lazy(() => import('./SectionTab/VideoGalleryTab'))
 // const AboutTab = React.lazy(() => import('./SectionTab/AboutTab'))
+
+
 
 type HomeRoutesProps = {
   //   isSubscribed: boolean
@@ -127,6 +133,10 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
             <Route path={`${match.path}/${HomeTabs.TIMELINE}`} component={Newsfeed} />
             <Route path={`${match.path}/${HomeTabs.SAVED}`} component={Saved} />
             <Route path={`${match.path}/${HomeTabs.PURCHASED}`} component={Purchased} />
+            
+            <Route path={`${match.path}/${Tabs.ABOUT}`} component={About} />
+            <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGallery} />
+            <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGallery} />
 
             <Route
               path={`${match.path}/`}

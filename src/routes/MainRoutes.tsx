@@ -25,9 +25,8 @@ import UserProfile from '../views/UserProfile/UserProfile'
 import routes from './MenuRoutes'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 import ChatMain from 'views/MessagesNew/ChatMain'
-// import PhotoGallery from 'components/LiveSectionFeatures/PhotoGallery/PhotoGallery'
-// import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
-// import About from 'components/LiveSectionFeatures/About/About'
+import LiveView from 'components/LiveView/LiveView'
+
 
 const NoMatchPage = () => {
   return (
@@ -87,6 +86,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <ProtectedRoute {...routerProps} path="/user/notification" component={Notification} />
 
+
               <ProtectedRoute {...routerProps} exact path="/user/discover" component={Discover} />
 
               <ProtectedRoute {...routerProps} exact path="/account/add-bank" component={AddBank} />
@@ -94,6 +94,9 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} path="/u/:username/post/:id" exact component={SinglePost} />
 
               <ProtectedRoute {...routerProps} path="/u/:username/metrics" exact component={Metrics} />
+
+              <ProtectedRoute {...routerProps} path="/u/:username/live" exact component={LiveView} />
+
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
         

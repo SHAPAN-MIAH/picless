@@ -4,27 +4,27 @@ import Alert from '../../Common/Alerts/Alerts'
 import ProviderProfileContext from '../../../context/ProviderProfileContext'
 import { UserInterestType, UserTimeLineType } from '../../../types/UserType'
 import { GetCountryName } from '../../../utils/Functions'
-import { useDispatch } from 'react-redux'
-import { showUserAbout } from '../../../context/actions/UserAction';
+
+// import { useDispatch } from 'react-redux'
+// import { showUserAbout } from '../../../context/actions/UserAction';
 
 const noInterests = 'The user has not yet added interests.'
 const noTimeLineEvents = 'The user has not yet added events to the timeline.'
 
 
 const About: React.FunctionComponent<{}> = () => {
-    // const { provider } = useContext(ProviderProfileContext.context)
+    const { provider } = useContext(ProviderProfileContext.context)
 
-    // const age = moment().diff(provider.birthDate, 'years', false)
-    // const countryName = GetCountryName(provider.countryCode || '')
+    const age = moment().diff(provider.birthDate, 'years', false)
+    const countryName = GetCountryName(provider.countryCode || '')
 
     // const dispatch = useDispatch()
-
     // useEffect(() => dispatch(showUserAbout()), [])
 
     return (
         <div>
             <h2>this is about page</h2>
-            {/* <div className="grid grid-3-9 mobile-prefer-content">
+            <div className="grid grid-3-9 mobile-prefer-content">
                 <div className="grid-column">
                 <div className="widget-box">
                     <p className="widget-box-title">About Me</p>
@@ -134,7 +134,7 @@ const About: React.FunctionComponent<{}> = () => {
                     </div>
                 </div>
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 };

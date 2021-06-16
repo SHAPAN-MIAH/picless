@@ -33,6 +33,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
     styleMobile.flex = 1
   }
 
+
   return (
     <GridDiv className="grid grid-3-3-3">
       <div className="user-preview small fixed-height" style={styleMobile}>
