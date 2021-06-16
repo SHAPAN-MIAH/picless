@@ -6,6 +6,7 @@ import Popup from 'reactjs-popup'
 import useProfile from '../../../../hooks/useProfile'
 import CountryFlag from '../../../../components/CountryFlag/CountryFlag'
 import UserAvatar from '../../../../components/UserAvatar'
+import ShareComponent from 'components/ShareComponent/ShareComponent'
 
 import { WalletContextProvider } from '../../../../context/WalletContext'
 import useUser from '../../../../hooks/useUser'
@@ -16,7 +17,7 @@ import styles from './UserHeader.module.css'
 import './UserHeader.css'
 import { Link } from 'react-router-dom'
 import useWallet from 'hooks/useWallet'
-import { ServiceSubscritionPlanOption} from '../../../../types/PaymentTypes'
+import { ServiceSubscritionPlanOption } from '../../../../types/PaymentTypes'
 import { SelectOptionsType } from '../../../../components/Common/SelectForm'
 
 type UserHeaderProps = {
@@ -46,11 +47,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setSubscribed(subscription !== null)
 
     const controllerCancelable = new AbortController()
-    const { signal } = controllerCancelable  
+    const { signal } = controllerCancelable
 
-    getPlanOptions(provider.userName || '', signal)
-    .then((data: ServiceSubscritionPlanOption) => {
-      if(data.data) {
+    getPlanOptions(provider.userName || '', signal).then((data: ServiceSubscritionPlanOption) => {
+      if (data.data) {
         setPlanList(data.data[0])
       }
     })
@@ -78,6 +78,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
           >
             <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
           </div>
+          <ShareComponent>Share</ShareComponent>
 
           <div className="profile-header-info">
             <div className="user-short-description big">
@@ -105,7 +106,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                     trigger={
                       <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
                         <p className="profile-header-info-action button primary custom-btn">
-                          Suscribe {planList ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}` : ''}
+                          Suscribe{' '}
+                          {planList
+                            ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}`
+                            : ''}
                           <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
                         </p>
                       </div>
@@ -157,8 +161,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <p className="user-stat-text">Videos</p>
               </div>
 
-              <div className="user-stat big flag" style={{marginTop: 'auto', marginBottom: 'auto'}}>
-                <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName}/>
+              <div className="user-stat big flag" style={{ marginTop: 'auto', marginBottom: 'auto' }}>
+                <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName} />
               </div>
             </div>
           </div>
