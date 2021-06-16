@@ -78,7 +78,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
           >
             <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
           </div>
-          <ShareComponent>Share</ShareComponent>
+          <ShareComponent />
 
           <div className="profile-header-info">
             <div className="user-short-description big">

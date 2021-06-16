@@ -45,31 +45,34 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
               position="center center"
               trigger={
                 <span className="post-option">
-                  <FontAwesomeIcon icon={faShare} size="1x" />
+                  {/* <FontAwesomeIcon icon={faShare} size="1x" /> */}
+                  <p>Share Profile</p>
                 </span>
-                // <div className={styles.mainPopup}>
-                //   <div className={styles.closePopup}>
-                //     <FontAwesomeIcon icon="times" color="white" size="1x" />
-                //   </div>
-                //   <form action="">
-                /* <FormRowItem>
-                        <div className={styles.userInfoContainer}>
-                          <div className={styles.userInfoName}>
-                            <p className="user-status-title">
-                              <span className="bold">Share to</span>
-                            </p>
-                            <p className="user-status-text small">
-                              <a href={`/u/hello`}>Options</a>
-                            </p>
-                          </div>
-                        </div>
-                      </FormRowItem> */
-                /* Share Button */
-                //   </form>
-                // </div>
               }
             >
-              <SocialLinkList />
+              <div className={styles.mainPopup}>
+                <div className={styles.closePopup}>
+                  <FontAwesomeIcon icon="times" color="white" size="1x" />
+                </div>
+                <form action="">
+                  <FormRowItem>
+                    <div className={styles.userInfoContainer}>
+                      <div className={styles.userInfoName}>
+                        <p className="user-status-title">
+                          <span className="bold">Share to</span>
+                        </p>
+                        <p className="user-status-text small">
+                          <input readOnly>http://userlink</input>
+                        </p>
+                      </div>
+                    </div>
+                  </FormRowItem>
+                  <FormRowItem>
+                    <h4>Share To</h4>
+                    <SocialLinkList />
+                  </FormRowItem>
+                </form>
+              </div>
             </Popup>
           </Popup>
         </div>
