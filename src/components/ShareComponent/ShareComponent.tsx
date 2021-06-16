@@ -45,7 +45,7 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
               position="center center"
               trigger={
                 <span className="post-option">
-                  <FontAwesomeIcon icon={faShare} color="gray" size="1x" />
+                  <FontAwesomeIcon icon={faShare} size="1x" />
                 </span>
                 // <div className={styles.mainPopup}>
                 //   <div className={styles.closePopup}>
