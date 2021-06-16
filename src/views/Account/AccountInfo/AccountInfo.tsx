@@ -90,14 +90,6 @@ const AccountInfo: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="account-hub-content">
-        <div className="section-header">
-          <div className="section-header-info">
-            <p className="section-pretitle">{t('accountInfo.accountTitle')}</p>
-
-            <h2 className="section-title">{t('accountInfo.accountSubTitle')}</h2>
-          </div>
-        </div>
-
         <div className="grid-column">
           <div className="widget-box">
             <p className="widget-box-title">{t('accountInfo.personalInfo')}</p>
