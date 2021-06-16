@@ -62,7 +62,7 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
                           <span className="bold">Share to</span>
                         </p>
                         <p className="user-status-text small">
-                          <input readOnly>http://userlink</input>
+                          <a href={`/u/hello`}>http://userlink</a>
                         </p>
                       </div>
                     </div>
