@@ -7,16 +7,17 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 interface DatePickerFormProps extends ReactDatePickerProps {
   classNameFormInput?: string
+  disableKeyboard?: boolean
   iconName?: string
 }
 
 const DatePickerForm = React.forwardRef<HTMLInputElement, DatePickerFormProps>((props, ref) => {
-  const { classNameFormInput, id, placeholderText, iconName, customInputRef, ...rest } = props
+  const { classNameFormInput, id, placeholderText, iconName, customInputRef, disableKeyboard = true, ...rest } = props
 
   const InputText: React.FunctionComponent<any> = ({ value, onClick }) => (
     <div className={classNames('form-input', classNameFormInput, value ? 'active' : '')}>
       <label htmlFor={id}>{placeholderText}</label>
-      <input type="text" ref={ref} defaultValue={value} onClick={onClick} />
+      <input type="text" ref={ref} defaultValue={value} onClick={onClick} readOnly={disableKeyboard} />
       {iconName && (
         <svg className={`form-input-icon icon-${iconName}`}>
           <use xlinkHref={`#svg-${iconName}`} />
