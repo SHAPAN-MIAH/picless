@@ -1,19 +1,13 @@
 import React, { FunctionComponent, useState, ReactNode, Children } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShare } from '@fortawesome/free-solid-svg-icons'
-
-import { toast } from 'react-hot-toast'
 import Popup from 'reactjs-popup'
 
-import SocialLinkList from './SocialLinkList/SocialLinkList'
+import useProfile from 'hooks/useProfile'
 import FormRowItem from 'components/Common/Form/FormRowItem'
-import UserAvatar from 'components/UserAvatar'
+import SocialLinkList from './SocialLinkList/SocialLinkList'
+import CopyToClipboardComponent from './CopyToClipboard/CopyToClipboard'
 
 import styles from './ShareComponent.module.css'
-import useProfile from 'hooks/useProfile'
-import { UserProfileType } from 'types/UserType'
-import CopyToClipboardComponent from './CopyToClipboard/CopyToClipboard'
-// import SocialLink from './SocialLinks/SocialLink'
 
 interface ShareProps {
   // user: UserProfileType,
@@ -24,6 +18,9 @@ interface ShareProps {
 const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
   const { provider } = useProfile()
 
+  if (navigator.userAgent.match(/Android/i)) {
+    alert('Youre in Movile')
+  }
   return (
     <>
       <div className="widget-box-settings">
@@ -74,7 +71,7 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
                   </FormRowItem>
                   <FormRowItem>
                     <h4>Share To</h4>
-                    <SocialLinkList />
+                    <SocialLinkList userProfile={provider.userName} />
                   </FormRowItem>
                 </form>
               </div>

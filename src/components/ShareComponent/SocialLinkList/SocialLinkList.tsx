@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { faFacebook, faWhatsapp, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { faMailBulk, faClipboard } from '@fortawesome/free-solid-svg-icons'
+import { faMailBulk } from '@fortawesome/free-solid-svg-icons'
 
 import SocialLink from '../SocialLink/SocialLink'
 
@@ -11,12 +11,22 @@ const socialMedia = [
   { name: 'mail', icon: faMailBulk },
 ]
 
-const SocialLinkList = () => {
+interface SocialLinkListProps {
+  userProfile: string
+}
+
+const SocialLinkList: FunctionComponent<SocialLinkListProps> = ({ userProfile }) => {
   return (
     <>
       <ul className="social-links">
         {socialMedia.map(({ name, icon }) => (
-          <SocialLink key={name} name={name} icon={icon} url={'github.com'} text={'Hi my friend'} />
+          <SocialLink
+            key={name}
+            name={name}
+            icon={icon}
+            url={`michael.lup20.uk/u/${userProfile}`}
+            text={'Hi my friend, You want to Join US!'}
+          />
         ))}
       </ul>
     </>
