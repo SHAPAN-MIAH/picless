@@ -6,7 +6,6 @@ import React, { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserService from 'services/UserService'
 import styled from 'styled-components'
-
 import ButtonWithLoader from '../../../components/Common/ButtonWithLoader'
 
 const TextContainerP = styled.p`
