@@ -49,11 +49,17 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
               }
             >
               {/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
-                navigator.share({
-                  title: 'Hi my friend, You want to Join US!',
-                  text: 'Join us in PicLess',
-                  url: `michael.lup20.uk/u/${provider.userName}`,
-                })
+                <button
+                  onClick={() => {
+                    navigator.share({
+                      title: 'Hi my friend, You want to Join US!',
+                      text: 'Join us in PicLess',
+                      url: `michael.lup20.uk/u/${provider.userName}`,
+                    })
+                  }}
+                >
+                  Share Profile
+                </button>
               ) : (
                 <div className={styles.mainPopup}>
                   <div className={styles.closePopup}>
