@@ -16,7 +16,7 @@ interface ShareProps {
 }
 
 const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
-  const { provider } = useProfile()
+  const { provider } = useProfile({ disableMount: true })
 
   return (
     <>
