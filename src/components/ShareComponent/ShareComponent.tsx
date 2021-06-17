@@ -18,69 +18,78 @@ interface ShareProps {
 const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
   const { provider } = useProfile()
 
-  if (navigator.userAgent.match(/Android/i)) {
-    alert('Youre in Movile')
-  }
-  return (
-    <>
-      <div className="widget-box-settings">
-        <div className="post-settings-wrap">
-          <Popup
-            trigger={
-              <div className="post-settings widget-box-post-settings-dropdown-trigger">
-                <svg className="post-settings-icon icon-more-dots">
-                  <use xlinkHref="#svg-more-dots" />
-                </svg>
-              </div>
-            }
-            position="bottom right"
-            on="click"
-            closeOnDocumentClick={false}
-            mouseLeaveDelay={300}
-            mouseEnterDelay={0}
-            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '100px' }}
-            arrow={false}
-          >
+  if (
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i)
+  ) {
+    return <div>Hello</div>
+  } else {
+    return (
+      <>
+        <div className="widget-box-settings">
+          <div className="post-settings-wrap">
             <Popup
-              modal
-              contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
-              position="center center"
               trigger={
-                <span className="post-option">
-                  <p>Share Profile</p>
-                </span>
-              }
-            >
-              <div className={styles.mainPopup}>
-                <div className={styles.closePopup}>
-                  <FontAwesomeIcon icon="times" color="white" size="1x" />
+                <div className="post-settings widget-box-post-settings-dropdown-trigger">
+                  <svg className="post-settings-icon icon-more-dots">
+                    <use xlinkHref="#svg-more-dots" />
+                  </svg>
                 </div>
-                <form action="">
-                  <FormRowItem>
-                    <div className={styles.userInfoContainer}>
-                      <div className={styles.userInfoName}>
-                        <CopyToClipboardComponent userProfile={provider.userName} />
-                        {/* <p className="user-status-title">
+              }
+              position="bottom right"
+              on="click"
+              closeOnDocumentClick={false}
+              mouseLeaveDelay={300}
+              mouseEnterDelay={0}
+              contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '100px' }}
+              arrow={false}
+            >
+              <Popup
+                modal
+                contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
+                position="center center"
+                trigger={
+                  <span className="post-option">
+                    <p>Share Profile</p>
+                  </span>
+                }
+              >
+                <div className={styles.mainPopup}>
+                  <div className={styles.closePopup}>
+                    <FontAwesomeIcon icon="times" color="white" size="1x" />
+                  </div>
+                  <form action="">
+                    <FormRowItem>
+                      <div className={styles.userInfoContainer}>
+                        <div className={styles.userInfoName}>
+                          <CopyToClipboardComponent userProfile={provider.userName} />
+                          {/* <p className="user-status-title">
                           <span className="bold">Share to</span>
                         </p>
                         <p className="user-status-text small">
                           <a href={`/u/hello`}>https://michael.lup20.uk/u/{provider.userName}</a>
                         </p> */}
+                        </div>
                       </div>
-                    </div>
-                  </FormRowItem>
-                  <FormRowItem>
-                    <h4>Share To</h4>
-                    <SocialLinkList userProfile={provider.userName} />
-                  </FormRowItem>
-                </form>
-              </div>
+                    </FormRowItem>
+                    <FormRowItem>
+                      <h4>Share To</h4>
+                      <SocialLinkList userProfile={provider.userName} />
+                    </FormRowItem>
+                  </form>
+                </div>
+              </Popup>
             </Popup>
-          </Popup>
+          </div>
         </div>
-      </div>
-    </>
-  )
+      </>
+    )
+  }
 })
 
 export default ShareComponent
