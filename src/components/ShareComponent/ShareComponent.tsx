@@ -38,16 +38,30 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
             contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '100px' }}
             arrow={false}
           >
-            if ( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) ||
-            navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i)
-            || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i) )
-            {navigator.share({
-              title: 'Hi my friend, You want to Join US!',
-              text: 'Join us in PicLess',
-              url: `michael.lup20.uk/u/${provider.userName}`,
-            })}
-            else
-            {
+            {/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
+              <Popup
+                modal
+                contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
+                position="center center"
+                trigger={
+                  <span className="post-option">
+                    <p>Share Profile</p>
+                  </span>
+                }
+              >
+                <a
+                  onClick={() => {
+                    navigator.share({
+                      title: 'Hi my friend, You want to Join US!',
+                      text: 'Join us in PicLess',
+                      url: `michael.lup20.uk/u/${provider.userName}`,
+                    })
+                  }}
+                >
+                  Share Profile
+                </a>
+              </Popup>
+            ) : (
               <Popup
                 modal
                 contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
@@ -68,11 +82,11 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
                         <div className={styles.userInfoName}>
                           <CopyToClipboardComponent userProfile={provider.userName} />
                           {/* <p className="user-status-title">
-              <span className="bold">Share to</span>
-            </p>
-            <p className="user-status-text small">
-              <a href={`/u/hello`}>https://michael.lup20.uk/u/{provider.userName}</a>
-            </p> */}
+                            <span className="bold">Share to</span>
+                          </p>
+                          <p className="user-status-text small">
+                            <a href={`/u/hello`}>https://michael.lup20.uk/u/{provider.userName}</a>
+                          </p> */}
                         </div>
                       </div>
                     </FormRowItem>
@@ -83,7 +97,7 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
                   </form>
                 </div>
               </Popup>
-            }
+            )}
           </Popup>
         </div>
       </div>
