@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, ReactNode } from 'react'
+import React, { FunctionComponent, useState, ReactNode, Children } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 
@@ -10,15 +10,20 @@ import FormRowItem from 'components/Common/Form/FormRowItem'
 import UserAvatar from 'components/UserAvatar'
 
 import styles from './ShareComponent.module.css'
+import useProfile from 'hooks/useProfile'
+import { UserProfileType } from 'types/UserType'
+import CopyToClipboardComponent from './CopyToClipboard/CopyToClipboard'
 // import SocialLink from './SocialLinks/SocialLink'
 
 interface ShareProps {
-  // user: UserType,
+  // user: UserProfileType,
   // children: ReactNode,
   // onClose: true
 }
 
-const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
+const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
+  const { provider } = useProfile()
+
   return (
     <>
       <div className="widget-box-settings">
@@ -33,7 +38,7 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
             }
             position="bottom right"
             on="click"
-            closeOnDocumentClick={true}
+            closeOnDocumentClick={false}
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
             contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '100px' }}
@@ -45,7 +50,6 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
               position="center center"
               trigger={
                 <span className="post-option">
-                  {/* <FontAwesomeIcon icon={faShare} size="1x" /> */}
                   <p>Share Profile</p>
                 </span>
               }
@@ -58,12 +62,13 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(({}) => {
                   <FormRowItem>
                     <div className={styles.userInfoContainer}>
                       <div className={styles.userInfoName}>
-                        <p className="user-status-title">
+                        <CopyToClipboardComponent userProfile={provider.userName} />
+                        {/* <p className="user-status-title">
                           <span className="bold">Share to</span>
                         </p>
                         <p className="user-status-text small">
-                          <a href={`/u/hello`}>http://userlink</a>
-                        </p>
+                          <a href={`/u/hello`}>https://michael.lup20.uk/u/{provider.userName}</a>
+                        </p> */}
                       </div>
                     </div>
                   </FormRowItem>

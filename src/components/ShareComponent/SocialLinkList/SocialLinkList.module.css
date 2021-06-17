@@ -52,23 +52,3 @@
 .social-links .social-link:last-child {
   margin-right: 0;
 }
-
-.social-link .whatsapp {
-  background-color: #25d366;
-}
-
-.social-link .mail {
-  background-color: gray;
-}
-
-.social-link .clipboard {
-  background: black;
-}
-
-.whatsapp {
-  background: #25d366;
-}
-
-.mail {
-  background: gray;
-}
