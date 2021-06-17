@@ -38,18 +38,18 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
             contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '100px' }}
             arrow={false}
           >
-            {/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
-              <Popup
-                modal
-                contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
-                position="center center"
-                trigger={
-                  <span className="post-option">
-                    <p>Share Profile</p>
-                  </span>
-                }
-              >
-                <a
+            <Popup
+              modal
+              contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
+              position="center center"
+              trigger={
+                <span className="post-option">
+                  <p>Share Profile</p>
+                </span>
+              }
+            >
+              {/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
+                <button
                   onClick={() => {
                     navigator.share({
                       title: 'Hi my friend, You want to Join US!',
@@ -59,24 +59,13 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
                   }}
                 >
                   Share Profile
-                </a>
-              </Popup>
-            ) : (
-              <Popup
-                modal
-                contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
-                position="center center"
-                trigger={
-                  <span className="post-option">
-                    <p>Share Profile</p>
-                  </span>
-                }
-              >
+                </button>
+              ) : (
                 <div className={styles.mainPopup}>
                   <div className={styles.closePopup}>
                     <FontAwesomeIcon icon="times" color="white" size="1x" />
                   </div>
-                  <form action="">
+                  <form>
                     <FormRowItem>
                       <div className={styles.userInfoContainer}>
                         <div className={styles.userInfoName}>
@@ -96,8 +85,8 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
                     </FormRowItem>
                   </form>
                 </div>
-              </Popup>
-            )}
+              )}
+            </Popup>
           </Popup>
         </div>
       </div>
