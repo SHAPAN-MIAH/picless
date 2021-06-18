@@ -195,3 +195,8 @@
 .quick-post .quick-post-footer .quick-post-footer-actions .quick-post-footer-action:last-child {
   border-right: 0px solid #eaeaf5;
 }
+@media screen and (min-width: 1070px) {
+  .account-hub-content {
+    padding-top: 40px;
+  }
+}
