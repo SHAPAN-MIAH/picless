@@ -23,7 +23,7 @@
 @media screen and (max-width: 680px) {
   .content-grid {
     width: 100%;
-    padding: 20px 0 200px;
+    padding: 40px 20px 55px !important;
   }
 }
 
@@ -52,7 +52,6 @@
   }
 }
 
-
 .fixed-grid {
   margin-top: 0px !important;
 }
@@ -69,7 +68,7 @@
 
 /* REACT-ELASTIC-CAROUSEL CUSTOM STYLES*/
 .rec.rec-carousel {
-  background-color:  #fff/*#212529*/;
+  background-color: #fff /*#212529*/;
   top: 0px;
   left: 0px;
   width: inherit;
@@ -147,8 +146,8 @@
   display: none;
 }
 .margins-svg {
-  margin-left: auto!important;
-  margin-right: auto!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 /* REACT-POPUP */
 @keyframes anvil {
@@ -173,12 +172,12 @@
 }
 
 /* TEMPlATE FIXES*/
-@media screen and (max-width: 1070px){
+@media screen and (max-width: 1070px) {
   .grid.grid-3-9 {
     grid-template-columns: 100%;
     grid-template-areas:
-        "sidebar"
-        "content"
+      'sidebar'
+      'content';
   }
 
   .quick-post .quick-post-footer {

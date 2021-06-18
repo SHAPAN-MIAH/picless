@@ -12,6 +12,7 @@ const GridDiv = styled.div`
   display: ${isMobile ? 'contents' : 'flex'};
   flex-direction: row;
 `
+
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
   const { getUser } = useUser()
