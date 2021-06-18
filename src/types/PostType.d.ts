@@ -22,6 +22,7 @@ export interface CommonPostType {
   endDate?: Date | string
   privacity?: PrivacityType
   postType?: string
+  saved?: boolean
   amount?: number
 }
 

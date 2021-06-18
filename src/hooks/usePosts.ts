@@ -213,10 +213,16 @@ const usePosts = () => {
     })
   }
 
-  const savePost = (postId: number) => {
+  const savePost = (postId: number, action: 'ADD' | 'REMOVE') => {
+      if(action==='ADD') return addSavedPost(postId)
+
+      return removeSavedPost(postId)
+  }
+
+  const addSavedPost = (postId: number) => { 
     return new Promise<void>((resolve, reject) => {
     
-      PostService.savePost(postId).then((data: CommonServiceResponse) => {
+      PostService.addSavedPost(postId).then((data: CommonServiceResponse) => {
         if (data.code !== '0') {
           throw new Error(data.message)
         }
@@ -226,6 +232,26 @@ const usePosts = () => {
       })
       .catch((err) => {
         toast.error('Error saving post')
+        console.error(err.message)
+
+        reject()
+      })
+    })
+  }
+
+  const removeSavedPost = (postId: number) => { 
+    return new Promise<void>((resolve, reject) => {
+    
+      PostService.removeSavedPost(postId).then((data: CommonServiceResponse) => {
+        if (data.code !== '0') {
+          throw new Error(data.message)
+        }
+        toast.success('Post removed from saved list')
+
+        resolve()
+      })
+      .catch((err) => {
+        toast.error('Error removing post from saved list')
         console.error(err.message)
 
         reject()
