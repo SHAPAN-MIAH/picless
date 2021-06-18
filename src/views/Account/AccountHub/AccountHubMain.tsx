@@ -8,7 +8,6 @@ import useUser from '../../../hooks/useUser'
 
 const GridDiv = styled.div`
   justify-content: center;
-  margin-top: 30px !important;
   display: ${isMobile ? 'contents' : 'flex'};
   flex-direction: row;
 `
