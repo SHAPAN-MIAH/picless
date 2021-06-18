@@ -60,7 +60,6 @@ const ScheduleTooltip: FunctionComponent<ScheduleTooltipProps> = (props) => {
               <TooltipContainerDiv>
                 <FormRowItem>
                   <DatePickerForm
-                    // classNameFormInput={styles.datepicker}
                     placeholderText={t('home.createPost.fields.scheduleStart')}
                     customInputRef="startDateRef"
                     selected={schedule}
@@ -69,6 +68,7 @@ const ScheduleTooltip: FunctionComponent<ScheduleTooltipProps> = (props) => {
                     showTimeInput
                     dateFormat="dd/MM/yyyy h:mm aa"
                     name={name}
+                    disableKeyboard={true}
                     onChange={(date: Date) => setSchedule(date)}
                   />
                 </FormRowItem>
