@@ -3,6 +3,8 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 
+import styles from './CopyToClipboard.module.css'
+
 interface UserProfileProps {
   userProfile: string
 }
@@ -20,13 +22,14 @@ const CopyToClipboardComponent: FunctionComponent<UserProfileProps> = ({ userPro
 
   return (
     <>
-      <h4>Copty to ClipBoard</h4>
-      <p>{link}</p>
-
-      <div className="clipboard">
-        <CopyToClipboard text={link} onCopy={copyToClipboard}>
-          <a> {isCopied ? 'Copied!' : <FontAwesomeIcon icon={faClipboard} color="black" />}</a>
-        </CopyToClipboard>
+      <h4 className="user-status-title">Copty to ClipBoard</h4>
+      <div className={styles.copyContainer}>
+        <h6 className={styles.copyLink}>{link}</h6>
+        <a className={styles.clipboard}>
+          <CopyToClipboard text={link} onCopy={copyToClipboard}>
+            <h6> {isCopied ? 'Copied' : <FontAwesomeIcon icon={faClipboard} color="#91E8F0" />}</h6>
+          </CopyToClipboard>
+        </a>
       </div>
     </>
   )

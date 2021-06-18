@@ -9,13 +9,7 @@ import CopyToClipboardComponent from './CopyToClipboard/CopyToClipboard'
 
 import styles from './ShareComponent.module.css'
 
-interface ShareProps {
-  // user: UserProfileType,
-  // children: ReactNode,
-  // onClose: true
-}
-
-const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
+const ShareComponent: FunctionComponent = React.memo(() => {
   const { provider } = useProfile({ disableMount: true })
 
   return (
@@ -49,18 +43,18 @@ const ShareComponent: FunctionComponent<ShareProps> = React.memo(() => {
 const SharePopup = (username: any) => {
   if (/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     return (
-      <button
+      <span
         className="post-option"
         onClick={() => {
           navigator.share({
-            title: 'Hi my friend, You want to Join US!',
+            title: 'Picless Share',
             text: 'Join us in PicLess',
             url: `michael.lup20.uk/u/${username}`,
           })
         }}
       >
         Share Profile
-      </button>
+      </span>
     )
   } else {
     return (
@@ -75,25 +69,20 @@ const SharePopup = (username: any) => {
         }
       >
         <div className={styles.mainPopup}>
-          <div className={styles.closePopup}>
+          <div className={` ${styles.closePopup}`}>
             <FontAwesomeIcon icon="times" color="white" size="1x" />
           </div>
-          <form>
+
+          <form className="form">
             <FormRowItem>
               <div className={styles.userInfoContainer}>
                 <div className={styles.userInfoName}>
                   <CopyToClipboardComponent userProfile={username} />
-                  {/* <p className="user-status-title">
-                <span className="bold">Share to</span>
-              </p>
-              <p className="user-status-text small">
-                <a href={`/u/hello`}>https://michael.lup20.uk/u/{provider.userName}</a>
-              </p> */}
                 </div>
               </div>
             </FormRowItem>
             <FormRowItem>
-              <h4>Share To</h4>
+              <h4 className={styles.socialLinkTitle}>Share To</h4>
               <SocialLinkList userProfile={username} />
             </FormRowItem>
           </form>
