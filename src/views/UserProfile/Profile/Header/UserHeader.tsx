@@ -72,13 +72,13 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     <>
       <WalletContextProvider>
         <div className="profile-header" style={{ marginTop: isMobile ? '60px' : '0px' }}>
+          <ShareComponent />
           <div
             className={classNames('profile-header-cover', styles.profileHeaderCoverMobile)}
             style={{ background: `url(${imageCover}) center center / cover no-repeat`, height: '20em' }}
           >
             <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
           </div>
-          <ShareComponent />
 
           <div className="profile-header-info">
             <div className="user-short-description big">
