@@ -26,7 +26,11 @@
     padding: 0px 0px 48px !important;
   }
 }
-
+@media screen and (min-width: 680px) {
+  .account-hub-content {
+    padding-top: 15px;
+  }
+}
 .App-header {
   min-height: 100vh;
   display: flex;
@@ -171,7 +175,7 @@
   -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
 
-/* TEMPlATE FIXES*/
+/* TEMPLATE FIXES*/
 @media screen and (max-width: 1070px) {
   .grid.grid-3-9 {
     grid-template-columns: 100%;
@@ -194,9 +198,4 @@
 
 .quick-post .quick-post-footer .quick-post-footer-actions .quick-post-footer-action:last-child {
   border-right: 0px solid #eaeaf5;
-}
-@media screen and (min-width: 680px) {
-  .account-hub-content {
-    padding-top: 40px;
-  }
 }
