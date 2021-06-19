@@ -32,7 +32,9 @@ const ShareComponent: FunctionComponent = React.memo(() => {
             contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '100px' }}
             arrow={false}
           >
-            <SharePopup username={provider.userName} />
+            <div className="simple-dropdown widget-box-post-settings-dropdown">
+              <SharePopup username={provider.userName} />
+            </div>
           </Popup>
         </div>
       </div>
@@ -43,8 +45,8 @@ const ShareComponent: FunctionComponent = React.memo(() => {
 const SharePopup = (username: any) => {
   if (/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     return (
-      <span
-        className="post-option"
+      <p
+        className="simple-dropdown-link"
         onClick={() => {
           navigator.share({
             title: 'Picless Share',
@@ -54,7 +56,7 @@ const SharePopup = (username: any) => {
         }}
       >
         Share Profile
-      </span>
+      </p>
     )
   } else {
     return (
@@ -62,31 +64,29 @@ const SharePopup = (username: any) => {
         modal
         contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
         position="center center"
-        trigger={
-          <span className="post-option">
-            <p>Share Profile</p>
-          </span>
-        }
+        trigger={<p className="simple-dropdown-link">Share Profile</p>}
       >
-        <div className={styles.mainPopup}>
-          <div className={` ${styles.closePopup}`}>
-            <FontAwesomeIcon icon="times" color="white" size="1x" />
-          </div>
+        {(close: any) => (
+          <div className={styles.mainPopup}>
+            <div className={`${styles.closePopup}`} onClick={close}>
+              <FontAwesomeIcon icon="times" color="white" size="1x" />
+            </div>
 
-          <form className="form">
-            <FormRowItem>
-              <div className={styles.userInfoContainer}>
-                <div className={styles.userInfoName}>
-                  <CopyToClipboardComponent userProfile={username} />
+            <form className="form">
+              <FormRowItem>
+                <div className={styles.userInfoContainer}>
+                  <div className={styles.userInfoName}>
+                    <CopyToClipboardComponent userProfile={username} />
+                  </div>
                 </div>
-              </div>
-            </FormRowItem>
-            <FormRowItem>
-              <h4 className={styles.socialLinkTitle}>Share To</h4>
-              <SocialLinkList userProfile={username} />
-            </FormRowItem>
-          </form>
-        </div>
+              </FormRowItem>
+              <FormRowItem>
+                <h4 className={styles.socialLinkTitle}>Share To</h4>
+                <SocialLinkList userProfile={username} />
+              </FormRowItem>
+            </form>
+          </div>
+        )}
       </Popup>
     )
   }
