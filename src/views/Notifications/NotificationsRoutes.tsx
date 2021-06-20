@@ -78,21 +78,47 @@ const NotificationsRoutes: FunctionComponent<{}> = () => {
             <FontAwesomeIcon icon="heart" color="tomato" />
           </svg>
         </TabLink>
-        {/* <TabLink
+        <TabLink
           className={classNames('option-item', currentTab === NotificationsTabsNames.SUSCRIBER ? 'active' : '')}
           to={`${url}/${NotificationsTabsNames.SUSCRIBER}`}
           onClick={() => setCurrentTab(NotificationsTabsNames.SUSCRIBER)}
         >
           <svg
             className={classNames(
-              'option-item-icon icon-status icon-join-group',
+              'option-item-icon icon-status',
               currentTab !== NotificationsTabsNames.SUSCRIBER ? 'margins-svg' : ''
             )}
-            style={{marginLeft: 'auto', marginRight: 'auto'}}
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+            viewBox="0 0 32 32"
           >
-            <use xlinkHref="#svg-join-group" />
+            <g id="ic-users-add">
+              <circle
+                style={{ fill: 'none', stroke: '#adafca', strokeLinecap: 'round', strokeLinejoin: 'round' }}
+                cx="16"
+                cy="9"
+                r="5"
+              />
+              <circle
+                style={{ fill: 'none', stroke: '#adafca', strokeLinecap: 'round', strokeLinejoin: 'round' }}
+                cx="24"
+                cy="24"
+                r="6"
+              />
+              <path
+                style={{ fill: 'none', stroke: '#adafca', strokeLinecap: 'round', strokeLinejoin: 'round' }}
+                d="M21,24h6"
+              />
+              <path
+                style={{ fill: 'none', stroke: '#adafca', strokeLinecap: 'round', strokeLinejoin: 'round' }}
+                d="M24,27V21"
+              />
+              <path
+                style={{ fill: 'none', stroke: '#adafca', strokeLinecap: 'round', strokeLinejoin: 'round' }}
+                d="M16,28H6.24A.24.24,0,0,1,6,27.76V26a10,10,0,0,1,13-9.54"
+              />
+            </g>
           </svg>
-        </TabLink> */}
+        </TabLink>
         <TabLink
           className={classNames('option-item', currentTab === NotificationsTabsNames.MONEY ? 'active' : '')}
           to={`${url}/${NotificationsTabsNames.MONEY}`}

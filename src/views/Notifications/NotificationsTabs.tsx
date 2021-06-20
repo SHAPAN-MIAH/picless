@@ -5,6 +5,7 @@ import NotificationsRoutes from './NotificationsRoutes'
 export enum NotificationsTabsNames {
   ALL = 'all',
   LIKES = 'likes',
+  SUSCRIBER = 'subscriber',
   MONEY = 'money',
   ALERTS = 'alerts',
   SETTINGS = 'settings',
