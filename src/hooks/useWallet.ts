@@ -1,13 +1,12 @@
 import { useCallback, useContext, useState } from 'react'
 import {
-  
   CardType,
   MovementType,
   ServiceMovementType,
-  
 } from '../types/PaymentTypes'
 import WalletContext from '../context/WalletContext'
 import PaymentService from '../services/PaymentService'
+import toast from 'react-hot-toast'
 
 enum FoundReturn {
   Succeeded = 'SUCCEEDED',
@@ -43,7 +42,7 @@ const useWallet = () => {
       PaymentService.removeCard(cardId).then((data: any) => {
         if (data.code === '0') {
           updateCards()
-          alert('Remove card successfully')
+          toast.success('Remove card successfully')
         }
       })
     },
@@ -67,7 +66,7 @@ const useWallet = () => {
       PaymentService.changeDefaultCard(cardId).then((data: any) => {
         if (data.code === '0') {
           getDefaultCard()
-          alert('changed default card successfully')
+          toast.success('changed default card successfully')
         }
       })
     },
