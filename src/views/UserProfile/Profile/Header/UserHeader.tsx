@@ -160,7 +160,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               <div className="user-stat big">
                 <p className="user-stat-title">{provider.numberOfFollowers}</p>
 
-                <p className="user-stat-text">followers</p>
+                <p className="user-stat-text">Posts</p>
               </div>
 
               <div className="user-stat big">
