@@ -20,16 +20,6 @@ const LoadingPlanOptionsDiv = styled.div`
   text-align: center;
 `
 
-const PopupMessage: FunctionComponent<{}> = () => {
-  return (
-    <>
-      <StyledPopup show trigger={<></>} onClose={() => {}}>
-        <h4>asdfasfasfasdf</h4>
-      </StyledPopup>
-    </>
-  )
-}
-
 const SubscribePopup: FunctionComponent<{ onClose: () => void }> = (props) => {
   const { onClose } = props
   const { provider } = useContext(ProviderProfileContext.context)

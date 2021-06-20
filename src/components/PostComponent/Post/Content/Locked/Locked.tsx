@@ -1,4 +1,6 @@
 import ButtonWithLoader from 'components/Common/ButtonWithLoader'
+import FormRowItem from 'components/Common/Form/FormRowItem'
+import TextInput from 'components/Common/TextInput'
 import StyledPopup from 'components/StyledPopup/StyledPopup'
 import usePosts from 'hooks/usePosts'
 import React, { FunctionComponent } from 'react'
@@ -22,11 +24,12 @@ const Locked: FunctionComponent<LockedProps> = (props) => {
       }
     })
   }
+  console.log(post)
   return (
     <>
       <ContainerLockedContentDiv>
         <StyledPopup
-          header="Unblock content"
+          header="Purchase"
           size="S"
           trigger={
             <ButtonWithLoader type="button" className="small primary" showLoader={false}>
@@ -34,6 +37,21 @@ const Locked: FunctionComponent<LockedProps> = (props) => {
             </ButtonWithLoader>
           }
         >
+          <FormRowItem>
+            <TextInput type="text" name="username" defaultValue="" placeholder={'dfsd'} />
+          </FormRowItem>
+          <FormRowItem>
+            {/* <div className={styles.resumeContainer}>
+              <p>
+                <strong>Tax: </strong> {0 * tax} {selectedPlan?.currency.toLocaleUpperCase()}
+              </p>
+              <p>
+                <strong>Total: </strong> {((selectedPlan?.amount || 0) * (tax + 1)).toFixed(2)}{' '}
+                {selectedPlan?.currency.toLocaleUpperCase()}
+              </p>
+            </div> */}
+          </FormRowItem>
+
           <ButtonWithLoader type="button" className="small primary" onClick={payForContentLocked} showLoader={false}>
             Pay $ {post.amount}
           </ButtonWithLoader>
