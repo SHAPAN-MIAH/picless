@@ -23,7 +23,7 @@ interface MonetizedProps extends React.BaseHTMLAttributes<HTMLDivElement> {
 const Monetized: FunctionComponent<MonetizedProps> = (props) => {
   const { onApplyMonetize, name = 'monetized-amount', defaultAmount } = props
 
-  const [amount, setAmount] = useState<number>(0)
+  const [amount, setAmount] = useState<number>(defaultAmount || 0)
   const [monetize, setMonetize] = useState<boolean>(true)
 
   const onApply = (close: () => void) => {
@@ -37,7 +37,7 @@ const Monetized: FunctionComponent<MonetizedProps> = (props) => {
     if (defaultAmount) {
       setAmount(defaultAmount)
     }
-  }, [])
+  }, [defaultAmount])
 
   return (
     <>
