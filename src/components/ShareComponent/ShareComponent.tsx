@@ -24,12 +24,12 @@ const ShareComponent: FunctionComponent = React.memo(() => {
                 </svg>
               </div>
             }
-            position="bottom left"
+            position="bottom right"
             on="click"
             closeOnDocumentClick={false}
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
-            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '-100px' }}
+            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '50px' }}
             arrow={false}
           >
             <div className="simple-dropdown widget-box-post-settings-dropdown">
