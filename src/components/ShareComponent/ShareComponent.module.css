@@ -2,11 +2,11 @@
   position: fixed;
   z-index: 1;
   margin-top: 1rem;
-  margin-left: 70%;
+  /* margin-left: 70%; */
 }
 
 .dotsShare {
-  height: 8px !important;
+  height: 9px !important;
   width: auto !important;
   fill: #3e3f5e !important;
 }
@@ -15,26 +15,52 @@
   fill: #000 !important;
 }
 
-.mainPopup {
-  padding: 25px;
-}
-
-.shareHeader {
-  text-align: left;
-  margin-bottom: 25px;
-}
-
-.socialLinkTitle {
-  margin-bottom: 1rem;
-}
-
-.post-option-text {
-  margin-left: 0.5rem;
+@media only screen and (min-width: 1366px) {
+  .shareComponent {
+    margin-top: 2rem;
+    margin-left: 90%;
+  }
 }
 
 @media only screen and (max-width: 1366px) {
-  /* For mobile phones: */
-  [class*='mainPopup'] {
-    padding: 15px;
+  .shareComponent {
+    margin-top: 2rem;
+    margin-left: 75%;
+  }
+}
+
+@media screen and (max-width: 1113px) {
+  .shareComponent {
+    margin-left: 73%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .shareComponent {
+    margin-left: 70%;
+  }
+}
+
+@media screen and (max-width: 923px) {
+  .shareComponent {
+    margin-left: 65%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .shareComponent {
+    margin-left: 60%;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .shareComponent {
+    margin-left: 85%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .shareComponent {
+    margin-left: 80%;
   }
 }
