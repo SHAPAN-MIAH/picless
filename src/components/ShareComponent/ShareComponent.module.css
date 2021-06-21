@@ -1,8 +1,4 @@
 .shareComponent {
-  /* display: flex;
-  justify-content: flex-end;
-  z-index: 1; */
-
   position: fixed;
   z-index: 1;
   margin-top: 1rem;
@@ -32,19 +28,13 @@
   margin-bottom: 1rem;
 }
 
+.post-option-text {
+  margin-left: 0.5rem;
+}
+
 @media only screen and (max-width: 1366px) {
   /* For mobile phones: */
   [class*='mainPopup'] {
     padding: 15px;
-  }
-
-  .shareComponent {
-    margin-left: 85%;
-  }
-}
-
-@media only screen and (min-width: 681px) {
-  .shareComponent {
-    margin-left: 60%;
   }
 }
