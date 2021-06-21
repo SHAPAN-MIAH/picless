@@ -49,6 +49,7 @@
 
 @media screen and (max-width: 768px) {
   .shareComponent {
+    margin-top: 0.8rem;
     margin-left: 60%;
   }
 }
