@@ -24,12 +24,12 @@ const ShareComponent: FunctionComponent = React.memo(() => {
                 </svg>
               </div>
             }
-            position="bottom right"
+            position="bottom left"
             on="click"
             closeOnDocumentClick={false}
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
-            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '50px' }}
+            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '-100px' }}
             arrow={false}
           >
             <SharePopup username={provider.userName} />
