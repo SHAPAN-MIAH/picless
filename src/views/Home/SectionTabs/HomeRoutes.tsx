@@ -13,6 +13,7 @@ import PhotoGallery from './../../../components/LiveSectionFeatures/PhotoGallery
 import VideoGallery from './../../../components/LiveSectionFeatures/VideoGallery/VideoGallery';
 import About from './../../../components/LiveSectionFeatures/About/About';
 import { Tabs } from 'hooks/useProfile'
+// import { Router } from '@material-ui/icons'
 
 const Newsfeed = React.lazy(() => import('./NewsfeedTab'))
 const Saved = React.lazy(() => import('./SavedTab'))
@@ -61,7 +62,9 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
   const { user } = useUser()
   const { match } = router
 
+  // const tabsArgs = [HomeTabs, Tabs];
   const [currentTab, setCurrentTab] = useState<HomeTabs>()
+  const [currentTabs, setCurrentTabs] = useState<Tabs>()
 
   useEffect(() => {
     if (router.pathname.includes(HomeTabs.SAVED)) setCurrentTab(HomeTabs.SAVED)
@@ -69,17 +72,23 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
     else setCurrentTab(HomeTabs.TIMELINE)
   }, [])
 
+  useEffect(() => {
+    if (router.pathname.includes(Tabs.ABOUT)) setCurrentTabs(Tabs.ABOUT)
+    else if (router.pathname.includes(Tabs.PHOTOS)) setCurrentTabs(Tabs.PHOTOS)
+    else if (router.pathname.includes(Tabs.VIDEOS)) setCurrentTabs(Tabs.VIDEOS)
+  })
+
   const hanleStyles = (tab: any) => {
-    let width = {width: '20%'}
-    if(tab === currentTab) {
-      width = user.verifiedAccount ? {width: '40%'} : {width: '60%'}  
+    let width = { width: '20%' }
+    if (tab === currentTab) {
+      width = user.verifiedAccount ? { width: '40%' } : { width: '60%' }
     }
     return width;
   }
 
   return (
     <>
-      <TabContainerDiv className="option-items" style={{ justifyContent: 'center', position: 'sticky', top: 0, zIndex: 10, marginBottom: '-20px'}}>
+      <TabContainerDiv className="option-items" style={{ justifyContent: 'center', position: 'sticky', top: 0, zIndex: 10, marginBottom: '-20px' }}>
         <TabLink
           className={classNames('option-item', currentTab === HomeTabs.TIMELINE ? 'active' : '')}
           to={`${url}/${HomeTabs.TIMELINE}`}
@@ -118,14 +127,18 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
           <TabLink
             className={classNames('option-item')}
             to={`/user/create-post`}
-            style={{width: '20%'}}
+            style={{ width: '20%' }}
           >
-            <svg className="option-item-icon icon-plus" style={{marginLeft: 'auto', marginRight: 'auto'}}>
+            <svg className="option-item-icon icon-plus" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
               <use xlinkHref="#svg-plus"> </use>
             </svg>
-        </TabLink>
+          </TabLink>
         }
+
+
       </TabContainerDiv>
+
+
 
       <ContentContainerDiv>
         <React.Suspense fallback={Loading}>
@@ -133,7 +146,6 @@ const HomeRoutes: FunctionComponent<HomeRoutesProps> = () => {
             <Route path={`${match.path}/${HomeTabs.TIMELINE}`} component={Newsfeed} />
             <Route path={`${match.path}/${HomeTabs.SAVED}`} component={Saved} />
             <Route path={`${match.path}/${HomeTabs.PURCHASED}`} component={Purchased} />
-            
             <Route path={`${match.path}/${Tabs.ABOUT}`} component={About} />
             <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGallery} />
             <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGallery} />
