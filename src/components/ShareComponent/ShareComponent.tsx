@@ -55,7 +55,7 @@ const SharePopup: FunctionComponent<SharePopupProps> = ({ username }) => {
               .share({
                 title: 'Picless Share',
                 text: 'Join us in PicLess',
-                url: `michael.lup20.uk/u/${username}`,
+                url: `${username}`,
               })
               .then(() => {
                 console.log('Share successfully')
