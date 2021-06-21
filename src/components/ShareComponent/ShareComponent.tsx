@@ -45,6 +45,7 @@ type SharePopupProps = {
 }
 
 const SharePopup: FunctionComponent<SharePopupProps> = ({ username }) => {
+  console.log(username)
   return (
     <div className="simple-dropdown widget-box-post-settings-dropdown">
       {/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
@@ -55,7 +56,7 @@ const SharePopup: FunctionComponent<SharePopupProps> = ({ username }) => {
               .share({
                 title: 'Picless Share',
                 text: 'Join us in PicLess',
-                url: `${username}`,
+                // url: `${username}`,
               })
               .then(() => {
                 console.log('Share successfully')
