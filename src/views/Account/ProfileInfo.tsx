@@ -60,7 +60,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)
-
       formData.push(dataAttr)
     })
 

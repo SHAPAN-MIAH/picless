@@ -63,11 +63,6 @@ const ChangePassword: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="account-hub-content">
-        <div className="section-header">
-          <div className="section-header-info">
-            <h2 className="section-title">{t('changePassword.changePasswordTitle')} </h2>
-          </div>
-        </div>
 
         <div className="grid-column">
           <div className="widget-box">
