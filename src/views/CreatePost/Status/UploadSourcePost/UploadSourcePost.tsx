@@ -21,6 +21,7 @@ interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> 
   onLoading: (status: boolean) => void
   onRemove: (name: string) => void
   fileInput: HTMLImageElement | any
+  onReorder: ([]) => void
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
@@ -35,7 +36,7 @@ interface FilePreviewType extends File {
 const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
-  const { user, onUploadedFile, onRemove, onLoading, className, fileInput } = props
+  const { user, onUploadedFile, onRemove, onLoading, className, fileInput, onReorder } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -88,7 +89,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     const result = [...list];
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-  
+    onReorder(result)
     return result;
   };
   
@@ -184,10 +185,11 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     overflow: 'auto',
   });
 
-  const getItemStyle = (isDragging: any, draggableStyle: any) => ({
+  const getItemStyle = (isDragging: boolean, draggableStyle: any, index: number) => ({
     ...draggableStyle,
-    //visibility: isDragging ? 'hidden' : 'visible',
-    marginLeft: isDragging && isDesktop ? '0!impotant' : 0
+    left: isDragging ? 92*(index+1) : 0,
+    borderTop: isDragging  && '3px solid #6610f2',
+    borderRadius: '0.9em'
   });
 
   const dragg = (result: any) =>  {
@@ -209,7 +211,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
       {...droppableProvided.droppableProps} 
       ref={droppableProvided.innerRef} 
       style={getListStyle(snapshot.isDraggingOver)}>
-      <FormRow className={classNames(className)}>
+      <FormRow className={classNames(className)} style={{width: '100%'}}>
         <FormItem>
           <div className={styles.main}>
             <div className={styles.container}>
@@ -248,7 +250,8 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
                                 {...draggableProvider.draggableProps}
                                 style={getItemStyle(
                                   snapshot.isDragging,
-                                  draggableProvider.draggableProps.style
+                                  draggableProvider.draggableProps.style,
+                                  index
                                 )}> 
                                 <PhotoPreview
                                   imgReference={item.reference as React.RefObject<HTMLImageElement>}
@@ -259,7 +262,6 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
                                 />
                               </div>}
                           </Draggable>
-                        
                       )
                     }
 
