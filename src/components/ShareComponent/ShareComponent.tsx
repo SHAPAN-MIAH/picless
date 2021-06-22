@@ -29,7 +29,7 @@ const ShareComponent: FunctionComponent = React.memo(() => {
             closeOnDocumentClick={false}
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
-            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '12px', marginLeft: '-100px' }}
+            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '10px', marginLeft: '-100px' }}
             arrow={false}
           >
             <SharePopup username={provider.userName} />
@@ -56,10 +56,7 @@ const SharePopup: FunctionComponent<SharePopupProps> = ({ username }) => {
               .share({
                 title: 'Picless Share',
                 text: 'Join us in PicLess',
-                url: '',
-              })
-              .then(() => {
-                console.log('Share successfully')
+                url: `https://michael.lup20.uk/u/${username}`,
               })
               .catch((error) => {
                 console.log(error)
