@@ -5,6 +5,17 @@
   /* margin-left: 70%; */
 }
 
+.shareBox {
+  display: block;
+  padding: 5px 0;
+  width: auto !important;
+}
+
+.shareButton {
+  padding: 4px 16px !important;
+  text-align: right;
+}
+
 .dotsShare {
   height: 9px !important;
   width: auto !important;

@@ -26,10 +26,10 @@ const ShareComponent: FunctionComponent = React.memo(() => {
             }
             position="bottom left"
             on="click"
-            closeOnDocumentClick={false}
+            closeOnDocumentClick
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
-            contentStyle={{ padding: '0px', border: 'none', width: '140px', borderRadius: '10px', marginLeft: '-100px' }}
+            contentStyle={{ padding: '0px', border: 'none', width: '100px', borderRadius: '10px', marginLeft: '-65px' }}
             arrow={false}
           >
             <SharePopup username={provider.userName} />
@@ -47,10 +47,10 @@ type SharePopupProps = {
 const SharePopup: FunctionComponent<SharePopupProps> = ({ username }) => {
   console.log(username)
   return (
-    <div className="simple-dropdown widget-box-post-settings-dropdown">
+    <div className={`simple-dropdown widget-box-post-settings-dropdown ${styles.shareBox}`}>
       {/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
         <p
-          className="simple-dropdown-link"
+          className={`simple-dropdown-link ${styles.shareButton}`}
           onClick={() => {
             navigator
               .share({
@@ -68,7 +68,7 @@ const SharePopup: FunctionComponent<SharePopupProps> = ({ username }) => {
       ) : (
         <Popup
           modal
-          contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '' }}
+          contentStyle={{ width: 'auto', borderRadius: '5px', minWidth: '', padding: '5px' }}
           position="center center"
           trigger={<p className="simple-dropdown-link">Share Profile</p>}
         >
