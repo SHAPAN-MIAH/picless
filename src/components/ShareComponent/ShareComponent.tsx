@@ -29,7 +29,7 @@ const ShareComponent: FunctionComponent = React.memo(() => {
             closeOnDocumentClick
             mouseLeaveDelay={300}
             mouseEnterDelay={0}
-            contentStyle={{ padding: '0px', border: 'none', width: '100px', borderRadius: '10px', marginLeft: '-65px' }}
+            contentStyle={{ padding: '0px', border: 'none', width: '110px', borderRadius: '10px', marginLeft: '-65px' }}
             arrow={false}
           >
             <SharePopup username={provider.userName} />
