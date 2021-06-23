@@ -4,7 +4,7 @@ import TextInput from 'components/Common/TextInput'
 import StyledPopup from 'components/StyledPopup/StyledPopup'
 import usePosts from 'hooks/usePosts'
 import useUser from 'hooks/useUser'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import { PostType } from 'types/PostType'
 
@@ -23,10 +23,13 @@ type LockedProps = { post: PostType }
 const Locked: FunctionComponent<LockedProps> = (props) => {
   const { post } = props
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   const { unlockPost } = usePosts()
   const { user } = useUser()
 
   const payForContentLocked = () => {
+    setLoading(true)
     unlockPost(post.id).then((data) => {
       if (data.action === 'redirect' && data.redirect) {
         window.location.href = data.redirect
@@ -70,7 +73,7 @@ const Locked: FunctionComponent<LockedProps> = (props) => {
             </ResumeContainerDiv>
           </FormRowItem>
 
-          <ButtonWithLoader type="button" className="small primary" onClick={payForContentLocked} showLoader={false}>
+          <ButtonWithLoader type="button" className="small primary" onClick={payForContentLocked} showLoader={loading}>
             Pay $ {total.toFixed(2)}
           </ButtonWithLoader>
         </StyledPopup>
