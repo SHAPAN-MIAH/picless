@@ -202,3 +202,19 @@
 .quick-post .quick-post-footer .quick-post-footer-actions .quick-post-footer-action:last-child {
   border-right: 0px solid #eaeaf5;
 }
+
+.eyeIcon {
+  position: absolute;
+  margin-left: 320px;
+  margin-top: -38px;
+}
+
+.passwordDiv {
+  position: relative;
+}
+
+@media screen and (max-width: 680px) {
+  .eyeIcon {
+    margin-left: 60vw;
+  }
+}
