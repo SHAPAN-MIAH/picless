@@ -25,6 +25,9 @@
     width: 100%;
     padding: 0px 0px 48px !important;
   }
+  .account-hub-content {
+    padding-top: 25px;
+  }
 }
 @media screen and (min-width: 680px) {
   .account-hub-content {
