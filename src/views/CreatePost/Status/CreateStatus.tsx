@@ -146,7 +146,6 @@ const CreateStatus: FunctionComponent<{}> = () => {
       return el.status !== "ERROR"
     })
     for (let i = 0; i<filterData.length; i++) {
-      console.log(filterData[i]['internalName'])
       imageList?.map(img => {
         if(filterData[i]['internalName'] === img.name) {
           img.index = i 
