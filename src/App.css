@@ -207,6 +207,7 @@
   position: absolute;
   margin-left: 320px;
   margin-top: -38px;
+  cursor: pointer;
 }
 
 .passwordDiv {
