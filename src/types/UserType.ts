@@ -37,6 +37,7 @@ export interface UserType {
   planId?: string
   occupationId?: number
   verifiedAccount?: boolean
+  countryTax?:number
   occupation?: OccupationType
   userInterest?: UserInterestType[]
   userTimeLine?: UserTimeLineType[]

@@ -3,6 +3,7 @@ import FormRowItem from 'components/Common/Form/FormRowItem'
 import TextInput from 'components/Common/TextInput'
 import StyledPopup from 'components/StyledPopup/StyledPopup'
 import usePosts from 'hooks/usePosts'
+import useUser from 'hooks/useUser'
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { PostType } from 'types/PostType'
@@ -10,12 +11,20 @@ import { PostType } from 'types/PostType'
 const ContainerLockedContentDiv = styled.div`
   margin: 25px 25% 15px 25%;
 `
+
+const ResumeContainerDiv = styled.div`
+  text-align: right;
+  margin-right: 10px;
+  margin-bottom: 15px;
+`
+
 type LockedProps = { post: PostType }
 
 const Locked: FunctionComponent<LockedProps> = (props) => {
   const { post } = props
 
   const { unlockPost } = usePosts()
+  const { user } = useUser()
 
   const payForContentLocked = () => {
     unlockPost(post.id).then((data) => {
@@ -24,7 +33,11 @@ const Locked: FunctionComponent<LockedProps> = (props) => {
       }
     })
   }
-  console.log(post)
+
+  const tax = user.countryTax && user.countryTax > 0 ? user.countryTax + 1 : 0
+  const total = (post.amount || 0) * tax
+  const taxCalculated = total - (post.amount || 0)
+
   return (
     <>
       <ContainerLockedContentDiv>
@@ -33,27 +46,32 @@ const Locked: FunctionComponent<LockedProps> = (props) => {
           size="S"
           trigger={
             <ButtonWithLoader type="button" className="small primary" showLoader={false}>
-              Unlock Content for $ {post.amount}
+              Unlock Content for $ {(post.amount || 0).toFixed(2)} + tax({taxCalculated.toFixed(2)})
             </ButtonWithLoader>
           }
         >
           <FormRowItem>
-            <TextInput type="text" name="username" defaultValue="" placeholder={'dfsd'} />
+            <TextInput
+              type="text"
+              name="username"
+              value={`${(post.amount || 0).toFixed(2)}  EUR`}
+              readOnly
+              style={{ textAlign: 'right' }}
+            />
           </FormRowItem>
           <FormRowItem>
-            {/* <div className={styles.resumeContainer}>
+            <ResumeContainerDiv>
               <p>
-                <strong>Tax: </strong> {0 * tax} {selectedPlan?.currency.toLocaleUpperCase()}
+                <strong>Tax: </strong> {taxCalculated.toFixed(2)} EUR
               </p>
               <p>
-                <strong>Total: </strong> {((selectedPlan?.amount || 0) * (tax + 1)).toFixed(2)}{' '}
-                {selectedPlan?.currency.toLocaleUpperCase()}
+                <strong>Total: </strong> {total.toFixed(2)} EUR
               </p>
-            </div> */}
+            </ResumeContainerDiv>
           </FormRowItem>
 
           <ButtonWithLoader type="button" className="small primary" onClick={payForContentLocked} showLoader={false}>
-            Pay $ {post.amount}
+            Pay $ {total.toFixed(2)}
           </ButtonWithLoader>
         </StyledPopup>
       </ContainerLockedContentDiv>
