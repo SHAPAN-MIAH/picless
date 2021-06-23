@@ -37,7 +37,7 @@ export interface UserType {
   planId?: string
   occupationId?: number
   verifiedAccount?: boolean
-  countryTax?:number
+  countryTax?: number
   occupation?: OccupationType
   userInterest?: UserInterestType[]
   userTimeLine?: UserTimeLineType[]
@@ -75,6 +75,7 @@ export interface UserProfileType extends UserType {
   numberImages: number
   numberOfFollowers: number
   numberVideos: number
+  numberPosts: number
 }
 
 export interface TipType {

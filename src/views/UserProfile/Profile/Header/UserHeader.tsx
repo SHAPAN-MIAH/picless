@@ -17,7 +17,6 @@ import './UserHeader.css'
 import { Link } from 'react-router-dom'
 import useWallet from 'hooks/useWallet'
 import { ServiceSubscritionPlanOption } from '../../../../types/PaymentTypes'
-import MessageModal from 'components/MessageModal/MessageModal'
 import ConfirmationModal from 'components/ConfirmationModal/ConfirmationModal'
 
 type UserHeaderProps = {
@@ -158,7 +157,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
             <div className="user-stats">
               <div className="user-stat big">
-                <p className="user-stat-title">{provider.numberOfFollowers}</p>
+                <p className="user-stat-title">{provider.numberPosts}</p>
 
                 <p className="user-stat-text">Posts</p>
               </div>
