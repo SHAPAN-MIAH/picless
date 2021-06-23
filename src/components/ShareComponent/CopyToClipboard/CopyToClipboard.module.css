@@ -1,3 +1,7 @@
+.socialLinkTitle {
+  margin-bottom: 1rem;
+}
+
 .copyContainer {
   display: flex;
 }
@@ -21,12 +25,13 @@
   transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
 }
 
+.clipboard h6 {
+  color: #91e8f0;
+}
+
 .clipboard:hover h6 {
   transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
   -webkit-transform: translate(0, -3px);
   transform: translate(0, -3px);
 }
 
-.clipboard h6 {
-  color: #91e8f0;
-}

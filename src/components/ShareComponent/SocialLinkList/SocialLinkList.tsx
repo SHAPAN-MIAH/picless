@@ -4,6 +4,7 @@ import { faMailBulk } from '@fortawesome/free-solid-svg-icons'
 
 import SocialLink from '../SocialLink/SocialLink'
 
+import styles from './SocialLinkList.module.css'
 const socialMedia = [
   { name: 'facebook', icon: faFacebook },
   { name: 'twitter', icon: faTwitter },
@@ -18,7 +19,7 @@ interface SocialLinkListProps {
 const SocialLinkList: FunctionComponent<SocialLinkListProps> = ({ userProfile }) => {
   return (
     <>
-      <ul className="social-links">
+      <ul className={`social-links ${styles.socialLinkList}`}>
         {socialMedia.map(({ name, icon }) => (
           <SocialLink
             key={name}

@@ -22,7 +22,7 @@ const CopyToClipboardComponent: FunctionComponent<UserProfileProps> = ({ userPro
 
   return (
     <>
-      <h4 className="user-status-title">Copty to ClipBoard</h4>
+      <h4 className={`user-status-title ${styles.socialLinkTitle}`}>Copty to ClipBoard</h4>
       <div className={styles.copyContainer}>
         <h6 className={styles.copyLink}>{link}</h6>
         <a className={styles.clipboard}>
