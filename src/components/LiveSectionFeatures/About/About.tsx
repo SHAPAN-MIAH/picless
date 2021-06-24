@@ -5,8 +5,6 @@ import ProviderProfileContext from '../../../context/ProviderProfileContext'
 import { UserInterestType, UserTimeLineType } from '../../../types/UserType'
 import { GetCountryName } from '../../../utils/Functions'
 
-// import { useDispatch } from 'react-redux'
-// import { showUserAbout } from '../../../context/actions/UserAction';
 
 const noInterests = 'The user has not yet added interests.'
 const noTimeLineEvents = 'The user has not yet added events to the timeline.'
@@ -18,11 +16,10 @@ const About: React.FunctionComponent<{}> = () => {
     const age = moment().diff(provider.birthDate, 'years', false)
     const countryName = GetCountryName(provider.countryCode || '')
 
-    // const dispatch = useDispatch()
-    // useEffect(() => dispatch(showUserAbout()), [])
 
     return (
-        <div>
+        <div style={{ paddingTop: "15vh", width: '70%', margin: 'auto', }}>
+            {/* <h1>this is the about page</h1> */}
             <div className="grid grid-3-9 mobile-prefer-content">
                 <div className="grid-column">
                     <div className="widget-box">

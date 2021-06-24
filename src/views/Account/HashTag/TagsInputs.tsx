@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import './HashTag.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 interface TagsInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    // label: string;
+
     defaultTags: string[];
     error: string
     changeTags: (name: string, list: string[]) => void
 }
+
+
 const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
     const { id, placeholder, error, defaultTags, changeTags, name } = props
 
@@ -31,14 +36,17 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
     const updateTagsHandler = (e: any) => {
         e.preventDefault();
 
-        // Add tags if input is not empty and if input value is not comma
         if (e.target.value !== '' && e.target.value !== ',') {
+
 
             if (e.key === ',') {
 
                 const newTag = value.trim().split(',')[0];
 
-                if (!tags.includes(newTag) && newTag !== '') {
+                if (e.target.value.length > 25) {
+                    alert("Tag length should be less than 26")
+                }
+                else if (!tags.includes(newTag) && newTag !== '') {
                     const arr = [...tags, newTag];
                     setTags(arr);
                     changeTags(name || '', arr);
@@ -50,7 +58,10 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
 
                 const newTag = value.trim();
 
-                if (!tags.includes(newTag) && newTag !== '') {
+                if (e.target.value.length > 25) {
+                    alert("Tag length should be less than 26")
+                }
+                else if (!tags.includes(newTag) && newTag !== '') {
                     const arr = [...tags, newTag];
                     setTags(arr);
                     changeTags(name || '', arr);
@@ -75,40 +86,60 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
         setIsActive(true);
     }
 
-    const blurHandler = () => {
+    const handelBlur = (e: any) => {
+
         setIsActive(false);
     }
 
-    return (<>
 
-        <div className={!isActive ? "tags-input" : "tags-input active"}>
-            {/* {label && <label htmlFor={id ? id : name}>{label}</label>} */}
-            <div className="tags-input__wrapper">
-                <div className="tags-input__tags">
-                    {tags.map((tag, i) =>
-                        <div key={i} className="tag">
-                            {tag} <span onClick={() => removeTag(tag)}><i className="fas fa-times-circle"></i></span>
-                        </div>
-                    )}
-                    <input
-                        type="text"
-                        placeholder={placeholder}
-                        name={name}
-                        id={id ? id : name}
-                        value={value}
-                        onChange={changeHandler}
-                        autoComplete="off"
-                        onKeyUp={updateTagsHandler}
-                        onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
-                        onKeyPress={(e) => e.key === 'Enter' && e.preventDefault()}
-                        onFocus={focusHandler}
-                        onBlur={blurHandler}
-                    />
+    return (
+        <>
+            <div className={!isActive ? "tags-input" : "tags-input active"}>
+
+                <div className="tags-input__wrapper" style={{
+                    border: '1px solid lightGray',
+                    height: '48px',
+                    borderRadius: '12px',
+                    transition: 'border-color .3s ease',
+                }}>
+                    <div className="tags-input__tags" style={{ flexWrap: 'wrap', display: 'flex' }}>
+                        {tags.map((tag, i) =>
+                            <div key={i} className="tag justify-content-center"
+                                style={{
+                                    display: "inline-block",
+                                    backgroundColor: "rgb(226, 226, 226)",
+                                    margin: "8.5px 5px",
+                                    padding: "0px 7px",
+                                    borderRadius: "5px",
+                                    fontSize: "14px",
+                                    fontFamily: "Rajdhani",
+                                    textAlign: "center",
+                                    marginTop: '7px'
+                                }}>
+                                {tag} <span className="removeIcon" onClick={() => removeTag(tag)}>
+                                    <FontAwesomeIcon icon={faTimesCircle} className="timesIcon" style={{ cursor: "pointer", color: 'gray', marginTop: '8.5px' }} />
+                                </span>
+                            </div>
+                        )}
+                        <input
+                            type="text"
+                            placeholder={placeholder}
+                            name={name}
+                            id={id ? id : name}
+                            value={value}
+                            onChange={changeHandler}
+                            autoComplete="off"
+                            onKeyUp={updateTagsHandler}
+                            onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+                            onKeyPress={(e) => e.key === 'Enter' && e.preventDefault()}
+                            onFocus={focusHandler}
+                            onBlur={handelBlur}
+                        />
+                    </div>
                 </div>
+                {error && <div className="error">{error}</div>}
             </div>
-            {error && <div className="error">{error}</div>}
-        </div>    </>
-
+        </>
     );
 }
 

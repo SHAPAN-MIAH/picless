@@ -1,53 +1,14 @@
-.shapanCss {
-
-
-}
-
 
 * {
     box-sizing: border-box;
     margin: 0;
   }
   
-  /* body {
-    font-family: 'Roboto', 'sans-serif';;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #3d3d3d;
-  } */
 
-
-  /* form {
-    max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid gray;
-    padding: 40px;
-  } */
-
-  .tags-input__wrapper{
-    border: 1px solid gray;
-    padding: 10px 10px 5px;
-    border-radius: 4px;
-    transition: border-color .3s ease;
-  }
-  .tags-input__tags{
-      display: flex;
-      flex-wrap: wrap;
-  }
-  .tag {
-    background-color: lightgray;
-    padding: 3px;
-    border-radius: 4px;
-    font-size: 10px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    /* transition: background-color .3s ease; */
-
-  }
-
-  i {
-    margin-left: 5px;
+  .timesIcon{
     cursor: pointer;
+    color: lightslategrey;
+    border: 1px solid gray;
   }
 
   .tag:hover {
@@ -56,28 +17,15 @@
   input {
     border: 0;
     outline: 0;
-    margin-bottom: 5px;
+    height: 48px !important;
     padding: 0;
     flex: 1;
     min-width: 80px;
   }
 
-  /* button {
-    background-color: lightgray;
-    color: #3d3d3d;
-    padding: 10px 20px;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    font-family: roboto;
-    transition: background-color .3s ease;
-
-   
-  }
-
   button:hover {
     background-color: darken(lightgray, 10);
-  } */
+  }
 
   .error {
     padding: 5px 0;

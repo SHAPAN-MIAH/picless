@@ -1,16 +1,35 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import { Link, useRouteMatch, Switch, } from 'react-router-dom'
+import { Link, useRouteMatch, Switch, Route } from 'react-router-dom'
 import useRouter from '../../../hooks/commons/useRouter'
 import { Tabs } from '../../../hooks/useProfile'
+import Loader from 'react-loader-spinner'
 import './LiveSectionMenu.css';
+import About from './../About/About';
+import VideoGallery from './../VideoGallery/VideoGallery';
+import PhotoGallery from './../PhotoGallery/PhotoGallery';
 
 
-const LiveSectionMenu: React.FunctionComponent<{}> = () => {
+// interface CreateLiveProps extends React.InputHTMLAttributes<> {
+//   chatToogle: (value: boolean) => void
+// }
+
+
+const Loading = (
+  <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
+    <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
+  </div>
+)
+
+const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any }> = (props) => {
+
+  console.log(props);
 
   const { url } = useRouteMatch()
   const router = useRouter()
+  const { match } = router
   const [currentTabs, setCurrentTabs] = useState<Tabs>()
+
 
   useEffect(() => {
     if (router.pathname.includes(Tabs.CHAT)) setCurrentTabs(Tabs.CHAT)
@@ -26,10 +45,10 @@ const LiveSectionMenu: React.FunctionComponent<{}> = () => {
     <>
       <nav className="section-navigation">
         <div id="section-navigation-slider" className="section-menu">
-          <Link
+          <button
+            style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.CHAT ? 'active' : '')}
-            to={`${url}/${Tabs.CHAT}`}
-            onClick={() => setCurrentTabs(Tabs.CHAT)}
+            onClick={() => props.onToggleChat()}
           >
 
             <svg xmlns="http://www.w3.org/2000/svg" className="section-menu-item-icon icon-chat" fill="none" stroke="currentColor">
@@ -37,7 +56,7 @@ const LiveSectionMenu: React.FunctionComponent<{}> = () => {
             </svg>
 
             <p className="section-menu-item-text">Chat</p>
-          </Link>
+          </button>
 
           <Link
             className={classNames(sectionMenuClasses, currentTabs === Tabs.PHOTOS ? 'active' : '')}
@@ -77,32 +96,7 @@ const LiveSectionMenu: React.FunctionComponent<{}> = () => {
 
         </div>
 
-        {/* {
-          <TabLink
-            className={classNames('option-item', currentTabs === Tabs.ABOUT ? 'active' : '')}
-            to={`${url}/user/${Tabs.ABOUT}`}
-            onClick={() => setCurrentTabs(Tabs.ABOUT)}
-          >
-          </TabLink>
-        }
-        {
-          <TabLink
-            className={classNames('option-item', currentTabs === Tabs.PHOTOS ? 'active' : '')}
-            to={`${url}/user/${Tabs.PHOTOS}`}
-            onClick={() => setCurrentTabs(Tabs.PHOTOS)}
-          >
-          </TabLink>
-        }
-        {
-          <TabLink
-            className={classNames('option-item', currentTabs === Tabs.VIDEOS ? 'active' : '')}
-            to={`${url}/user/${Tabs.VIDEOS}`}
-            onClick={() => setCurrentTabs(Tabs.VIDEOS)}
-          >
-          </TabLink>
-        } */}
-
-        {/* <ContentContainerDiv>
+        <div>
           <React.Suspense fallback={Loading}>
             <Switch>
               <Route path={`${match.path}/${Tabs.ABOUT}`} component={About} />
@@ -110,7 +104,9 @@ const LiveSectionMenu: React.FunctionComponent<{}> = () => {
               <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGallery} />
             </Switch>
           </React.Suspense>
-        </ContentContainerDiv> */}
+        </div>
+
+
 
         <div id="section-navigation-slider-controls" className="slider-controls">
           <div className="slider-control left">

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -20,6 +20,7 @@ import AccountHubMain from './AccountHub/AccountHubMain'
 import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
 import HashTag from './HashTag/HashTag'
+import TagsInputs from './HashTag/TagsInputs'
 
 
 type FormValues = {
@@ -29,6 +30,13 @@ type FormValues = {
   cityName: string
   occupationId: string
   birthDate: Date
+  tags: string
+  id: number
+  name: string
+  placeholder: string
+  changeTags: string
+  error: string | ""
+  defaultTags: string
 }
 
 type formFieldsNames = keyof FormValues
@@ -59,6 +67,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   }, [user, setValue])
 
   const onSubmit = (data: FormValues) => {
+    console.log(data);
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)
@@ -73,9 +82,50 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       success: 'The account information has been successfully saved',
       error: 'Error Saving the account information',
     }
+    console.log(dataToSubmit.tagLine)
 
     return updateUser(dataToSubmit, toastOptions)
+
   }
+
+
+
+
+  interface errorType {
+    tags?: string;
+  }
+  const [tags, setTags] = useState<string[]>([]);
+  const [error, setError] = useState<errorType>({});
+
+  const changeHandler = (name: string, value: string[] = []) => {
+    if (name === "tags") {
+      setTags(value);
+      if (value.length > 0 && errors.tags) {
+        setError((prev) => {
+          const prevErrors = { ...prev };
+          delete prevErrors.tags;
+          return prevErrors;
+        });
+      }
+    }
+  };
+
+  const submitHandler = (e: React.SyntheticEvent<EventTarget>) => {
+
+    e.preventDefault();
+
+    if (tags.length === 0) {
+      setError((prev) => ({
+        ...prev,
+        tags: "Please add at least one tag",
+      }));
+    }
+    if (tags.length > 0) {
+      console.log(tags);
+      // Submit form
+    }
+  };
+
 
   return (
     <div className="content-grid" style={{ maxWidth: '800px' }}>
@@ -167,36 +217,24 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                         />
                       </div>
                     </FormItem>
-                    {/* <FormItem>
-                      <Controller
-                        control={control}
-                        name="occupationId"
-                        defaultValue=""
-                        render={(propsController) => (
-                          <SelectForm
-                            id=""
-                            name={propsController.name}
-                            placeholder={t('accountInfo.occupationField')}
-                            options={professionList}
-                            value={propsController.value || ''}
-                            onChange={(val) => {
-                              propsController.onChange(val)
-                            }}
-                          />
-                        )}
-                      />
-                    </FormItem> */}
+
                     <FormItem>
                       {/* <Controller
                         control={control}
-                        type="text"
-                        as={TextInput}
-                        name="HashTag"
+                        name="tagLine"
                         defaultValue=""
-                        classNameFormInput="small"
-                        placeholder={t('Hashtags')}
-                        errorMessage={errors.cityName?.message}
+                        render={() => (
+                          <TagsInputs
+                            id="tags"
+                            name="tagLine"
+                            placeholder="Add tag"
+                            changeTags={changeHandler}
+                            error={error.tags || ''}
+                            defaultTags={tags}
+                          />
+                        )}
                       /> */}
+
 
                       <HashTag />
 

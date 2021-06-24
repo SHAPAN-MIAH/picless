@@ -89,7 +89,8 @@ const CreateLive: FunctionComponent<{}> = () => {
           <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} chatRef={chatRef} />
         )}
       </div>
-      <div className="widget-box">{ <LiveSectionMenu />}</div>
+      <div className="widget-box">{<LiveSectionMenu onToggleChat={onToggleChat} />}</div>
+
       <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
     </>
   )

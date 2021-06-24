@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TagsInputs from "./TagsInputs";
 import styles from './HashTag.module.css'
+
 
 const HashTag: React.FunctionComponent<{}> = () => {
     interface errorType {
@@ -10,6 +11,7 @@ const HashTag: React.FunctionComponent<{}> = () => {
     const [errors, setErrors] = useState<errorType>({});
 
     const changeHandler = (name: string, value: string[] = []) => {
+
         if (name === "tags") {
             setTags(value);
             if (value.length > 0 && errors.tags) {
@@ -19,37 +21,60 @@ const HashTag: React.FunctionComponent<{}> = () => {
                     return prevErrors;
                 });
             }
+
         }
     };
 
     const submitHandler = (e: React.SyntheticEvent<EventTarget>) => {
+        console.log(e);
         e.preventDefault();
 
-        if (tags.length === 0) {
+        if (tags.length > 5) {
+            alert("Please enter 5 input tags")
+        }
+        else if (tags.length === 0) {
             setErrors((prev) => ({
                 ...prev,
                 tags: "Please add at least one tag",
             }));
         }
-        if (tags.length > 0) {
+        else if (tags.length > 0) {
             console.log(tags);
             // Submit form
         }
+
+
+        fetch(`${process.env.REACT_APP_BASE_URL_API}/users/updateprofile`, {
+            method: 'PUT',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(tags)
+        })
+            .then(res => {
+                // res.json
+                console.log(res.body);
+            }
+            )
+            .then(data => {
+                console.log("Successfully added");
+            })
+
     };
+
+
 
     return (
         <div>
             <form onSubmit={submitHandler}>
                 <TagsInputs
-                    // label="Tags"
                     id="tags"
                     name="tags"
                     placeholder="Add tag"
                     changeTags={changeHandler}
                     error={errors.tags || ''}
                     defaultTags={tags}
+
                 />
-                {/* <button type="submit">Submit</button> */}
+                <button style={{ width: '70px', marginTop: '10px', color: 'gray' }} type="submit">Submit</button>
             </form>
         </div>
     );

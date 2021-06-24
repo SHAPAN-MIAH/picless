@@ -26,6 +26,10 @@ import routes from './MenuRoutes'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
 import ChatMain from 'views/MessagesNew/ChatMain'
 import LiveView from 'components/LiveView/LiveView'
+import PhotoGallery from './../components/LiveSectionFeatures/PhotoGallery/PhotoGallery';
+import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
+import About from 'components/LiveSectionFeatures/About/About'
+import LiveChat from 'components/LiveChat/LiveChat'
 
 
 const NoMatchPage = () => {
@@ -83,6 +87,10 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path={['/user/chat', '/user/chat/:userid']} component={ChatMain} />
 
               <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
+              <ProtectedRoute {...routerProps} exact path="/user/create-post/photos" component={PhotoGallery} />
+              <ProtectedRoute {...routerProps} exact path="/user/create-post/videos" component={VideoGallery} />
+              <ProtectedRoute {...routerProps} exact path="/user/create-post/about" component={About} />
+              <ProtectedRoute {...routerProps} exact path="/user/create-post/chat" component={LiveChat} />
 
               <ProtectedRoute {...routerProps} path="/user/notification" component={Notification} />
 
@@ -99,7 +107,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
-        
+
               {/* <ProtectedRoute
                 {...routerProps}
                 path={['/u/:username', '/u/:username/', '/u/:username/:tab']}
@@ -113,7 +121,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <Route path="/support/contact" component={Contact} />
               <Route path="/support/privacy" component={PrivacyPolicy} />
               <Route path="/support/terms-conditions" component={TermsAndConditions} />
-              
+
               <Route path="/">
                 <Redirect to="/user/home/timeline" />
               </Route>
