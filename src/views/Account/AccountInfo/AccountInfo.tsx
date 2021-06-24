@@ -89,7 +89,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="account-hub-content">
+      <div className="account-hub-content account-info-section">
         <div className="grid-column">
           <div className="widget-box">
             <p className="widget-box-title">{t('accountInfo.personalInfo')}</p>

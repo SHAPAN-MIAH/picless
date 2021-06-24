@@ -25,8 +25,22 @@
     width: 100%;
     padding: 0px 0px 48px !important;
   }
-  .account-hub-content {
+  .account-info-section {
     padding-top: 25px;
+  }
+  .eyeIcon {
+    margin-left: 60vw;
+  }
+  .cover-page {
+    height: 130px !important;
+    padding-bottom: 100px;
+  }
+  .cover-container {
+    margin-bottom: 20px;
+    height: 200px !important;
+  }
+  .update-pic {
+    margin-bottom: 20px;
   }
 }
 @media screen and (min-width: 680px) {
@@ -212,10 +226,4 @@
 
 .passwordDiv {
   position: relative;
-}
-
-@media screen and (max-width: 680px) {
-  .eyeIcon {
-    margin-left: 60vw;
-  }
 }
