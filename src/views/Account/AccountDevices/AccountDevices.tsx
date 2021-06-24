@@ -7,6 +7,8 @@ import { unixTimestampToDate } from '../../../utils/Helpers'
 import UserService from '../../../services/UserService'
 import useAuth from '../../../hooks/useAuth'
 
+import styles from './AccountDevices.module.css';
+
 interface RenderTableProps {
   devices: any
   refresh: () => void
@@ -15,11 +17,14 @@ interface RenderTableProps {
 const RenderTableData = (props: RenderTableProps) => {
   const { devices, refresh } = props
 
+  console.log(devices)
+
   return devices.map((item: any) => {
     const deviceKey = item.DeviceKey
     const lastAuthentication = item.DeviceLastAuthenticatedDate
 
     const deviceName = item.DeviceAttributes.find((attr: any) => {
+      console.log(attr)
       return attr.Name === 'device_name'
     })
 
@@ -45,19 +50,32 @@ const RenderTableData = (props: RenderTableProps) => {
       })
     }
 
-    return (
-      <tr key={deviceKey}>
-        <td>{deviceName.Value}</td>
-        <td>{deviceIp.Value}</td>
-        <td>{unixTimestampToDate(lastAuthentication)}</td>
-        <td>
-          <a href="#/" onClick={removeDevice}>
-            <svg className="icon-delete">
-              <use xlinkHref="#svg-delete" />
-            </svg>
-          </a>
-        </td>
-      </tr>
+    return (    
+      <tbody key={deviceKey} >
+        <tr className={styles.deviceItem}>
+          <th>Name</th>
+          <td>{deviceName.Value}</td>
+        </tr>
+        
+        <tr className={styles.deviceItem}>
+          <th>Device IP</th>
+          <td>{deviceIp.Value}</td>
+        </tr>
+
+        <tr className={styles.deviceItem}>
+          <th className={styles.deviceItemTitle}>Last Seen</th>  
+          <td className={styles.deviceItemTitle}>{unixTimestampToDate(lastAuthentication)}</td>
+        </tr>  
+
+        <tr className={`button small ${styles.deviceButton}`}>
+            <span onClick={removeDevice}>
+              Log Above Device Out
+              <svg className="icon-delete">
+                <use xlinkHref="#svg-delete" />
+              </svg>
+            </span>
+        </tr>   
+      </tbody>
     )
   })
 }
@@ -79,6 +97,8 @@ const AccountDevices: FunctionComponent<{}> = () => {
     })
   }, [])
 
+  console.log("My devices",myDevices)
+  console.log('Devices Updated', setMyDevices)
   return (
     <>
       <div className="account-hub-content">
@@ -91,23 +111,13 @@ const AccountDevices: FunctionComponent<{}> = () => {
         </div>
 
         <div className="grid-column">
-          <div className="widget-box">
+          <div className="widget-box" >
             <p className="widget-box-title">{t('accountDevices.devicesList')}</p>
 
             <div className="widget-box-content">
               {myDevices.length > 0 && (
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Ip v6</th>
-                      <th scope="col">Last Seen</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <table className='table' >
                     <RenderTableData devices={myDevices} refresh={refreshDevices} />
-                  </tbody>
                 </table>
               )}
             </div>
