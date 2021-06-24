@@ -23,10 +23,31 @@
 @media screen and (max-width: 680px) {
   .content-grid {
     width: 100%;
-    padding: 20px 0 200px;
+    padding: 0px 0px 48px !important;
+  }
+  .account-info-section {
+    padding-top: 25px;
+  }
+  .eyeIcon {
+    margin-left: 60vw;
+  }
+  .cover-page {
+    height: 130px !important;
+    padding-bottom: 100px;
+  }
+  .cover-container {
+    margin-bottom: 20px;
+    height: 200px !important;
+  }
+  .update-pic {
+    margin-bottom: 20px;
   }
 }
-
+@media screen and (min-width: 680px) {
+  .account-hub-content {
+    padding-top: 15px;
+  }
+}
 .App-header {
   min-height: 100vh;
   display: flex;
@@ -52,7 +73,6 @@
   }
 }
 
-
 .fixed-grid {
   margin-top: 0px !important;
 }
@@ -69,7 +89,7 @@
 
 /* REACT-ELASTIC-CAROUSEL CUSTOM STYLES*/
 .rec.rec-carousel {
-  background-color:  #fff/*#212529*/;
+  background-color: #fff /*#212529*/;
   top: 0px;
   left: 0px;
   width: inherit;
@@ -147,8 +167,8 @@
   display: none;
 }
 .margins-svg {
-  margin-left: auto!important;
-  margin-right: auto!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 /* REACT-POPUP */
 @keyframes anvil {
@@ -172,13 +192,13 @@
   -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
 
-/* TEMPlATE FIXES*/
-@media screen and (max-width: 1070px){
+/* TEMPLATE FIXES*/
+@media screen and (max-width: 1070px) {
   .grid.grid-3-9 {
     grid-template-columns: 100%;
     grid-template-areas:
-        "sidebar"
-        "content"
+      'sidebar'
+      'content';
   }
 
   .quick-post .quick-post-footer {
@@ -195,4 +215,15 @@
 
 .quick-post .quick-post-footer .quick-post-footer-actions .quick-post-footer-action:last-child {
   border-right: 0px solid #eaeaf5;
+}
+
+.eyeIcon {
+  position: absolute;
+  margin-left: 320px;
+  margin-top: -38px;
+  cursor: pointer;
+}
+
+.passwordDiv {
+  position: relative;
 }

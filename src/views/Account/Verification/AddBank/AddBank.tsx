@@ -98,19 +98,6 @@ const AddBank: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="content-grid">
-        <div className="section-banner">
-          <img
-            className="section-banner-icon"
-            src={`${process.env.PUBLIC_URL}/assets/img/banner/marketplace-icon.png`}
-            alt="marketplace-icon"
-          />
-
-          <p className="section-banner-title">Add a bank and start to earn $$$</p>
-
-          <p className="section-banner-text">
-            {process.env.REACT_APP_WEBSITE_NAME} is the best place to buy and sell online content!
-          </p>
-        </div>
         <div className="grid grid-2-8-2">
           <div className="grid-column">
             <form className="form" onSubmit={handleSubmit(onSubmit)}>

@@ -82,24 +82,26 @@ const InterestList: FunctionComponent<{}> = () => {
     setInterestList(user.userInterest || [])
   }, [user, setInterestList])
 
-  const onDelete = useCallback((interestId: number) => {
-    const dataToSubmit = { userInterest: user.userInterest?.filter((i) => i.id !== interestId) }
+  const onDelete = useCallback(
+    (interestId: number) => {
+      const dataToSubmit = { userInterest: user.userInterest?.filter((i) => i.id !== interestId) }
 
-    const toastOptions = {
-      loading: 'Saving account information ...',
-      success: 'The account information has been successfully saved',
-      error: 'Error Saving the account information',
-    }
+      const toastOptions = {
+        loading: 'Saving account information ...',
+        success: 'The account information has been successfully saved',
+        error: 'Error Saving the account information',
+      }
 
-    return updateUser(dataToSubmit, toastOptions)
-  }, [])
+      return updateUser(dataToSubmit, toastOptions)
+    },
+    [user.userInterest, updateUser]
+  )
 
   const renderContent = () => {
     if (interestList && interestList.length > 0) {
       const interestSplitted = _.chunk(interestList, 2)
       return interestSplitted.map((row) => {
         const key = Utils.simpleKeyGenerator(5)
-
         return (
           <div key={key}>
             <FormRow classNameRow="split">

@@ -60,7 +60,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)
-
       formData.push(dataAttr)
     })
 
@@ -79,21 +78,11 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     <div className="content-grid" style={{ maxWidth: '800px' }}>
       <div className="grid grid-2-7-2">
         <div className="account-hub-content">
-          <div className="section-header">
-            <div className="section-header-info">
-              <p className="section-pretitle">{t('profileInfo.myProfileTitle')}</p>
-
-              <h2 className="section-title">{t('profileInfo.profileInfo')}</h2>
-            </div>
-          </div>
-
           <div className="grid-column">
             <AccountHubMain />
-
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div className="widget-box">
                 <p className="widget-box-title">{t('profileInfo.aboutYourProfile')}</p>
-
                 <div className="widget-box-content">
                   <FormRow classNameRow="split">
                     <FormItem>
@@ -107,7 +96,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                         errorMessage={errors.profileDescription?.message}
                       />
                     </FormItem>
-
                     <FormItem>
                       <Controller
                         control={control}

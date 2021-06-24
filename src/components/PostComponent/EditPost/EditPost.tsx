@@ -12,7 +12,6 @@ import ButtonWithLoader from '../../Common/ButtonWithLoader'
 import FormRow from '../../Common/Form/FormRow'
 import FormRowItem from '../../Common/Form/FormRowItem'
 import TextArea from '../../Common/TextArea'
-import ScheduleTooltip from './ScheduleTooltip/ScheduleTooltip'
 
 import { CommonPostType, PostType, PrivacityType } from '../../../types/PostType'
 
@@ -25,7 +24,6 @@ type EditPostProps = {
 
 type FormValues = {
   content: string
-  schedule: Date
   amount: number
   privacity: PrivacityType
 }
@@ -46,14 +44,11 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
   const [privacy, setPrivacy] = useState<PrivacityType>(post.privacity as PrivacityType)
 
   const onSubmit = (data: FormValues) => {
-    const scheduleData = data.schedule && (data.schedule.toISOString() || '')
-
     const postEdited: Partial<CommonPostType> = {
       id: post.id,
       content: data.content,
       featuredPost: false,
       tags: [],
-      startDate: scheduleData,
       privacity: privacy,
       amount: data.amount,
     }
@@ -73,7 +68,6 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
   useEffect(() => {
     setValue('content', post.content)
     setValue('amount', post.amount)
-    setValue('schedule', post.schedule)
   }, [])
 
   const handlePrivacy = () => {
@@ -111,22 +105,6 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
           </FormRowItem>
 
           <FormRow style={{ flexFlow: 'row' }}>
-            <FormItem style={{ width: '40px' }}>
-              <Controller
-                control={control}
-                name="schedule"
-                defaultValue=""
-                render={(propsController) => (
-                  <ScheduleTooltip
-                    scheduleDate={propsController.value || ''}
-                    name={propsController.name}
-                    onApplySchedule={(date) => {
-                      propsController.onChange(date)
-                    }}
-                  />
-                )}
-              />
-            </FormItem>
             <FormItem style={{ width: '40px' }}>
               <Controller
                 control={control}
