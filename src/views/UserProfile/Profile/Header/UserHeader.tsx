@@ -99,24 +99,47 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
             {provider.userName !== userData.userName && (
               <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
                 {!subscribed && (
-                  <Popup
-                    modal
-                    contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
-                    position="center center"
-                    trigger={
-                      <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
-                        <p className="profile-header-info-action button primary custom-btn">
-                          Suscribe{' '}
-                          {planList
-                            ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}`
-                            : ''}
-                          <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
-                        </p>
-                      </div>
-                    }
-                  >
-                    {(close: any) => <SubscribePopup onClose={close} />}
-                  </Popup>
+                  <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+                    <Popup
+                      modal
+                      contentStyle={{ width: '330px', borderRadius: '5px', minWidth: '' }}
+                      position="center center"
+                      trigger={
+                        <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+                          <p className={`profile-header-info-action button primary custom-btn ${styles.suscribeButtonText}`}>
+                            Suscribe{' '}
+                            {planList
+                              ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}`
+                              : ''}
+                            <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
+                          </p>
+                        </div>
+                      }
+                    >
+                      {(close: any) => <SubscribePopup onClose={close} />}
+                    </Popup>
+
+                    <Popup
+                      modal
+                      contentStyle={{
+                        width: '330px',
+                        borderRadius: '5px',
+                        minWidth: '',
+                      }}
+                      position="center center"
+                      trigger={
+                        <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
+                          <span
+                            className={`profile-header-info-action button secondary custom-btn ${styles.suscribeButtonText}`}
+                          >
+                            Send Message <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
+                          </span>
+                        </div>
+                      }
+                    >
+                      {(close: any) => <SubscribePopup onClose={close} />}
+                    </Popup>
+                  </div>
                 )}
 
                 {subscribed && (
