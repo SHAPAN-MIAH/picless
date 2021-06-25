@@ -17,6 +17,8 @@ import useAuth from '../../../../hooks/useAuth'
 
 import { CurrentView } from './Login'
 import useRouter from '../../../../hooks/commons/useRouter'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 type FormValues = {
   username: string
@@ -24,7 +26,14 @@ type FormValues = {
   rememberMe: boolean
 }
 
+const eyeShow = <FontAwesomeIcon icon={faEye} />
+const eyeHide = <FontAwesomeIcon icon={faEyeSlash} />
 const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> = (props) => {
+  const [passwordShown, setPasswordShown] = useState(false)
+  const passwordToggle = () => {
+    setPasswordShown(passwordShown ? false : true)
+  }
+
   const { t } = useTranslation()
 
   const { changeView } = props
@@ -106,15 +115,20 @@ const LoginForm: FunctionComponent<{ changeView: (view: CurrentView) => void }> 
         </FormRowItem>
 
         <FormRowItem>
-          <Controller
-            control={control}
-            as={TextInput}
-            type="password"
-            name="password"
-            defaultValue=""
-            placeholder={t('authentication.password')}
-            errorMessage={errors.password?.message}
-          />
+          <div className="passwordDiv">
+            <Controller
+              control={control}
+              as={TextInput}
+              type={passwordShown ? 'text' : 'password'}
+              name="password"
+              defaultValue=""
+              placeholder={t('authentication.password')}
+              errorMessage={errors.password?.message}
+            />
+          </div>
+          <i className="eyeIcon" onClick={passwordToggle}>
+            {passwordShown ? eyeShow : eyeHide}
+          </i>
         </FormRowItem>
 
         <FormRow classNameRow="space-between">
