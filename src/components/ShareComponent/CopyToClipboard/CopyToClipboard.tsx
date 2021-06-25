@@ -13,7 +13,11 @@ interface UserProfileProps {
 
 const CopyToClipboardComponent: FunctionComponent<UserProfileProps> = ({ userProfile }) => {
   const [isCopied, setIsCopied] = useState(false)
-  const link = `michael.lup20.uk/u/${userProfile}`
+
+  const mainUrl = window.location.origin
+  const url = `${mainUrl}/${userProfile}`
+
+  console.log('useRouter Hook', url)
 
   const copyToClipboard = () => {
     setIsCopied(true)
@@ -26,9 +30,9 @@ const CopyToClipboardComponent: FunctionComponent<UserProfileProps> = ({ userPro
     <>
       <h4 className={`user-status-title ${styles.socialLinkTitle}`}>Copty to ClipBoard</h4>
       <div className={styles.copyContainer}>
-        <h6 className={styles.copyLink}>{link}</h6>
+        <h6 className={styles.copyLink}>{url}</h6>
         <a className={styles.clipboard}>
-          <CopyToClipboard text={link} onCopy={copyToClipboard}>
+          <CopyToClipboard text={url} onCopy={copyToClipboard}>
             <h6> {isCopied ? 'Copied' : <FontAwesomeIcon icon={faClipboard} color="#91E8F0" />}</h6>
           </CopyToClipboard>
         </a>
