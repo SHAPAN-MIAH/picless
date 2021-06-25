@@ -39,7 +39,7 @@ const Locked: FunctionComponent<LockedProps> = (props) => {
 
   const tax = user.countryTax && user.countryTax > 0 ? user.countryTax + 1 : 0
   const total = (post.amount || 0) * tax
-  const taxCalculated = total - (post.amount || 0)
+  const taxCalculated = total === 0 ? 0 : total - (post.amount || 0)
 
   return (
     <>
