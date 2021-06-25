@@ -15,6 +15,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { result } from 'lodash'
 import { isDesktop } from 'react-device-detect'
 
+import './UploadSourcePost.css'
+import { url } from 'inspector'
+
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   user: UserType
   onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void
@@ -180,17 +183,16 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     })
   }
 
-  const getListStyle = (isDraggingOver: any) => ({
-    display: 'flex',
-    overflow: 'auto',
-  });
+  const getListStyle = (isDraggingOver: boolean) => {
+    return ({
+      display: 'flex',
+      overflow: 'auto',
+    })
+  };
 
-  const getItemStyle = (isDragging: boolean, draggableStyle: any, index: number) => ({
-    ...draggableStyle,
-    left: isDragging ? 92*(index+1) : 0,
-    borderTop: isDragging  && '3px solid #6610f2',
-    borderRadius: '0.9em'
-  });
+  const getItemStyle = (isDragging: boolean, draggableStyle: any, index: number) => (
+    setleft(isDragging, draggableStyle, index)
+  );
 
   const dragg = (result: any) =>  {
     const { source, destination } = result;
@@ -203,7 +205,27 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     setSelectedFile(prevItems => reorder(prevItems, source.index, destination.index)) 
   }
 
-  return (
+  const setleft = (isDragging: boolean, draggableStyle: any, index: number) => {
+    const basics = {
+      ...draggableStyle,
+      border: isDragging  && '3px solid #6610f2',
+      borderRadius: '0.9em',
+      width: '80px',
+      height:'80px',
+    }
+    if (window.innerWidth < 800 ) {
+      return basics;
+    }
+    return {
+      ...basics,
+      visibility: isDragging ? 'hidden' : 'visible',
+      cursor: 'url(data:text/html;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSItMjQxIDI0MyAxNiAxNiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkYwMDAwO30NCjwvc3R5bGU+DQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNLTIyOS4yLDI0NGMtMS43LDAtMy4xLDEuNC0zLjgsMi44Yy0wLjctMS40LTIuMS0yLjgtMy44LTIuOGMtMi4zLDAtNC4yLDEuOS00LjIsNC4yYzAsNC43LDQuOCw2LDgsMTAuNg0KCWMzLjEtNC42LDgtNi4xLDgtMTAuNkMtMjI1LDI0NS45LTIyNi45LDI0NC0yMjkuMiwyNDRMLTIyOS4yLDI0NHoiLz4NCjwvc3ZnPg0K), auto'
+    }
+
+  }
+
+
+  return ( 
     <DragDropContext onDragEnd={(result: any) => dragg(result)}>
     <Droppable droppableId='uploadId' direction="horizontal">
      {(droppableProvided, snapshot) => 
@@ -252,7 +274,8 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
                                   snapshot.isDragging,
                                   draggableProvider.draggableProps.style,
                                   index
-                                )}> 
+                                )}
+                                className={'draggable'}> 
                                 <PhotoPreview
                                   imgReference={item.reference as React.RefObject<HTMLImageElement>}
                                   key={key}
