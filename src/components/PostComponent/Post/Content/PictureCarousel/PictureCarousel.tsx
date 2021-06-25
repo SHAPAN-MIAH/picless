@@ -35,6 +35,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
 
   const carouselRef = useRef<any>(null);
 
+  let mediaContainer: any = []
   let media: any = []
   let isDisabled = false
 
@@ -42,12 +43,15 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
   const listVideos: SourceType[] = allData.videos || []
 
   listImages.map((images: SourceType) => {
-    media.push(images)
+    mediaContainer.push(images)
   })
   listVideos.map((videos: SourceType) => {
-    media.push(videos)
+    mediaContainer.push(videos)
   })
 
+  mediaContainer.map((el: any) => {
+    media[el.index] = el;
+  })
   const page = media.length > 1 ? true : false
 
   const handleDisable = (item: SourceType) => {
