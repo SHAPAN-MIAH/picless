@@ -15,7 +15,7 @@ const Chat: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div className="content-grid">
+      <div className="content-grid" style={{ paddingTop: '10vh' }}>
         <div className="grid fixed-grid">
           <div className="account-hub-content">
             <div className="section-header">

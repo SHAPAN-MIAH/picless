@@ -141,6 +141,24 @@ const CreateStatus: FunctionComponent<{}> = () => {
     setVideoList(updatedVidList)
   }
 
+  const reorder = (data: any) => {
+    const filterData = data.filter((el: any)=> {
+      return el.status !== "ERROR"
+    })
+    for (let i = 0; i<filterData.length; i++) {
+      imageList?.map(img => {
+        if(filterData[i]['internalName'] === img.name) {
+          img.index = i 
+        }
+      })
+      videoList?.map(video => {
+        if(filterData[i]['internalName'] === video.name) {
+          video.index = i 
+        }
+      })
+    }
+  };
+
   return (
     <>
       <div className="quick-post-body">
@@ -153,6 +171,7 @@ const CreateStatus: FunctionComponent<{}> = () => {
             onLoading={onLoading}
             onRemove={onRemoveImage}
             fileInput={uploadFile}
+            onReorder={reorder}
           />
 
           <FormRow>
