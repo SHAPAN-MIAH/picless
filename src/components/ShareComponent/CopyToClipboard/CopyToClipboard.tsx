@@ -3,6 +3,8 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 
+import useRouter from './../../../hooks/commons/useRouter'
+
 import styles from './CopyToClipboard.module.css'
 
 interface UserProfileProps {
