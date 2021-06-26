@@ -10,6 +10,10 @@
   padding-left: 10px;
 }
 
+.suscribeButtonText {
+  padding: 0 0.5rem !important;
+}
+
 .socialLinksWrapAdjustment {
   display: flex;
   justify-content: flex-end;
@@ -29,9 +33,12 @@
   }
 }
 
-
 @media only screen and (max-width: 680px) {
   .profileHeaderCoverMobile {
-    border-radius: 0!important;
+    border-radius: 0 !important;
+  }
+  .suscribeButtonText {
+    padding: 0.1 !important;
+    width: 120px !important;
   }
 }

@@ -1,0 +1,37 @@
+.socialLinkTitle {
+  margin-bottom: 1rem;
+}
+
+.copyContainer {
+  display: flex;
+}
+
+.copyLink {
+  margin: 1rem 0 0 0;
+  padding: 1rem;
+  color: #fff;
+  background: #615dfa;
+  border-radius: 5px 0 0 5px;
+}
+
+.clipboard {
+  cursor: pointer;
+  margin: 1rem 0 0 0;
+  padding: 1rem;
+  background: #4e4ac8;
+  border-radius: 0 5px 5px 0;
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+}
+
+.clipboard h6 {
+  color: #91e8f0;
+}
+
+.clipboard:hover h6 {
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+  -webkit-transform: translate(0, -3px);
+  transform: translate(0, -3px);
+}
+
