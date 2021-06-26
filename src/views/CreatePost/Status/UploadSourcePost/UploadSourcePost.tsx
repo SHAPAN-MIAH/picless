@@ -16,6 +16,7 @@ import { result } from 'lodash'
 import { isDesktop } from 'react-device-detect'
 
 import './UploadSourcePost.css'
+import logo from  '../../../../Picless.png'
 import { url } from 'inspector'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
@@ -190,9 +191,30 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     })
   };
 
-  const getItemStyle = (isDragging: boolean, draggableStyle: any, index: number) => (
-    setleft(isDragging, draggableStyle, index)
-  );
+  const getItemStyle = (isDragging: boolean, draggableStyle: any, index: number, imgSrc: string) => {
+    const draggableArea = document.getElementById('draggableArea');
+    
+    if (isDragging) {
+      draggableArea?.classList.add('dragging')
+    }
+    else {
+      draggableArea?.classList.remove('dragging');
+    }
+    const basics = {
+      ...draggableStyle,
+      border: isDragging  && '3px solid #6610f2',
+      borderRadius: '0.9em',
+      width: '80px',
+      height:'80px',
+    }
+    if (!isDesktop ) {
+      return basics;
+    }
+    return {
+      ...basics,
+      visibility: isDragging ? 'hidden' : 'visible',
+    }
+  };
 
   const dragg = (result: any) =>  {
     const { source, destination } = result;
@@ -205,22 +227,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     setSelectedFile(prevItems => reorder(prevItems, source.index, destination.index)) 
   }
 
-  const setleft = (isDragging: boolean, draggableStyle: any, index: number) => {
-    const basics = {
-      ...draggableStyle,
-      border: isDragging  && '3px solid #6610f2',
-      borderRadius: '0.9em',
-      width: '80px',
-      height:'80px',
-    }
-    if (window.innerWidth < 800 ) {
-      return basics;
-    }
-    return {
-      ...basics,
-      visibility: isDragging ? 'hidden' : 'visible',
-      cursor: 'url(data:text/html;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSItMjQxIDI0MyAxNiAxNiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkYwMDAwO30NCjwvc3R5bGU+DQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNLTIyOS4yLDI0NGMtMS43LDAtMy4xLDEuNC0zLjgsMi44Yy0wLjctMS40LTIuMS0yLjgtMy44LTIuOGMtMi4zLDAtNC4yLDEuOS00LjIsNC4yYzAsNC43LDQuOCw2LDgsMTAuNg0KCWMzLjEtNC42LDgtNi4xLDgtMTAuNkMtMjI1LDI0NS45LTIyNi45LDI0NC0yMjkuMiwyNDRMLTIyOS4yLDI0NHoiLz4NCjwvc3ZnPg0K), auto'
-    }
+  const setleft = (isDragging: boolean, draggableStyle: any, index: number, imgSrc: string) => {
 
   }
 
@@ -232,7 +239,8 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
      <div 
       {...droppableProvided.droppableProps} 
       ref={droppableProvided.innerRef} 
-      style={getListStyle(snapshot.isDraggingOver)}>
+      style={getListStyle(snapshot.isDraggingOver)}
+      id='draggableArea'>
       <FormRow className={classNames(className)} style={{width: '100%'}}>
         <FormItem>
           <div className={styles.main}>
@@ -273,9 +281,9 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
                                 style={getItemStyle(
                                   snapshot.isDragging,
                                   draggableProvider.draggableProps.style,
-                                  index
-                                )}
-                                className={'draggable'}> 
+                                  index,
+                                  imgSrc
+                                )}> 
                                 <PhotoPreview
                                   imgReference={item.reference as React.RefObject<HTMLImageElement>}
                                   key={key}
