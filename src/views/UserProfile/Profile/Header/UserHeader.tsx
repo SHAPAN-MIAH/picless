@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom'
 import useWallet from 'hooks/useWallet'
 import { ServiceSubscritionPlanOption } from '../../../../types/PaymentTypes'
 import ConfirmationModal from 'components/ConfirmationModal/ConfirmationModal'
+import ShareComponent from 'components/ShareComponent/ShareComponent'
 
 type UserHeaderProps = {
   subscription: SubscriptionType | null
@@ -70,6 +71,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     <>
       <WalletContextProvider>
         <div className="profile-header" style={{ marginTop: isMobile ? '60px' : '0px' }}>
+          <ShareComponent />
           <div
             className={classNames('profile-header-cover', styles.profileHeaderCoverMobile)}
             style={{ background: `url(${imageCover}) center center / cover no-repeat`, height: '20em' }}
