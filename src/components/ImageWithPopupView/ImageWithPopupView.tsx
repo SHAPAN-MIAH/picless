@@ -51,7 +51,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const handleImgIndex = (img: SourceType) => {
     imgIndex = medios.indexOf(img)
   }
-
   const videoJsOptions = {
     autoplay: false,
     width: '100%',
