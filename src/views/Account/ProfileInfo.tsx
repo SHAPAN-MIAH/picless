@@ -28,21 +28,26 @@ type FormValues = {
   profileDescription: string
   countryCode: string
   cityName: string
-  occupationId: string
   birthDate: Date
-  tags: string
+  tagLine: string
   id: number
   name: string
   placeholder: string
-  changeTags: string
   error: string | ""
-  defaultTags: string
 }
 
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = ['profileDescription', 'countryCode', 'cityName', 'occupationId', 'birthDate']
+const formFields: formFieldsNames[] = ['profileDescription', 'countryCode', 'cityName', 'birthDate', 'tagLine']
 
 const ProfileInfo: FunctionComponent<{}> = () => {
+
+
+  interface errorType {
+    tags?: string;
+  }
+  // const [tags, setTags] = useState<string[]>([]);
+  // const [error, setError] = useState<errorType>({});
+
   const { t } = useTranslation()
 
   // Validations Fields
@@ -55,7 +60,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     resolver: yupResolver(validationSchema),
   })
 
-  const professionList: SelectOptionsType[] = professions
+  // const professionList: SelectOptionsType[] = professions
 
   useEffect(() => {
     formFields.forEach((field: string) => {
@@ -66,8 +71,26 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     })
   }, [user, setValue])
 
+
+
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+
+    // if (tags.length > 5) {
+    //   alert("Please enter 5 input tags")
+    // }
+    // else if (tags.length === 0) {
+    //   setError((prev) => ({
+    //     ...prev,
+    //     tags: "Please add at least one tag",
+    //   }));
+    // }
+    // else if (tags.length > 0) {
+    //   console.log(tags);
+    //   // Submit form
+    // }
+
+
+    // console.log(data);
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)
@@ -88,43 +111,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
   }
 
-
-
-
-  interface errorType {
-    tags?: string;
-  }
-  const [tags, setTags] = useState<string[]>([]);
-  const [error, setError] = useState<errorType>({});
-
-  const changeHandler = (name: string, value: string[] = []) => {
-    if (name === "tags") {
-      setTags(value);
-      if (value.length > 0 && errors.tags) {
-        setError((prev) => {
-          const prevErrors = { ...prev };
-          delete prevErrors.tags;
-          return prevErrors;
-        });
-      }
-    }
-  };
-
-  const submitHandler = (e: React.SyntheticEvent<EventTarget>) => {
-
-    e.preventDefault();
-
-    if (tags.length === 0) {
-      setError((prev) => ({
-        ...prev,
-        tags: "Please add at least one tag",
-      }));
-    }
-    if (tags.length > 0) {
-      console.log(tags);
-      // Submit form
-    }
-  };
 
 
   return (
@@ -219,24 +205,23 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                     </FormItem>
 
                     <FormItem>
-                      {/* <Controller
+                      <Controller
                         control={control}
                         name="tagLine"
                         defaultValue=""
-                        render={() => (
+                        render={(propsController) => (
                           <TagsInputs
                             id="tags"
-                            name="tagLine"
+                            name={propsController.name}
                             placeholder="Add tag"
-                            changeTags={changeHandler}
-                            error={error.tags || ''}
-                            defaultTags={tags}
+                            onChangeTags={(value: string) => propsController.onChange(value)}
+                            // error={error.tags || ''}
+                            defaultTags={propsController.value}
                           />
                         )}
-                      /> */}
+                      />
 
-
-                      <HashTag />
+                      {/* <HashTag /> */}
 
                     </FormItem>
                   </FormRow>

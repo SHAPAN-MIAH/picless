@@ -4,31 +4,53 @@
     margin: 0;
   }
   
+.inputWrapper{
+  border: 1px solid lightGray;
+  height: 48px;
+  border-radius: 12px;
+  transition: 'border-color .3s ease',
+}
+.tags_input{
+  flex-wrap: wrap;
+  display: flex;
+}
+.tag{
+  display: inline-block;
+  background-color: rgb(226, 226, 226);
+  margin: 8.5px 5px;
+  padding: 0px 7px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Rajdhani";
+  text-align: center;
+  margin-top: 7px;
+}
+.tag:hover {
+  background-color: rgb(214, 214, 214);
+}
+.timesIcon{
+  cursor: pointer; 
+  color: gray;
+  margin-top: 8.5px;
+}
 
-  .timesIcon{
-    cursor: pointer;
-    color: lightslategrey;
-    border: 1px solid gray;
-  }
+input {
+  border: none;
+  outline: none;
+  height: 48px !important;
+  padding: 0;
+  flex: 1;
+  min-width: 80px;
+}
 
-  .tag:hover {
-    background-color: rgb(151, 151, 151);
-  }
-  input {
-    border: 0;
-    outline: 0;
-    height: 48px !important;
-    padding: 0;
-    flex: 1;
-    min-width: 80px;
-  }
+.button{
+  width: 70px; 
+  margin-top: 10px; 
+  color: gray;
+}
 
-  button:hover {
-    background-color: darken(lightgray, 10);
-  }
-
-  .error {
-    padding: 5px 0;
-    color: #3d3d3d;
-    font-size: 12px;
-  }
+.error {
+  padding: 5px 0;
+  color: #3d3d3d;
+  font-size: 12px;
+}

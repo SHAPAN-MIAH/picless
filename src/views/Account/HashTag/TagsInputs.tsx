@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
-import './HashTag.module.css'
+import styles from './HashTag.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 interface TagsInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
-    defaultTags: string[];
-    error: string
-    changeTags: (name: string, list: string[]) => void
+    defaultTags: string;
+    //error: string
+    onChangeTags: (name: string) => void
 }
 
-
 const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
-    const { id, placeholder, error, defaultTags, changeTags, name } = props
-
+    const { id, placeholder, defaultTags, onChangeTags, name } = props
     const [value, setValue] = useState('');
-    const [tags, setTags] = useState(defaultTags ? defaultTags : []);
+    const [tags, setTags] = useState<string[]>(defaultTags ? defaultTags.split(',') : []);
     const [isActive, setIsActive] = useState(false);
 
-    const changeHandler = (e: any) => {
-        setValue(e.target.value);
-        const arr = tags.filter(t => t !== '');
+    const tagChanges = () => {
+        const currentTags: string = tags.join(',')
 
-        if (changeTags)
-            changeTags(name || '', arr);
+        onChangeTags(currentTags)
     }
 
     const removeTag = (tag: string) => {
         const arr = tags.filter(t => t !== tag);
         setTags(arr);
-        changeTags(name || '', arr);
+        tagChanges()
     }
 
     const updateTagsHandler = (e: any) => {
@@ -49,11 +45,9 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
                 else if (!tags.includes(newTag) && newTag !== '') {
                     const arr = [...tags, newTag];
                     setTags(arr);
-                    changeTags(name || '', arr);
+                    tagChanges()
                 }
-
                 setValue('');
-
             } else if (e.key === 'Enter') {
 
                 const newTag = value.trim();
@@ -64,13 +58,10 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
                 else if (!tags.includes(newTag) && newTag !== '') {
                     const arr = [...tags, newTag];
                     setTags(arr);
-                    changeTags(name || '', arr);
+                    tagChanges()
                 }
-
                 setValue('');
-
             }
-
         }
 
         // Remove tags if backspace is pressed
@@ -78,7 +69,7 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
             const copyOfTags = [...tags];
             copyOfTags.pop();
             setTags(copyOfTags);
-            changeTags(name || '', copyOfTags);
+            tagChanges()
         }
     }
 
@@ -96,28 +87,12 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
         <>
             <div className={!isActive ? "tags-input" : "tags-input active"}>
 
-                <div className="tags-input__wrapper" style={{
-                    border: '1px solid lightGray',
-                    height: '48px',
-                    borderRadius: '12px',
-                    transition: 'border-color .3s ease',
-                }}>
-                    <div className="tags-input__tags" style={{ flexWrap: 'wrap', display: 'flex' }}>
+                <div className={styles.inputWrapper}>
+                    <div className={styles.tags_input}>
                         {tags.map((tag, i) =>
-                            <div key={i} className="tag justify-content-center"
-                                style={{
-                                    display: "inline-block",
-                                    backgroundColor: "rgb(226, 226, 226)",
-                                    margin: "8.5px 5px",
-                                    padding: "0px 7px",
-                                    borderRadius: "5px",
-                                    fontSize: "14px",
-                                    fontFamily: "Rajdhani",
-                                    textAlign: "center",
-                                    marginTop: '7px'
-                                }}>
-                                {tag} <span className="removeIcon" onClick={() => removeTag(tag)}>
-                                    <FontAwesomeIcon icon={faTimesCircle} className="timesIcon" style={{ cursor: "pointer", color: 'gray', marginTop: '8.5px' }} />
+                            <div key={i} className={styles.tag}>
+                                {tag} <span onClick={() => removeTag(tag)}>
+                                    <FontAwesomeIcon icon={faTimesCircle} className={styles.timesIcon} />
                                 </span>
                             </div>
                         )}
@@ -127,7 +102,7 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
                             name={name}
                             id={id ? id : name}
                             value={value}
-                            onChange={changeHandler}
+                            onChange={(e: any) => setValue(e.target.value)}
                             autoComplete="off"
                             onKeyUp={updateTagsHandler}
                             onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
@@ -137,7 +112,7 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
                         />
                     </div>
                 </div>
-                {error && <div className="error">{error}</div>}
+                {/* {error && <div className={styles.error}>{error}</div>} */}
             </div>
         </>
     );

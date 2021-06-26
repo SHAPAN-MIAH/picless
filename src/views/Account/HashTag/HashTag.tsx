@@ -70,11 +70,11 @@ const HashTag: React.FunctionComponent<{}> = () => {
                     name="tags"
                     placeholder="Add tag"
                     changeTags={changeHandler}
-                    error={errors.tags || ''}
+
                     defaultTags={tags}
 
                 />
-                <button style={{ width: '70px', marginTop: '10px', color: 'gray' }} type="submit">Submit</button>
+                <button className={styles.button} type="submit">Submit</button>
             </form>
         </div>
     );

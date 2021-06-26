@@ -10,10 +10,6 @@ import VideoGallery from './../VideoGallery/VideoGallery';
 import PhotoGallery from './../PhotoGallery/PhotoGallery';
 
 
-// interface CreateLiveProps extends React.InputHTMLAttributes<> {
-//   chatToogle: (value: boolean) => void
-// }
-
 
 const Loading = (
   <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
