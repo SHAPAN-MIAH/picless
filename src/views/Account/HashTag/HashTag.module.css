@@ -1,18 +1,28 @@
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-  }
-  
+  box-sizing: border-box;
+  margin: 0;
+}
+
+input {
+  border: .5px solid lightGray;
+  /* border: none; */
+  outline: none;
+  height: 48px !important;
+  padding: 0;
+  flex: 1;
+  min-width: 80px;
+}
 .inputWrapper{
-  border: 1px solid lightGray;
+  /* position: relative; */
   height: 48px;
-  border-radius: 12px;
   transition: 'border-color .3s ease',
 }
 .tags_input{
   flex-wrap: wrap;
   display: flex;
+  border: .5px solid lightGray;
+  border-radius: 12px;
 }
 .tag{
   display: inline-block;
@@ -32,15 +42,6 @@
   cursor: pointer; 
   color: gray;
   margin-top: 8.5px;
-}
-
-input {
-  border: none;
-  outline: none;
-  height: 48px !important;
-  padding: 0;
-  flex: 1;
-  min-width: 80px;
 }
 
 .button{

@@ -34,9 +34,7 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
 
         if (e.target.value !== '' && e.target.value !== ',') {
 
-
             if (e.key === ',') {
-
                 const newTag = value.trim().split(',')[0];
 
                 if (e.target.value.length > 25) {
@@ -112,7 +110,6 @@ const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
                         />
                     </div>
                 </div>
-                {/* {error && <div className={styles.error}>{error}</div>} */}
             </div>
         </>
     );

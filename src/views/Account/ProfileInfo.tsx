@@ -19,7 +19,6 @@ import { UserType } from '../../types/UserType'
 import AccountHubMain from './AccountHub/AccountHubMain'
 import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
-import HashTag from './HashTag/HashTag'
 import TagsInputs from './HashTag/TagsInputs'
 
 
@@ -45,11 +44,8 @@ const ProfileInfo: FunctionComponent<{}> = () => {
   interface errorType {
     tags?: string;
   }
-  // const [tags, setTags] = useState<string[]>([]);
-  // const [error, setError] = useState<errorType>({});
 
   const { t } = useTranslation()
-
   // Validations Fields
   const validationSchema = Yup.object().shape({
     profileDescription: Yup.string(),
@@ -75,22 +71,15 @@ const ProfileInfo: FunctionComponent<{}> = () => {
 
   const onSubmit = (data: FormValues) => {
 
-    // if (tags.length > 5) {
-    //   alert("Please enter 5 input tags")
-    // }
-    // else if (tags.length === 0) {
-    //   setError((prev) => ({
-    //     ...prev,
-    //     tags: "Please add at least one tag",
-    //   }));
-    // }
-    // else if (tags.length > 0) {
-    //   console.log(tags);
-    //   // Submit form
-    // }
+    let tagCount = 0;
 
+    for (let i = 0; i < data.tagLine.length; i++) {
+      if (data.tagLine[i] === ',') {
+        tagCount++
+      }
 
-    // console.log(data);
+    }
+
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)
@@ -107,7 +96,12 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     }
     console.log(dataToSubmit.tagLine)
 
-    return updateUser(dataToSubmit, toastOptions)
+    if (tagCount < 5) {
+      return updateUser(dataToSubmit, toastOptions)
+    }
+    else {
+      alert('Please enter upto 5 tags')
+    }
 
   }
 
@@ -220,9 +214,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                           />
                         )}
                       />
-
-                      {/* <HashTag /> */}
-
                     </FormItem>
                   </FormRow>
 
