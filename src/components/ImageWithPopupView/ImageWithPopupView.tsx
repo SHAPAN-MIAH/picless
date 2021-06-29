@@ -6,7 +6,7 @@ import { SourceType } from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel'
 import VideoPlayer from '../../assets/js/VideoPlayer'
 import * as Utils from '../../utils/Functions'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import './imageWithPopupView.css'
 
