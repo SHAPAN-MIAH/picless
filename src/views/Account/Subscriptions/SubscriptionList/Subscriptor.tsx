@@ -1,10 +1,12 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import { unixTimestampToDate } from 'utils/Helpers'
 import useSubscription from '../../../../hooks/useSubscription'
 import LiquidImage from '../../../../components/Common/LiquidImage'
 import UserAvatar from '../../../../components/UserAvatar'
 import { SubscriptorListType } from '../../../../types/UserType'
+import ConfirmationModal from 'components/ConfirmationModal/ConfirmationModal'
+import { Link } from 'react-router-dom'
 
 const LinkUserA = styled.a`
   left: -32px !important;
@@ -23,17 +25,14 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
   const { subscriptor } = props
   const { suscribeUser: subscribeUser, subscription } = subscriptor
 
+  const [unsubscribeConfirmation, setUnsubscribeConfirmation] = useState<boolean>(false)
+
   const { cancelSubscription } = useSubscription()
 
   const imageCover = process.env.REACT_APP_BUCKET_IMAGES + subscribeUser.coverPicture
 
-  const onUnsubscribe = (event: any) => {
-    const decision = window.confirm(`Are you sure to cancel the subscription to ${subscribeUser.userName}`)
-    event.preventDefault()
-
-    if (decision) {
-      cancelSubscription(subscriptor.subscriptionId, subscribeUser.userName)
-    }
+  const onUnsubscribe = () => {
+    cancelSubscription(subscriptor.subscriptionId, subscribeUser.userName)
   }
 
   return (
@@ -89,17 +88,32 @@ const Subscriptor: FunctionComponent<SubscriptorProps> = (props) => {
               </svg>
             </p> */}
 
-            <a href={`/user/chat/${subscribeUser.id}`} className="button primary" title="Send a message">
+            <Link to={`/user/chat/${subscribeUser.id}`} className="button primary" title="Send a message">
               <svg className="button-icon icon-comment">
                 <use xlinkHref="#svg-comment" />
               </svg>
-            </a>
+            </Link>
 
-            <a href="" onClick={onUnsubscribe} className="button secundary" title="Unsubscribe">
+            <p onClick={() => setUnsubscribeConfirmation(true)} className="button secundary" title="Unsubscribe">
               <svg className="button-icon icon-cross">
                 <use xlinkHref="#svg-cross" />
               </svg>
-            </a>
+            </p>
+
+            {unsubscribeConfirmation && (
+              <ConfirmationModal
+                message={`Are you sure to cancel the subscription to ${subscribeUser.userName}?`}
+                buttonOkText="Yes"
+                buttonCancelText="No"
+                okHandler={() => {
+                  onUnsubscribe()
+                }}
+                cancelHandler={() => {}}
+                closeHandler={() => {
+                  setUnsubscribeConfirmation(false)
+                }}
+              />
+            )}
           </div>
         </div>
       </ContainerDiv>

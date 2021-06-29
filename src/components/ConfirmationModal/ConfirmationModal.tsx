@@ -45,7 +45,7 @@ const ConfirmationModal: FunctionComponent<ConfirmationModalProps> = (props) => 
 
   return (
     <>
-      <StyledPopup show onClose={closeHandler} header="Message" trigger={undefined}>
+      <StyledPopup show onClose={closeHandler} header="Message" trigger={undefined} closeOnDocumentClick={false}>
         <ContainerMessage>
           <MessageH6>{message}</MessageH6>
 
