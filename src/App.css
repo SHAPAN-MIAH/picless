@@ -76,6 +76,10 @@
 
 }
 
+.declineIcon{
+  margin-left: 5px !important;
+}
+
 .App-header {
   min-height: 100vh;
   display: flex;
