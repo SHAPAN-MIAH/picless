@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import { Link, useRouteMatch, Switch, Route } from 'react-router-dom'
+import { Link, useRouteMatch, Switch, Route, BrowserRouter as Router} from 'react-router-dom'
 import useRouter from '../../../hooks/commons/useRouter'
 import { Tabs } from '../../../hooks/useProfile'
 import Loader from 'react-loader-spinner'
@@ -8,6 +8,9 @@ import './LiveSectionMenu.css';
 import About from './../About/About';
 import VideoGallery from './../VideoGallery/VideoGallery';
 import PhotoGallery from './../PhotoGallery/PhotoGallery';
+import AboutTab from './../../../views/UserProfile/Profile/SectionTab/AboutTab';
+import PhotoGalleryTab from './../../../views/UserProfile/Profile/SectionTab/PhotoGalleryTab';
+import VideoGalleryTab from './../../../views/UserProfile/Profile/SectionTab/VideoGalleryTab';
 
 
 
@@ -92,15 +95,18 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any }> = (props) 
 
         </div>
 
-        <div>
+        {/* <div>
           <React.Suspense fallback={Loading}>
+            <Router>
             <Switch>
               <Route path={`${match.path}/${Tabs.ABOUT}`} component={About} />
               <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGallery} />
               <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGallery} />
             </Switch>
+            </Router>
+            
           </React.Suspense>
-        </div>
+        </div> */}
 
 
 
