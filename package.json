@@ -61,8 +61,8 @@
     "recharts": "^2.0.9",
     "simplebar-react": "^2.3.0",
     "styled-components": "^5.2.1",
-    "use-svg": "0.0.7",
     "typescript": "^3.9.9",
+    "use-svg": "0.0.7",
     "webrtc-adapter": "^7.7.0",
     "yup": "^0.32.8"
   },
