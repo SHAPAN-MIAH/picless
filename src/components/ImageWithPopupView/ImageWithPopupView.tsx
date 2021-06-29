@@ -144,7 +144,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                 {medios.map((item: SourceType) => {
                   const routeTo = `/u/${userName}/post/${item.postId}`;
                   const LinkPost = routeTo !== pathname ?
-                    <Link to={routeTo} className='goToPost'>Go to Post</Link>: '';
+                    <a href={routeTo} className='goToPost'>Go to Post</a>: '';
                   if (!item.accessUrl) {
                     return (
                       <div key={Utils.simpleKeyGenerator(5)} className='containerLink'>
