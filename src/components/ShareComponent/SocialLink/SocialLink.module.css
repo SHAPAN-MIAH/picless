@@ -1,0 +1,56 @@
+/*-----------------------
+3. SOCIAL LINK
+-----------------------*/
+.social-link {
+  list-style: none;
+
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+}
+
+.social-link.small {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.social-link.small .social-link-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.social-link.no-hover:hover {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.social-link:hover {
+  -webkit-transform: translate(0, -4px);
+  transform: translate(0, -4px);
+}
+
+.facebook {
+  background: #3763d2;
+}
+
+.twitter {
+  background: #1abcff;
+}
+
+.whatsapp {
+  background: #25d366 !important;
+}
+
+.mail {
+  background: gray;
+}

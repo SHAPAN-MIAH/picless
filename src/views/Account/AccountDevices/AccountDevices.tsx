@@ -7,6 +7,8 @@ import { unixTimestampToDate } from '../../../utils/Helpers'
 import UserService from '../../../services/UserService'
 import useAuth from '../../../hooks/useAuth'
 
+import styles from './AccountDevices.module.css'
+
 interface RenderTableProps {
   devices: any
   refresh: () => void
@@ -46,18 +48,31 @@ const RenderTableData = (props: RenderTableProps) => {
     }
 
     return (
-      <tr key={deviceKey}>
-        <td>{deviceName.Value}</td>
-        <td>{deviceIp.Value}</td>
-        <td>{unixTimestampToDate(lastAuthentication)}</td>
-        <td>
-          <a href="#/" onClick={removeDevice}>
+      <tbody key={deviceKey}>
+        <tr className={styles.deviceItem}>
+          <th>Name</th>
+          <td>{deviceName.Value}</td>
+        </tr>
+
+        <tr className={styles.deviceItem}>
+          <th>Device IP</th>
+          <td>{deviceIp.Value}</td>
+        </tr>
+
+        <tr className={styles.deviceItem}>
+          <th className={styles.deviceItemTitle}>Last Seen</th>
+          <td className={styles.deviceItemTitle}>{unixTimestampToDate(lastAuthentication)}</td>
+        </tr>
+
+        <tr className={`button small ${styles.deviceButton}`}>
+          <span onClick={removeDevice}>
+            Log Above Device Out
             <svg className="icon-delete">
               <use xlinkHref="#svg-delete" />
             </svg>
-          </a>
-        </td>
-      </tr>
+          </span>
+        </tr>
+      </tbody>
     )
   })
 }
@@ -82,14 +97,6 @@ const AccountDevices: FunctionComponent<{}> = () => {
   return (
     <>
       <div className="account-hub-content">
-        <div className="section-header">
-          <div className="section-header-info">
-            <p className="section-pretitle">{t('accountDevices.devicesTitle')}</p>
-
-            <h2 className="section-title">{t('accountDevices.devicesSubTitle')}</h2>
-          </div>
-        </div>
-
         <div className="grid-column">
           <div className="widget-box">
             <p className="widget-box-title">{t('accountDevices.devicesList')}</p>
@@ -97,17 +104,7 @@ const AccountDevices: FunctionComponent<{}> = () => {
             <div className="widget-box-content">
               {myDevices.length > 0 && (
                 <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Ip v6</th>
-                      <th scope="col">Last Seen</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <RenderTableData devices={myDevices} refresh={refreshDevices} />
-                  </tbody>
+                  <RenderTableData devices={myDevices} refresh={refreshDevices} />
                 </table>
               )}
             </div>

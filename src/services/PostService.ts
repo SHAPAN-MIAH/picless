@@ -101,6 +101,22 @@ const getPurchasedPosts = async (page = 0): Promise<ServicePostType> => {
   return body
 }
 
+const getSavedPosts = async (page = 0): Promise<ServicePostType> => {
+  const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+  }
+
+  const url = `${baseUrl}/getsaveposts?page=${page}`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 const getPostById = async (id = 0): Promise<ServiceSinglePostType> => {
   const headers = await ApiHelper.requestHeaders({ 'Content-Type': 'application/json' })
 
@@ -173,20 +189,58 @@ const addReaction = async (postId = 0, reactionCode: ReactionCodeType): Promise<
 }
 
 const deleteReaction = async (reactionId = 0): Promise<CommonServiceResponse> => {
+const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+const bodyData = new FormData()
+bodyData.append('reactionId', reactionId.toString())
+
+const requestOptions: RequestInit = {
+  method: 'DELETE',
+  headers,
+  body: bodyData,
+}
+const url = `${baseUrl}/deletereaction`
+const response = await fetch(url, requestOptions)
+const body = await response.json()
+
+return body
+}
+
+const addSavedPost = async (postId: number): Promise<CommonServiceResponse> => {
   const headers = await ApiHelper.requestHeaders({ type: 'formData' })
 
   const bodyData = new FormData()
-  bodyData.append('reactionId', reactionId.toString())
+  bodyData.append('postId', postId.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData,
+  }
+
+  const url = `${baseUrl}/addsavedpost`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
+const removeSavedPost = async (postId: number): Promise<CommonServiceResponse> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('postId', postId.toString())
 
   const requestOptions: RequestInit = {
     method: 'DELETE',
     headers,
     body: bodyData,
   }
-  const url = `${baseUrl}/deletereaction`
+
+  const url = `${baseUrl}/deletesavedpost`
+
   const response = await fetch(url, requestOptions)
   const body = await response.json()
-
   return body
 }
 
@@ -197,8 +251,11 @@ export default {
   deletePost,
   getPosts,
   getPurchasedPosts,
+  getSavedPosts,
   getPostById,
   getMedia,
   addReaction,
   deleteReaction,
+  addSavedPost,
+  removeSavedPost
 }

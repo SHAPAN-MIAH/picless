@@ -1,0 +1,145 @@
+.mainPopup {
+  padding: 0 0.5rem;
+}
+
+.shareComponent {
+  position: fixed;
+  z-index: 1;
+  margin-top: 2.5rem;
+}
+
+.shareBox {
+  display: block;
+  padding: 5px 0;
+  width: auto !important;
+}
+
+.socialLinkTitle {
+  margin-bottom: 1rem;
+}
+
+.shareButton {
+  padding: 4px 16px !important;
+  text-align: center;
+}
+
+.dotsShare {
+  height: 9px !important;
+  width: auto !important;
+  fill: #3e3f5e !important;
+}
+
+.dotsShare :hover {
+  fill: #000 !important;
+}
+
+@media only screen and (min-width: 1366px) {
+  .shareComponent {
+    /* margin-top: 1rem; */
+    margin-left: 95%;
+  }
+}
+
+@media only screen and (max-width: 1366px) {
+  .shareComponent {
+    /* margin-top: 1rem; */
+    margin-left: 79%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .shareComponent {
+    /* margin-top: 1rem; */
+    margin-left: 78%;
+  }
+}
+
+@media only screen and (max-width: 1180px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 76%;
+  }
+}
+
+@media screen and (max-width: 1113px) {
+  .shareComponent {
+    /* margin-top: 1rem; */
+    margin-left: 74%;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .shareComponent {
+    /* margin-top: 1rem; */
+    margin-left: 73%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .shareComponent {
+    /* margin-top: 1rem; */
+    margin-left: 71%;
+  }
+}
+
+@media screen and (max-width: 923px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 72%;
+  }
+}
+
+@media screen and (max-width: 922px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 69%;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 67%;
+  }
+}
+
+@media screen and (max-width: 805px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 66%;
+  }
+}
+
+@media screen and (max-width: 773px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 65%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 63%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .shareComponent {
+    /* margin-top: 0.8rem; */
+    margin-left: 61%;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .shareComponent {
+    margin-left: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .shareComponent {
+    margin-top: 0.5;
+    margin-left: 85%;
+  }
+}

@@ -14,9 +14,7 @@ const GridDiv = styled.div`
 
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-
   const { getUser } = useUser()
-
   const [imageCover, setImageCover] = useState()
   const [imageProfile, setImageProfile] = useState('')
 
@@ -35,35 +33,41 @@ const AccountHubMain: FunctionComponent<{}> = () => {
 
 
   return (
-    <GridDiv className="grid grid-3-3-3">
-      <div className="user-preview small fixed-height" style={styleMobile}>
-        <div className="user-preview-cover" style={{ background: `url(${imageCover}) center center / cover no-repeat` }}>
-          <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
-        </div>
+    <div style={{ marginTop: '25px' }}>
+      <GridDiv className="grid grid-3-3-3">
+        <div className="user-preview small fixed-height account-hub-cards cover-container" style={styleMobile}>
+          <div
+            className="user-preview-cover cover-page"
+            style={{ background: `url(${imageCover}) center center / cover no-repeat` }}
+          >
+            <img src={imageCover} alt="cover-01" style={{ display: 'none' }} />
+          </div>
 
-        <div className="user-short-description">
-          <div className="user-short-description-avatar user-avatar medium" style={{ marginLeft: '-49px' }}>
-            <UserAvatar size="L" imageName={imageProfile || ''} removeContainerStyle />
+          <div className="user-short-description" style={{ marginBottom: '20px !important' }}>
+            <div className="user-short-description-avatar user-avatar medium" style={{ marginLeft: '-49px' }}>
+              <UserAvatar size="L" imageName={imageProfile || ''} removeContainerStyle />
+            </div>
           </div>
         </div>
-      </div>
 
-      <UploadBox
-        id="upload-avatar"
-        iconName="members"
-        uploadTitleName={t('profileInfo.changeAvatar')}
-        imageType="PROFILE"
-        uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
-      />
+          <UploadBox
+            id="upload-avatar"
+          className="update-pic"
+            iconName="members"
+            uploadTitleName={t('profileInfo.changeAvatar')}
+            imageType="PROFILE"
+            uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
+          />
 
-      <UploadBox
-        id="upload-cover"
-        iconName="photos"
-        uploadTitleName={t('profileInfo.changeCover')}
-        imageType="COVER"
-        uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
-      />
-    </GridDiv>
+        <UploadBox
+          id="upload-cover"
+          iconName="photos"
+          uploadTitleName={t('profileInfo.changeCover')}
+          imageType="COVER"
+          uploadText={t('profileInfo.changeCoverDescription')} // "1184x300px size minimum"
+        />
+      </GridDiv>
+    </div>
   )
 }
 

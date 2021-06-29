@@ -45,7 +45,7 @@ const SendPrivateMessage: FunctionComponent<SendPrivateMessageProps> = (props) =
 
   const onSubmit = (formData: FormValues) => {
     const userSelected: UserStatusMessagesOptionalType = {
-      userId,
+      userId: user.id?.toString() || '',
       email: user.email || '',
       connectionId: null,
     }

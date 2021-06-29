@@ -11,12 +11,21 @@ import { ResourceType, SourceType } from '../../../../types/PostType.d'
 import * as Utils from '../../../../utils/Functions'
 import PhotoPreview from './PhotoPreview/PhotoPreview'
 import styles from './UploadSourcePost.module.css'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { result } from 'lodash'
+import { isDesktop } from 'react-device-detect'
+
+import './UploadSourcePost.css'
+import logo from  '../../../../Picless.png'
+import { url } from 'inspector'
 
 interface UploadSourcePostProp extends React.BaseHTMLAttributes<HTMLDivElement> {
   user: UserType
   onUploadedFile: (source: { images: SourceType[]; videos: SourceType[] }) => void
   onLoading: (status: boolean) => void
   onRemove: (name: string) => void
+  fileInput: HTMLImageElement | any
+  onReorder: ([]) => void
 }
 
 type fileUploadStatus = 'PENDING' | 'UPLOADING' | 'FINISHED' | 'ERROR'
@@ -31,7 +40,7 @@ interface FilePreviewType extends File {
 const qtyResources: number = parseInt(process.env.REACT_APP_QTY_RESOURCES_POST || '8', 10)
 
 const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
-  const { user, onUploadedFile, onRemove, onLoading, className } = props
+  const { user, onUploadedFile, onRemove, onLoading, className, fileInput, onReorder } = props
 
   const [selectedFile, setSelectedFile] = useState<FilePreviewType[]>([])
   // const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -79,6 +88,15 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
       }
     }
   }
+
+  const reorder = (list: any, startIndex: any, endIndex: any) => {
+    const result = [...list];
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    onReorder(result)
+    return result;
+  };
+  
 
   const fileUploadHandler = (files: FilePreviewType[]) => {
     const formDataList: FormData[] = []
@@ -166,18 +184,71 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
     })
   }
 
-  let fileInput: HTMLInputElement | null
+  const getListStyle = (isDraggingOver: boolean) => {
+    return ({
+      display: 'flex',
+      overflow: 'auto',
+    })
+  };
 
-  return (
-    <>
-      <FormRow className={classNames(className)}>
+  const getItemStyle = (isDragging: boolean, draggableStyle: any, index: number, imgSrc: string) => {
+    const draggableArea = document.getElementById('draggableArea');
+    
+    if (isDragging) {
+      draggableArea?.classList.add('dragging')
+    }
+    else {
+      draggableArea?.classList.remove('dragging');
+    }
+    const basics = {
+      ...draggableStyle,
+      border: isDragging  && '3px solid #6610f2',
+      borderRadius: '0.9em',
+      width: '80px',
+      height:'80px',
+    }
+    if (!isDesktop ) {
+      return basics;
+    }
+    return {
+      ...basics,
+      visibility: isDragging ? 'hidden' : 'visible',
+    }
+  };
+
+  const dragg = (result: any) =>  {
+    const { source, destination } = result;
+    if(
+      !destination || 
+      (source.index === destination.index && source.droppableId === destination.droppableId)
+    ) {
+      return;
+    }
+    setSelectedFile(prevItems => reorder(prevItems, source.index, destination.index)) 
+  }
+
+  const setleft = (isDragging: boolean, draggableStyle: any, index: number, imgSrc: string) => {
+
+  }
+
+
+  return ( 
+    <DragDropContext onDragEnd={(result: any) => dragg(result)}>
+    <Droppable droppableId='uploadId' direction="horizontal">
+     {(droppableProvided, snapshot) => 
+     <div 
+      {...droppableProvided.droppableProps} 
+      ref={droppableProvided.innerRef} 
+      style={getListStyle(snapshot.isDraggingOver)}
+      id='draggableArea'>
+      <FormRow className={classNames(className)} style={{width: '100%'}}>
         <FormItem>
           <div className={styles.main}>
             <div className={styles.container}>
               <div
                 className={classNames(styles.itemBase, styles.addSource)}
                 onClick={() => {
-                  if (fileInput) fileInput.click()
+                  if (fileInput.current) fileInput.current.click()
                 }}
               >
                 <div style={{ textAlign: 'center', color: 'white' }}>
@@ -186,44 +257,63 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
               </div>
 
               {/* IMAGES SELECTED AND UPLOADED */}
-              {selectedFile.map((item, index) => {
-                // PREVIEW
-                if (/^image/.test(item.type) || /^video/.test(item.type)) {
-                  let imgSrc = item.url || ''
-                  if (/^video/.test(item.type)) {
-                    imgSrc = `${process.env.PUBLIC_URL}/assets/img/defaults/video_preview.jpg`
-                  }
+                  {selectedFile.map((item, index) => {
+                    // PREVIEW
+                    if (/^image/.test(item.type) || /^video/.test(item.type)) {
+                      let imgSrc = item.url || ''
+                      if (/^video/.test(item.type)) {
+                        imgSrc = `${process.env.PUBLIC_URL}/assets/img/defaults/video_preview.jpg`
+                      }
 
-                  const key = `${item.lastModified}${item.name}${index}`
+                      const key = `${item.lastModified}${item.name}${index}`
 
-                  return (
-                    <PhotoPreview
-                      imgReference={item.reference as React.RefObject<HTMLImageElement>}
-                      key={key}
-                      item={item}
-                      imgSrc={imgSrc}
-                      onRemoveImage={removeImage}
-                    />
-                  )
-                }
+                      return (
+                        <Draggable 
+                            key={key}
+                            draggableId={key}
+                            index={index}
+                            >
+                            {(draggableProvider, snapshot) =>
+                              <div 
+                                {...draggableProvider.dragHandleProps}
+                                ref={draggableProvider.innerRef}
+                                {...draggableProvider.draggableProps}
+                                style={getItemStyle(
+                                  snapshot.isDragging,
+                                  draggableProvider.draggableProps.style,
+                                  index,
+                                  imgSrc
+                                )}> 
+                                <PhotoPreview
+                                  imgReference={item.reference as React.RefObject<HTMLImageElement>}
+                                  key={key}
+                                  item={item}
+                                  imgSrc={imgSrc}
+                                  onRemoveImage={removeImage}
+                                />
+                              </div>}
+                          </Draggable>
+                      )
+                    }
 
-                return ''
-              })}
+                    return ''
+                  })}
 
               <input
                 style={{ display: 'none' }}
                 type="file"
                 multiple
                 onChange={fileSelectedHandler}
-                ref={(input) => {
-                  fileInput = input
-                }}
+                ref={fileInput}
               />
             </div>
           </div>
         </FormItem>
       </FormRow>
-    </>
+      {droppableProvided.placeholder}
+      </div>}
+      </Droppable>
+    </DragDropContext>
   )
 }
 

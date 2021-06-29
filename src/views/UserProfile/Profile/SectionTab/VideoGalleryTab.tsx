@@ -62,7 +62,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                       return (
                         <div key={item.id} className="album-preview">
                           <div key={item.id} data-vjs-player>
-                            <VideoPlayer src={item.accessUrl} type="" options={options} aspect='1:1'/>
+                            <VideoPlayer src={item.accessUrl} type="" options={options} aspect='3:4'/>
                           </div>
                           {/*<div style={{width: '100%', height: '100%'}}>
                             <img

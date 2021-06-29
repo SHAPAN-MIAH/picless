@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
@@ -46,6 +46,8 @@ const CreateStatus: FunctionComponent<{}> = () => {
 
   const { user } = useUser()
   const router = useRouter()
+
+  const uploadFile = React.createRef<any>();
 
   const [showUploadPhotos, setShowUploadPhotos] = useState<boolean>(false)
   // const [showTags, setShowTags] = useState<boolean>(false)
@@ -139,6 +141,24 @@ const CreateStatus: FunctionComponent<{}> = () => {
     setVideoList(updatedVidList)
   }
 
+  const reorder = (data: any) => {
+    const filterData = data.filter((el: any)=> {
+      return el.status !== "ERROR"
+    })
+    for (let i = 0; i<filterData.length; i++) {
+      imageList?.map(img => {
+        if(filterData[i]['internalName'] === img.name) {
+          img.index = i 
+        }
+      })
+      videoList?.map(video => {
+        if(filterData[i]['internalName'] === video.name) {
+          video.index = i 
+        }
+      })
+    }
+  };
+
   return (
     <>
       <div className="quick-post-body">
@@ -150,6 +170,8 @@ const CreateStatus: FunctionComponent<{}> = () => {
             onUploadedFile={onUploadedFile}
             onLoading={onLoading}
             onRemove={onRemoveImage}
+            fileInput={uploadFile}
+            onReorder={reorder}
           />
 
           <FormRow>
@@ -202,7 +224,10 @@ const CreateStatus: FunctionComponent<{}> = () => {
             className="quick-post-footer-action"
             style={{ paddingLeft: '0px' }}
             onClick={() => {
-              setShowUploadPhotos(!showUploadPhotos)
+              {
+                uploadFile.current && uploadFile.current.click()
+                setShowUploadPhotos(true)
+              }
             }}
           >
             <svg className="quick-post-footer-action-icon icon-camera">

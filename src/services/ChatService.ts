@@ -35,7 +35,7 @@ const getChatHistoryByUser = async (userId: number): Promise<MessageType[]> => {
   return body
 }
 
-const getFavoriteUsers = async (): Promise<any> => {
+const getFavoriteUsers = async (userId?: number): Promise<any> => {
   const headers = await ApiHelper.requestHeaders()
 
   const requestOptions: RequestInit = {
@@ -43,7 +43,7 @@ const getFavoriteUsers = async (): Promise<any> => {
     headers,
   }
 
-  const url = `${baseUrlUsers}/getsuscribersmessages`
+  const url = `${baseUrlUsers}/getsuscribersmessages${userId ? `?userId=${userId}` : ''}`
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()

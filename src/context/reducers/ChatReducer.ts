@@ -26,6 +26,7 @@ export const ACTIONS = {
   LOADING_USERS: 'loading_users',
   LOADING_MESSAGES: 'loading_messages',
   SET_USERS: 'set_users',
+  SET_SINGLE_USER: 'set_single_user',
   SELECT_USER: 'select_user',
   CHANGE_USER_STATUS: 'change_user_status',
   SET_CURRENT_CHAT: 'set_current_chat',
@@ -48,6 +49,17 @@ const ACTIONS_REDUCERS = {
     loadingUsers: false,
     users: action.payload as UserStatusMessagesType[],
   }),
+  [ACTIONS.SET_SINGLE_USER]: (state: ChatState, action: ChatAction) => {
+    const userList = [...state.users]
+    const user = action.payload as UserStatusMessagesType
+
+    userList.push({...user, connectionId: 'ONLINE', hasUnreadMessages: true})
+
+    return {
+      ...state,
+      users: userList
+    }
+  },
   [ACTIONS.SELECT_USER]: (state: ChatState, action: ChatAction) => {
     const users = state.users.map((u) => {
       if(u.userId === action.payload as number){

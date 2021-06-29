@@ -16,8 +16,9 @@ import styles from './UserHeader.module.css'
 import './UserHeader.css'
 import { Link } from 'react-router-dom'
 import useWallet from 'hooks/useWallet'
-import { ServiceSubscritionPlanOption} from '../../../../types/PaymentTypes'
-import { SelectOptionsType } from '../../../../components/Common/SelectForm'
+import { ServiceSubscritionPlanOption } from '../../../../types/PaymentTypes'
+import ConfirmationModal from 'components/ConfirmationModal/ConfirmationModal'
+import ShareComponent from 'components/ShareComponent/ShareComponent'
 
 type UserHeaderProps = {
   subscription: SubscriptionType | null
@@ -35,6 +36,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const [subscribed, setSubscribed] = useState<boolean>(subscription !== null)
   const [userData, setUserData] = useState<UserType>({})
   const [planList, setPlanList] = useState<any>()
+  const [unsubscribeConfirmation, setUnsubscribeConfirmation] = useState<boolean>(false)
 
   useEffect(() => {
     getUser().then((u: UserType) => {
@@ -46,11 +48,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
     setSubscribed(subscription !== null)
 
     const controllerCancelable = new AbortController()
-    const { signal } = controllerCancelable  
+    const { signal } = controllerCancelable
 
-    getPlanOptions(provider.userName || '', signal)
-    .then((data: ServiceSubscritionPlanOption) => {
-      if(data.data) {
+    getPlanOptions(provider.userName || '', signal).then((data: ServiceSubscritionPlanOption) => {
+      if (data.data) {
         setPlanList(data.data[0])
       }
     })
@@ -58,20 +59,19 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
 
   const countryName = GetCountryName(provider.countryCode || '')
 
-  const onUnsubscribe = (event: any) => {
-    const decision = window.confirm(`Are you sure to cancel the subscription to ${provider.userName}`)
-    event.preventDefault()
-
-    if (decision && subscription) {
+  const onUnsubscribe = () => {
+    if (subscription) {
       cancelSubscription(subscription.id, provider.userName).then(() => {
         window.location.reload()
       })
     }
   }
+
   return (
     <>
       <WalletContextProvider>
         <div className="profile-header" style={{ marginTop: isMobile ? '60px' : '0px' }}>
+          <ShareComponent />
           <div
             className={classNames('profile-header-cover', styles.profileHeaderCoverMobile)}
             style={{ background: `url(${imageCover}) center center / cover no-repeat`, height: '20em' }}
@@ -105,7 +105,10 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                     trigger={
                       <div className={classNames('profile-header-info-actions', styles.suscribeButton)}>
                         <p className="profile-header-info-action button primary custom-btn">
-                          Suscribe {planList ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}` : ''}
+                          Suscribe{' '}
+                          {planList
+                            ? `${planList.intervalCount} ${planList.interval} - $${planList.amount} ${planList.currency}`
+                            : ''}
                           <FontAwesomeIcon color="white" icon="lock" style={{ marginLeft: '10px' }} />
                         </p>
                       </div>
@@ -125,24 +128,40 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                       <span className="hide-text-mobile"> Send </span> Message
                     </Link>
 
-                    <a
+                    <p
                       title="Unsubscribe"
-                      href=""
-                      onClick={onUnsubscribe}
+                      onClick={() => {
+                        setUnsubscribeConfirmation(true)
+                      }}
                       className="profile-header-info-action button remove"
                     >
                       Unsubscribe
-                    </a>
+                    </p>
                   </div>
                 )}
               </div>
             )}
 
+            {unsubscribeConfirmation && (
+              <ConfirmationModal
+                message={`Are you sure to cancel the subscription to ${provider.userName}?`}
+                buttonOkText="Yes"
+                buttonCancelText="No"
+                okHandler={() => {
+                  onUnsubscribe()
+                }}
+                cancelHandler={() => {}}
+                closeHandler={() => {
+                  setUnsubscribeConfirmation(false)
+                }}
+              />
+            )}
+
             <div className="user-stats">
               <div className="user-stat big">
-                <p className="user-stat-title">{provider.numberOfFollowers}</p>
+                <p className="user-stat-title">{provider.numberPosts}</p>
 
-                <p className="user-stat-text">followers</p>
+                <p className="user-stat-text">Posts</p>
               </div>
 
               <div className="user-stat big">
@@ -157,8 +176,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 <p className="user-stat-text">Videos</p>
               </div>
 
-              <div className="user-stat big flag" style={{marginTop: 'auto', marginBottom: 'auto'}}>
-                <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName}/>
+              <div className="user-stat big flag" style={{ marginTop: 'auto', marginBottom: 'auto' }}>
+                <CountryFlag className="user-stat-image" code={provider.countryCode || ''} alt={countryName} />
               </div>
             </div>
           </div>

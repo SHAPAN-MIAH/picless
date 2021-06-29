@@ -1,3 +1,4 @@
+import { CommonServiceResponse } from './../types/CommonTypes';
 import { useCallback, useContext } from 'react'
 import toast from 'react-hot-toast'
 import PaymentService from 'services/PaymentService'
@@ -129,8 +130,34 @@ const usePosts = () => {
     })
   }
 
+  const getSavedPosts = async (): Promise<void> => {
+    dispatch({ type: ACTIONS.LOADING })
+
+    return PostService.getSavedPosts(state.nextPage).then((p: ServicePostType): void => {
+      if (p.code === '0') {
+        if (state.nextPage === 0) {
+          dispatch({
+            type: ACTIONS.SET_TOTAL_PAGES,
+            payload: p.pages,
+          })
+        }
+
+        dispatch({
+          type: ACTIONS.GET_POSTS,
+          payload: p.posts,
+        })
+
+        dispatch({
+          type: ACTIONS.CHANGE_PAGE,
+        })
+      } else {
+        toast.error('Error loading posts')
+      }
+    })
+  }
+
   const deletePost = async (postId: number) => {
-    PostService.deletePost(postId)
+    return PostService.deletePost(postId)
       .then((data: { code: number; message: string }) => {
         if (data.code !== 0) {
           throw new Error(data.message)
@@ -168,18 +195,63 @@ const usePosts = () => {
   }, [])
 
   const unlockPost = (postId: number) => {
-    return new Promise<{action: string, redirect?: string}>((resolve, reject) => {
-    
+    return new Promise<{ action: string; redirect?: string }>((resolve, reject) => {
       PaymentService.unlockContent(postId)
-      .then((data: { code: number; message: string, path: string }) => {
-        if (data.code !== 0) {
+        .then((data: { code: number; message: string; path: string }) => {
+          if (data.code !== 0) {
+            throw new Error(data.message)
+          }
+
+          resolve({ action: data.message, redirect: data.path })
+        })
+        .catch((err) => {
+          toast.error('Error unblocking post')
+          console.error(err.message)
+
+          reject()
+        })
+    })
+  }
+
+  const savePost = (postId: number, action: 'ADD' | 'REMOVE') => {
+      if(action==='ADD') return addSavedPost(postId)
+
+      return removeSavedPost(postId)
+  }
+
+  const addSavedPost = (postId: number) => { 
+    return new Promise<void>((resolve, reject) => {
+    
+      PostService.addSavedPost(postId).then((data: CommonServiceResponse) => {
+        if (data.code !== '0') {
           throw new Error(data.message)
         }
+        toast.success('Post saved')
 
-        resolve({action: data.message, redirect: data.path})
+        resolve()
       })
       .catch((err) => {
-        toast.error('Error unblocking post')
+        toast.error('Error saving post')
+        console.error(err.message)
+
+        reject()
+      })
+    })
+  }
+
+  const removeSavedPost = (postId: number) => { 
+    return new Promise<void>((resolve, reject) => {
+    
+      PostService.removeSavedPost(postId).then((data: CommonServiceResponse) => {
+        if (data.code !== '0') {
+          throw new Error(data.message)
+        }
+        toast.success('Post removed from saved list')
+
+        resolve()
+      })
+      .catch((err) => {
+        toast.error('Error removing post from saved list')
         console.error(err.message)
 
         reject()
@@ -193,13 +265,15 @@ const usePosts = () => {
     hasMore: state.pages >= state.nextPage - 1,
     getPosts,
     getPurchasedPosts,
+    getSavedPosts,
     deletePost,
     addReaction,
     removeReaction,
     unlockPost,
     cleanPost: () => dispatch({
       type: ACTIONS.CLEAR,
-    })
+    }),
+    savePost
   }
 }
 
