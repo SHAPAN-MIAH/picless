@@ -99,7 +99,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                                 e.target.onerror = null
                                 e.target.src = Utils.imgError
                               }}
-                              onClick={() => handleOpen(item)}
+                              onClick={() => console.log(item)}
                             />
                           </div>
                         </div>
