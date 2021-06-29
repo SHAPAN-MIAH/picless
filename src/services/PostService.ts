@@ -80,8 +80,9 @@ const getPosts = async (page = 0, userName = ''): Promise<ServicePostType> => {
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
-
+  // console.log(body)
   return body
+
 }
 
 const getPurchasedPosts = async (page = 0): Promise<ServicePostType> => {

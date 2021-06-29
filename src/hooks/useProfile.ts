@@ -8,12 +8,14 @@ import UserService from '../services/UserService'
 import { ServiceMediaTypes, ServicePostType } from '../types/PostType.d'
 import { ServiceUserProfileType } from '../types/UserType'
 import useRouter from './commons/useRouter'
+import Chat from './../views/MessagesNew/Chat';
 
 export enum Tabs {
   POSTS = 'posts',
   PHOTOS = 'photos',
   VIDEOS = 'videos',
   ABOUT = 'about',
+  CHAT = 'chat'
 }
 
 const useProfile = (props?: { disableMount: boolean }) => {
@@ -29,6 +31,7 @@ const useProfile = (props?: { disableMount: boolean }) => {
     setVideos,
     setSubscription,
     cleanProfile,
+    
   } = useContext(ProviderProfileContext.context)
 
   const router = useRouter()

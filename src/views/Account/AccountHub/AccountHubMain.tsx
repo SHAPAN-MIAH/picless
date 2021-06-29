@@ -31,6 +31,7 @@ const AccountHubMain: FunctionComponent<{}> = () => {
     styleMobile.flex = 1
   }
 
+
   return (
     <div style={{ marginTop: '25px' }}>
       <GridDiv className="grid grid-3-3-3">

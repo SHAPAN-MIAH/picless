@@ -18,7 +18,7 @@ const Wallet: FunctionComponent<{}> = () => {
               <div className="section-header">
                 <div className="section-header-info">
                   <p className="section-pretitle">{t('wallet.title')}</p>
-
+                    
                   <h2 className="section-title">{t('wallet.paymentMethodSubTitle')}</h2>
                 </div>
 

@@ -25,7 +25,7 @@ const getUserProfile = async (): Promise<UserType> => {
 
   const response = await fetch(url, requestOptions)
   const body = await response.json()
-
+  // console.log(body)
   return body
 }
 
@@ -59,7 +59,7 @@ const updateUserProfile = async (userData: UserType): Promise<UserType> => {
 
     const response = await fetch(url, requestOptions)
     const body = await response.json()
-
+    console.log(body)
     return body
   } catch (err) {
     throw new Error(err.message)

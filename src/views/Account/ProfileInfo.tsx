@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -19,22 +19,33 @@ import { UserType } from '../../types/UserType'
 import AccountHubMain from './AccountHub/AccountHubMain'
 import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
+import TagsInputs from './HashTag/TagsInputs'
+
 
 type FormValues = {
   userName: string
   profileDescription: string
   countryCode: string
   cityName: string
-  occupationId: string
   birthDate: Date
+  tagLine: string
+  id: number
+  name: string
+  placeholder: string
+  error: string | ""
 }
 
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = ['profileDescription', 'countryCode', 'cityName', 'occupationId', 'birthDate']
+const formFields: formFieldsNames[] = ['profileDescription', 'countryCode', 'cityName', 'birthDate', 'tagLine']
 
 const ProfileInfo: FunctionComponent<{}> = () => {
-  const { t } = useTranslation()
 
+
+  interface errorType {
+    tags?: string;
+  }
+
+  const { t } = useTranslation()
   // Validations Fields
   const validationSchema = Yup.object().shape({
     profileDescription: Yup.string(),
@@ -45,7 +56,7 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     resolver: yupResolver(validationSchema),
   })
 
-  const professionList: SelectOptionsType[] = professions
+  // const professionList: SelectOptionsType[] = professions
 
   useEffect(() => {
     formFields.forEach((field: string) => {
@@ -56,7 +67,19 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     })
   }, [user, setValue])
 
+
+
   const onSubmit = (data: FormValues) => {
+
+    let tagCount = 0;
+
+    for (let i = 0; i < data.tagLine.length; i++) {
+      if (data.tagLine[i] === ',') {
+        tagCount++
+      }
+
+    }
+
     const formData: any[] = []
     formFields.forEach((field: string) => {
       const dataAttr = _.get(data, field)
@@ -70,9 +93,18 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       success: 'The account information has been successfully saved',
       error: 'Error Saving the account information',
     }
+    console.log(dataToSubmit.tagLine)
 
-    return updateUser(dataToSubmit, toastOptions)
+    if (tagCount < 5) {
+      return updateUser(dataToSubmit, toastOptions)
+    }
+    else {
+      alert('Please enter upto 5 tags')
+    }
+
   }
+
+
 
   return (
     <div className="content-grid" style={{ maxWidth: '800px' }}>
@@ -153,21 +185,20 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                         />
                       </div>
                     </FormItem>
+
                     <FormItem>
                       <Controller
                         control={control}
-                        name="occupationId"
+                        name="tagLine"
                         defaultValue=""
                         render={(propsController) => (
-                          <SelectForm
-                            id="occupation"
+                          <TagsInputs
+                            id="tags"
                             name={propsController.name}
-                            placeholder={t('accountInfo.occupationField')}
-                            options={professionList}
-                            value={propsController.value || ''}
-                            onChange={(val) => {
-                              propsController.onChange(val)
-                            }}
+                            placeholder="Add tag"
+                            onChangeTags={(value: string) => propsController.onChange(value)}
+                            // error={error.tags || ''}
+                            defaultTags={propsController.value}
                           />
                         )}
                       />

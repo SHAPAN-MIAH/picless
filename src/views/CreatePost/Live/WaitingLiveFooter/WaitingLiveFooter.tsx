@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import LiveSectionMenu from 'components/LiveSectionFeatures/LiveSectionMenu/LiveSectionMenu'
 import React, { FunctionComponent } from 'react'
 import CheckboxForm from '../../../../components/Common/CheckboxForm'
 
@@ -20,6 +21,7 @@ const WaitingLiveFooter: FunctionComponent<{ startLive: () => void; disabled: bo
             }}
           />
         </div>
+
         <div style={{ flex: 3 }}> </div>
         <div style={{ flex: 3 }}>
           <button

@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react'
 import ProviderIconCard from '../../../../../components/Common/ProviderIconCard'
 import { CardType } from '../../../../../types/PaymentTypes'
 
+
 type CardItemProps = {
   card: CardType
   isDefault: boolean
@@ -10,19 +11,21 @@ type CardItemProps = {
   onRemoveCard: (cardId: string) => void
 }
 
+
 const CardItem: FunctionComponent<CardItemProps> = (props) => {
   const { card, isDefault, onChangeDefaultCard, onRemoveCard } = props
 
   return (
     <>
-      <div className="table-row medium">
-        <div className="table-column ">
+      <div className="table-row medium ">
+        {/* <div className='tableContainer'> */}
+        <div className="table-column table-column-first">
           <div className="product-preview tiny">
-            <div style={{ fontSize: '40px', marginRight: '20px' }}>
+            <div className="providerIcon" style={{ fontSize: '40px', marginRight: '10px' }}>
               <ProviderIconCard provider={card.brand} />
             </div>
 
-            <div className="product-preview-info" style={{ paddingTop: '24px' }}>
+            <div className="product-preview-info" style={{ paddingTop: '24px'}}>
               <p className="product-preview-title">
                 {card.brand} ending in {card.last4}
               </p>
@@ -34,8 +37,8 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
           <p className="table-title">{card.cardholderName}</p>
         </div> */}
 
-        <div className="table-column padded-right">
-          <p className="table-title">
+        <div className="table-column table-column-second padded-right ">
+          <p className="table-title yearCard">
             {card.expMonth} / {card.expYear}
           </p>
         </div>
@@ -59,12 +62,12 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
           </p>
         </div> */}
 
-        <div className="table-column padded-right">
+        <div className="table-column table-column-third padded-right">
           <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
             <div
               className="action-request accept"
               title=""
-              style={{ marginRight: '5px' }}
+              style={{ marginRight: '0px' }}
               onClick={() => {
                 onChangeDefaultCard(card.id)
               }}
@@ -74,7 +77,7 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
             </div>
 
             <div
-              className="action-request decline"
+              className="action-request decline declineIcon"
               title="Delete"
               onClick={() => {
                 onRemoveCard(card.id)
@@ -84,8 +87,10 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
                 <use xlinkHref="#svg-cross" />
               </svg>
             </div>
+            
           </div>
         </div>
+        {/* </div> */}
       </div>
     </>
   )
