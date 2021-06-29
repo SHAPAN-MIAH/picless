@@ -74,6 +74,7 @@ const ACTIONS_REDUCERS = {
       users,
       currentChat: []
     }
+    console.log(state)
   },
   [ACTIONS.CHANGE_USER_STATUS]: (state: ChatState, action: ChatAction) => {
     const {userId, status} = (action.payload as {userId: number, status: StatusType})
