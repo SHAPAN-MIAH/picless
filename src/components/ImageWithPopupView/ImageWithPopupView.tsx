@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType } from '../../types/PostType.d'
@@ -50,6 +50,8 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const history = useHistory();
   const pathname = history.location.pathname;
 
+  const [width, setwidht] = useState<number>(window.document.getElementsByClassName('content-grid')[0].clientWidth)
+
   let imgIndex = 0
   const handleImgIndex = (img: SourceType) => {
     imgIndex = medios.indexOf(img)
@@ -93,7 +95,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   }
   const initialImage = getWidth();
 
-  const width = initialImage ? initialImage.widthResized : 0
   const height = initialImage ? initialImage.heightResized : 0
 
   const maximoComunDivisor = (width: number, height: number): any => {
@@ -105,6 +106,12 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const numerator = Math.round(width / base)
   const denominator = Math.round(height / base)
   const appearance = `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
+  
+  const handleWidht = () => {
+    setwidht(window.document.getElementsByClassName('content-grid')[0].clientWidth)
+  }
+
+  window.addEventListener('resize', handleWidht);
   
   return (
     <>
