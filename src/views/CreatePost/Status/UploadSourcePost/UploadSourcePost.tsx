@@ -141,6 +141,7 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
 
                 imageList.push(source)
               } else if (videoList) {
+                source.index = index
                 videoList.push(source)
               }
 
@@ -225,10 +226,6 @@ const UploadSourcePost: FunctionComponent<UploadSourcePostProp> = (props) => {
       return;
     }
     setSelectedFile(prevItems => reorder(prevItems, source.index, destination.index)) 
-  }
-
-  const setleft = (isDragging: boolean, draggableStyle: any, index: number, imgSrc: string) => {
-
   }
 
 
