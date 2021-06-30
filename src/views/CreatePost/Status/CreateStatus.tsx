@@ -80,8 +80,6 @@ const CreateStatus: FunctionComponent<{}> = () => {
 
       setImageList(imgs)
       setVideoList(vids)
-      console.log(imgs)
-      console.log(vids)
     } else {
       alert('Need verify account')
     }
