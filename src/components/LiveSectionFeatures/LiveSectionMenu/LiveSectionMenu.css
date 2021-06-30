@@ -1,0 +1,8 @@
+@media screen and (max-width: 812px) {
+    .section-navigation{
+        top: 0!important;
+        position: sticky!important;
+        z-index: 9999999!important;
+        border-radius: 0!important;
+    }
+}

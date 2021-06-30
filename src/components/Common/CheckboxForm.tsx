@@ -50,7 +50,7 @@ const CheckboxForm = React.forwardRef<HTMLInputElement, CheckboxFormProps>((prop
         ref={ref}
         checked={checkState}
         id={id}
-        onChange={() => {}}
+        onChange={() => { }}
         style={{ display: 'none' }}
       />
     </div>
