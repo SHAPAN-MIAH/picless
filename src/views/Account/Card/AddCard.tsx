@@ -67,7 +67,7 @@ const AddCard: FunctionComponent<{}> = () => {
 
   const onSubmit = (values: FormValues) => {
     const cardData: AddCardType = {
-      number: values.cardNumber,
+      number: values.cardNumber.replace(/\s+/g, ""),
       holderName: values.holderName,
       expireMonth: values.expMonth as MonthNumbers,
       expireYear: values.expYear,
