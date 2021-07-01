@@ -44,21 +44,22 @@
     margin-bottom: 20px;
   }
 }
-@media screen and (min-width: 680px) {
+@media screen and (max-width: 680px) {
   .account-hub-content {
     padding-top: 15px;
   }
 
   .widget-box{
-    padding: 20px 10px !important;
+    padding: 20px 0px !important;
 
   }
   .widget-box-title{
     padding-bottom: 10px !important;
+    margin-left: 10px !important;
   }
   .table.split-rows{
-    margin: 0px;
-    padding: 0px
+    /* margin: 10px !important; */
+    padding: 20px 0px !important
   }
   .yearCard{
     margin-left: -10px !important;
@@ -72,31 +73,57 @@
 @media screen and (max-width: 400px) {
   
   .widget-box{
-    padding: 20px 10px !important;
-
+    padding: 30px 5px !important;
   }
   .widget-box-title{
     padding-bottom: 10px !important;
   }
   .table.split-rows{
     margin: 0px;
-    padding: 0px
+    padding: 0px;
   }
 
   .providerIcon{
-    margin-left: -15px !important;
+    margin-left: -20px !important;
+  }
+
+  .yearCard{
+    margin-left: -45px !important;
+    margin-right: 10px !important;
+  }
+
+  .declineIcon{
+    margin-left: 3px !important;
+  }
+
+}
+/* @media screen and (min-width: 350px) {
+  
+  .widget-box{
+    padding: 20px 5px !important;
+  }
+  .widget-box-title{
+    padding-bottom: 10px !important;
+  }
+  .table.split-rows{
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .providerIcon{
+    margin-left: -10px !important;
   }
 
   .yearCard{
     margin-left: -40px !important;
-    margin-right: 5px !important;
+    margin-right: 10px !important;
   }
 
   .declineIcon{
-    margin-left: 5px !important;
+    margin-left: 3px !important;
   }
 
-}
+} */
 
 .declineIcon{
   margin-left: 5px !important;
