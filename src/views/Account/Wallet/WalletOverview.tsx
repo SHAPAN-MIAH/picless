@@ -16,9 +16,9 @@ const WalletOverview: FunctionComponent<{}> = () => {
       <div className="account-hub-content">
         <div className="section-header">
           <div className="section-header-info">
-            <p className="section-pretitle">{t('wallet.movements')}</p>
+            <p className="section-pretitle" style={{marginLeft: '5px'}}>{t('wallet.movements')}</p>
 
-            <h2 className="section-title">{t('wallet.lastMovement')}</h2>
+            <h2 className="section-title" style={{marginLeft: '5px'}}>{t('wallet.lastMovement')}</h2>
           </div>
         </div>
 
