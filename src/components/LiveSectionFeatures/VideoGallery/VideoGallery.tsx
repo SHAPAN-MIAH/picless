@@ -51,7 +51,7 @@ const VideoGallery: React.FunctionComponent<{}> = () => {
             <div className="grid">
                 <div className="grid-column">
                 <div className="widget-box widget-videos">
-                {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
+                {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%', textAlign: 'center'}}/>}
                     {videos.length > 0 && (
                     <>
                         <InfiniteScroll dataLength={videos.length} next={getVideoList} hasMore loader={LoaderDiv}>

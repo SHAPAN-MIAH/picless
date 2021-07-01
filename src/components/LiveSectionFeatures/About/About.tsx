@@ -18,8 +18,7 @@ const About: React.FunctionComponent<{}> = () => {
 
 
     return (
-        <div style={{ paddingTop: "15vh", width: '70%', margin: 'auto', }}>
-            {/* <h1>this is the about page</h1> */}
+        <div>
             <div className="grid grid-3-9 mobile-prefer-content">
                 <div className="grid-column">
                     <div className="widget-box">

@@ -11,6 +11,9 @@ import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
 import LiveSectionMenu from '../../../components/LiveSectionFeatures/LiveSectionMenu/LiveSectionMenu'
+import About from 'components/LiveSectionFeatures/About/About'
+import PhotoGallery from 'components/LiveSectionFeatures/PhotoGallery/PhotoGallery'
+import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
 
 const CreateLive: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
@@ -30,6 +33,11 @@ const CreateLive: FunctionComponent<{}> = () => {
 
   const [liveName, setLiveName] = useState<string>('')
   const [toggleChat, setToggleChat] = useState<boolean>(true)
+  const [currentTab, setCurrentTab] = useState<string>('CHAT')
+
+  // const toggleTab = () => {
+  //   setCurrentTab()
+  // }
 
   useEffect(() => {
     return () => {
@@ -89,9 +97,12 @@ const CreateLive: FunctionComponent<{}> = () => {
           <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} chatRef={chatRef} />
         )}
       </div>
-      <div className="widget-box">{<LiveSectionMenu onToggleChat={onToggleChat} />}</div>
+      <div className="widget-box">{<LiveSectionMenu toggleTab={setCurrentTab} onToggleChat={onToggleChat} />}</div>
 
-      <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
+      <div  className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
+      <div style={{display: currentTab === 'PHOTOS' ? 'block' : 'none'}} className="widget-box">{<PhotoGallery/>}</div>
+      <div style={{display: currentTab === 'VIDEOS' ? 'block' : 'none'}} className="widget-box">{<VideoGallery/>}</div>
+      <div style={{display: currentTab === 'ABOUT' ? 'block' : 'none'}} className="widget-box">{<About/>} </div>
     </>
   )
 }

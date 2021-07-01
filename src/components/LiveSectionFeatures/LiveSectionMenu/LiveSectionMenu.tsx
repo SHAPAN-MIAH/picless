@@ -20,7 +20,7 @@ const Loading = (
   </div>
 )
 
-const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any }> = (props) => {
+const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: any }> = (props) => {
 
   console.log(props);
 
@@ -31,13 +31,42 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any }> = (props) 
 
 
   useEffect(() => {
-    if (router.pathname.includes(Tabs.CHAT)) setCurrentTabs(Tabs.CHAT)
-    else if (router.pathname.includes(Tabs.PHOTOS)) setCurrentTabs(Tabs.PHOTOS)
-    else if (router.pathname.includes(Tabs.VIDEOS)) setCurrentTabs(Tabs.VIDEOS)
-    else setCurrentTabs(Tabs.ABOUT)
+    if (router.pathname.includes(Tabs.CHAT)) {
+      setCurrentTabs(Tabs.CHAT)
+    }
+    else if (router.pathname.includes(Tabs.PHOTOS)) {
+      setCurrentTabs(Tabs.PHOTOS)
+    }
+    else if (router.pathname.includes(Tabs.VIDEOS)) {
+      setCurrentTabs(Tabs.VIDEOS)
+    }
+    else {
+      setCurrentTabs(Tabs.ABOUT)
+    }
 
     window.tpl.load(['slider'])
   }, [])
+
+  const clickHandler = (tabName: any) => {
+    if(tabName === 'CHAT'){
+      setCurrentTabs(Tabs.CHAT)
+      props.onToggleChat()
+      props.toggleTab('CHAT')
+    }
+    else if(tabName === 'PHOTOS'){
+      setCurrentTabs(Tabs.PHOTOS)
+      props.toggleTab('PHOTOS')
+    }
+    else if(tabName === 'VIDEOS'){
+      setCurrentTabs(Tabs.VIDEOS)
+      props.toggleTab('VIDEOS')
+    }
+    else if(tabName === 'ABOUT'){
+      setCurrentTabs(Tabs.ABOUT)
+      props.toggleTab('ABOUT')
+    }
+
+  }
 
   const sectionMenuClasses = 'section-menu-item tns-item tns-slide-active'
   return (
@@ -47,7 +76,8 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any }> = (props) 
           <button
             style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.CHAT ? 'active' : '')}
-            onClick={() => props.onToggleChat()}
+            // to={`${url}/${Tabs.CHAT}`}
+            onClick={() => clickHandler('CHAT')}
           >
 
             <svg xmlns="http://www.w3.org/2000/svg" className="section-menu-item-icon icon-chat" fill="none" stroke="currentColor">
@@ -57,57 +87,46 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any }> = (props) 
             <p className="section-menu-item-text">Chat</p>
           </button>
 
-          <Link
+          <button
+          style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.PHOTOS ? 'active' : '')}
-            to={`${url}/${Tabs.PHOTOS}`}
-            onClick={() => setCurrentTabs(Tabs.PHOTOS)}
+            // to={`${url}/${Tabs.PHOTOS}`}
+            onClick={() => clickHandler('PHOTOS')}
           >
             <svg className="section-menu-item-icon icon-photos">
               <use xlinkHref="#svg-photos" />
             </svg>
 
             <p className="section-menu-item-text">Photos</p>
-          </Link>
+          </button>
 
-          <Link
+          <button
+          style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.VIDEOS ? 'active' : '')}
-            to={`${url}/${Tabs.VIDEOS}`}
-            onClick={() => setCurrentTabs(Tabs.VIDEOS)}
+            // to={`${url}/${Tabs.VIDEOS}`}
+            onClick={() => clickHandler('VIDEOS')}
           >
             <svg className="section-menu-item-icon icon-videos">
               <use xlinkHref="#svg-videos" />
             </svg>
 
             <p className="section-menu-item-text">Videos</p>
-          </Link>
+          </button>
 
-          <Link
+          <button
+          style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.ABOUT ? 'active' : '')}
-            to={`${url}/${Tabs.ABOUT}`}
-            onClick={() => setCurrentTabs(Tabs.ABOUT)}
+            // to={`${url}/${Tabs.ABOUT}`}
+            onClick={() => clickHandler('ABOUT')}
           >
             <svg className="section-menu-item-icon icon-profile">
               <use xlinkHref="#svg-profile" />
             </svg>
 
             <p className="section-menu-item-text">About</p>
-          </Link>
+          </button>
 
         </div>
-
-        {/* <div>
-          <React.Suspense fallback={Loading}>
-            <Router>
-            <Switch>
-              <Route path={`${match.path}/${Tabs.ABOUT}`} component={About} />
-              <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGallery} />
-              <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGallery} />
-            </Switch>
-            </Router>
-            
-          </React.Suspense>
-        </div> */}
-
 
 
         <div id="section-navigation-slider-controls" className="slider-controls">
