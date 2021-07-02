@@ -115,6 +115,8 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   }
 
   window.addEventListener('resize', handleWidht);
+
+  //style={{height: height, objectFit: 'cover', objectPosition: 'center center'}}
   
   return (
     <>
@@ -130,7 +132,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                       decoding="async"
                       src={image?.resized}
                       alt={image.name}
-                      style={{height: height, objectFit: 'cover', objectPosition: 'center center'}}
                       />
           } else {
             return (
