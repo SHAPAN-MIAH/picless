@@ -83,7 +83,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
     return false
   }
 
-  const getWidth = () => { 
+  const getHeight = () => { 
     const imgs = medios.filter(el => !el.accessUrl)
     let index:any = imgs[0]
     imgs.map(image => {
@@ -91,11 +91,13 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
           index = image
         }
     })
-    return index;
+    if (index) {
+      return index.heightResized > 670 ? 670 : index.heightResized
+    }
+    return 670;
   }
-  const initialImage = getWidth();
 
-  const height = initialImage ? initialImage.heightResized : 0
+  const height =  getHeight()
 
   const maximoComunDivisor = (width: number, height: number): any => {
     if (height === 0) return width
@@ -106,7 +108,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const numerator = Math.round(width / base)
   const denominator = Math.round(height / base)
   const appearance = `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
-  
+ 
   const handleWidht = () => {
     setwidht(window.document.getElementsByClassName('content-grid')[0].clientWidth)
   }
