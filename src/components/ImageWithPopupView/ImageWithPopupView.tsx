@@ -91,6 +91,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
           index = image
         }
     })
+    
     if (index) {
       return index.heightResized > 670 ? 670 : index.heightResized
     }
@@ -124,7 +125,13 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
         trigger={() => {
           handleImgIndex(image)
           if (!image.accessUrl) {
-            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
+            return <ImageImg 
+                      loading="lazy"
+                      decoding="async"
+                      src={image?.resized}
+                      alt={image.name}
+                      style={{height: height, objectFit: 'cover', objectPosition: 'center center'}}
+                      />
           } else {
             return (
               <div className="video-triger-pop">
