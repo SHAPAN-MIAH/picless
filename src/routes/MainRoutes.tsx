@@ -33,6 +33,7 @@ import LiveChat from 'components/LiveChat/LiveChat'
 import AboutTab from './../views/UserProfile/Profile/SectionTab/AboutTab';
 import PhotoGalleryTab from './../views/UserProfile/Profile/SectionTab/PhotoGalleryTab';
 import VideoGalleryTab from './../views/UserProfile/Profile/SectionTab/VideoGalleryTab';
+import LiveTab from 'views/UserProfile/Profile/SectionTab/LiveTab'
 
 
 const NoMatchPage = () => {
@@ -90,7 +91,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path={['/user/chat', '/user/chat/:userid']} component={ChatMain} />
 
               <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
-              
+
               <ProtectedRoute {...routerProps} exact path="/user/create-post/photos" component={PhotoGallery} />
               <ProtectedRoute {...routerProps} exact path="/user/create-post/videos" component={VideoGallery} />
               <ProtectedRoute {...routerProps} exact path="/user/create-post/about" component={About} />
@@ -107,7 +108,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <ProtectedRoute {...routerProps} path="/u/:username/metrics" exact component={Metrics} />
 
-              <ProtectedRoute {...routerProps} path="/u/:username/live" exact component={LiveView} />
+              <ProtectedRoute {...routerProps} path="/u/:username/live" exact component={LiveTab} />
 
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
@@ -119,7 +120,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
               />
               <ProtectedRoute {...routerProps} exact path={['/u/not-exist']} component={ProfileNotExist} /> */}
 
-            
+
 
               <Route {...routerProps} exact path="/testviewd" component={TestView} />
 

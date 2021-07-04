@@ -1,18 +1,18 @@
 [
   {
     "name": "Prefer not to say",
-    "genderId": 1
+    "value": 1
   },
   {
     "name": "Male",
-    "genderId": 2
+    "value": 2
   },
   {
     "name": "Female",
-    "genderId": 3
+    "value": 3
   },
   {
     "name": "Non-Binary",
-    "genderId": 4
+    "value": 4
   }
 ]

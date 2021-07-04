@@ -22,10 +22,10 @@ type FormValues = {
   emailRecovery: string
   phoneNumber: string
   planId: string
-  gender: string
+  genderId: string
 }
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId', 'gender']
+const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId', 'genderId']
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -58,9 +58,9 @@ const AccountInfo: FunctionComponent<{}> = () => {
   }
 
   const genderList = (): SelectOptionsType[] => {
-   return gender.map((data: any) => {
-     return { value: data.name, name: `${data.name}`}
-   })
+    return gender.map((data: any) => {
+      return { value: data.value, name: `${data.name}` }
+    })
   }
 
   useEffect(() => {
@@ -152,10 +152,10 @@ const AccountInfo: FunctionComponent<{}> = () => {
                       control={control}
                       as={SelectForm}
                       id="genderId"
-                      name="gender"
+                      name="genderId"
                       placeholder={t('accountInfo.GenderField')}
                       options={genderList()}
-                    /> 
+                    />
                   </FormItem>
                 </FormRow>
 
