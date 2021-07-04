@@ -79,6 +79,7 @@
     "personalInfo": "Personal Info",
     "fullNameField": "Full Name",
     "accountEmailField": "Email",
+    "GenderField": "Gender",
     "countryField": "Country",
     "recoveryEmailField": "Recovery Email",
     "phoneNumberField": "Phone Number",

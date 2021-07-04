@@ -25,7 +25,7 @@ type FormValues = {
   gender: string
 }
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId']
+const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId', 'gender']
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -42,7 +42,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
     emailRecovery: Yup.string().email('Please enter an valid email').nullable(),
     phoneNumber: Yup.string().matches(phoneRegExp, { message: 'Phone number is not valid', excludeEmptyString: true }),
     planId: Yup.string(),
-    gender: Yup.string(),
+    // genderId: Yup.number(),
   })
 
   const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
@@ -56,9 +56,11 @@ const AccountInfo: FunctionComponent<{}> = () => {
       return { value: data.name, name: `${data.amount} $ (${data.currency})`.toUpperCase() }
     })
   }
+
   const genderList = (): SelectOptionsType[] => {
-   return gender.map((data: any) => {console.log(data)}
-   )
+   return gender.map((data: any) => {
+     return { value: data.name, name: `${data.name}`}
+   })
   }
 
   useEffect(() => {
@@ -151,7 +153,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
                       as={SelectForm}
                       id="genderId"
                       name="gender"
-                      placeholder={t('Gender')}
+                      placeholder={t('accountInfo.GenderField')}
                       options={genderList()}
                     /> 
                   </FormItem>

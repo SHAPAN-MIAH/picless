@@ -31,7 +31,7 @@ export interface UserType {
   registrationDate?: string
   countryCode?: string
   regionName?: string
-  gender?: any
+  gender?: string
   language?: any
   tagLine?: string
   planId?: string
