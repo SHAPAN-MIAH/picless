@@ -13,6 +13,7 @@ import TextInput from '../../../components/Common/TextInput'
 import plans from '../../../constants/plans.json'
 import useUser from '../../../hooks/useUser'
 import { UserType } from '../../../types/UserType'
+import gender from '../../../constants/gender.json'
 
 type FormValues = {
   fullName: string
@@ -21,6 +22,7 @@ type FormValues = {
   emailRecovery: string
   phoneNumber: string
   planId: string
+  gender: string
 }
 type formFieldsNames = keyof FormValues
 const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId']
@@ -40,6 +42,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
     emailRecovery: Yup.string().email('Please enter an valid email').nullable(),
     phoneNumber: Yup.string().matches(phoneRegExp, { message: 'Phone number is not valid', excludeEmptyString: true }),
     planId: Yup.string(),
+    gender: Yup.string(),
   })
 
   const { control, handleSubmit, setValue, errors, formState } = useForm<FormValues>({
@@ -52,6 +55,10 @@ const AccountInfo: FunctionComponent<{}> = () => {
 
       return { value: data.name, name: `${data.amount} $ (${data.currency})`.toUpperCase() }
     })
+  }
+  const genderList = (): SelectOptionsType[] => {
+   return gender.map((data: any) => {console.log(data)}
+   )
   }
 
   useEffect(() => {
@@ -141,14 +148,12 @@ const AccountInfo: FunctionComponent<{}> = () => {
                   <FormItem>
                     <Controller
                       control={control}
-                      as={TextInput}
-                      type="text"
-                      name="emailRecovery"
-                      defaultValue=""
-                      placeholder={t('accountInfo.recoveryEmailField')}
-                      classNameFormInput="small active"
-                      errorMessage={errors.emailRecovery?.message}
-                    />
+                      as={SelectForm}
+                      id="genderId"
+                      name="gender"
+                      placeholder={t('Gender')}
+                      options={genderList()}
+                    /> 
                   </FormItem>
                 </FormRow>
 
