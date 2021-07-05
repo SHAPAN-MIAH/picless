@@ -9,7 +9,8 @@ export const VideoPlayer = ({
   src = '',
   type = '',
   options = {},
-  aspect = '4:5'
+  aspect = '4:5',
+  videoThreshol = .7
 }) => {
   const videoRef = useRef(null);
   const [player, setPlayer] = useState(null);
@@ -34,7 +35,7 @@ export const VideoPlayer = ({
     });
 
     const optionsIntersection = {
-      threshol: .7
+      videoThreshol
     }
 
     vjsPlayer.aspectRatio(aspect)

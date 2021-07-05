@@ -1,7 +1,3 @@
-.album-preview {
-    height: auto!important;
-}
-
 @media screen and (max-device-width: 812px) {
     .grid-videos {
         display: flex;

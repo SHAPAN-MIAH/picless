@@ -37,12 +37,6 @@ const StyledPopup = styled(Popup)`
   }
 `
 
-const ImagePop = styled.img`
-  max-height: 100vh;
-  max-width: 99%;
-  object-fit: contain;
-`
-
 const CloseButtonDiv = styled.div`
     position: absolute;
     bottom: 50px;
@@ -60,6 +54,12 @@ const CloseButtonDiv = styled.div`
 }
 `
 
+const ImagePop = styled.img`
+  max-height: 100vh;
+  max-width: 99%;
+  object-fit: contain;
+`
+
 const LoaderDiv = (
   <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
@@ -68,7 +68,6 @@ const LoaderDiv = (
 const VideoGalleryTab: FunctionComponent<{}> = () => {
   const { getVideos, videos, provider } = useProfile({ disableMount: true })
   const [page, setPage] = useState<number>(0)
-  const [currentVideo, setCurrentVideo] = useState<any>({})
   const [values, setOpen] = useState({ open: false, index: 0 })
 
   const closeModal = () => {
@@ -91,12 +90,13 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     }
   }, [])
 
-  const options = {
+  const videoJsOptions = {
+    autoplay: false,
+    width: '100%',
+    controls: true,
+    responsive: true,
     fill: true,
     fluid: true,
-    responsive: true,
-    preload: 'auto',
-    controls: true,
     controlBar: {
       pictureInPictureToggle: false,
     },
@@ -109,8 +109,6 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
 
   const handleVideiIndex = (img: any) => {
     imgIndex = videos.indexOf(img)
-    setCurrentVideo(img)
-    console.log(currentVideo)
     setOpen({ open: true, index: imgIndex })
   }
  
@@ -121,6 +119,30 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     }
   }
 
+  const maximoComunDivisor = (width: number, height: number): any => {
+    if (height === 0) return width
+    return maximoComunDivisor(height, width % height)
+  }
+
+  const setApparence = (width = 0, height = 0) => {
+    if (isMobile) {
+      return '9:16'
+    }
+    const base = maximoComunDivisor(width, height)
+    const numerator = Math.round(width / base)
+    const denominator = Math.round(height / base)
+    return  `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
+  }
+
+  const setVideoPlayer = (accessUrl: any) => {
+   return <VideoPlayer
+      src={accessUrl}
+      type=""
+      options={videoJsOptions}
+      aspect={setApparence(window.innerWidth, window.innerHeight)}
+    />  
+  }
+
   return (
     <>
       <div className="grid">
@@ -129,31 +151,6 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
           {videos.length === 0 && <Alert alertType="PRIMARY" message={noVideos} style={{ width: '100%' }} />}
             {videos.length > 0 && (
               <>
-                {/*<InfiniteScroll dataLength={videos.length} next={getVideoList} hasMore loader={LoaderDiv}>
-                  <div className="grid grid-3-3-3-3 centered grid-videos" style={{ overflow: 'hidden' }}>
-                    {videos.map((item) => {
-                      return (
-                        <div key={item.id} className="album-preview">
-                          {/*<div key={item.id} data-vjs-player>
-                            <VideoPlayer src={item.accessUrl} type="" options={options} aspect='3:4'/>
-                          </div>}
-                          <div style={{width: '100%', height: 'auto'}}>
-                            <img
-                              src={item.resized}
-                              className='tumbail-video'
-                              alt={item.name}
-                              onError={(e: any) => {
-                                e.target.onerror = null
-                                e.target.src = Utils.imgError
-                              }}
-                              onClick={() => console.log(item)}
-                            />
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </InfiniteScroll>*/}
                 <InfiniteScroll dataLength={videos.length} next={getVideoList} hasMore loader={LoaderDiv}>
                   <div className="grid grid-3-3-3-3 centered grid-photos" style={{ overflow: 'hidden' }}>
                     {videos.map((item) => {
@@ -194,10 +191,23 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                           }
                         }}
                         className="class-up"
+                        onChange={() => console.log()}
                       >
-                      <div key={currentVideo.id} data-vjs-player>
-                        <VideoPlayer src={currentVideo.accessUrl} type="" options={options} aspect='9:16'/>
-                      </div>
+                        {videos.map((item) => {
+                          let videoPlied = setVideoPlayer(item.accessUrl)
+                          return (
+                            <div key={item.id} className='containerLink'>
+                              <div 
+                                key={item.id}
+                                data-vjs-player
+                                style={{width: window.innerWidth}}
+                              >
+                                {videoPlied}
+                              </div>
+                              <a href={`/u/${provider.userName}/post/${item.postId}`} className='goToPost'>Go to Post</a>
+                            </div>
+                          )
+                        })}
                       </Carousel>
                     </div>
                   </StyledPopup>
