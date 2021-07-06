@@ -63,11 +63,11 @@ const AboutTab: FunctionComponent<{}> = () => {
                   </div>
                 )}
 
-                {provider.occupation && (
+                {provider.tagLine && (
                   <div className="information-line">
-                    <p className="information-line-title">Occupation</p>
+                    <p className="information-line-title">TagLine</p>
 
-                    <p className="information-line-text">{provider.occupation?.name}</p>
+                    <p className="information-line-text">{provider.tagLine}</p>
                   </div>
                 )}
               </div>

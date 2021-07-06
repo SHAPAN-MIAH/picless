@@ -56,21 +56,24 @@ const CardList: FunctionComponent<{}> = () => {
               data-simplebar
               style={{ overflowX: 'hidden', overflowY: 'auto', maxHeight: '415px', marginTop: '-10px' }}
             >
-              <div className="table table-downloads split-rows">
-                <div className="table-body same-color-rows">
-                  {cards.map((card: CardType) => {
-                    const isDefault: boolean = card.id === defaultCard?.defaultCardId
-
-                    return (
-                      <CardItem
-                        key={`id-${card.id}`}
-                        card={card}
-                        isDefault={isDefault}
-                        onChangeDefaultCard={onChangeDefaultCard}
-                        onRemoveCard={onRemoveCard}
-                      />
-                    )
-                  })}
+              <div className="table table-downloads split-rows" >
+                <div className="table-body same-color-rows" >
+                  
+                    {cards.map((card: CardType) => {
+                      const isDefault: boolean = card.id === defaultCard?.defaultCardId
+                      return (
+                        
+                            <CardItem
+                            key={`id-${card.id}`}
+                            card={card}
+                            isDefault={isDefault}
+                            onChangeDefaultCard={onChangeDefaultCard}
+                            onRemoveCard={onRemoveCard}
+                          />
+                        
+                      )
+                    })}
+                  
                 </div>
               </div>
             </div>

@@ -1,20 +1,11 @@
-.album-preview {
-    max-height: 284px!important;
-    width: 105%;
-  }
-
-  .album-preview img {
-    border-radius: 0!important;
-  }
-
 @media screen and (max-device-width: 812px) {
-    .grid-photos {
+    .grid-videos {
         display: flex;
         flex-wrap: wrap;
         grid-gap: .1px!important;
         justify-content: space-between!important;
     }
-    .widget-photos {
+    .widget-videos {
         padding: 10px 10px;
     }
     .album-preview {
@@ -22,10 +13,19 @@
         height: auto!important;
         margin: .5px;
     }
-    .widget-photos {
+    .album-preview img {
+        border-radius: 0!important;
+    }
+    .widget-videos {
         padding: 0%!important;
     }
     .class-up > div > div > div {
         height: 100vh!important;
     }
+  }
+
+  .tumbail-video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
   }

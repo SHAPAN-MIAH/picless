@@ -52,6 +52,8 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
   mediaContainer.map((el: any) => {
     media[el.index] = el;
   })
+
+  const userName = allData.users.userName;
   const page = media.length > 1 ? true : false
 
   const handleDisable = (item: SourceType) => {
@@ -82,7 +84,7 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
           {media.map((item: SourceType) => (
             <div key={item.id}>
               {handleDisable(item)}
-              <ImageWithPopupView image={item} medios={media} isDisabled={isDisabled} />
+              <ImageWithPopupView image={item} medios={media} isDisabled={isDisabled} userName={userName} />
             </div>
           ))}
         </Carousel>

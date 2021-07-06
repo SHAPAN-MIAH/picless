@@ -1,12 +1,3 @@
-.album-preview {
-    max-height: 284px!important;
-    width: 105%;
-  }
-
-  .album-preview img {
-    border-radius: 0!important;
-  }
-
 @media screen and (max-device-width: 812px) {
     .grid-photos {
         display: flex;
@@ -22,10 +13,17 @@
         height: auto!important;
         margin: .5px;
     }
+    .album-preview img {
+        border-radius: 0!important;
+    }
     .widget-photos {
         padding: 0%!important;
     }
     .class-up > div > div > div {
         height: 100vh!important;
     }
+  }
+
+  .album-preview {
+    max-height: 284px!important;
   }
