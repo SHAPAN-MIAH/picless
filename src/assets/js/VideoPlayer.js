@@ -1,16 +1,18 @@
 import React, { useRef, useEffect,  useState} from 'react';
 import videojs from 'video.js';
+import * as Utils from '../../utils/Functions'
 
 import 'video.js/dist/video-js.min.css';
 
 
 
-export const VideoPlayer = ({ 
+const VideoPlayer = ({ 
   src = '',
   type = '',
   options = {},
   aspect = '4:5',
-  videoThreshol = .7
+  videoThreshol = .7,
+  videoId = Utils.simpleKeyGenerator(5)
 }) => {
   const videoRef = useRef(null);
   const [player, setPlayer] = useState(null);
@@ -58,8 +60,7 @@ export const VideoPlayer = ({
 
   return (
     <div>
-      
-      <video ref={videoRef} className="video-js vjs-big-play-centered">
+      <video id={videoId} ref={videoRef} className="video-js vjs-big-play-centered">
       </video>
     </div>
   );

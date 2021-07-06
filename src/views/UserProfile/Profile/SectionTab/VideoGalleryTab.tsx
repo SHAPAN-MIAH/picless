@@ -125,7 +125,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   }
 
   const setApparence = (width = 0, height = 0) => {
-    if (isMobile) {
+    if (isMobile && height > (width*2)) {
       return '9:16'
     }
     const base = maximoComunDivisor(width, height)
@@ -134,14 +134,27 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     return  `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
   }
 
-  const setVideoPlayer = (accessUrl: any) => {
+  const setVideoPlayer = (accessUrl: any, id: any) => {
+    console.log(setApparence(window.innerWidth, window.innerHeight));
+    console.log(isMobile)
    return <VideoPlayer
       src={accessUrl}
       type=""
       options={videoJsOptions}
       aspect={setApparence(window.innerWidth, window.innerHeight)}
+      videoThreshol ={0}
+      videoId={id}
     />  
   }
+
+  const handlePause = (item: any) => {
+    item?.pause();
+  }
+
+  const handleSelect = (id: string) => {
+    handlePause(document.getElementById(`${id}_html5_api`));  
+  }
+
 
   return (
     <>
@@ -191,12 +204,26 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                           }
                         }}
                         className="class-up"
-                        onChange={() => console.log()}
+                        onNextStart={(
+                          prevItemObject: any
+                        ) => {
+                          handleSelect(prevItemObject.item['data-id'])
+                        }}
+                        onPrevStart={(
+                          prevItemObject: any
+                        ) => {
+                          handleSelect(prevItemObject.item['data-id'])
+                        }}
                       >
                         {videos.map((item) => {
-                          let videoPlied = setVideoPlayer(item.accessUrl)
+                          let ids = Utils.simpleKeyGenerator(8);
+                          let videoPlied = setVideoPlayer(item.accessUrl, ids)
                           return (
-                            <div key={item.id} className='containerLink'>
+                            <div 
+                              key={item.id}
+                              className='containerLink'
+                              data-id={ids}
+                            >
                               <div 
                                 key={item.id}
                                 data-vjs-player
