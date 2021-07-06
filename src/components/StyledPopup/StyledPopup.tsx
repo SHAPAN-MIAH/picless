@@ -8,7 +8,7 @@ import styles from './StyledPopup.module.css'
 
 type SizeType = 'S' | 'M'
 
-interface StyledPopupProps extends PopupProps {
+type StyledPopupProps = {
   trigger?: JSX.Element
   children: ReactNode
   show?: boolean
@@ -24,7 +24,7 @@ const ContainerMobileDiv = styled.div`
 `
 
 const StyledPopup: FunctionComponent<StyledPopupProps> = React.memo((props) => {
-  const { show, onClose, trigger, header, children, size = 'S', closeOnDocumentClick = false } = props
+  const { show, onClose, trigger, header, children, size = 'S' } = props
 
   const contentStyle = {
     width: '330px',
@@ -37,7 +37,6 @@ const StyledPopup: FunctionComponent<StyledPopupProps> = React.memo((props) => {
     nested: true,
     position: 'center center',
     children,
-    closeOnDocumentClick,
   }
 
   if (!isMobile) {
