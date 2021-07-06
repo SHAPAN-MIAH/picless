@@ -11,6 +11,7 @@ import SendATip from '../../../SendATip/SendATip'
 import { PostType } from 'types/PostType'
 
 import styles from './Footer.module.css'
+import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 
 type FooterProps = {
   post: PostType
@@ -129,15 +130,22 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
         >
           {(close: any) => <SendATip user={user || {}} callback={handleCallback} onClose={close} />}
         </Popup>
+
         <div className="post-option-wrap">
           <div className="post-option" onClick={handleSaved} style={{ width: '100px' }}>
-            <svg className={classNames('post-option-icon icon-thumbs-up', save ? styles.liked : '')}>
-              <use xlinkHref="#svg-pinned" />
-            </svg>
             {save ? (
-              <p className={classNames('post-option-text', styles.liked)}>Saved!</p>
+              <div style={{ display: 'flex' }}>
+                <FontAwesomeIcon style={{ marginTop: '2px', marginRight: "7px", color: "#23d2e2", fontSize: "20px" }} icon={faBookmark} className={styles.timesIcon} />
+
+                <p style={{ marginTop: "6px", marginLeft: "6px" }} className={classNames('post-option-text', styles.liked)}>Saved!</p>
+              </div>
             ) : (
-              <p className="post-option-text">Save</p>
+              <div style={{ display: 'flex' }}>
+                <svg style={{ marginTop: "2px" }} className={classNames('post-option-icon icon-thumbs-up', save ? styles.liked : '')}>
+                  <use xlinkHref="#svg-pinned" />
+                </svg>
+                <p style={{ marginTop: "5px" }} className="post-option-text">Save</p>
+              </div>
             )}
           </div>
         </div>
