@@ -131,9 +131,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             />
                           </ImageContainerDiv>
                           {!isMobile && (
-                            <div className="album-preview-info" style={{ top: '-284px' }}>
-                              <p className="album-preview-title">View post</p>
-                              <p className="album-preview-text">{item.registerDate}</p>
+                            <div className="album-preview-info" style={{ top: '-270px', borderRadius: '0' }}>
                             </div>
                           )}
                         </div>
@@ -164,16 +162,18 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                       >
                         {photos.map((item) => {
                           return (
-                            <ImagePop
-                              key={item.id}
-                              decoding="async"
-                              src={item?.original}
-                              alt={item.name}
-                              onError={(e: any) => {
-                                e.target.onerror = null
-                                e.target.src = Utils.imgError
-                              }}
-                            />
+                            <div key={item.id} className='containerLink'>
+                              <ImagePop
+                                decoding="async"
+                                src={item?.original}
+                                alt={item.name}
+                                onError={(e: any) => {
+                                  e.target.onerror = null
+                                  e.target.src = Utils.imgError
+                                }}
+                              />
+                              <a href={`/u/${provider.userName}/post/${item.postId}`} className='goToPost'>Go to Post</a>
+                            </div>
                           )
                         })}
                       </Carousel>

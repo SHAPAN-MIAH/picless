@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType } from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel'
 import VideoPlayer from '../../assets/js/VideoPlayer'
 import * as Utils from '../../utils/Functions'
+import { useHistory } from 'react-router-dom'
 
 import './imageWithPopupView.css'
 
@@ -44,8 +45,12 @@ const CloseButtonDiv = styled.div`
 }
 `
 
-const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceType[]; isDisabled: boolean }> = (props) => {
-  const { image, medios, isDisabled } = props
+const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceType[]; isDisabled: boolean; userName: string }> = (props) => {
+  const { image, medios, isDisabled, userName } = props
+  const history = useHistory();
+  const pathname = history.location.pathname;
+
+  const [width, setwidht] = useState<number>(window.document.getElementsByClassName('content-grid')[0].clientWidth)
 
   let imgIndex = 0
   const handleImgIndex = (img: SourceType) => {
@@ -78,7 +83,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
     return false
   }
 
-  const getWidth = () => { 
+  const getHeight = () => { 
     const imgs = medios.filter(el => !el.accessUrl)
     let index:any = imgs[0]
     imgs.map(image => {
@@ -86,12 +91,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
           index = image
         }
     })
-    return index;
+    
+    if (index) {
+      return index.heightResized > 670 ? 670 : index.heightResized
+    }
+    return 670;
   }
-  const initialImage = getWidth();
 
-  const width = initialImage ? initialImage.widthResized : 0
-  const height = initialImage ? initialImage.heightResized : 0
+  const height =  getHeight()
 
   const maximoComunDivisor = (width: number, height: number): any => {
     if (height === 0) return width
@@ -102,6 +109,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const numerator = Math.round(width / base)
   const denominator = Math.round(height / base)
   const appearance = `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
+ 
+  const handleWidht = () => {
+    setwidht(window.document.getElementsByClassName('content-grid')[0].clientWidth)
+  }
+
+  window.addEventListener('resize', handleWidht);
+
+  //style={{height: height, objectFit: 'cover', objectPosition: 'center center'}}
   
   return (
     <>
@@ -112,7 +127,12 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
         trigger={() => {
           handleImgIndex(image)
           if (!image.accessUrl) {
-            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
+            return <ImageImg 
+                      loading="lazy"
+                      decoding="async"
+                      src={image?.resized}
+                      alt={image.name}
+                      />
           } else {
             return (
               <div className="video-triger-pop">
@@ -139,20 +159,32 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
               </CloseButtonDiv>
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} className='carousel-phater'>
                 {medios.map((item: SourceType) => {
+                  const routeTo = `/u/${userName}/post/${item.postId}`;
+                  const LinkPost = routeTo !== pathname ?
+                    <a href={routeTo} className='goToPost'>Go to Post</a>: '';
                   if (!item.accessUrl) {
                     return (
-                      <ImagePop
-                        key={Utils.simpleKeyGenerator(5)}
-                        loading="lazy"
-                        decoding="async"
-                        src={item?.original}
-                        alt={item.name}
-                      />
+                      <div key={Utils.simpleKeyGenerator(5)} className='containerLink'>
+                        <ImagePop
+                          loading="lazy"
+                          decoding="async"
+                          src={item?.original}
+                          alt={item.name}
+                        />
+                        {
+                          LinkPost
+                        }
+                      </div>
                     )
                   } else {
                     return (
-                      <div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">
-                        <VideoPlayer src={item.accessUrl} type="" options={videoJsOptions} />
+                      <div key={Utils.simpleKeyGenerator(5)} className='containerLink'>
+                        <div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">
+                          <VideoPlayer src={item.accessUrl} type="" options={videoJsOptions} />
+                        </div>
+                        {
+                          LinkPost
+                        }
                       </div>
                     )
                   }

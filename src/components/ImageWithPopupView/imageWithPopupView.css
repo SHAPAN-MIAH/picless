@@ -40,6 +40,21 @@
     height: 98vh!important;
 }
 
+.goToPost {
+    position: fixed;
+    bottom: 1px;
+    padding: 12px;
+    border: 0.8em;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    font-weight: bolder;
+}
+.containerLink {
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 1366px) and (orientation: landscape) {
     .video-triger-pop {
         width: 30em;
