@@ -135,8 +135,6 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   }
 
   const setVideoPlayer = (accessUrl: any, id: any) => {
-    console.log(setApparence(window.innerWidth, window.innerHeight));
-    console.log(isMobile)
    return <VideoPlayer
       src={accessUrl}
       type=""
@@ -151,9 +149,19 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     item?.pause();
   }
 
+  const handleFullScream = () => {
+
+  }
+
   const handleSelect = (id: string) => {
     handlePause(document.getElementById(`${id}_html5_api`));  
   }
+
+  const handleSelectFullScream = () => {
+      
+  }
+
+  window.addEventListener('resize', handleSelectFullScream);
 
 
   return (

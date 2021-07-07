@@ -84,7 +84,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     if (provider && photos && photos.length === 0) {
       getPhotosList()
       if (window.tpl) {
-        window.tpl.load(['dropdown'])
+        window.tpl?.load(['dropdown'])
       }
     }
   }, [])
