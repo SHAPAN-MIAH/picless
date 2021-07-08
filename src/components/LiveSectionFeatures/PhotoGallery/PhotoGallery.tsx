@@ -67,7 +67,7 @@ const PhotoGallery: React.FunctionComponent<{}> = () => {
 
   //    const [photos, setPhotos] = useState()
   const { getPhotos, photos, provider } = useProfile({ disableMount: true })
-  console.log("Provider Photos", provider.userName);
+
 
   const [page, setPage] = useState<number>(0)
 

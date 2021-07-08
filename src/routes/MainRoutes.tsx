@@ -92,13 +92,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
 
-              {/* <ProtectedRoute {...routerProps} exact path="/user/live/photos" component={PhotoGallery} />
-              <ProtectedRoute {...routerProps} exact path="/user/live/videos" component={VideoGallery} />
-              <ProtectedRoute {...routerProps} exact path="/user/live/about" component={About} />
-              <ProtectedRoute {...routerProps} exact path="/user/live/chat" component={LiveChat} /> */}
-
               <ProtectedRoute {...routerProps} path="/user/notification" component={Notification} />
-
 
               <ProtectedRoute {...routerProps} exact path="/user/discover" component={Discover} />
 

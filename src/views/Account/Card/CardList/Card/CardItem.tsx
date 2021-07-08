@@ -25,11 +25,11 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
               <ProviderIconCard provider={card.brand} />
             </div>
 
-            <div className="product-preview-info" style={{ paddingTop: '24px'}}>
+            {/* <div className="product-preview-info" style={{ paddingTop: '24px'}}>
               <p className="product-preview-title">
                 {card.brand} ending in {card.last4}
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -87,7 +87,7 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
                 <use xlinkHref="#svg-cross" />
               </svg>
             </div>
-            
+
           </div>
         </div>
         {/* </div> */}
