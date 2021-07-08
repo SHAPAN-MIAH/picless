@@ -49,6 +49,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const { image, medios, isDisabled, userName } = props
   const history = useHistory();
   const pathname = history.location.pathname;
+  console.log(pathname)
 
   const [width, setwidht] = useState<number>(window.document.getElementsByClassName('content-grid')[0].clientWidth)
 
