@@ -32,7 +32,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const AccountInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
 
-  const { getUser, updateUser } = useUser()
+  const { user, updateUser } = useUser()
 
   // Validations Fields
   const validationSchema = Yup.object().shape({
@@ -64,18 +64,12 @@ const AccountInfo: FunctionComponent<{}> = () => {
   }
 
   useEffect(() => {
-    getUser()
-      .then((user) => {
-        formFields.forEach((field: string) => {
-          const value = _.get(user, field)
+    formFields.forEach((field: string) => {
+      const value = _.get(user, field)
 
-          setValue(field as formFieldsNames, value || '')
-        })
-      })
-      .catch((err) => {
-        toast.error(err.message)
-      })
-  }, [getUser, setValue])
+      setValue(field as formFieldsNames, value || '')
+    })
+  }, [user, setValue])
 
   const saveData = (data: FormValues) => {
     const formData: any[] = []
