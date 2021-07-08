@@ -65,131 +65,132 @@ const LoaderDiv = (
 
 const PhotoGallery: React.FunctionComponent<{}> = () => {
 
-//    const [photos, setPhotos] = useState()
-   const { getPhotos, photos, provider } = useProfile({ disableMount: true })
+  //    const [photos, setPhotos] = useState()
+  const { getPhotos, photos, provider } = useProfile({ disableMount: true })
+  console.log("Provider Photos", provider.userName);
 
-   const [page, setPage] = useState<number>(0)
- 
-   const [values, setOpen] = useState({ open: false, index: 0 })
-   const closeModal = () => {
-     document.body.style.overflow = 'auto'
-     setOpen({ ...values, open: false })
-   }
- 
-   const getPhotosList = useCallback(() => {
-     getPhotos(page).then(() => {
-       setPage(page + 1)
-     })
-   }, [getPhotos, setPage, page])
- 
-   useEffect(() => {
-     if (provider && photos && photos.length === 0) {
-       getPhotosList()
-       if (window.tpl) {
-         window.tpl.load(['dropdown'])
-       }
-     }
-   }, [])
- 
-   let imgIndex = 0
-   const handleImgIndex = (img: any) => {
-     imgIndex = photos.indexOf(img)
-     setOpen({ open: true, index: imgIndex })
-   }
- 
-   const handleOpen = () => {
-     document.body.style.overflow = 'hidden'
-   }
- 
-   const handleClick = (e: any) => {
-     if (e.target.tagName === 'DIV') {
-       closeModal()
-     }
-   }
+  const [page, setPage] = useState<number>(0)
 
-    return (
-        <div>
-            <div className="grid">
-                <div className="grid-column">
-                <div className="widget-box widget-photos">
-                    {photos.length === 0 && (
-                    <Alert alertType="PRIMARY" message={noPhotos} style={{ width: '100%', textAlign: 'center' }} />
-                    )}
-                    {photos.length > 0 && (
-                    <div>
-                        <InfiniteScroll dataLength={photos.length} next={getPhotosList} hasMore loader={LoaderDiv}>
-                        <div className="grid grid-3-3-3-3 centered grid-photos" style={{ overflow: 'hidden' }}>
-                            {photos.map((item) => {
-                            return (
-                                <div key={item.id} className="album-preview" onClick={() => handleImgIndex(item)}>
-                                <ImageContainerDiv>
-                                    <ImageImg
-                                    src={item.thumbnail}
-                                    alt={item.name}
-                                    onError={(e: any) => {
-                                        e.target.onerror = null
-                                        e.target.src = Utils.imgError
-                                    }}
-                                    />
-                                </ImageContainerDiv>
-                                {!isMobile && (
-                                    <div className="album-preview-info" style={{ top: '-284px' }}>
-                                    <p className="album-preview-title">View post</p>
-                                    <p className="album-preview-text">{item.registerDate}</p>
-                                    </div>
-                                )}
-                                </div>
-                            )
-                            })}
-                        </div>
-                        </InfiniteScroll>
-                        {
-                        <StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
-                            <div onClick={(event) => handleClick(event)}>
-                            <CloseButtonDiv
-                                onClick={() => {
-                                closeModal()
-                                }}
-                            >
-                                <FontAwesomeIcon icon="times" color="white" size="1x" />
-                            </CloseButtonDiv>
-                            <Carousel
-                                isRTL={false}
-                                initialActiveIndex={values.index}
-                                pagination={false}
-                                onNextEnd={(currentItem) => {
-                                if (currentItem.index + 4 >= photos.length) {
-                                    getPhotosList()
-                                }
-                                }}
-                                className="class-up"
-                            >
-                                {photos.map((item) => {
-                                return (
-                                    <ImagePop
-                                    key={item.id}
-                                    decoding="async"
-                                    src={item?.original}
-                                    alt={item.name}
-                                    onError={(e: any) => {
-                                        e.target.onerror = null
-                                        e.target.src = Utils.imgError
-                                    }}
-                                    />
-                                )
-                                })}
-                            </Carousel>
+  const [values, setOpen] = useState({ open: false, index: 0 })
+  const closeModal = () => {
+    document.body.style.overflow = 'auto'
+    setOpen({ ...values, open: false })
+  }
+
+  const getPhotosList = useCallback(() => {
+    getPhotos(page).then(() => {
+      setPage(page + 1)
+    })
+  }, [getPhotos, setPage, page])
+
+  useEffect(() => {
+    if (provider && photos && photos.length === 0) {
+      getPhotosList()
+      if (window.tpl) {
+        window.tpl.load(['dropdown'])
+      }
+    }
+  }, [])
+
+  let imgIndex = 0
+  const handleImgIndex = (img: any) => {
+    imgIndex = photos.indexOf(img)
+    setOpen({ open: true, index: imgIndex })
+  }
+
+  const handleOpen = () => {
+    document.body.style.overflow = 'hidden'
+  }
+
+  const handleClick = (e: any) => {
+    if (e.target.tagName === 'DIV') {
+      closeModal()
+    }
+  }
+
+  return (
+    <div>
+      <div className="grid">
+        <div className="grid-column">
+          <div className="widget-box widget-photos">
+            {photos.length === 0 && (
+              <Alert alertType="PRIMARY" message={noPhotos} style={{ width: '100%', textAlign: 'center' }} />
+            )}
+            {photos.length > 0 && (
+              <div>
+                <InfiniteScroll dataLength={photos.length} next={getPhotosList} hasMore loader={LoaderDiv}>
+                  <div className="grid grid-3-3-3-3 centered grid-photos" style={{ overflow: 'hidden' }}>
+                    {photos.map((item) => {
+                      return (
+                        <div key={item.id} className="album-preview" onClick={() => handleImgIndex(item)}>
+                          <ImageContainerDiv>
+                            <ImageImg
+                              src={item.thumbnail}
+                              alt={item.name}
+                              onError={(e: any) => {
+                                e.target.onerror = null
+                                e.target.src = Utils.imgError
+                              }}
+                            />
+                          </ImageContainerDiv>
+                          {!isMobile && (
+                            <div className="album-preview-info" style={{ top: '-284px' }}>
+                              <p className="album-preview-title">View post</p>
+                              <p className="album-preview-text">{item.registerDate}</p>
                             </div>
-                        </StyledPopup>
-                        }
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </InfiniteScroll>
+                {
+                  <StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
+                    <div onClick={(event) => handleClick(event)}>
+                      <CloseButtonDiv
+                        onClick={() => {
+                          closeModal()
+                        }}
+                      >
+                        <FontAwesomeIcon icon="times" color="white" size="1x" />
+                      </CloseButtonDiv>
+                      <Carousel
+                        isRTL={false}
+                        initialActiveIndex={values.index}
+                        pagination={false}
+                        onNextEnd={(currentItem) => {
+                          if (currentItem.index + 4 >= photos.length) {
+                            getPhotosList()
+                          }
+                        }}
+                        className="class-up"
+                      >
+                        {photos.map((item) => {
+                          return (
+                            <ImagePop
+                              key={item.id}
+                              decoding="async"
+                              src={item?.original}
+                              alt={item.name}
+                              onError={(e: any) => {
+                                e.target.onerror = null
+                                e.target.src = Utils.imgError
+                              }}
+                            />
+                          )
+                        })}
+                      </Carousel>
                     </div>
-                    )}
-                </div>
-                </div>
-            </div>
-            
+                  </StyledPopup>
+                }
+              </div>
+            )}
+          </div>
         </div>
-    );
+      </div>
+
+    </div>
+  );
 };
 
 export default PhotoGallery;

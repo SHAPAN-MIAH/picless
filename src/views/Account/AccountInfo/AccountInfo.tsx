@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import _ from 'lodash'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -23,14 +23,18 @@ type FormValues = {
   phoneNumber: string
   planId: string
   genderId: string
+  gender: string
+  // localStorage: string | null
 }
 type formFieldsNames = keyof FormValues
-const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId', 'genderId']
+const formFields: formFieldsNames[] = ['fullName', 'email', 'userName', 'emailRecovery', 'phoneNumber', 'planId', 'genderId', "gender"]
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const AccountInfo: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
+
+  const [genderName, setGenderName] = useState({ genderName: "" });
 
   const { getUser, updateUser } = useUser()
 
@@ -63,6 +67,16 @@ const AccountInfo: FunctionComponent<{}> = () => {
     })
   }
 
+  // useEffect(() => {
+  //   setGenderName(JSON.parse(window.localStorage.getItem('genderName')))
+  // }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem('genderName', JSON.stringify(genderName))
+  }, [genderName])
+
+
+
   useEffect(() => {
     getUser()
       .then((user) => {
@@ -70,12 +84,16 @@ const AccountInfo: FunctionComponent<{}> = () => {
           const value = _.get(user, field)
 
           setValue(field as formFieldsNames, value || '')
+          console.log(value);
         })
       })
       .catch((err) => {
         toast.error(err.message)
       })
   }, [getUser, setValue])
+
+
+
 
   const saveData = (data: FormValues) => {
     const formData: any[] = []
@@ -155,6 +173,8 @@ const AccountInfo: FunctionComponent<{}> = () => {
                       name="genderId"
                       placeholder={t('accountInfo.GenderField')}
                       options={genderList()}
+                      value={'genderName'}
+                      onClick={(e: any) => setGenderName(e.target.value)}
                     />
                   </FormItem>
                 </FormRow>

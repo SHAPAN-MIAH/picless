@@ -28,11 +28,11 @@ const CheckboxForm = React.forwardRef<HTMLInputElement, CheckboxFormProps>((prop
 
   return (
     <div className="switch-option" id={id}>
-      {/* <p className="switch-option-title">{title}</p> */}
+      <p className="switch-option-title">{title}</p>
 
       {description && <p className="switch-option-text">{description}</p>}
 
-      {/* <div
+      <div
         className={classNames('form-switch', checkState ? 'active' : '')}
         style={controlStyle}
         onClick={() => {
@@ -41,7 +41,7 @@ const CheckboxForm = React.forwardRef<HTMLInputElement, CheckboxFormProps>((prop
         }}
       >
         <div className="form-switch-button" />
-      </div> */}
+      </div>
 
       <input
         {...rest}

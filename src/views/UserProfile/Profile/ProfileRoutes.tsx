@@ -4,12 +4,20 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { SubscriptionType } from '../../../types/UserType'
 import { Tabs } from '../../../hooks/useProfile'
 import useRouter from '../../../hooks/commons/useRouter'
+// import About from 'components/LiveSectionFeatures/About/About'
+// import PhotoGallery from 'components/LiveSectionFeatures/PhotoGallery/PhotoGallery'
+// import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
 
 const Newsfeed = React.lazy(() => import('./SectionTab/NewsfeedTab'))
 const PhotoGalleryTab = React.lazy(() => import('./SectionTab/PhotoGalleryTab'))
 const VideoGalleryTab = React.lazy(() => import('./SectionTab/VideoGalleryTab'))
 const AboutTab = React.lazy(() => import('./SectionTab/AboutTab'))
 const BlockedContent = React.lazy(() => import('./SectionTab/BlockedContent'))
+const About = React.lazy(() => import('../../../components/LiveSectionFeatures/About/About'))
+const PhotoGallery = React.lazy(() => import('../../../components/LiveSectionFeatures/PhotoGallery/PhotoGallery'))
+const VideoGallery = React.lazy(() => import('../../../components/LiveSectionFeatures/VideoGallery/VideoGallery'))
+// import { PhotoGallery } from 'components/LiveSectionFeatures/PhotoGallery/PhotoGallery';
+// import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
 
 type ProfileRoutesProps = {
   subscription: SubscriptionType | null
@@ -37,6 +45,9 @@ const ProfileRoute: FunctionComponent<ProfileRoutesProps> = (props) => {
               <Route path={`${match.path}/${Tabs.PHOTOS}`} component={PhotoGalleryTab} />
               <Route path={`${match.path}/${Tabs.VIDEOS}`} component={VideoGalleryTab} />
               <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={AboutTab} />
+              <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={About} />
+              <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={PhotoGallery} />
+              <Route path={[`${match.path}/${Tabs.ABOUT}`]} component={VideoGallery} />
               <Route
                 path={`${match.path}/`}
                 render={() => {

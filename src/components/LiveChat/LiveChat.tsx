@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faComment} from '@fortawesome/free-solid-svg-icons';
+
 
 type LiveChatProps = {
   sendMessageChat: (message: string) => void
@@ -43,7 +42,6 @@ const LiveChat = React.forwardRef<HTMLDivElement | null, LiveChatProps>((props, 
   return (
     <>
       <ChatHeaderDiv className="chat-widget-header">
-        {/* <h2><FontAwesomeIcon icon={faComment} /></h2> */}
         <h2>Chat</h2>
       </ChatHeaderDiv>
       <ChatConversationDiv ref={ref} className="chat-widget-conversation">
@@ -69,6 +67,7 @@ const LiveChat = React.forwardRef<HTMLDivElement | null, LiveChatProps>((props, 
                   <svg className="interactive-input-icon icon-camera">
                     <use xlinkHref="#svg-camera" />
                   </svg>
+                  
                 </div>
               </div> */}
 
