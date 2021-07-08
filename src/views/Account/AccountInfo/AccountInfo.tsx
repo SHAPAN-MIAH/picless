@@ -38,6 +38,9 @@ const AccountInfo: FunctionComponent<{}> = () => {
 
   const { getUser, updateUser } = useUser()
 
+  // const { user, updateUser } = useUser()
+
+
   // Validations Fields
   const validationSchema = Yup.object().shape({
     fullName: Yup.string(),
@@ -67,17 +70,9 @@ const AccountInfo: FunctionComponent<{}> = () => {
     })
   }
 
-  // useEffect(() => {
-  //   setGenderName(JSON.parse(window.localStorage.getItem('genderName')))
-  // }, [])
 
   useEffect(() => {
-    window.localStorage.setItem('genderName', JSON.stringify(genderName))
-  }, [genderName])
 
-
-
-  useEffect(() => {
     getUser()
       .then((user) => {
         formFields.forEach((field: string) => {
@@ -92,7 +87,11 @@ const AccountInfo: FunctionComponent<{}> = () => {
       })
   }, [getUser, setValue])
 
+  // formFields.forEach((field: string) => {
+  //   const value = _.get(user, field)
 
+  //   setValue(field as formFieldsNames, value || '')
+  // }, [user, setValue])
 
 
   const saveData = (data: FormValues) => {
@@ -112,6 +111,7 @@ const AccountInfo: FunctionComponent<{}> = () => {
     }
 
     return updateUser(dataToSubmit, toastOptions)
+
   }
 
   return (

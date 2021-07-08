@@ -26,7 +26,7 @@ const SelectForm = React.forwardRef<HTMLSelectElement, SelectFormProps>((props, 
           <label htmlFor={id}>
             {placeholder} {required && <span style={{ color: 'red' }}>*</span>}
           </label>
-          <select id={id} name={name} defaultValue={defaultValue || value || ''} ref={ref} {...rest}>
+          <select id={id} name={name} value={value || defaultValue || ''} ref={ref} {...rest}>
             {options.map((option) => {
               const key = option.value || Utils.simpleKeyGenerator(5)
 
