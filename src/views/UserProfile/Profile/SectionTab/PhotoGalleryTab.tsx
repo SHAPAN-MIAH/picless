@@ -67,11 +67,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const { getPhotos, photos, provider } = useProfile({ disableMount: true })
 
   const [page, setPage] = useState<number>(0)
+  const [itemId, setItemId] = useState<number>(0)
 
   const [values, setOpen] = useState({ open: false, index: 0 })
   const closeModal = () => {
     document.body.style.overflow = 'auto'
     setOpen({ ...values, open: false })
+    setItemId(0)
   }
 
   const getPhotosList = useCallback(() => {
@@ -97,6 +99,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
 
   const handleOpen = () => {
     document.body.style.overflow = 'hidden'
+    setItemId(photos[values.index].postId ?? 0);
   }
 
   const handleClick = (e: any) => {
@@ -131,7 +134,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             />
                           </ImageContainerDiv>
                           {!isMobile && (
-                            <div className="album-preview-info" style={{ top: '-270px', borderRadius: '0' }}>
+                            <div className="album-preview-info" style={{ top: '-284px', borderRadius: '0' }}>
                             </div>
                           )}
                         </div>
@@ -158,25 +161,29 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             getPhotosList()
                           }
                         }}
+                        onChange={(
+                          currentPageIndex
+                          )=> console.log(setItemId(photos[currentPageIndex.index].postId?? 0))}
                         className="class-up"
                       >
                         {photos.map((item) => {
                           return (
-                            <div key={item.id} className='containerLink'>
-                              <ImagePop
-                                decoding="async"
-                                src={item?.original}
-                                alt={item.name}
-                                onError={(e: any) => {
-                                  e.target.onerror = null
-                                  e.target.src = Utils.imgError
-                                }}
-                              />
-                              <a href={`/u/${provider.userName}/post/${item.postId}`} className='goToPost'>Go to Post</a>
-                            </div>
+                            <ImagePop
+                              key={item.id}
+                              decoding="async"
+                              src={item?.original}
+                              alt={item.name}
+                              onError={(e: any) => {
+                                e.target.onerror = null
+                                e.target.src = Utils.imgError
+                              }}
+                            />
                           )
                         })}
                       </Carousel>
+                    </div>
+                    <div className='containerLink'>
+                      <a href={`/u/${provider.userName}/post/${itemId}`} className='goToPost'>Go to Post</a>
                     </div>
                   </StyledPopup>
                 }

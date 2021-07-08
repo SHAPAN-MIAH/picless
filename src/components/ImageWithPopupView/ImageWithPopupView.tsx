@@ -6,7 +6,6 @@ import { SourceType } from '../../types/PostType.d'
 import Carousel from 'react-elastic-carousel'
 import VideoPlayer from '../../assets/js/VideoPlayer'
 import * as Utils from '../../utils/Functions'
-import { useHistory } from 'react-router-dom'
 
 import './imageWithPopupView.css'
 
@@ -47,9 +46,6 @@ const CloseButtonDiv = styled.div`
 
 const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceType[]; isDisabled: boolean; userName: string }> = (props) => {
   const { image, medios, isDisabled, userName } = props
-  const history = useHistory();
-  const pathname = history.location.pathname;
-  console.log(pathname)
 
   const [width, setwidht] = useState<number>(window.document.getElementsByClassName('content-grid')[0].clientWidth)
 
@@ -161,32 +157,21 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
               <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} className='carousel-phater'>
                 {medios.map((item: SourceType) => {
                   const routeTo = `/u/${userName}/post/${item.postId}`;
-                  const LinkPost = routeTo !== pathname ?
-                    <a href={routeTo} className='goToPost'>Go to Post</a>: '';
                   if (!item.accessUrl) {
                     return (
-                      <div key={Utils.simpleKeyGenerator(5)} className='containerLink'>
                         <ImagePop
+                          key={Utils.simpleKeyGenerator(5)}
                           loading="lazy"
                           decoding="async"
                           src={item?.original}
                           alt={item.name}
                         />
-                        {
-                          LinkPost
-                        }
-                      </div>
                     )
                   } else {
                     return (
-                      <div key={Utils.simpleKeyGenerator(5)} className='containerLink'>
                         <div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">
                           <VideoPlayer src={item.accessUrl} type="" options={videoJsOptions} />
                         </div>
-                        {
-                          LinkPost
-                        }
-                      </div>
                     )
                   }
                 })}
