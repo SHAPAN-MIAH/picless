@@ -62,13 +62,18 @@
     padding: 20px 0px !important
   }
   .yearCard{
-    margin-left: -20px !important;
-    margin-right: 10px !important;
+    margin-left: -40px !important;
+    margin-right: 40px !important;
   }
+  /* .table-column-third{
+    margin-right: 50px !important;
+  } */
   .declineIcon{
     margin-left: 5px !important;
   }
-
+  .tableContainer{
+    width: 95% !important;
+  }
 }
 @media screen and (max-width: 400px) {
   
@@ -84,18 +89,22 @@
   }
 
   .providerIcon{
-    margin-left: -20px !important;
+    margin-left: -10px !important;
   }
 
   .yearCard{
     margin-left: -70px !important;
     margin-right: 10px !important;
   }
-
+  /* .table-column-third{
+    margin-right: 50px !important;
+  } */
   .declineIcon{
     margin-left: 3px !important;
   }
-
+  .tableContainer{
+    width: 90% !important;
+  }
 }
 /* @media screen and (min-width: 350px) {
   

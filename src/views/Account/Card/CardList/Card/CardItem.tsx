@@ -18,32 +18,32 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
   return (
     <>
       <div className="table-row medium ">
-        {/* <div className='tableContainer'> */}
-        <div className="table-column table-column-first">
-          <div className="product-preview tiny">
-            <div className="providerIcon" style={{ fontSize: '40px', marginRight: '10px' }}>
-              <ProviderIconCard provider={card.brand} />
-            </div>
+        <div className='tableContainer'>
+          <div className="table-column table-column-first">
+            <div className="product-preview tiny">
+              <div className="providerIcon" style={{ fontSize: '40px', marginRight: '10px' }}>
+                <ProviderIconCard provider={card.brand} />
+              </div>
 
-            {/* <div className="product-preview-info" style={{ paddingTop: '24px'}}>
+              {/* <div className="product-preview-info" style={{ paddingTop: '24px'}}>
               <p className="product-preview-title">
                 {card.brand} ending in {card.last4}
               </p>
             </div> */}
+            </div>
           </div>
-        </div>
 
-        {/* <div className="table-column padded-right">
+          {/* <div className="table-column padded-right">
           <p className="table-title">{card.cardholderName}</p>
         </div> */}
 
-        <div className="table-column table-column-second padded-right ">
-          <p className="table-title yearCard">
-            {card.expMonth} / {card.expYear}
-          </p>
-        </div>
+          <div className="table-column table-column-second padded-right ">
+            <p className="table-title yearCard">
+              {card.expMonth} / {card.expYear}
+            </p>
+          </div>
 
-        {/* <div className="table-column padded-right">
+          {/* <div className="table-column padded-right">
           <p className="table-title">
             <Popup
               trigger={<span className="highlighted">Billing address</span>}
@@ -62,35 +62,35 @@ const CardItem: FunctionComponent<CardItemProps> = (props) => {
           </p>
         </div> */}
 
-        <div className="table-column table-column-third padded-right">
-          <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
-            <div
-              className="action-request accept"
-              title=""
-              style={{ marginRight: '0px' }}
-              onClick={() => {
-                onChangeDefaultCard(card.id)
-              }}
-            >
-              {isDefault && <FontAwesomeIcon color="#ffd765" icon="star" title="Default Card" />}
-              {!isDefault && <FontAwesomeIcon color="#8f91ac" icon="star" title="Mark as default card" />}
-            </div>
+          <div className="table-column table-column-third padded-right">
+            <div className="table-actions" style={{ justifyContent: 'flex-end', marginRight: '25px' }}>
+              <div
+                className="action-request accept"
+                title=""
+                style={{ marginRight: '0px' }}
+                onClick={() => {
+                  onChangeDefaultCard(card.id)
+                }}
+              >
+                {isDefault && <FontAwesomeIcon color="#ffd765" icon="star" title="Default Card" />}
+                {!isDefault && <FontAwesomeIcon color="#8f91ac" icon="star" title="Mark as default card" />}
+              </div>
 
-            <div
-              className="action-request decline declineIcon"
-              title="Delete"
-              onClick={() => {
-                onRemoveCard(card.id)
-              }}
-            >
-              <svg className="action-request-icon icon-cross">
-                <use xlinkHref="#svg-cross" />
-              </svg>
-            </div>
+              <div
+                className="action-request decline declineIcon"
+                title="Delete"
+                onClick={() => {
+                  onRemoveCard(card.id)
+                }}
+              >
+                <svg className="action-request-icon icon-cross">
+                  <use xlinkHref="#svg-cross" />
+                </svg>
+              </div>
 
+            </div>
           </div>
         </div>
-        {/* </div> */}
       </div>
     </>
   )
