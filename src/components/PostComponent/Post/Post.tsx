@@ -3,7 +3,7 @@ import React, { FunctionComponent, useCallback, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import ThreeDotsMenu from '../../ThreeDotsMenu/ThreeDotsMenu'
-import usePosts from '../../../hooks/usePosts'
+import usePosts, { ReportTypes } from '../../../hooks/usePosts'
 import useUser from '../../../hooks/useUser'
 import { PostType } from '../../../types/PostType'
 
@@ -18,10 +18,12 @@ type PostProps = { data: PostType; isSinglePost?: boolean }
 const Post: FunctionComponent<PostProps> = React.memo((props) => {
   const { data } = props
 
-  const { deletePost } = usePosts()
+  const { deletePost, reportPost } = usePosts()
   const { user } = useUser()
 
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false)
+  const [reportInappropriateConfirmation, setReportInappropriateConfirmation] = useState<boolean>(false)
+  const [reportSpamConfirmation, setReportSpamConfirmation] = useState<boolean>(false)
 
   const onDeletePost = useCallback(() => {
     deletePost(data.id).then(() => {
@@ -29,9 +31,13 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
     })
   }, [])
 
+  const onReportPost = useCallback((code: ReportTypes) => {
+    reportPost(data.id, code)
+  }, [])
+
   return (
     <>
-      <div className="widget-box no-padding" style={{ marginTop: '20px'}}>
+      <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
         {user.id === data.users.id && (
           <>
             <ThreeDotsMenu>
@@ -61,7 +67,6 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
               <MessageModal
                 message="Are you sure you want to delete your post?"
                 onClose={(ok: boolean | undefined) => {
-                  console.log('onClose View')
                   setDeleteConfirmation(false)
 
                   if (ok) {
@@ -73,10 +78,63 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
           </>
         )}
 
+        {user.id !== data.users.id && (
+          <>
+            <ThreeDotsMenu>
+              <div className="simple-dropdown widget-box-post-settings-dropdown" style={{ width: '160px' }}>
+                <p
+                  className="simple-dropdown-link"
+                  onClick={() => {
+                    setReportInappropriateConfirmation(true)
+                  }}
+                >
+                  Report as Inappropriate
+                </p>
+                <p
+                  className="simple-dropdown-link"
+                  onClick={() => {
+                    setReportSpamConfirmation(true)
+                  }}
+                >
+                  Report as Spam
+                </p>
+              </div>
+            </ThreeDotsMenu>
+
+            {reportInappropriateConfirmation && (
+              <MessageModal
+                message="Are you sure you want to report as inappropriate?"
+                onClose={(ok: boolean | undefined) => {
+                  setReportInappropriateConfirmation(false)
+
+                  if (ok) {
+                    onReportPost(ReportTypes.INAPPROPRIATE)
+                  }
+                }}
+              />
+            )}
+
+            {reportSpamConfirmation && (
+              <MessageModal
+                message="Are you sure you want to report as spam?"
+                onClose={(ok: boolean | undefined) => {
+                  setReportSpamConfirmation(false)
+
+                  if (ok) {
+                    onReportPost(ReportTypes.SPAM)
+                  }
+                }}
+              />
+            )}
+          </>
+        )}
+
         <div className="widget-box-status">
           <div className="widget-box-status-content">
             <Header post={data} />
-            <p className="widget-box-status-text" style={{margin: '10px 0'}}>{data.content}</p>
+            <p className="widget-box-status-text" style={{ margin: '10px 0' }}>
+              {data.content}
+            </p>
           </div>
           <Content post={data} />
           {/* <LivePromotion user={data.users} /> */}
