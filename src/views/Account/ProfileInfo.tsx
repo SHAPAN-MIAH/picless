@@ -21,7 +21,6 @@ import InterestList from './Interest/InterestList'
 import TimeLineList from './TimeLine/TimeLineList'
 import TagsInputs from './HashTag/TagsInputs'
 
-
 type FormValues = {
   userName: string
   profileDescription: string
@@ -32,17 +31,15 @@ type FormValues = {
   id: number
   name: string
   placeholder: string
-  error: string | ""
+  error: string | ''
 }
 
 type formFieldsNames = keyof FormValues
 const formFields: formFieldsNames[] = ['profileDescription', 'countryCode', 'cityName', 'birthDate', 'tagLine']
 
 const ProfileInfo: FunctionComponent<{}> = () => {
-
-
   interface errorType {
-    tags?: string;
+    tags?: string
   }
 
   const { t } = useTranslation()
@@ -56,8 +53,6 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     resolver: yupResolver(validationSchema),
   })
 
-  // const professionList: SelectOptionsType[] = professions
-
   useEffect(() => {
     formFields.forEach((field: string) => {
       const value = _.get(user, field)
@@ -67,17 +62,13 @@ const ProfileInfo: FunctionComponent<{}> = () => {
     })
   }, [user, setValue])
 
-
-
   const onSubmit = (data: FormValues) => {
-
-    let tagCount = 0;
+    let tagCount = 0
 
     for (let i = 0; i < data.tagLine.length; i++) {
       if (data.tagLine[i] === ',') {
         tagCount++
       }
-
     }
 
     const formData: any[] = []
@@ -93,18 +84,13 @@ const ProfileInfo: FunctionComponent<{}> = () => {
       success: 'The account information has been successfully saved',
       error: 'Error Saving the account information',
     }
-    console.log(dataToSubmit.tagLine)
 
     if (tagCount < 5) {
       return updateUser(dataToSubmit, toastOptions)
-    }
-    else {
+    } else {
       alert('Please enter upto 5 tags')
     }
-
   }
-
-
 
   return (
     <div className="content-grid" style={{ maxWidth: '800px' }}>
@@ -193,11 +179,12 @@ const ProfileInfo: FunctionComponent<{}> = () => {
                         defaultValue=""
                         render={(propsController) => (
                           <TagsInputs
-                            id="tags"
+                            ref={propsController.ref}
                             name={propsController.name}
                             placeholder="Add tag"
-                            onChangeTags={(value: string) => propsController.onChange(value)}
-                            // error={error.tags || ''}
+                            onChangeTags={(value: string) => {
+                              propsController.onChange(value)
+                            }}
                             defaultTags={propsController.value}
                           />
                         )}
