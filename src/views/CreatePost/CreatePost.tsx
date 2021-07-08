@@ -30,16 +30,14 @@ const CreatePost: FunctionComponent<{}> = () => {
   const [currentTab, setCurrentTab] = useState<TabNamesType>('STATUS')
   const [blocked, setBlocked] = useState<boolean>(true)
 
-  const { getUser } = useUser()
+  const { user } = useUser()
 
   const changeTab = (tabName: TabNamesType) => {
     setCurrentTab(tabName)
   }
 
   useEffect(() => {
-    getUser().then((user) => {
-      setBlocked(!user?.verifiedAccount)
-    })
+    setBlocked(!user?.verifiedAccount)
   }, [])
 
   return (

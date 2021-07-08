@@ -28,21 +28,16 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const { subscription } = props
 
   const { provider, cancelSubscription } = useProfile({ disableMount: true })
-  const { getUser } = useUser()
+  const { user } = useUser()
   const { getPlanOptions } = useWallet()
 
   const [imageCover, setImageCover] = useState(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
   const [imageProfile, setImageProfile] = useState(provider.profilePicture)
   const [subscribed, setSubscribed] = useState<boolean>(subscription !== null)
-  const [userData, setUserData] = useState<UserType>({})
   const [planList, setPlanList] = useState<any>()
   const [unsubscribeConfirmation, setUnsubscribeConfirmation] = useState<boolean>(false)
 
   useEffect(() => {
-    getUser().then((u: UserType) => {
-      setUserData(u)
-    })
-
     setImageCover(process.env.REACT_APP_BUCKET_IMAGES + provider.coverPicture)
     setImageProfile(provider.profilePicture)
     setSubscribed(subscription !== null)
@@ -55,7 +50,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
         setPlanList(data.data[0])
       }
     })
-  }, [provider, subscription, getUser])
+  }, [provider, subscription, user])
 
   const countryName = GetCountryName(provider.countryCode || '')
 
@@ -95,7 +90,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
               </p>
             </div>
 
-            {provider.userName !== userData.userName && (
+            {provider.userName !== user.userName && (
               <div className={classNames('profile-header-social-links-wrap', styles.socialLinksWrapAdjustment)}>
                 {!subscribed && (
                   <Popup

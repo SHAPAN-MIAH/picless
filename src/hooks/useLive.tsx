@@ -36,7 +36,7 @@ const useLive = () => {
 
   const { addMessage, chatRef } = useLiveChat()
 
-  const { getUser } = useUser()
+  const { user } = useUser()
   const [userName, setUserName] = useState('')
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
@@ -100,9 +100,8 @@ const useLive = () => {
       setStreamData(data.data)
       streamingName = 'lupanarC' // data.data.streamId
       tokenId = data.data.tokenId
-      getUser().then((user: UserType) => {
-        setUserName(user.userName)
-      })
+
+      setUserName(user.userName)
 
       initWebRTCAdaptor()
     })

@@ -36,7 +36,7 @@ const useLiveView = (props: UseLiveViewProps) => {
 
   const { addMessage, chatRef } = useLiveChat()
 
-  const { getUser } = useUser()
+  const { user } = useUser()
   const [userName, setUserName] = useState('')
 
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -110,10 +110,7 @@ const useLiveView = (props: UseLiveViewProps) => {
   }, [])
 
   useEffect(() => {
-    getUser().then((user: UserType) => {
-      console.log(user)
-      setUserName(user.userName)
-    })
+    setUserName(user.userName)
 
     initWebRTCAdaptor()
 

@@ -26,15 +26,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
   const { showMenu, setShowMenu } = useMenu()
   const route = useRouter()
   const { signOut } = useAuth()
-  const { getUser } = useUser()
-
-  const [user, setUser] = useState<UserType>()
-
-  useEffect(() => {
-    getUser().then((userData: UserType) => {
-      setUser(userData)
-    })
-  }, [user, showMenu])
+  const { user } = useUser()
 
   const handleCloseMenu = () => {
     setShowMenu(false)
@@ -47,7 +39,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
           id="navigation-widget-mobile"
           className={classNames('navigation-widget navigation-widget-mobile sidebar right', showMenu ? 'visible' : 'hidden')}
           data-simplebar
-          style={{paddingBottom: '20%'}}
+          style={{ paddingBottom: '20%' }}
         >
           <div className="navigation-widget-close-button" onClick={handleCloseMenu} style={{ zIndex: 9, right: '80%' }}>
             <svg className="navigation-widget-close-button-icon icon-big-arrow">
@@ -59,7 +51,7 @@ const MobileMenu: FunctionComponent<{}> = () => {
             <div className="user-short-description" style={{ paddingTop: '24px' }} onClick={handleCloseMenu}>
               <AvatarContainerDiv>
                 <Link to={`/u/${user?.userName}`} data-title={t('navLeftMenu.goToMyProfile')}>
-                  <UserAvatar size="L" imageName={user?.profilePicture || ''} removeContainerStyle />    
+                  <UserAvatar size="L" imageName={user?.profilePicture || ''} removeContainerStyle />
                 </Link>
               </AvatarContainerDiv>
 
@@ -86,19 +78,27 @@ const MobileMenu: FunctionComponent<{}> = () => {
               </div>
 
               <div className="user-stat">
-              <Link to={`/u/${user?.userName}/photos`} data-title={t('navLeftMenu.goToMyPhotos')} onClick={handleCloseMenu}>
-                <p className="user-stat-title">{user?.numberImages}</p>
+                <Link
+                  to={`/u/${user?.userName}/photos`}
+                  data-title={t('navLeftMenu.goToMyPhotos')}
+                  onClick={handleCloseMenu}
+                >
+                  <p className="user-stat-title">{user?.numberImages}</p>
 
-                <p className="user-stat-text">Photos</p>
-              </Link>
+                  <p className="user-stat-text">Photos</p>
+                </Link>
               </div>
 
               <div className="user-stat">
-              <Link to={`/u/${user?.userName}/videos`} data-title={t('navLeftMenu.goToMyVideos')} onClick={handleCloseMenu}>
-                <p className="user-stat-title">{user?.numberVideos}</p>
+                <Link
+                  to={`/u/${user?.userName}/videos`}
+                  data-title={t('navLeftMenu.goToMyVideos')}
+                  onClick={handleCloseMenu}
+                >
+                  <p className="user-stat-title">{user?.numberVideos}</p>
 
-                <p className="user-stat-text">Videos</p>
-              </Link>
+                  <p className="user-stat-text">Videos</p>
+                </Link>
               </div>
             </div>
           </div>
