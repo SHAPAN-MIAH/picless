@@ -1,122 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import styles from './HashTag.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import classNames from 'classnames'
+import { useEffect } from 'react'
 
 interface TagsInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-
-  defaultTags: string;
+  defaultTags: string
   //error: string
   onChangeTags: (name: string) => void
-
 }
 
-const TagsInputs: React.FunctionComponent<TagsInputProps> = (props) => {
+const TagsInputs = React.forwardRef<HTMLInputElement, TagsInputProps>((props, ref) => {
   const { id, placeholder, defaultTags, onChangeTags, name } = props
-  const [value, setValue] = useState('');
-  const [tags, setTags] = useState<string[]>(defaultTags ? defaultTags.split(',') : []);
-  const [isActive, setIsActive] = useState(false);
+  const [value, setValue] = useState('')
+  const [tags, setTags] = useState<string[]>([])
+  const [isActive, setIsActive] = useState(false)
 
-  const tagChanges = () => {
-    const currentTags: string = tags.join(',');
-
-    onChangeTags(currentTags)
-  }
+  useEffect(() => {
+    if (defaultTags) {
+      setTags(defaultTags.split(','))
+    }
+  }, [defaultTags])
 
   const removeTag = (tag: string) => {
-    const arr = tags.filter(t => t !== tag);
-    setTags(arr);
-    tagChanges()
+    const arr = tags.filter((t) => t !== tag)
+    setTags(arr)
+    onChangeTags(arr.join(','))
   }
 
-  const updateTagsHandler = async (e: any) => {
-    e.preventDefault();
+  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault()
 
-    if (e.target.value !== '' && e.target.value !== ',') {
+    const key = e.key
 
-      if (e.key === ',') {
-        const newTag = value.trim().split(',')[0];
+    if (key === 'Enter' || key === ',') {
+      addTag()
+    } else if (e.key === 'Backspace' && tags.length > 0) {
+      const copyOfTags = [...tags]
 
-        if (e.target.value.length > 25) {
-          alert("Tag length should be less than 26")
-        }
-        else if (!tags.includes(newTag) && newTag !== '') {
-          const arr = [...tags, newTag];
-          setTags(arr);
-          // console.log(arr);
-          tagChanges()
-        }
-        setValue('');
-      } else if (e.key === 'Enter') {
+      copyOfTags.pop()
 
+      setTags(copyOfTags)
+      onChangeTags(copyOfTags.join(','))
+    }
+  }
 
-        const newTag = value.trim();
+  const addTag = () => {
+    if (value.length > 25) {
+      alert('Tag length should be less than 26')
+    } else {
+      let tag = value.trim()
+      tag = tag.replace(/,/g, '')
 
-        if (e.target.value.length > 25) {
-          alert("Tag length should be less than 26")
-        }
-        else if (!tags.includes(newTag) && newTag !== '') {
-          const arr = [...tags, newTag];
-          setTags(arr)
-          tagChanges()
+      const isDuplicated = tags.includes(tag) && tag !== ''
 
-        }
-        setValue('');
+      if (!tag || isDuplicated) {
+        return
       }
+
+      const updatedTagList = tags.concat(tag)
+
+      setTags(updatedTagList)
+      onChangeTags(updatedTagList.join(','))
+
+      setValue('')
     }
-
-    // Remove tags if backspace is pressed
-    if (e.key === 'Backspace' && tags.length > 0) {
-      const copyOfTags = [...tags];
-      copyOfTags.pop();
-      setTags(copyOfTags);
-      tagChanges()
-    }
   }
-
-  const focusHandler = () => {
-    setIsActive(true);
-  }
-
-  const handelBlur = () => {
-
-    setIsActive(false);
-  }
-
 
   return (
     <>
-      <div className={!isActive ? "tags-input" : "tags-input active"}>
-
+      <div className={classNames('tags-input ', isActive ? 'active' : '')}>
         <div className={styles.inputWrapper}>
           <div className={styles.tags_input}>
-            {tags.map((tag, i) =>
+            {tags.map((tag, i) => (
               <div key={i} className={styles.tag}>
-                {tag} <span onClick={() => removeTag(tag)}>
+                {tag}{' '}
+                <span onClick={() => removeTag(tag)}>
                   <FontAwesomeIcon icon={faTimesCircle} className={styles.timesIcon} />
                 </span>
               </div>
-            )}
+            ))}
             <input
               type="text"
+              ref={ref}
               placeholder={placeholder}
               name={name}
-              id={id ? id : name}
               value={value}
               onChange={(e: any) => setValue(e.target.value)}
-              autoComplete="off"
-              onKeyUp={updateTagsHandler}
+              onKeyUp={onKeyUp}
               onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
               onKeyPress={(e) => e.key === 'Enter' && e.preventDefault()}
-              onFocus={focusHandler}
-              onBlur={handelBlur}
+              onFocus={() => setIsActive(true)}
+              onBlur={() => setIsActive(false)}
+              autoComplete="off"
             />
           </div>
         </div>
       </div>
     </>
-  );
-}
+  )
+})
 
-export default TagsInputs;
+export default TagsInputs
