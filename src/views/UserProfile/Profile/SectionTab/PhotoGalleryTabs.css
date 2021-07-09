@@ -49,3 +49,9 @@
         height: 100vh!important;
     }
   }
+  @media screen and (min-device-width: 813px) {
+    .album-preview {
+        margin-bottom: .5px;
+        margin-top: .5px;
+    }
+  }
