@@ -31,7 +31,7 @@ const pc_config = {
   ],
 }
 
-const useLive = () => {
+const useLiveStreaming = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const { addMessage, chatRef } = useLiveChat()
@@ -98,7 +98,7 @@ const useLive = () => {
   useEffect(() => {
     StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
       setStreamData(data.data)
-      streamingName = 'lupanarC' // data.data.streamId
+      streamingName = data.data.streamId
       tokenId = data.data.tokenId
 
       setUserName(user.userName)
@@ -209,4 +209,4 @@ const useLive = () => {
   }
 }
 
-export default useLive
+export default useLiveStreaming

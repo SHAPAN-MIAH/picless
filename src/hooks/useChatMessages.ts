@@ -2,8 +2,8 @@ import { useContext } from 'react'
 import ChatService from 'services/ChatService'
 import { MessageType, OnReceiveMessageType, UserStatusMessagesType } from 'types/MessagesType'
 import ChatReducerContext from '../context/ChatReducerContext'
-// import useChat, { UserStatusMessagesOptionalType } from './useChat'
 import useUser from './useUser'
+
 export interface UserStatusMessagesOptionalType {
   email: string
   userId: string

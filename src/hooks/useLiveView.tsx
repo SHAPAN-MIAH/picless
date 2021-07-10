@@ -7,9 +7,11 @@ import WebRTCAdaptor from '../assets/js/webrtc_adaptor'
 import useLiveChat, { LiveChatMessageType } from './useLiveChat'
 
 import { UserType } from '../types/UserType'
+import { ServiceStreamingType, StreamingType, StreamType } from 'types/StreamingType'
+import StreamService from 'services/StreamService'
 
-const streamingName = 'lup20k'
-const token = ''
+let streamingName = ''
+let token = ''
 let webRTCAdaptor: any = {}
 
 const hlsExtension = 'm3u8'
@@ -28,16 +30,18 @@ const pc_config = {
 }
 
 type UseLiveViewProps = {
-  videojsId?: string
+  streamId: string
+  videojsId: string
 }
 
 const useLiveView = (props: UseLiveViewProps) => {
-  const { videojsId } = props
+  const { videojsId, streamId } = props
 
   const { addMessage, chatRef } = useLiveChat()
-
   const { user } = useUser()
-  const [userName, setUserName] = useState('')
+
+  const [userName, setUserName] = useState<string>('')
+  const [streamData, setStreamData] = useState<StreamingType>()
 
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -110,14 +114,22 @@ const useLiveView = (props: UseLiveViewProps) => {
   }, [])
 
   useEffect(() => {
-    setUserName(user.userName)
+    streamingName = streamId
 
-    initWebRTCAdaptor()
+    StreamService.getStreamAuth(streamId).then((data: ServiceStreamingType) => {
+      setStreamData(data.data)
 
-    if (videoRef.current) {
-      const video: any = videoRef.current
-      video.scrollIntoView({ behavior: 'smooth' })
-    }
+      token = data.data.tokenId
+
+      setUserName(user.userName)
+
+      initWebRTCAdaptor()
+    })
+
+    // if (videoRef.current) {
+    //   const video: any = videoRef.current
+    //   video.scrollIntoView({ behavior: 'smooth' })
+    // }
   }, [setUserName])
 
   const playWebRTCVideo = () => {
@@ -134,12 +146,12 @@ const useLiveView = (props: UseLiveViewProps) => {
     }
   }
 
-  const initializePlayer = (streamId: string, type: string, tokenId: string) => {
+  const initializePlayer = (streamingId: string, type: string, tokenId: string) => {
     // hideWebRTCElements();
-    startPlayer(streamId, type, tokenId)
+    startPlayer(streamingId, type, tokenId)
   }
 
-  const startPlayer = (streamId: string, extension: string, tokenId: string) => {
+  const startPlayer = (streamingId: string, extension: string, tokenId: string) => {
     let type
     let liveStream = false
 
@@ -178,7 +190,7 @@ const useLiveView = (props: UseLiveViewProps) => {
     const player = videojs(videojsId, {})
 
     player.src({
-      src: `streams/${streamId}.${extension}?token=${token}`,
+      src: `streams/${streamingId}.${extension}?token=${token}`,
       type,
     })
 
@@ -192,7 +204,7 @@ const useLiveView = (props: UseLiveViewProps) => {
     if (typeof player.ready !== 'undefined') {
       player.ready(() => {
         player.on('ended', () => {
-          tryToPlay(streamId, token, hlsExtension)
+          tryToPlay(streamingId, token, hlsExtension)
         })
       })
     } else {
@@ -200,22 +212,22 @@ const useLiveView = (props: UseLiveViewProps) => {
     }
   }
 
-  const tryToPlay = (streamId: string, type: string, noStreamCallback: any) => {
+  const tryToPlay = (streamingId: string, type: string, noStreamCallback: any) => {
     // const tryToPlay = (name, token, type, subscriberId, subscriberCode, noStreamCallback, initializePlayer) => {
     type = 'webrtc'
-    const streamURL = `streams/${streamingName}_adaptive.${type}`
+    const streamURL = `streams/${streamingId}_adaptive.${type}`
 
     fetch(streamURL, { method: 'HEAD' })
       .then((response) => {
         if (response.status === 200) {
           // adaptive m3u8 & mpd exists,play it
-          initializePlayer(`${streamingName}_adaptive`, type, token)
+          initializePlayer(`${streamingId}_adaptive`, type, token)
         } else {
           // adaptive not exists, try mpd or m3u8 exists.
-          fetch(`streams/${streamingName}.${type}`, { method: 'HEAD' })
+          fetch(`streams/${streamingId}.${type}`, { method: 'HEAD' })
             .then((r) => {
               if (r.status === 200) {
-                initializePlayer(streamingName, type, token)
+                initializePlayer(streamingId, type, token)
               } else {
                 console.log('No stream found')
                 if (typeof noStreamCallback !== 'undefined') {
