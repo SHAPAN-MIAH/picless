@@ -1,5 +1,5 @@
 .album-preview {
-    max-height: 284px!important;
+    max-height: 300px!important;
     width: 105%;
   }
 
@@ -10,15 +10,14 @@
   
   .goToPost {
     position: fixed;
-    bottom: 50px;
-    padding: 8px;
+    bottom: 55px;
+    padding: 10px;
     border: 0.8em;
     color: white;
     font-weight: bolder;
-    font-size: 12px;
-    background-color: rgba(245, 245, 245, 0.7);
-    box-shadow: 0 0 0px 0px #111;
-    color: rgba(0, 0, 0, 0.5);
+    font-size: 13px;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0px 0px #333;
     border-radius: .4em;
     text-align: center;
     line-height: 5px;
@@ -48,5 +47,11 @@
     }
     .class-up > div > div > div {
         height: 100vh!important;
+    }
+  }
+  @media screen and (min-device-width: 813px) {
+    .album-preview {
+        margin-bottom: .5px;
+        margin-top: .5px;
     }
   }
