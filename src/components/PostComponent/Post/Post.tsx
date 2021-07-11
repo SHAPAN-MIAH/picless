@@ -1,5 +1,5 @@
 import MessageModal from 'components/MessageModal/MessageModal'
-import React, { FunctionComponent, useCallback, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import ThreeDotsMenu from '../../ThreeDotsMenu/ThreeDotsMenu'
@@ -12,6 +12,7 @@ import Header from './Header/Header'
 import Content from './Content/Content'
 import Locked from './Content/Locked/Locked'
 import Footer from './Footer/Footer'
+// import { useRef } from 'react'
 
 type PostProps = { data: PostType; isSinglePost?: boolean }
 
@@ -29,11 +30,13 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
     })
   }, [])
 
+
   return (
     <>
-      <div className="widget-box no-padding" style={{ marginTop: '20px'}}>
+      <div className="widget-box no-padding" style={{ marginTop: '20px' }}>
         {user.id === data.users.id && (
           <>
+
             <ThreeDotsMenu>
               <div className="simple-dropdown widget-box-post-settings-dropdown">
                 <Popup
@@ -76,7 +79,7 @@ const Post: FunctionComponent<PostProps> = React.memo((props) => {
         <div className="widget-box-status">
           <div className="widget-box-status-content">
             <Header post={data} />
-            <p className="widget-box-status-text" style={{margin: '10px 0'}}>{data.content}</p>
+            <p className="widget-box-status-text" style={{ margin: '10px 0' }}>{data.content}</p>
           </div>
           <Content post={data} />
           {/* <LivePromotion user={data.users} /> */}

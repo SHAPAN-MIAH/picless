@@ -37,9 +37,9 @@ const Footer: FunctionComponent<FooterProps> = (props) => {
         }
       }
     }
-
     if (saved) setSaved(true)
   }, [])
+
 
   const handleCallback = (status: string, message?: string) => {
     if (status === 'SUCCESS') {

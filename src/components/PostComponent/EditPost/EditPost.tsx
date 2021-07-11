@@ -68,6 +68,7 @@ const EditPost: FunctionComponent<EditPostProps> = (props) => {
   useEffect(() => {
     setValue('content', post.content)
     setValue('amount', post.amount)
+
   }, [])
 
   const handlePrivacy = () => {

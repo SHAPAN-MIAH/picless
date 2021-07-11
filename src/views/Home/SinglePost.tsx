@@ -30,7 +30,7 @@ const SinglePost: FunctionComponent<{}> = () => {
         setLoading(false)
       })
   }, [id, setSinglePost])
-
+  console.log(singlePost);
   return (
     <>
       <div className="content-grid" style={{ maxWidth: '800px' }}>

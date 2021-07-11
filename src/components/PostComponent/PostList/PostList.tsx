@@ -2,6 +2,7 @@ import React, { FunctionComponent, Suspense } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import { PostType } from 'types/PostType'
+import Footer from 'views/Authorization/Footer/Footer'
 import Post from '../Post/Post'
 
 const LoaderDiv = (
@@ -44,6 +45,7 @@ const PostList: FunctionComponent<PostListProps> = (props) => {
             })}
           </InfiniteScroll>
         )}
+        {/* <Footer></Footer> */}
       </Suspense>
     </>
   )
