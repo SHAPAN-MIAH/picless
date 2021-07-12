@@ -31,12 +31,12 @@ const pc_config = {
   ],
 }
 
-const useLive = () => {
+const useLiveStreaming = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const { addMessage, chatRef } = useLiveChat()
 
-  const { getUser } = useUser()
+  const { user } = useUser()
   const [userName, setUserName] = useState('')
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
@@ -98,11 +98,10 @@ const useLive = () => {
   useEffect(() => {
     StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
       setStreamData(data.data)
-      streamingName = 'lupanarC' // data.data.streamId
+      streamingName = data.data.streamId
       tokenId = data.data.tokenId
-      getUser().then((user: UserType) => {
-        setUserName(user.userName)
-      })
+
+      setUserName(user.userName)
 
       initWebRTCAdaptor()
     })
@@ -210,4 +209,4 @@ const useLive = () => {
   }
 }
 
-export default useLive
+export default useLiveStreaming

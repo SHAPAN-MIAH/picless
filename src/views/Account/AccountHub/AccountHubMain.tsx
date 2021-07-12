@@ -14,23 +14,20 @@ const GridDiv = styled.div`
 
 const AccountHubMain: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
-  const { getUser } = useUser()
+  const { user } = useUser()
   const [imageCover, setImageCover] = useState()
   const [imageProfile, setImageProfile] = useState('')
 
   useEffect(() => {
-    getUser().then((user) => {
-      setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
-      setImageProfile(user.profilePicture)
-    })
-  }, [getUser])
+    setImageCover(process.env.REACT_APP_BUCKET_IMAGES + user.coverPicture)
+    setImageProfile(user.profilePicture)
+  }, [user])
 
   const styleMobile: React.CSSProperties = {}
 
   if (!isMobile) {
     styleMobile.flex = 1
   }
-
 
   return (
     <div style={{ marginTop: '25px' }}>
@@ -50,14 +47,14 @@ const AccountHubMain: FunctionComponent<{}> = () => {
           </div>
         </div>
 
-          <UploadBox
-            id="upload-avatar"
+        <UploadBox
+          id="upload-avatar"
           className="update-pic"
-            iconName="members"
-            uploadTitleName={t('profileInfo.changeAvatar')}
-            imageType="PROFILE"
-            uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
-          />
+          iconName="members"
+          uploadTitleName={t('profileInfo.changeAvatar')}
+          imageType="PROFILE"
+          uploadText={t('profileInfo.changeAvatarDescription')} // "110x110px size minimum"
+        />
 
         <UploadBox
           id="upload-cover"

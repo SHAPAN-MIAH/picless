@@ -35,7 +35,7 @@ type FormValues = {
 const AddCard: FunctionComponent<{}> = () => {
   const { t } = useTranslation()
   const history = useHistory()
-  const { getUser } = useUser()
+  const { user } = useUser()
 
   const [errorMessage, setErrorMessage] = useState<string>('')
 
@@ -59,11 +59,9 @@ const AddCard: FunctionComponent<{}> = () => {
   })
 
   useEffect(() => {
-    getUser().then((user: UserType) => {
-      setValue('email', user.email)
-      setValue('country', user.countryCode)
-    })
-  }, [getUser, setValue])
+    setValue('email', user.email)
+    setValue('country', user.countryCode)
+  }, [user, setValue])
 
   const onSubmit = (values: FormValues) => {
     const cardData: AddCardType = {

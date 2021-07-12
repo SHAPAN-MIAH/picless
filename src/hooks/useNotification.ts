@@ -1,8 +1,6 @@
 import { useContext, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
-import useInterval from './commons/useInterval'
-
 import ApplicationContext from '../context/ApplicationContext'
 import { ServiceNotificationType } from '../types/NotificationType'
 import NotificationService from '../services/NotificationService'

@@ -18,22 +18,17 @@ import LayoutMain from '../views/LayoutMain/LayoutMain'
 import Authorization from '../views/Authorization/Authorization'
 import PaymentCallback from '../views/Payments/PaymentCallback'
 import TestView from '../views/TestView/TestView'
-import img from '../views/TestView/Img'
 import Metrics from '../views/Metrics/Metrics'
 import Notification from '../views/Notifications/Notifications'
 import UserProfile from '../views/UserProfile/UserProfile'
-import routes from './MenuRoutes'
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute'
+import routes from './MenuRoutes'
 import ChatMain from 'views/MessagesNew/ChatMain'
-import LiveView from 'components/LiveView/LiveView'
-import PhotoGallery from './../components/LiveSectionFeatures/PhotoGallery/PhotoGallery';
+import PhotoGallery from './../components/LiveSectionFeatures/PhotoGallery/PhotoGallery'
 import VideoGallery from 'components/LiveSectionFeatures/VideoGallery/VideoGallery'
 import About from 'components/LiveSectionFeatures/About/About'
 import LiveChat from 'components/LiveChat/LiveChat'
-import AboutTab from './../views/UserProfile/Profile/SectionTab/AboutTab';
-import PhotoGalleryTab from './../views/UserProfile/Profile/SectionTab/PhotoGalleryTab';
-import VideoGalleryTab from './../views/UserProfile/Profile/SectionTab/VideoGalleryTab';
-
+import Viewer from 'views/Lives/Viewer'
 
 const NoMatchPage = () => {
   return (
@@ -90,14 +85,13 @@ const MainRoutes: FunctionComponent<{}> = () => {
               <ProtectedRoute {...routerProps} exact path={['/user/chat', '/user/chat/:userid']} component={ChatMain} />
 
               <ProtectedRoute {...routerProps} exact path="/user/create-post" component={CreatePost} />
-              
+
               <ProtectedRoute {...routerProps} exact path="/user/create-post/photos" component={PhotoGallery} />
               <ProtectedRoute {...routerProps} exact path="/user/create-post/videos" component={VideoGallery} />
               <ProtectedRoute {...routerProps} exact path="/user/create-post/about" component={About} />
               <ProtectedRoute {...routerProps} exact path="/user/create-post/chat" component={LiveChat} />
 
               <ProtectedRoute {...routerProps} path="/user/notification" component={Notification} />
-
 
               <ProtectedRoute {...routerProps} exact path="/user/discover" component={Discover} />
 
@@ -107,8 +101,7 @@ const MainRoutes: FunctionComponent<{}> = () => {
 
               <ProtectedRoute {...routerProps} path="/u/:username/metrics" exact component={Metrics} />
 
-              <ProtectedRoute {...routerProps} path="/u/:username/live" exact component={LiveView} />
-
+              <ProtectedRoute {...routerProps} path="/u/:username/live/:streamId" exact component={Viewer} />
 
               <ProtectedRoute {...routerProps} path="/u/:username" component={UserProfile} />
 
@@ -118,8 +111,6 @@ const MainRoutes: FunctionComponent<{}> = () => {
                 component={UserProfile}
               />
               <ProtectedRoute {...routerProps} exact path={['/u/not-exist']} component={ProfileNotExist} /> */}
-
-            
 
               <Route {...routerProps} exact path="/testviewd" component={TestView} />
 

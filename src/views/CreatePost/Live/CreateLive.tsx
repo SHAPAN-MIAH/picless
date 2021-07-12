@@ -6,7 +6,7 @@ import { CommonPostType } from '../../../types/PostType.d'
 import FormRowItem from '../../../components/Common/Form/FormRowItem'
 import TextInput from '../../../components/Common/TextInput'
 import LiveChat from '../../../components/LiveChat/LiveChat'
-import useLive from '../../../hooks/useLive'
+import useLiveStreaming from '../../../hooks/useLiveStreaming'
 import LiveVideo from './LiveVideo/LiveVideo'
 import OnAirLiveFooter from './OnAirLiveFooter/OnAirLiveFooter'
 import WaitingLiveFooter from './WaitingLiveFooter/WaitingLiveFooter'
@@ -26,7 +26,7 @@ const CreateLive: FunctionComponent<{}> = () => {
     audioStatus,
     audioToggle,
     sendMessageChat,
-  } = useLive()
+  } = useLiveStreaming()
 
   const [liveName, setLiveName] = useState<string>('')
   const [toggleChat, setToggleChat] = useState<boolean>(true)
