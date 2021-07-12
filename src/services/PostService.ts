@@ -244,6 +244,25 @@ const removeSavedPost = async (postId: number): Promise<CommonServiceResponse> =
   return body
 }
 
+const reportPost = async (postId: number, code: '0' | '1') => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('postId', postId.toString())
+  bodyData.append('code', code.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'post',
+    headers,
+    body: bodyData,
+  }
+  const url = `${baseUrl}/addreportedpost`
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+
+  return body
+}
+
 export default {
   uploadPostResource,
   createPost,
@@ -256,6 +275,7 @@ export default {
   getMedia,
   addReaction,
   deleteReaction,
+  reportPost,
   addSavedPost,
   removeSavedPost
 }
