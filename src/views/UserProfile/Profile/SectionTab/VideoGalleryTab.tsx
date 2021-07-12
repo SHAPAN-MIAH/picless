@@ -69,10 +69,12 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const { getVideos, videos, provider } = useProfile({ disableMount: true })
   const [page, setPage] = useState<number>(0)
   const [values, setOpen] = useState({ open: false, index: 0 })
+  const [itemId, setItemId] = useState<number>(0)
 
   const closeModal = () => {
     document.body.style.overflow = 'auto'
     setOpen({ ...values, open: false })
+    setItemId(0)
   }
 
   const getVideoList = useCallback(() => {
@@ -85,7 +87,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     if (provider && videos && videos.length === 0) {
       getVideoList()
       if (window.tpl) {
-        window.tpl.load(['dropdown'])
+        window.tpl?.load(['dropdown'])
       }
     }
   }, [])
@@ -105,6 +107,8 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   let imgIndex = 0
   const handleOpen = () => {
     document.body.style.overflow = 'hidden'
+    setItemId(videos[values.index].postId ?? 0);
+    handleSelect(videos[values.index].id, 'PLAY')
   }
 
   const handleVideiIndex = (img: any) => {
@@ -149,12 +153,25 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     item?.pause();
   }
 
+  const handlePlay = (item: any) => {
+    item?.play();
+  }
+
   const handleFullScream = () => {
 
   }
 
-  const handleSelect = (id: string) => {
-    handlePause(document.getElementById(`${id}_html5_api`));  
+  const handleSelect = (id: any, type: string) => {
+    switch (type) {
+      case 'PAUSE':
+        handlePause(document.getElementById(`${id}_html5_api`))
+        break;
+      case 'PLAY':
+        setTimeout(() => {
+          handlePlay(document.getElementById(`${id}_html5_api`))
+        }, 1000)
+      break;
+    }  
   }
 
   const handleSelectFullScream = () => {
@@ -215,22 +232,29 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                         onNextStart={(
                           prevItemObject: any
                         ) => {
-                          handleSelect(prevItemObject.item['data-id'])
+                          handleSelect(prevItemObject.item['data-id'], 'PAUSE')
                         }}
                         onPrevStart={(
                           prevItemObject: any
                         ) => {
-                          handleSelect(prevItemObject.item['data-id'])
+                          handleSelect(prevItemObject.item['data-id'], 'PAUSE')
                         }}
+                        onChange={(
+                          currentPageIndex
+                          )=> {
+                            setItemId(videos[currentPageIndex.index].postId?? 0)
+                            handleVideiIndex(videos[currentPageIndex.index])
+                          }}
+                        onResize={
+                          () => console.log()
+                        }
                       >
                         {videos.map((item) => {
-                          let ids = Utils.simpleKeyGenerator(8);
-                          let videoPlied = setVideoPlayer(item.accessUrl, ids)
+                          let videoPlied = setVideoPlayer(item.accessUrl, item.id)
                           return (
-                            <div 
+                            <div
                               key={item.id}
-                              className='containerLink'
-                              data-id={ids}
+                              data-id={item.id}
                             >
                               <div 
                                 key={item.id}
@@ -239,11 +263,13 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                               >
                                 {videoPlied}
                               </div>
-                              <a href={`/u/${provider.userName}/post/${item.postId}`} className='goToPost'>Go to Post</a>
-                            </div>
+                             </div>
                           )
                         })}
                       </Carousel>
+                      <div className='containerLink'>
+                      <a href={`/u/${provider.userName}/post/${itemId}`} className='goToPost'>Go to Post</a>
+                    </div>
                     </div>
                   </StyledPopup>
                 }

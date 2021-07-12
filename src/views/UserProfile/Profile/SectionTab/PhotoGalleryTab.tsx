@@ -163,7 +163,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                         }}
                         onChange={(
                           currentPageIndex
-                          )=> console.log(setItemId(photos[currentPageIndex.index].postId?? 0))}
+                          )=> setItemId(photos[currentPageIndex.index].postId?? 0)}
                         className="class-up"
                       >
                         {photos.map((item) => {
