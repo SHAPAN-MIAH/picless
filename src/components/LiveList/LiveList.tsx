@@ -29,11 +29,13 @@ const LiveList: FunctionComponent<LiveListProps> = () => {
         <Loading />
       ) : (
         <>
-          <SimpleBar className={classNames(styles.mainContainer)} autoHide>
-            {currentLives.map((live) => (
-              <LiveItem key={live.id} live={live} />
-            ))}
-          </SimpleBar>
+          {currentLives.length > 0 && (
+            <SimpleBar className={classNames(styles.mainContainer)} autoHide>
+              {currentLives.map((live) => (
+                <LiveItem key={live.id} live={live} />
+              ))}
+            </SimpleBar>
+          )}
         </>
       )}
     </>
