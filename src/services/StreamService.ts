@@ -52,4 +52,23 @@ const getLives = async (signal?: AbortSignal): Promise<ServiceLiveType> => {
   return body
 }
 
-export default { getToken, getStreamAuth, getLives }
+const startLive = async (streamId = ''): Promise<void> => {
+  const headers = await ApiHelper.requestHeaders({ type: 'formData' })
+
+  const bodyData = new FormData()
+  bodyData.append('streamId', streamId.toString())
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers,
+    body: bodyData
+  }
+
+  const url = `${baseUrl}/startlive`
+
+  const response = await fetch(url, requestOptions)
+  const body = await response.json()
+  return body
+}
+
+export default { getToken, getStreamAuth, getLives, startLive }
