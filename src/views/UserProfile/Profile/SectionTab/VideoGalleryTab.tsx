@@ -70,11 +70,13 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
   const [values, setOpen] = useState({ open: false, index: 0 })
   const [itemId, setItemId] = useState<number>(0)
+  const [currentItemType, setCurrentItemType] = useState<string>('img')
 
   const closeModal = () => {
     document.body.style.overflow = 'auto'
     setOpen({ ...values, open: false })
     setItemId(0)
+    setCurrentItemType('img')
   }
 
   const getVideoList = useCallback(() => {
@@ -178,6 +180,21 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
       
   }
 
+  const handleCurrentItem = (item: any) => {
+    return <ImagePop
+            src={item.original}
+            alt={item.name}
+            onError={(e: any) => {
+              e.target.onerror = null
+              e.target.src = Utils.imgError
+            }}
+            onClick={()=> {
+              setCurrentItemType('video')
+              handleSelect(item.id, 'PLAY')
+            }}
+          />
+  }
+
   window.addEventListener('resize', handleSelectFullScream);
 
 
@@ -219,7 +236,20 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                       >
                         <FontAwesomeIcon icon="times" color="white" size="1x" />
                       </CloseButtonDiv>
-                      <Carousel
+                      <VideoPlayer
+                        src={videos[values.index].accessUrl}
+                        type=""
+                        options={videoJsOptions}
+                        aspect={setApparence(window.innerWidth, window.innerHeight)}
+                        videoThreshol ={.7}
+                      />
+                        <span className="arrow left-arrow">
+                          <FontAwesomeIcon icon="angle-left" color="white" size="1x" />&#62;
+                        </span>
+                        <span className="arrow right-arrow">
+                          <FontAwesomeIcon icon="angle-right" color="white" size="1x" />&#60;
+                        </span>
+                      {/*<Carousel
                         isRTL={false}
                         initialActiveIndex={values.index}
                         pagination={false}
@@ -244,6 +274,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                           )=> {
                             setItemId(videos[currentPageIndex.index].postId?? 0)
                             handleVideiIndex(videos[currentPageIndex.index])
+                            setCurrentItemType('img')
                           }}
                         onResize={
                           () => console.log()
@@ -251,6 +282,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                       >
                         {videos.map((item) => {
                           let videoPlied = setVideoPlayer(item.accessUrl, item.id)
+                          let imgItem = handleCurrentItem(item)
                           return (
                             <div
                               key={item.id}
@@ -264,12 +296,16 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                                 {videoPlied}
                               </div>
                              </div>
+                              <ImageContainerDiv key={item.id}>
+                                {currentItemType === 'img' ? imgItem : videoPlied}
+                              </ImageContainerDiv>
                           )
                         })}
-                      </Carousel>
+                      </Carousel>*/}
+                      
                       <div className='containerLink'>
-                      <a href={`/u/${provider.userName}/post/${itemId}`} className='goToPost'>Go to Post</a>
-                    </div>
+                        <a href={`/u/${provider.userName}/post/${itemId}`} className='goToPost'>Go to Post</a>
+                      </div>
                     </div>
                   </StyledPopup>
                 }
