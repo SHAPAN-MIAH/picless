@@ -55,10 +55,11 @@ const useLiveStreaming = () => {
       bandwidth: maxVideoBitrateKbps,
       callback: (info: any, obj: any) => {
         if (info === 'initialized') {
-          console.log('Initialized')
+          // console.log('Initialized')
         } else if (info === 'publish_started') {
           setLiveStatus('ON_AIR')
-          console.log('ON_AIR')
+
+          StreamService.startLive(streamingName)
 
           if (autoRepublishIntervalJob == null) {
             autoRepublishIntervalJob = setInterval(() => {
@@ -93,7 +94,7 @@ const useLiveStreaming = () => {
         console.log(message)
       },
     })
-  }, [])
+  }, [streamingName])
 
   useEffect(() => {
     StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
