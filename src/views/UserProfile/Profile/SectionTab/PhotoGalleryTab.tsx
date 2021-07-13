@@ -134,7 +134,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             />
                           </ImageContainerDiv>
                           {!isMobile && (
-                            <div className="album-preview-info" style={{ top: '-284px', borderRadius: '0' }}>
+                            <div className="album-preview-info" style={{ top: '-330px', borderRadius: '0' }}>
                             </div>
                           )}
                         </div>

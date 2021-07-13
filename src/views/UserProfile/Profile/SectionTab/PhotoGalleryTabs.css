@@ -1,6 +1,8 @@
 .album-preview {
-    max-height: 300px!important;
+    max-height: 350px!important;
     width: 105%;
+    overflow: hidden;
+    border-radius: 0!important;
   }
 
   .album-preview img {
@@ -52,6 +54,6 @@
   @media screen and (min-device-width: 813px) {
     .album-preview {
         margin-bottom: .5px;
-        margin-top: .5px;
+        margin-top: -15px;
     }
   }
