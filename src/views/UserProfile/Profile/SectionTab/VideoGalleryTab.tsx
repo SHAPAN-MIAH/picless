@@ -166,6 +166,11 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     setOpen({ ...values, index: prevItemId })
   }
 
+  const hanleDragg = (event: any) => {
+      console.log(event.changedTouches[0].clientX)
+      console.log(event)
+  }
+
   window.addEventListener('resize', handleSelectFullScream);
 
 
@@ -198,7 +203,12 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                   </div>
                 </InfiniteScroll>
                 {
-                  <StyledPopup modal open={values.open} onClose={closeModal} onOpen={handleOpen}>
+                  <StyledPopup 
+                    modal
+                    open={values.open}
+                    onClose={closeModal}
+                    onOpen={handleOpen}
+                  >
                     <div onClick={(event) => handleClick(event)}>
                       <CloseButtonDiv
                         onClick={() => {
@@ -207,7 +217,10 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                       >
                         <FontAwesomeIcon icon="times" color="white" size="1x" />
                       </CloseButtonDiv>
-                        <div className="video-container">
+                        <div 
+                          className="video-container"
+                          onTouchMove={e => hanleDragg(e)}
+                        >
                           <VideoPlayer
                             src={videos[values.index].accessUrl}
                             type=""

@@ -28,14 +28,14 @@ const VideoPlayer = ({
     vjsPlayer.on('pause', () => {
      });
 
-    vjsPlayer.on('fullscreenchange', () => {
+    /*vjsPlayer.on('fullscreenchange', () => {
       if(vjsPlayer.isFulscreen()){
        vjsPlayer.aspectRatio('9:16')
       }
       else {
         vjsPlayer.aspectRatio(aspect)
       }
-    });
+    });*/
 
     const optionsIntersection = {
       videoThreshol

@@ -34,7 +34,7 @@
   }
 
   .arrow {
-      cursor: pointer;
+    cursor: pointer;
     position: absolute;
     bottom: 50%;
     font-size: 20px;
