@@ -38,6 +38,8 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
   const [planList, setPlanList] = useState<any>()
   const [unsubscribeConfirmation, setUnsubscribeConfirmation] = useState<boolean>(false)
 
+  // console.log(provider.number);
+
   useEffect(() => {
     getUser().then((u: UserType) => {
       setUserData(u)
@@ -150,7 +152,7 @@ const UserHeader: FunctionComponent<UserHeaderProps> = (props) => {
                 okHandler={() => {
                   onUnsubscribe()
                 }}
-                cancelHandler={() => {}}
+                cancelHandler={() => { }}
                 closeHandler={() => {
                   setUnsubscribeConfirmation(false)
                 }}

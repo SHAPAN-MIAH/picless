@@ -97,12 +97,10 @@ const CreateLive: FunctionComponent<{}> = () => {
           <OnAirLiveFooter stopLive={stopLive} audioStatus={audioStatus} changeAudioStatus={audioToggle} chatRef={chatRef} />
         )}
       </div>
-      <div className="widget-box">{<LiveSectionMenu toggleTab={setCurrentTab} onToggleChat={onToggleChat} />}</div>
+
 
       <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
-      <div style={{ display: currentTab === 'PHOTOS' ? 'block' : 'none' }} className="widget-box">{<PhotoGallery />}</div>
-      <div style={{ display: currentTab === 'VIDEOS' ? 'block' : 'none' }} className="widget-box">{<VideoGallery />}</div>
-      <div style={{ display: currentTab === 'ABOUT' ? 'block' : 'none' }} className="widget-box">{<About />} </div>
+
     </>
   )
 }

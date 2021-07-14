@@ -9,6 +9,9 @@ import useAuth from '../../../../hooks/useAuth'
 import useMenu from '../../../../hooks/useMenu'
 
 import useUser from '../../../../hooks/useUser'
+import useProfile from '../../../../hooks/useProfile'
+
+
 
 const BrowserMenu: FunctionComponent<{}> = React.memo(() => {
   const { t } = useTranslation()
@@ -20,13 +23,19 @@ const BrowserMenu: FunctionComponent<{}> = React.memo(() => {
 
   const [imageProfile, setImageProfile] = useState()
 
+  const { provider } = useProfile({ disableMount: true })
+
+  console.log(provider.numberPosts);
+
   useEffect(() => {
     setImageProfile(user.profilePicture)
+    console.log(user);
   }, [user])
 
   const validateUrl = useCallback((url: string) => {
     return window.location.href.includes(url)
   }, [])
+
 
   return (
     <>
@@ -171,7 +180,7 @@ const BrowserMenu: FunctionComponent<{}> = React.memo(() => {
             <div className="user-stat">
               <p className="user-stat-title">{user?.numberOfFollowers}</p>
 
-              <p className="user-stat-text">Followers</p>
+              <p className="user-stat-text">Posts</p>
             </div>
 
             <div className="user-stat">

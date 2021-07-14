@@ -33,8 +33,8 @@ const LiveTab: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div style={{ marginTop: '10vh' }}>
-        <div style={{ width: "60%", margin: "auto" }}>
+      <div className="Live_container" style={{ marginTop: '10vh' }}>
+        <div className="liveTab_container" style={{ width: "60%", margin: "auto" }}>
 
           <div className="grid  mobile-prefer-content">
             <div className="grid-column">
