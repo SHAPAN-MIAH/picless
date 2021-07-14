@@ -29,9 +29,8 @@
     border-radius: 10px;
   }
 
-  .container-arrow {
-    
-    
+  .video-container > div > .video-js {
+    height: 100vh;
   }
 
   .arrow {

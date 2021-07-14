@@ -52,7 +52,7 @@ const CloseButtonDiv = styled.div`
 }
 `
 
-const ImagePop = styled.img`
+const videoPop = styled.div`
   max-height: 100vh;
   max-width: 99%;
   object-fit: contain;
@@ -93,6 +93,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const videoJsOptions = {
     autoplay: false,
     width: '100%',
+    height: '100vh',
     controls: true,
     responsive: true,
     fill: true,
@@ -206,14 +207,16 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                       >
                         <FontAwesomeIcon icon="times" color="white" size="1x" />
                       </CloseButtonDiv>
-                      <VideoPlayer
-                        src={videos[values.index].accessUrl}
-                        type=""
-                        options={videoJsOptions}
-                        aspect={setApparence(window.innerWidth, window.innerHeight)}
-                        videoThreshol ={.7}
-                        videoId={videos[values.index].id}
-                      />
+                        <div className="video-container">
+                          <VideoPlayer
+                            src={videos[values.index].accessUrl}
+                            type=""
+                            options={videoJsOptions}
+                            aspect={setApparence(window.innerWidth, window.innerHeight)}
+                            videoThreshol ={.7}
+                            videoId={videos[values.index].id}
+                          />
+                        </div>
                         { values.index < videos.length-1 &&
                           (<span 
                             className="arrow left-arrow"
