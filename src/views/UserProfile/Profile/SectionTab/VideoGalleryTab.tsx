@@ -2,14 +2,12 @@ import React, { FunctionComponent, useCallback, useEffect, useState } from 'reac
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loader from 'react-loader-spinner'
 import Alert from '../../../../components/Common/Alerts/Alerts'
-import LiquidImage from '../../../../components/Common/LiquidImage'
 import useProfile from '../../../../hooks/useProfile'
 import * as Utils from '../../../../utils/Functions'
 import { isMobile } from 'react-device-detect'
 import VideoPlayer from '../../../../assets/js/VideoPlayer'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import Carousel from 'react-elastic-carousel'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './VideoGalleryTab..css'
@@ -70,13 +68,11 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
   const [values, setOpen] = useState({ open: false, index: 0 })
   const [itemId, setItemId] = useState<number>(0)
-  const [currentItemType, setCurrentItemType] = useState<string>('img')
 
   const closeModal = () => {
     document.body.style.overflow = 'auto'
     setOpen({ ...values, open: false })
     setItemId(0)
-    setCurrentItemType('img')
   }
 
   const getVideoList = useCallback(() => {
@@ -110,7 +106,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const handleOpen = () => {
     document.body.style.overflow = 'hidden'
     setItemId(videos[values.index].postId ?? 0);
-    handleSelect(videos[values.index].id, 'PLAY')
+    handleSelect(videos[values.index].id)
   }
 
   const handleVideiIndex = (img: any) => {
@@ -140,21 +136,6 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     return  `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
   }
 
-  const setVideoPlayer = (accessUrl: any, id: any) => {
-   return <VideoPlayer
-      src={accessUrl}
-      type=""
-      options={videoJsOptions}
-      aspect={setApparence(window.innerWidth, window.innerHeight)}
-      videoThreshol ={.7}
-      videoId={id}
-    />  
-  }
-
-  const handlePause = (item: any) => {
-    item?.pause();
-  }
-
   const handlePlay = (item: any) => {
     item?.play();
   }
@@ -163,36 +144,25 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
 
   }
 
-  const handleSelect = (id: any, type: string) => {
-    switch (type) {
-      case 'PAUSE':
-        handlePause(document.getElementById(`${id}_html5_api`))
-        break;
-      case 'PLAY':
+  const handleSelect = (id: any) => {
         setTimeout(() => {
           handlePlay(document.getElementById(`${id}_html5_api`))
-        }, 1000)
-      break;
-    }  
+        }, 1000)  
   }
 
   const handleSelectFullScream = () => {
       
   }
 
-  const handleCurrentItem = (item: any) => {
-    return <ImagePop
-            src={item.original}
-            alt={item.name}
-            onError={(e: any) => {
-              e.target.onerror = null
-              e.target.src = Utils.imgError
-            }}
-            onClick={()=> {
-              setCurrentItemType('video')
-              handleSelect(item.id, 'PLAY')
-            }}
-          />
+  const handleNext = (nextItemId: number) => {
+    if (nextItemId + 5 >= videos.length) {
+      getVideoList()
+    }
+    setOpen({ ...values, index: nextItemId })
+  }
+
+  const handlePrev = (prevItemId: number) => {
+    setOpen({ ...values, index: prevItemId })
   }
 
   window.addEventListener('resize', handleSelectFullScream);
@@ -242,67 +212,27 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                         options={videoJsOptions}
                         aspect={setApparence(window.innerWidth, window.innerHeight)}
                         videoThreshol ={.7}
+                        videoId={videos[values.index].id}
                       />
-                        <span className="arrow left-arrow">
-                          <FontAwesomeIcon icon="angle-left" color="white" size="1x" />&#62;
-                        </span>
-                        <span className="arrow right-arrow">
-                          <FontAwesomeIcon icon="angle-right" color="white" size="1x" />&#60;
-                        </span>
-                      {/*<Carousel
-                        isRTL={false}
-                        initialActiveIndex={values.index}
-                        pagination={false}
-                        onNextEnd={(currentItem) => {
-                          if (currentItem.index + 4 >= videos.length) {
-                            getVideoList()
-                          }
-                        }}
-                        className="class-up"
-                        onNextStart={(
-                          prevItemObject: any
-                        ) => {
-                          handleSelect(prevItemObject.item['data-id'], 'PAUSE')
-                        }}
-                        onPrevStart={(
-                          prevItemObject: any
-                        ) => {
-                          handleSelect(prevItemObject.item['data-id'], 'PAUSE')
-                        }}
-                        onChange={(
-                          currentPageIndex
-                          )=> {
-                            setItemId(videos[currentPageIndex.index].postId?? 0)
-                            handleVideiIndex(videos[currentPageIndex.index])
-                            setCurrentItemType('img')
-                          }}
-                        onResize={
-                          () => console.log()
-                        }
-                      >
-                        {videos.map((item) => {
-                          let videoPlied = setVideoPlayer(item.accessUrl, item.id)
-                          let imgItem = handleCurrentItem(item)
-                          return (
-                            <div
-                              key={item.id}
-                              data-id={item.id}
+                        { values.index < videos.length-1 &&
+                          (<span 
+                            className="arrow left-arrow"
+                            onClick={
+                              () => handleNext(values.index+1)
+                              }>
+                            <FontAwesomeIcon icon="times" color="white" size="1x" />
+                          </span>)
+                         }
+                        { values.index != 0 &&
+                          (<span 
+                            className="arrow right-arrow"
+                            onClick={
+                              () => handlePrev(values.index-1)
+                              }
                             >
-                              <div 
-                                key={item.id}
-                                data-vjs-player
-                                style={{width: window.innerWidth}}
-                              >
-                                {videoPlied}
-                              </div>
-                             </div>
-                              <ImageContainerDiv key={item.id}>
-                                {currentItemType === 'img' ? imgItem : videoPlied}
-                              </ImageContainerDiv>
-                          )
-                        })}
-                      </Carousel>*/}
-                      
+                            <FontAwesomeIcon icon="times" color="white" size="1x" />
+                          </span>)
+                         }
                       <div className='containerLink'>
                         <a href={`/u/${provider.userName}/post/${itemId}`} className='goToPost'>Go to Post</a>
                       </div>

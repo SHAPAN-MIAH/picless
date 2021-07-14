@@ -3,6 +3,7 @@ import videojs from 'video.js';
 import * as Utils from '../../utils/Functions'
 
 import 'video.js/dist/video-js.min.css';
+import { number } from 'prop-types';
 
 
 
@@ -12,7 +13,7 @@ const VideoPlayer = ({
   options = {},
   aspect = '4:5',
   videoThreshol = .7,
-  videoId = Utils.simpleKeyGenerator(5)
+  videoId = Utils.simpleKeyGenerator(5) | number
 }) => {
   const videoRef = useRef(null);
   const [player, setPlayer] = useState(null);

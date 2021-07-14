@@ -49,9 +49,24 @@
     border-radius: 50%;
 }
 
+.arrow svg {
+    display: none;
+}
+
 .left-arrow {
     margin-left: calc(100% - 40px);
 }
+
+.left-arrow::before {
+    content: '>';
+    margin-left: 10px;
+}
+
 .right-arrow {
     margin-right: calc(100% + 100px);;
+}
+
+.right-arrow::before {
+    content: '<';
+    margin-left: 8px;
 }
