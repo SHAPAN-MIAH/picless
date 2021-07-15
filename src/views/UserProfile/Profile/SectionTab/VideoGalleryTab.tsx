@@ -136,8 +136,10 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     item?.play();
   }
 
-  const handleFullScream = () => {
-
+  const handleFullScream = (item: any) => {
+    if (item[0]) {
+      item[0].click()
+    }
   }
 
   const handleSelect = (id: any) => {
@@ -147,7 +149,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   }
 
   const handleSelectFullScream = () => {
-      
+    handleFullScream(document.querySelectorAll("button.vjs-fullscreen-control"));
   }
 
   const handleNext = (nextItemId: number) => {
