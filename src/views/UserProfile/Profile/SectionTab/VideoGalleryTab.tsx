@@ -168,12 +168,12 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const hanleDraggEnd = (event: any) => {
     const point = event.changedTouches[0].clientX;
     if (dragPoint.start && point) {
-      if((dragPoint.start - point) > 0) {
+      if((dragPoint.start - point) > 30) {
         if (values.index < videos.length-1) {
          handleNext(values.index+1) 
         }
       }
-      else if ((dragPoint.start - point) < 0 && values.index > 0) {
+      else if ((dragPoint.start - point) < -30 && values.index > 0) {
         handlePrev(values.index-1) 
       }
     }
