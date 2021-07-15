@@ -52,12 +52,6 @@ const CloseButtonDiv = styled.div`
 }
 `
 
-const videoPop = styled.div`
-  max-height: 100vh;
-  max-width: 99%;
-  object-fit: contain;
-`
-
 const LoaderDiv = (
   <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
     <Loader type="TailSpin" color="#615dfa" height={50} width={50} visible />
@@ -68,6 +62,7 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   const [page, setPage] = useState<number>(0)
   const [values, setOpen] = useState({ open: false, index: 0 })
   const [itemId, setItemId] = useState<number>(0)
+  const [dragPoint, setDragPoint] = useState({start: -1})
 
   const closeModal = () => {
     document.body.style.overflow = 'auto'
@@ -166,9 +161,22 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
     setOpen({ ...values, index: prevItemId })
   }
 
-  const hanleDragg = (event: any) => {
-      console.log(event.changedTouches[0].clientX)
-      console.log(event)
+  const hanleDraggStart = (event: any) => {
+    setDragPoint({...dragPoint, start: event.changedTouches[0].clientX})
+  }
+
+  const hanleDraggEnd = (event: any) => {
+    const point = event.changedTouches[0].clientX;
+    if (dragPoint.start && point) {
+      if((dragPoint.start - point) > 0) {
+        if (values.index < videos.length-1) {
+         handleNext(values.index+1) 
+        }
+      }
+      else if ((dragPoint.start - point) < 0 && values.index > 0) {
+        handlePrev(values.index-1) 
+      }
+    }
   }
 
   window.addEventListener('resize', handleSelectFullScream);
@@ -219,7 +227,8 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                       </CloseButtonDiv>
                         <div 
                           className="video-container"
-                          onTouchMove={e => hanleDragg(e)}
+                          onTouchStart={e => hanleDraggStart(e)}
+                          onTouchEnd={e => hanleDraggEnd(e)}
                         >
                           <VideoPlayer
                             src={videos[values.index].accessUrl}
