@@ -12,7 +12,7 @@ import styles from './PictureCarousel.module.css'
 const CountContainerDiv = styled.div`
   position: absolute;
   top: 7px;
-  margin-left: calc(100% - 35px);
+  margin-left: calc(100% - 65px);
   font-size: 12px;
   background-color: rgba(245, 245, 245, 0.7);
   box-shadow: 0 0 0px 0px #111;
