@@ -45,6 +45,10 @@
   }
 }
 @media screen and (min-width: 680px) {
+  .widget-box{
+    padding-top: 20px 0 !important;
+  }
+
   .account-hub-content {
     padding-top: 15px;
   }
@@ -71,10 +75,6 @@
 }
 @media screen and (max-width: 400px) {
   
-  .widget-box{
-    padding: 20px 10px !important;
-
-  }
   .widget-box-title{
     padding-bottom: 10px !important;
   }
