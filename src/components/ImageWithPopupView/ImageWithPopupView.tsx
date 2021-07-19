@@ -111,10 +111,19 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
     setwidht(window.document.getElementsByClassName('content-grid')[0].clientWidth)
   }
 
-  window.addEventListener('resize', handleWidht);
+  const handlePause = (item: any) => {
+    item?.pause();
+  }
 
-  //style={{height: height, objectFit: 'cover', objectPosition: 'center center'}}
-  
+  const handleSelect = (index: number) =>  {
+    if (medios[index].accessUrl && index >= 0) {
+      const id = medios[index].id;
+      handlePause(document.getElementById(`${id}_html5_api`))
+    }
+  }
+
+  window.addEventListener('resize', handleWidht);
+ 
   return (
     <>
       <StyledPopup
@@ -131,9 +140,17 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                       alt={image.name}
                       />
           } else {
+            const idItem = image.id && image.id*999;
             return (
               <div className="video-triger-pop">
-                <VideoPlayer src={image.accessUrl} type="" options={videoJsOptions} aspect={appearance} />
+                <VideoPlayer
+                  src={image.accessUrl}
+                  type=""
+                  options={videoJsOptions}
+                  aspect={appearance}
+                  videoThreshol ={.7}
+                  videoId={idItem}
+                />
               </div>
             )
           }
@@ -154,9 +171,15 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
               >
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
-              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} className='carousel-phater'>
+              <Carousel
+                isRTL={false}
+                initialActiveIndex={imgIndex}
+                pagination={false}
+                className='carousel-phater'
+                onNextStart={(prevItemObject) => {handleSelect(prevItemObject.index)}}
+                onPrevStart={(prevItemObject) => {handleSelect(prevItemObject.index)}}
+              >
                 {medios.map((item: SourceType) => {
-                  const routeTo = `/u/${userName}/post/${item.postId}`;
                   if (!item.accessUrl) {
                     return (
                         <ImagePop
@@ -170,7 +193,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                   } else {
                     return (
                         <div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">
-                          <VideoPlayer src={item.accessUrl} type="" options={videoJsOptions} />
+                          <VideoPlayer
+                            src={item.accessUrl}
+                            type=""
+                            options={videoJsOptions}
+                            aspect={appearance}
+                            videoThreshol ={.7}
+                            videoId={item.id}
+                          />
                         </div>
                     )
                   }

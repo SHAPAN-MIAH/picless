@@ -63,6 +63,20 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
       isDisabled = true
     }
   }
+
+  const handlePause = (item: any) => {
+    item?.pause();
+  }
+
+  const handleSelect = (index: any) =>  {
+    console.log(index)
+
+    /*if (media[index] && media[index].accessUrl && index >= 0) {
+      const id = media[index].id*999;
+      handlePause(document.getElementById(`${id}_html5_api`))
+    }*/
+  }
+
   const swipe = media.length > 1 ? true : false;
 
   return (
@@ -80,6 +94,8 @@ const PictureCarousel: FunctionComponent<PictureCarouselProps> = (props) => {
             </CountContainerDiv>
           )
         }}
+          onNextStart={(prevItemObject) => {handleSelect(prevItemObject)}}
+          onPrevStart={(prevItemObject) => {handleSelect(prevItemObject)}}
         >
           {media.map((item: SourceType) => (
             <div key={item.id}>

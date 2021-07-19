@@ -149,7 +149,8 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
   }
 
   const handleSelectFullScream = () => {
-    handleFullScream(document.querySelectorAll("button.vjs-fullscreen-control"));
+    //handleFullScream(document.querySelectorAll("button.vjs-fullscreen-control"));
+    
   }
 
   const handleNext = (nextItemId: number) => {
