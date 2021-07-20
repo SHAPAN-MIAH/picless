@@ -238,7 +238,6 @@ const VideoGalleryTab: FunctionComponent<{}> = () => {
                             type=""
                             options={videoJsOptions}
                             aspect={setApparence(window.innerWidth, window.innerHeight)}
-                            videoThreshol ={.7}
                             videoId={videos[values.index].id}
                           />
                         </div>

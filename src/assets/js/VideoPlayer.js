@@ -12,7 +12,6 @@ const VideoPlayer = ({
   type = '',
   options = {},
   aspect = '4:5',
-  videoThreshol = .7,
   videoId = Utils.simpleKeyGenerator(5) | number
 }) => {
   const videoRef = useRef(null);
@@ -28,7 +27,28 @@ const VideoPlayer = ({
     vjsPlayer.on('pause', () => {
      });
 
+    /*vjsPlayer.on('fullscreenchange', () => {
+      if(vjsPlayer.isFulscreen()){
+       vjsPlayer.aspectRatio('9:16')
+      }
+      else {
+        vjsPlayer.aspectRatio(aspect)
+      }
+    });*/
+
+    const optionsIntersection = {
+      threshold: 0.7
+    }
+
     vjsPlayer.aspectRatio(aspect)
+
+    const inter = new IntersectionObserver((entries) => {
+      if(!entries[0].isIntersecting && !vjsPlayer.isDisposed_ && !vjsPlayer.paused()) {
+            vjsPlayer.pause()
+      }
+    }, optionsIntersection)
+
+    inter.observe(videoRef.current)
 
     return () => vjsPlayer.dispose();
   }, []);

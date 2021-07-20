@@ -115,11 +115,13 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
     item?.pause();
   }
 
-  const handleSelect = (index: number) =>  {
-    if (medios[index].accessUrl && index >= 0) {
-      const id = medios[index].id;
-      handlePause(document.getElementById(`${id}_html5_api`))
-    }
+  const handleSelect = () =>  {
+    medios.map((item: any) => {
+      if (item && item.accessUrl) {
+        const id = item.id;
+        handlePause(document.getElementById(`${id}_html5_api`))
+      }
+    });
   }
 
   window.addEventListener('resize', handleWidht);
@@ -148,7 +150,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                   type=""
                   options={videoJsOptions}
                   aspect={appearance}
-                  videoThreshol ={.7}
                   videoId={idItem}
                 />
               </div>
@@ -176,8 +177,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                 initialActiveIndex={imgIndex}
                 pagination={false}
                 className='carousel-phater'
-                onNextStart={(prevItemObject) => {handleSelect(prevItemObject.index)}}
-                onPrevStart={(prevItemObject) => {handleSelect(prevItemObject.index)}}
+                onChange={() => {handleSelect()}}
               >
                 {medios.map((item: SourceType) => {
                   if (!item.accessUrl) {
@@ -198,7 +198,6 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
                             type=""
                             options={videoJsOptions}
                             aspect={appearance}
-                            videoThreshol ={.7}
                             videoId={item.id}
                           />
                         </div>
