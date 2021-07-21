@@ -15,6 +15,24 @@ export interface StreamingType {
   message: string
 }
 
+export interface LiveType {
+  id: number
+  userId: number
+  liveName: string | null
+  registerDate: Date
+  status: string
+  token: string | null
+  streamId: string
+  email: string
+  fullName: string
+  userName: string
+  avatarPicture: string  
+}
+
 export interface ServiceStreamingType extends CommonServiceResponse {
   data: StreamingType
+}
+
+export interface ServiceLiveType extends CommonServiceResponse {
+  data: LiveType[]
 }

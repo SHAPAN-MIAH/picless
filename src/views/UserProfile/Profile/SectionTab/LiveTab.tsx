@@ -21,10 +21,10 @@ const LiveTab: FunctionComponent<{}> = () => {
   const [currentTab, setCurrentTab] = useState<string>('CHAT')
   const [toggleChat, setToggleChat] = useState<boolean>(true)
 
-  const { videoRef, chatRef, playVideo, sendMessageChat } = useLiveView({ videojsId: 'video-player' })
+  // const { videoRef, chatRef, playVideo, sendMessageChat } = useLiveView({ videojsId: 'video-player' })
 
   const sendATipCallback = (status: string) => {
-    if (status === 'SUCCESS') sendMessageChat('SENDATIP')
+    // if (status === 'SUCCESS') sendMessageChat('SENDATIP')
   }
 
   const onToggleChat = () => {
@@ -39,7 +39,7 @@ const LiveTab: FunctionComponent<{}> = () => {
           <div className="grid  mobile-prefer-content">
             <div className="grid-column">
               <div className="widget-box">
-                <LiveView videoRef={videoRef} playVideo={playVideo} />
+                {/* <LiveView videoRef={videoRef} playVideo={playVideo} /> */}
                 <Popup
                   modal
                   trigger={
@@ -66,7 +66,7 @@ const LiveTab: FunctionComponent<{}> = () => {
           </div>
           <div style={{ margin: '10px 0px' }} className="widget-box">{<LiveSectionMenu toggleTab={setCurrentTab} onToggleChat={onToggleChat} />}</div>
 
-          <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div>
+          {/* <div className="widget-box">{toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}</div> */}
           <div style={{ display: currentTab === 'PHOTOS' ? 'block' : 'none', marginTop: "10px" }} className="widget-box">{<PhotoGallery />}</div>
           <div style={{ display: currentTab === 'VIDEOS' ? 'block' : 'none', marginTop: "10px" }} className="widget-box">{<VideoGallery />}</div>
           <div style={{ display: currentTab === 'ABOUT' ? 'block' : 'none', marginTop: "10px" }} className="widget-box">{<About />} </div>

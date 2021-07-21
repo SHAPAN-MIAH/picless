@@ -31,12 +31,12 @@ const pc_config = {
   ],
 }
 
-const useLive = () => {
+const useLiveStreaming = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const { addMessage, chatRef } = useLiveChat()
 
-  const { getUser } = useUser()
+  const { user } = useUser()
   const [userName, setUserName] = useState('')
 
   const [availableDevices, setAvailableDevices] = useState<AvailableDeviceType[]>([])
@@ -55,10 +55,11 @@ const useLive = () => {
       bandwidth: maxVideoBitrateKbps,
       callback: (info: any, obj: any) => {
         if (info === 'initialized') {
-          console.log('Initialized')
+          // console.log('Initialized')
         } else if (info === 'publish_started') {
           setLiveStatus('ON_AIR')
-          console.log('ON_AIR')
+
+          StreamService.startLive(streamingName)
 
           if (autoRepublishIntervalJob == null) {
             autoRepublishIntervalJob = setInterval(() => {
@@ -93,16 +94,15 @@ const useLive = () => {
         console.log(message)
       },
     })
-  }, [])
+  }, [streamingName])
 
   useEffect(() => {
     StreamService.getToken(StreamType.PUBLISH).then((data: ServiceStreamingType) => {
       setStreamData(data.data)
-      streamingName = 'shapan' // data.data.streamId
-      tokenId = '' // data.data.tokenId
-      getUser().then((user: UserType) => {
-        setUserName(user.userName)
-      })
+      streamingName = data.data.streamId
+      tokenId = data.data.tokenId
+
+      setUserName(user.userName)
 
       initWebRTCAdaptor()
     })
@@ -210,4 +210,4 @@ const useLive = () => {
   }
 }
 
-export default useLive
+export default useLiveStreaming

@@ -1,15 +1,18 @@
 import React, { useRef, useEffect,  useState} from 'react';
 import videojs from 'video.js';
+import * as Utils from '../../utils/Functions'
 
 import 'video.js/dist/video-js.min.css';
+import { number } from 'prop-types';
 
 
 
-export const VideoPlayer = ({ 
+const VideoPlayer = ({ 
   src = '',
   type = '',
   options = {},
-  aspect = '4:5'
+  aspect = '4:5',
+  videoId = Utils.simpleKeyGenerator(5) | number
 }) => {
   const videoRef = useRef(null);
   const [player, setPlayer] = useState(null);
@@ -24,17 +27,17 @@ export const VideoPlayer = ({
     vjsPlayer.on('pause', () => {
      });
 
-    vjsPlayer.on('fullscreenchange', () => {
+    /*vjsPlayer.on('fullscreenchange', () => {
       if(vjsPlayer.isFulscreen()){
        vjsPlayer.aspectRatio('9:16')
       }
       else {
         vjsPlayer.aspectRatio(aspect)
       }
-    });
+    });*/
 
     const optionsIntersection = {
-      threshol: .7
+      threshold: 0.7
     }
 
     vjsPlayer.aspectRatio(aspect)
@@ -44,6 +47,7 @@ export const VideoPlayer = ({
             vjsPlayer.pause()
       }
     }, optionsIntersection)
+
     inter.observe(videoRef.current)
 
     return () => vjsPlayer.dispose();
@@ -57,8 +61,7 @@ export const VideoPlayer = ({
 
   return (
     <div>
-      
-      <video ref={videoRef} className="video-js vjs-big-play-centered">
+      <video id={videoId} ref={videoRef} className="video-js vjs-big-play-centered">
       </video>
     </div>
   );

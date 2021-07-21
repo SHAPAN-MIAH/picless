@@ -7,6 +7,11 @@ import PostService from '../services/PostService'
 import { PostReactionType, ReactionCodeType, ServicePostType, ServiceReactionPostType } from '../types/PostType.d'
 import useUser from './useUser'
 
+export enum ReportTypes {
+  INAPPROPRIATE = '0',
+  SPAM = '1'
+}
+
 const usePosts = () => {
   const { state, ACTIONS, dispatch } = useContext(PostsReducerContext.context)
 
@@ -259,6 +264,20 @@ const usePosts = () => {
     })
   }
 
+  const reportPost = (postId: number, code: ReportTypes) => {
+    return PostService.reportPost(postId, code)
+      .then((data: { code: string; message: string }) => {
+        if (data.code !== '0') {
+          throw new Error(data.message)
+        }
+        toast.success('Post reported successfully')
+      })
+      .catch((err) => {
+        toast.error('Error reporting post')
+        console.error(err.message)
+      })
+  }
+
   return {
     loading: state.loading,
     posts: state.posts,
@@ -267,6 +286,7 @@ const usePosts = () => {
     getPurchasedPosts,
     getSavedPosts,
     deletePost,
+    reportPost,
     addReaction,
     removeReaction,
     unlockPost,

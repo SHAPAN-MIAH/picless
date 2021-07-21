@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { SourceType } from '../../types/PostType.d'
@@ -44,8 +44,10 @@ const CloseButtonDiv = styled.div`
 }
 `
 
-const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceType[]; isDisabled: boolean }> = (props) => {
-  const { image, medios, isDisabled } = props
+const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceType[]; isDisabled: boolean; userName: string }> = (props) => {
+  const { image, medios, isDisabled, userName } = props
+
+  const [width, setwidht] = useState<number>(window.document.getElementsByClassName('content-grid')[0].clientWidth)
 
   let imgIndex = 0
   const handleImgIndex = (img: SourceType) => {
@@ -78,7 +80,7 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
     return false
   }
 
-  const getWidth = () => { 
+  const getHeight = () => { 
     const imgs = medios.filter(el => !el.accessUrl)
     let index:any = imgs[0]
     imgs.map(image => {
@@ -86,12 +88,14 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
           index = image
         }
     })
-    return index;
+    
+    if (index) {
+      return index.heightResized > 670 ? 670 : index.heightResized
+    }
+    return 670;
   }
-  const initialImage = getWidth();
 
-  const width = initialImage ? initialImage.widthResized : 0
-  const height = initialImage ? initialImage.heightResized : 0
+  const height =  getHeight()
 
   const maximoComunDivisor = (width: number, height: number): any => {
     if (height === 0) return width
@@ -102,7 +106,26 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
   const numerator = Math.round(width / base)
   const denominator = Math.round(height / base)
   const appearance = `${numerator}:${denominator}` !== 'NaN:NaN' ? `${numerator}:${denominator}` : '16:9'
-  
+ 
+  const handleWidht = () => {
+    setwidht(window.document.getElementsByClassName('content-grid')[0].clientWidth)
+  }
+
+  const handlePause = (item: any) => {
+    item?.pause();
+  }
+
+  const handleSelect = () =>  {
+    medios.map((item: any) => {
+      if (item && item.accessUrl) {
+        const id = item.id;
+        handlePause(document.getElementById(`${id}_html5_api`))
+      }
+    });
+  }
+
+  window.addEventListener('resize', handleWidht);
+ 
   return (
     <>
       <StyledPopup
@@ -112,11 +135,23 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
         trigger={() => {
           handleImgIndex(image)
           if (!image.accessUrl) {
-            return <ImageImg loading="lazy" decoding="async" src={image?.resized} alt={image.name}/>
+            return <ImageImg 
+                      loading="lazy"
+                      decoding="async"
+                      src={image?.resized}
+                      alt={image.name}
+                      />
           } else {
+            const idItem = image.id && image.id*999;
             return (
               <div className="video-triger-pop">
-                <VideoPlayer src={image.accessUrl} type="" options={videoJsOptions} aspect={appearance} />
+                <VideoPlayer
+                  src={image.accessUrl}
+                  type=""
+                  options={videoJsOptions}
+                  aspect={appearance}
+                  videoId={idItem}
+                />
               </div>
             )
           }
@@ -137,23 +172,35 @@ const ImageWithPopupView: FunctionComponent<{ image: SourceType; medios: SourceT
               >
                 <FontAwesomeIcon icon="times" color="white" size="1x" />
               </CloseButtonDiv>
-              <Carousel isRTL={false} initialActiveIndex={imgIndex} pagination={false} className='carousel-phater'>
+              <Carousel
+                isRTL={false}
+                initialActiveIndex={imgIndex}
+                pagination={false}
+                className='carousel-phater'
+                onChange={() => {handleSelect()}}
+              >
                 {medios.map((item: SourceType) => {
                   if (!item.accessUrl) {
                     return (
-                      <ImagePop
-                        key={Utils.simpleKeyGenerator(5)}
-                        loading="lazy"
-                        decoding="async"
-                        src={item?.original}
-                        alt={item.name}
-                      />
+                        <ImagePop
+                          key={Utils.simpleKeyGenerator(5)}
+                          loading="lazy"
+                          decoding="async"
+                          src={item?.original}
+                          alt={item.name}
+                        />
                     )
                   } else {
                     return (
-                      <div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">
-                        <VideoPlayer src={item.accessUrl} type="" options={videoJsOptions} />
-                      </div>
+                        <div key={Utils.simpleKeyGenerator(5)} className="video-triger-pop">
+                          <VideoPlayer
+                            src={item.accessUrl}
+                            type=""
+                            options={videoJsOptions}
+                            aspect={appearance}
+                            videoId={item.id}
+                          />
+                        </div>
                     )
                   }
                 })}

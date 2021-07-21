@@ -12,7 +12,10 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
   const { post } = props
   const { users: user } = post
 
-  const timeElapsed = moment(post.registerDate).fromNow()
+  // const timeElapsed = moment(post.registerDate).fromNow()
+
+  const timeElapsed = moment(post.registerDate).format('LLLL');
+
 
   return (
     <>
@@ -23,13 +26,14 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
           <Link className="bold" to={`/u/${user.userName}`}>
             {`${user.fullName || user.userName} `}
           </Link>
-          create a{' '}
+          scheduled a{' '}
           <Link to="" className="bold">
             post
           </Link>
         </p>
 
         <p className="user-status-text small">{timeElapsed}</p>
+
       </div>
     </>
   )

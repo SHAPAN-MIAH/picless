@@ -67,11 +67,13 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
   const { getPhotos, photos, provider } = useProfile({ disableMount: true })
 
   const [page, setPage] = useState<number>(0)
+  const [itemId, setItemId] = useState<number>(0)
 
   const [values, setOpen] = useState({ open: false, index: 0 })
   const closeModal = () => {
     document.body.style.overflow = 'auto'
     setOpen({ ...values, open: false })
+    setItemId(0)
   }
 
   const getPhotosList = useCallback(() => {
@@ -84,7 +86,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
     if (provider && photos && photos.length === 0) {
       getPhotosList()
       if (window.tpl) {
-        window.tpl.load(['dropdown'])
+        window.tpl?.load(['dropdown'])
       }
     }
   }, [])
@@ -97,6 +99,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
 
   const handleOpen = () => {
     document.body.style.overflow = 'hidden'
+    setItemId(photos[values.index].postId ?? 0);
   }
 
   const handleClick = (e: any) => {
@@ -131,9 +134,7 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             />
                           </ImageContainerDiv>
                           {!isMobile && (
-                            <div className="album-preview-info" style={{ top: '-284px' }}>
-                              <p className="album-preview-title">View post</p>
-                              <p className="album-preview-text">{item.registerDate}</p>
+                            <div className="album-preview-info" style={{ top: '-330px', borderRadius: '0' }}>
                             </div>
                           )}
                         </div>
@@ -160,6 +161,9 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                             getPhotosList()
                           }
                         }}
+                        onChange={(
+                          currentPageIndex
+                          )=> setItemId(photos[currentPageIndex.index].postId?? 0)}
                         className="class-up"
                       >
                         {photos.map((item) => {
@@ -177,6 +181,9 @@ const PhotoGalleryTab: FunctionComponent<{}> = () => {
                           )
                         })}
                       </Carousel>
+                    </div>
+                    <div className='containerLink'>
+                      <a href={`/u/${provider.userName}/post/${itemId}`} className='goToPost'>Go to Post</a>
                     </div>
                   </StyledPopup>
                 }

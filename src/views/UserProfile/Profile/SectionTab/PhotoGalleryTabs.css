@@ -1,3 +1,34 @@
+.album-preview {
+    max-height: 350px!important;
+    width: 105%;
+    overflow: hidden;
+    border-radius: 0!important;
+  }
+
+  .album-preview img {
+    border-radius: 0!important;
+  }
+
+  
+  .goToPost {
+    position: fixed;
+    bottom: 55px;
+    padding: 10px;
+    border: 0.8em;
+    color: white;
+    font-weight: bolder;
+    font-size: 13px;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0px 0px #333;
+    border-radius: .4em;
+    text-align: center;
+    line-height: 5px;
+}
+.containerLink {
+    display: flex;
+    justify-content: center;
+}
+
 @media screen and (max-device-width: 812px) {
     .grid-photos {
         display: flex;
@@ -13,9 +44,6 @@
         height: auto!important;
         margin: .5px;
     }
-    .album-preview img {
-        border-radius: 0!important;
-    }
     .widget-photos {
         padding: 0%!important;
     }
@@ -23,7 +51,9 @@
         height: 100vh!important;
     }
   }
-
-  .album-preview {
-    max-height: 284px!important;
+  @media screen and (min-device-width: 813px) {
+    .album-preview {
+        margin-bottom: .5px;
+        margin-top: -15px;
+    }
   }
