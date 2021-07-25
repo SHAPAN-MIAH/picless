@@ -6,7 +6,7 @@ const Viewer: FunctionComponent<{}> = () => {
   return (
     <>
       <ProviderProfileContextProvider>
-        <div className="grid grid-8-4 mobile-prefer-content">
+        <div className="grid grid-9-3 mobile-prefer-content liveView">
           <LiveViewer />
         </div>
       </ProviderProfileContextProvider>

@@ -80,11 +80,31 @@
   .declineIcon{
     margin-left: 5px !important;
   }
+  .liveView{
+    margin-left: 0%
+  }
   
 }
-@media screen and (max-width: 400px) {
 
-  .liveTab_container{
+.liveView{
+  margin-left: 20%
+}
+.Live_container{
+  width: 100%;
+  margin-top: 10vh;
+  
+}
+
+@media screen and (max-width: 400px) {
+  .liveView{
+    margin-left: 0%
+  }
+  .Live_container{
+    width: 100%;
+    margin-top: 0vh;
+    
+  }
+  .liveViewContainer{
     width: 100% !important;
   }
   
