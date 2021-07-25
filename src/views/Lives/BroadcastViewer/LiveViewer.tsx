@@ -12,6 +12,7 @@ import SendATip from 'components/SendATip/SendATip'
 import useProfile from 'hooks/useProfile'
 import useUser from 'hooks/useUser'
 import { useParams } from 'react-router-dom'
+import About from 'components/LiveSectionFeatures/About/About'
 
 const LiveViewer: FunctionComponent<{}> = () => {
   const { streamId } = useParams<{ streamId: string }>()
@@ -49,6 +50,8 @@ const LiveViewer: FunctionComponent<{}> = () => {
       <div className="grid-column">
         <div className="widget-box">
           <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />
+          <About />
+
         </div>
       </div>
     </>

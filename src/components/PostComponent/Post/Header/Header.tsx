@@ -26,7 +26,10 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
           <Link className="bold" to={`/u/${user.userName}`}>
             {`${user.fullName || user.userName} `}
           </Link>
-          scheduled a{' '}
+          {post.startDate && (<>
+            scheduled a{' '}
+          </>)}
+
           <Link to="" className="bold">
             post
           </Link>
