@@ -44,14 +44,22 @@
     margin-bottom: 20px;
   }
 }
+
+.Live_container{
+  width: 100%;
+  margin-top: 10vh;
+}
+
 @media screen and (max-width: 680px) {
-  .liveTab_container{
-    width: 100% !important;
-  }
   .Live_container{
     margin-top: 0 !important;
   }
+  .liveView{
+    width: 100% !important;
+    margin: 0 !important;
+  }
 } 
+
 @media screen and (min-width: 680px) {
   .widget-box{
     padding-top: 20px 0 !important;
@@ -80,32 +88,18 @@
   .declineIcon{
     margin-left: 5px !important;
   }
-  .liveView{
-    margin-left: 0%
-  }
   
-}
-
-.liveView{
-  margin-left: 20%
-}
-.Live_container{
-  width: 100%;
-  margin-top: 10vh;
   
 }
 
 @media screen and (max-width: 400px) {
   .liveView{
-    margin-left: 0%
+    width: 100% !important;
+    margin: 0 !important;
   }
   .Live_container{
     width: 100%;
-    margin-top: 0vh;
-    
-  }
-  .liveViewContainer{
-    width: 100% !important;
+    margin-top: 0vh;    
   }
   
   .widget-box{

@@ -6,8 +6,10 @@ const Viewer: FunctionComponent<{}> = () => {
   return (
     <>
       <ProviderProfileContextProvider>
-        <div className="grid grid-9-3 mobile-prefer-content liveView">
-          <LiveViewer />
+        <div className="grid mobile-prefer-content">
+          <div className="liveView" style={{ margin: "auto", width: "60%" }}>
+            <LiveViewer />
+          </div>
         </div>
       </ProviderProfileContextProvider>
     </>

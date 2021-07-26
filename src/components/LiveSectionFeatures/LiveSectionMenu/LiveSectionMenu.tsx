@@ -22,8 +22,6 @@ const Loading = (
 
 const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: any }> = (props) => {
 
-  console.log(props);
-
   const { url } = useRouteMatch()
   const router = useRouter()
   const { match } = router
