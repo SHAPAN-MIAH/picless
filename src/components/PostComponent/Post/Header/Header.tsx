@@ -12,10 +12,7 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
   const { post } = props
   const { users: user } = post
 
-  // const timeElapsed = moment(post.registerDate).fromNow()
-
   const timeElapsed = moment(post.registerDate).format('LLLL');
-
 
   return (
     <>
