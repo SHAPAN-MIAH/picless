@@ -29,7 +29,7 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
 
           {post.startDate && (<>
             scheduled a{' '}
-          </>)}
+          </>) || <>created a{' '}</>}
 
           <Link to="" className="bold">
             post
