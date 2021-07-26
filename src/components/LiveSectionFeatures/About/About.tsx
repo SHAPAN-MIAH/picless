@@ -18,13 +18,13 @@ const About: React.FunctionComponent<{}> = () => {
 
 
     return (
-        <div>
+        <>
             <div className="grid grid-3-9 mobile-prefer-content">
                 <div className="grid-column">
                     <div className="widget-box">
                         <p className="widget-box-title">About Me</p>
 
-                        <div className="widget-box-content">
+                        <div className="widget-box-content" style={{ margin: '0px 10px' }}>
                             <p className="paragraph">{provider.profileDescription}</p>
 
                             <div className="information-line-list">
@@ -79,10 +79,10 @@ const About: React.FunctionComponent<{}> = () => {
                 </div>
 
                 <div className="grid-column">
-                    <div className="widget-box">
+                    <div className="widget-box" style={{ marginRight: "5px" }}>
                         <p className="widget-box-title">Interests</p>
 
-                        <div className="widget-box-content">
+                        <div className="widget-box-content" style={{ margin: '0px 10px' }}>
                             <div className="information-block-list">
                                 {provider.userInterest &&
                                     provider.userInterest?.length > 0 &&
@@ -103,10 +103,10 @@ const About: React.FunctionComponent<{}> = () => {
                         </div>
                     </div>
 
-                    <div className="widget-box">
+                    <div className="widget-box" style={{ marginRight: "5px" }}>
                         <p className="widget-box-title">Timeline</p>
 
-                        <div className="widget-box-content">
+                        <div className="widget-box-content" style={{ margin: '0px 10px' }}>
                             <div className="timeline-information-list">
                                 {provider.userTimeLine &&
                                     provider.userTimeLine?.length > 0 &&
@@ -130,7 +130,7 @@ const About: React.FunctionComponent<{}> = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
