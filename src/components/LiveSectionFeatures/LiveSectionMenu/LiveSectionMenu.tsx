@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import { Link, useRouteMatch, Switch, Route, BrowserRouter as Router} from 'react-router-dom'
+import { Link, useRouteMatch, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import useRouter from '../../../hooks/commons/useRouter'
 import { Tabs } from '../../../hooks/useProfile'
 import Loader from 'react-loader-spinner'
@@ -48,20 +48,20 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: a
   }, [])
 
   const clickHandler = (tabName: any) => {
-    if(tabName === 'CHAT'){
+    if (tabName === 'CHAT') {
       setCurrentTabs(Tabs.CHAT)
       props.onToggleChat()
       props.toggleTab('CHAT')
     }
-    else if(tabName === 'PHOTOS'){
+    else if (tabName === 'PHOTOS') {
       setCurrentTabs(Tabs.PHOTOS)
       props.toggleTab('PHOTOS')
     }
-    else if(tabName === 'VIDEOS'){
+    else if (tabName === 'VIDEOS') {
       setCurrentTabs(Tabs.VIDEOS)
       props.toggleTab('VIDEOS')
     }
-    else if(tabName === 'ABOUT'){
+    else if (tabName === 'ABOUT') {
       setCurrentTabs(Tabs.ABOUT)
       props.toggleTab('ABOUT')
     }
@@ -71,7 +71,7 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: a
   const sectionMenuClasses = 'section-menu-item tns-item tns-slide-active'
   return (
     <>
-      <nav className="section-navigation">
+      <nav className="section-navigation" style={{ margin: "0px 10px" }}>
         <div id="section-navigation-slider" className="section-menu">
           <button
             style={{ background: "none", borderRadius: '0px' }}
@@ -88,7 +88,7 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: a
           </button>
 
           <button
-          style={{ background: "none", borderRadius: '0px' }}
+            style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.PHOTOS ? 'active' : '')}
             // to={`${url}/${Tabs.PHOTOS}`}
             onClick={() => clickHandler('PHOTOS')}
@@ -101,7 +101,7 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: a
           </button>
 
           <button
-          style={{ background: "none", borderRadius: '0px' }}
+            style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.VIDEOS ? 'active' : '')}
             // to={`${url}/${Tabs.VIDEOS}`}
             onClick={() => clickHandler('VIDEOS')}
@@ -114,7 +114,7 @@ const LiveSectionMenu: React.FunctionComponent<{ onToggleChat: any, toggleTab: a
           </button>
 
           <button
-          style={{ background: "none", borderRadius: '0px' }}
+            style={{ background: "none", borderRadius: '0px' }}
             className={classNames(sectionMenuClasses, currentTabs === Tabs.ABOUT ? 'active' : '')}
             // to={`${url}/${Tabs.ABOUT}`}
             onClick={() => clickHandler('ABOUT')}
