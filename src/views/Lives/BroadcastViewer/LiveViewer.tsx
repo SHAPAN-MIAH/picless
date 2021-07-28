@@ -61,7 +61,7 @@ const LiveViewer: FunctionComponent<{}> = () => {
             </div>
           </div>
           <div className="grid-column">
-            <div style={{ margin: '10px 0px' }} className="widget-box">{<LiveSectionMenu toggleTab={setCurrentTab} onToggleChat={onToggleChat} />}</div>
+            <div style={{ marginTop: '10px' }} className="widget-box">{<LiveSectionMenu toggleTab={setCurrentTab} onToggleChat={onToggleChat} />}</div>
             <div className="widget-box">
               {toggleChat && <LiveChat ref={chatRef} sendMessageChat={sendMessageChat} />}
               <div>
