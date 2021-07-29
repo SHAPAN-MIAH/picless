@@ -12,6 +12,7 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
   const { post } = props
   const { users: user } = post
 
+  const timesElapsed = moment(post.registerDate).fromNow();
   const timeElapsed = moment(post.registerDate).format('LLLL');
 
   return (
@@ -33,7 +34,7 @@ const Header: FunctionComponent<HeaderProps> = (props) => {
           </Link>
         </p>
 
-        <p className="user-status-text small">{timeElapsed}</p>
+        <p className="user-status-text small">{post.startDate && timeElapsed || timesElapsed}</p>
 
       </div>
     </>
