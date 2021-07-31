@@ -88,9 +88,9 @@
     padding: 20px 0px !important;
 
   }
-  /* .widgetBox{
+  .widgetBoxForMobile{
     padding: 0 !important;
-  } */
+  }
   .widget-box-title{
     padding-bottom: 10px !important;
     margin-left: 10px !important;
@@ -138,9 +138,9 @@
   .widget-box{
     padding: 30px 5px !important;
   }
-  /* .widgetBox{
-    padding: 5px !important;
-  } */
+  .widgetBoxForMobile{
+    padding: 0px !important;
+  }
   .widget-box-title{
     padding-bottom: 10px !important;
   }

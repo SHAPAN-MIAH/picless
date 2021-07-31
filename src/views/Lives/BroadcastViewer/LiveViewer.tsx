@@ -42,7 +42,7 @@ const LiveViewer: FunctionComponent<{}> = () => {
       <div className="Live_container">
         <div className="liveViewContainer" >
           <div className="grid-column">
-            <div className="widget-box widgetBox">
+            <div className="widget-box widgetBoxForMobile">
               <LiveView videoRef={videoRef} playVideo={playVideo} />
               <Popup
                 modal
