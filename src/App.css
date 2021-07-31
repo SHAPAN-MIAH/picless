@@ -59,10 +59,19 @@
     margin: 0 !important;
   }
   .sendTipBtn{
+    width: 95% !important;
+    background: #23d2e2 !important;
     margin-top: 20px !important;
     margin-left: 10px !important;
     padding: 0px 50px;
-    box-shadow: rgba(0, 0, 0, 0.10) 0px 2px 4px, rgba(0, 0, 0, 0.20) 0px 2px 4px;
+    /* box-shadow: rgba(0, 0, 0, 0.10) 0px 2px 4px, rgba(0, 0, 0, 0.20) 0px 2px 4px; */
+  }
+  .post-option-texts{
+    margin-left: 10px;
+    color: #fff;
+  }
+  .sendTipIcon{
+    color: #fff !important;
   }
 } 
 
@@ -79,6 +88,9 @@
     padding: 20px 0px !important;
 
   }
+  /* .widgetBox{
+    padding: 0 !important;
+  } */
   .widget-box-title{
     padding-bottom: 10px !important;
     margin-left: 10px !important;
@@ -108,15 +120,27 @@
     margin-top: 0vh;    
   }
   .sendTipBtn{
+    width: 95% !important;
+    background: #23d2e2 !important;
     margin-top: 20px !important;
     margin-left: 10px !important;
     padding: 0px 50px;
-    box-shadow: rgba(0, 0, 0, 0.10) 0px 2px 4px, rgba(0, 0, 0, 0.20) 0px 2px 4px;
+    /* box-shadow: rgba(0, 0, 0, 0.10) 0px 2px 4px, rgba(0, 0, 0, 0.20) 0px 2px 4px; */
+  }
+  .post-option-texts{
+    margin-left: 10px;
+    color: #fff;
+  }
+  .sendTipIcon{
+    color: #fff !important;
   }
 
   .widget-box{
     padding: 30px 5px !important;
   }
+  /* .widgetBox{
+    padding: 5px !important;
+  } */
   .widget-box-title{
     padding-bottom: 10px !important;
   }

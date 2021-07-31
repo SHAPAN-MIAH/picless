@@ -42,17 +42,17 @@ const LiveViewer: FunctionComponent<{}> = () => {
       <div className="Live_container">
         <div className="liveViewContainer" >
           <div className="grid-column">
-            <div className="widget-box">
+            <div className="widget-box widgetBox">
               <LiveView videoRef={videoRef} playVideo={playVideo} />
               <Popup
                 modal
                 trigger={
                   <div className="post-option sendTipBtn" style={{ marginTop: "20px", marginLeft: "20px" }}>
                     <div className="post-option-icon">
-                      <FontAwesomeIcon color="#adafca" icon="dollar-sign" />
+                      <FontAwesomeIcon className="sendTipIcon" color="#adafca" icon="dollar-sign" />
                     </div>
 
-                    <p className="post-option-text">Send a tip</p>
+                    <p className="post-option-texts">Send a tip</p>
                   </div>
                 }
               >
