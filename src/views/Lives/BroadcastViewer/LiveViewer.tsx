@@ -47,7 +47,7 @@ const LiveViewer: FunctionComponent<{}> = () => {
               <Popup
                 modal
                 trigger={
-                  <div className="post-option sendTipBtn" style={{ marginTop: "20px", marginLeft: "20px" }}>
+                  <div className="post-option sendTipBtn" style={{ margin: "20px 0px", marginLeft: "20px" }}>
                     <div className="post-option-icon">
                       <FontAwesomeIcon className="sendTipIcon" color="#adafca" icon="dollar-sign" />
                     </div>
